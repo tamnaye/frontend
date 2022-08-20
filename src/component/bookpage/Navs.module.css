@@ -1,0 +1,38 @@
+@media screen and (max-width: 700px) {
+    .navbarWrap .meetingRoom {
+        grid-template-columns: repeat(6, 1fr);
+    }
+    .navbarWrap .studyRoom {
+        grid-template-columns: repeat(6, 1fr);
+    }
+}
+
+.navbarWrap {
+    margin: 30px 10px;
+
+}
+
+.meetingRoom {
+    display: grid;
+    grid-template-columns: repeat(6, 100px);
+    text-align: center;
+}
+
+.studyRoom{
+    display: grid;
+    grid-template-columns: repeat(6, 100px);
+    text-align: center;
+}
+
+.spaceName {
+    font-weight: bold;
+    color: #528FC4;
+    font-size: 1.3vw;
+    text-align: center;
+}
+
+.spaceList {
+    color: #353535;
+    text-decoration: none;
+    font-size: 1.3vw;
+}
