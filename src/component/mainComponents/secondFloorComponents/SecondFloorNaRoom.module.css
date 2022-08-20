@@ -1,0 +1,58 @@
+@media screen and (max-width: 600px) {
+  .NaBoxContainer .roomContainer {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(4, 40px);
+  }
+  .NaBoxContainer .title {
+    font-size: 15px;
+    margin: 5px;
+  }
+}
+
+.NaBoxContainer {
+  margin-top: 5px;
+}
+
+.NaBoxContainer h4 {
+  margin: 10px;
+  font-size: 20px;
+  font-weight: 600;
+  color: #111111;
+}
+
+.roomContainer {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(2, 40px);
+}
+
+.full {
+  width: 92%;
+  height: 30px;
+  margin: 5px;
+  border-radius: 15px;
+  border: none;
+  font-size: 11px;
+  font-weight: 500;
+  cursor: not-allowed;
+  background-color: #8f8f8f;
+  color: white;
+}
+
+.notfull {
+  width: 92%;
+  height: 30px;
+  margin: 5px;
+  border-radius: 15px;
+  border: none;
+  font-size: 11px;
+  font-weight: 500;
+  cursor: pointer;
+  background-color: rgb(255, 163, 42);
+  color: white;
+}
+
+.notfull:hover {
+  background-color: rgb(156, 99, 0);
+}

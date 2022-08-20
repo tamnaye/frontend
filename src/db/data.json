@@ -1,0 +1,150 @@
+{
+  "secondFloor": [
+    {
+      "room_id": 1,
+      "room_type": "nabox",
+      "room_name": "NaBox1",
+      "room_full": false
+    },
+    {
+      "room_id": 2,
+      "room_type": "nabox",
+      "room_name": "NaBox2",
+      "room_full": false
+    },
+    {
+      "room_id": 3,
+      "room_type": "nabox",
+      "room_name": "NaBox3",
+      "room_full": false
+    },
+    {
+      "room_id": 4,
+      "room_type": "nabox",
+      "room_name": "NaBox4",
+      "room_full": true
+    },
+    {
+      "room_id": 5,
+      "room_type": "nabox",
+      "room_name": "NaBox5",
+      "room_full": false
+    },
+    {
+      "room_id": 6,
+      "room_type": "nabox",
+      "room_name": "NaBox6",
+      "room_full": false
+    },
+    {
+      "room_id": 7,
+      "room_type": "meetingRoom",
+      "room_name": "협재",
+      "room_full": true
+    },
+    {
+      "room_id": 8,
+      "room_type": "meetingRoom",
+      "room_name": "곽지",
+      "room_full": false
+    },
+    {
+      "room_id": 9,
+      "room_type": "meetingRoom",
+      "room_name": "이호",
+      "room_full": false
+    },
+    {
+      "room_id": 10,
+      "room_type": "meetingRoom",
+      "room_name": "함덕",
+      "room_full": false
+    },
+    {
+      "room_id": 11,
+      "room_type": "meetingRoom",
+      "room_name": "김녕",
+      "room_full": false
+    },
+    {
+      "room_id": 12,
+      "room_type": "meetingRoom",
+      "room_name": "월정",
+      "room_full": false
+    },
+    {
+      "room_id": 13,
+      "room_type": "meetingRoom",
+      "room_name": "신양",
+      "room_full": false
+    },
+    {
+      "room_id": 14,
+      "room_type": "meetingRoom",
+      "room_name": "하모",
+      "room_full": false
+    },
+    {
+      "room_id": 15,
+      "room_type": "meetingRoom",
+      "room_name": "화순",
+      "room_full": false
+    },
+    {
+      "room_id": 16,
+      "room_type": "meetingRoom",
+      "room_name": "표선",
+      "room_full": false
+    },
+    {
+      "room_id": 17,
+      "room_type": "meetingRoom",
+      "room_name": "중문",
+      "room_full": false
+    }
+  ],
+  "thirdFloor": [
+    {
+      "room_id": 1,
+      "room_type": "nabox",
+      "room_name": "NaBox1",
+      "room_full": true
+    },
+    {
+      "room_id": 2,
+      "room_type": "nabox",
+      "room_name": "NaBox2",
+      "room_full": true
+    },
+    {
+      "room_id": 3,
+      "room_type": "nabox",
+      "room_name": "NaBox3",
+      "room_full": false
+    },
+    {
+      "room_id": 4,
+      "room_type": "meetingRoom",
+      "room_name": "다랑쉬오름",
+      "room_full": true
+    },
+    {
+      "room_id": 5,
+      "room_type": "meetingRoom",
+      "room_name": "용눈이오름",
+      "room_full": false
+    },
+    {
+      "room_id": 6,
+      "room_type": "meetingRoom",
+      "room_name": "따라비오름",
+      "room_full": false
+    },
+    {
+      "room_id": 7,
+      "room_type": "meetingRoom",
+      "room_name": "거문오름",
+      "room_full": true
+    }
+  ]
+}
