@@ -1,5 +1,5 @@
 import './App.module.css';
-import Login from './component/Login';
+import Login from './component/login/Login';
 import { Route, Routes, useLocation } from "react-router-dom";
 import EmptyPage from './component/EmptyPage';
 import Header from './component/HeaderComponents/Header';

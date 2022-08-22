@@ -3,8 +3,8 @@ import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 import 'antd/dist/antd.min.css';
 import styles from './Login.module.css'
-import encrypt from "../hooks/encrypt";
-import decrypt from "../hooks/decrypt";
+import encrypt from "../../hooks/encrypt";
+import decrypt from "../../hooks/decrypt";
 
 export default function Login() {
 

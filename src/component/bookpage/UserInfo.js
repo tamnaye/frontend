@@ -1,9 +1,7 @@
 //styles
-import styles from './Info.module.css';
+import styles from './UserInfo.module.css';
 //useHooks
 import React, { useState } from 'react';
-//component
-import RoomImg from './RoomImg';
 
 function Info() {
   const [name, setName] = useState('');
@@ -21,27 +19,18 @@ function Info() {
   };
 
   return (
-    <div className={styles.infoBox}>
-      <RoomImg />
+    <div className={styles.wrap}>
+      <h6 className={styles.userinfo}> 예약자 정보 </h6>
       <div className={styles.list}>
         <p>
-          ✔ 신청자명
-          <input className={styles.userName} type='text' name='val' disabled />
-        </p>
-        <p>
-          ✔ 이용목적
-          <select className={styles.purpose}>
-            <option value=''></option>
-            <option value='회의'>회의</option>
-            <option value='스터디'>스터디</option>
-            <option value='기타'>기타</option>
-          </select>
+          신청자명
+          <input className={styles.input} type='text' name='val' disabled />
         </p>
         <form onSubmit={onSubmit}>
           <p>
-            ✔ 팀원선택
+            팀원선택
             <input
-              className={styles.teamMembers}
+              className={styles.input}
               onChange={onChange}
               value={name}
               type='text'

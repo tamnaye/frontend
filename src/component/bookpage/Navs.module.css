@@ -1,38 +1,24 @@
 @media screen and (max-width: 700px) {
-    .navbarWrap .meetingRoom {
-        grid-template-columns: repeat(6, 1fr);
+    .wrap {
+        /* background-color: aquamarine;
+        width: 350px;
+        안먹음.. */
+        
     }
-    .navbarWrap .studyRoom {
-        grid-template-columns: repeat(6, 1fr);
-    }
 }
 
-.navbarWrap {
-    margin: 30px 10px;
-
+.wrap {
+    width: 850px;
+    margin: auto;
+    display: flex;
+    column-gap: 5px;
+    margin-top: 50px;
 }
-
-.meetingRoom {
-    display: grid;
-    grid-template-columns: repeat(6, 100px);
-    text-align: center;
+.box {
+    border-radius: 3px;
+    border: 2px solid rgb(193, 224, 249);
+    border-bottom: none;
 }
-
-.studyRoom{
-    display: grid;
-    grid-template-columns: repeat(6, 100px);
-    text-align: center;
-}
-
-.spaceName {
-    font-weight: bold;
-    color: #528FC4;
-    font-size: 1.3vw;
-    text-align: center;
-}
-
-.spaceList {
-    color: #353535;
-    text-decoration: none;
-    font-size: 1.3vw;
+.toggle {
+    font-size: 14px;
 }

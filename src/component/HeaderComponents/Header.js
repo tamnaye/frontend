@@ -10,12 +10,14 @@ const Header = () => {
           <img className={styles.img} src={logo} alt="logo"></img>
         </Link>
         <div className={styles.anker}>
-          <a src="#">Sign up</a>
-          <a src="#">My page</a>
+          <Link to="#">Sign up</Link>
+          <Link to="#">My page</Link>
         </div>
       </div>
       <div className={styles.menu}>
         <Link to="/state">실시간예약현황</Link>
+        <Link to='#'>예약하기</Link>
+
       </div>
     </div>
   )

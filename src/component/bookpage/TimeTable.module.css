@@ -1,56 +1,16 @@
 /* Booking */
-@media screen and (max-width: 700px) {
-    .wrap .timeTable {
-        width: 80%;
-        padding: 0px 10px;
-    }
-    .wrap .timeTable .title {
-        padding: 5px;
-        margin-top: 0px;
-        text-align: start;
-        margin-left: 8px;
-    }
-    .wrap .timeTable .btnBox {
-        width: 90%;
-    }
-    .wrap .timeTable .text {
-        margin: 2px 0px;
-    }
-    .wrap .timeTable .btnBox button {
-        width: 50px;
-    }
-    .wrap .bookbtn {
-        width: 110px;
-        margin-top: 30px;
-        text-align: center;
-    }
+.time {
+    margin-top: 16px;
+    color: #D46B42;
 }
-
-.wrap {
-    width: 100%;
-}
-
-/* timetable */
-.timeTable {
-    /* border: 2px solid #D9DDDC; */
-    width: 65%;
-    padding: 10px;
-    margin: auto;
-    margin-top: 10px;
-}
-
-.title {
-    font-size: 1.2vw;
+.timetable {
+    padding: 10px 0px 10px 0px;
+    border: 1px solid #D9DDDC;
 }
 
 .text {
-    font-weight: bold;
-    font-size: 1.1vw;
-    margin: 5px 0px;
     display: flex;
-    flex-basis: 100%;
     align-items: center;
-    color: #353535;
 }
 .text::before,
 .text::after {
@@ -58,24 +18,23 @@ content: "";
 flex-grow: 1;
 background: rgba(0, 0, 0, 0.35);
 height: 1px;
-font-size: 0px;
 line-height: 0px;
 margin: 0px 16px;
 }
 
-.btnBox {
+.timebtn {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    margin: auto;
-    padding: 2px;
+    
 }
-.btnBox > button {
-    margin: 5px auto;
-    width: 6vw; /* 70px */
+.timebtn > button {
+    margin: auto;
+    margin-bottom: 10px;
+    width: 80px;
+    height: 25px;
     border: 1.5px solid #67b4f8;
     border-radius: 3px;
-    padding: 2px;
-    font-size: 1vw;
+    font-size: 12px;
     background-color: #B1D8FB;
     text-align: center;
 }
@@ -84,13 +43,13 @@ margin: 0px 16px;
 .bookbtn {
     background-color: #67b4f8;
     cursor: pointer;
-    width: 15vw;
-    height: 4vh;
+    width: 200px;
+    height: 30px;
     color: whitesmoke;
     border: 0px;
-    border-radius: 10px;
     display: block;
     margin: auto;
-    margin-top: 40px;
-    font-size: 1em;
-}
+    margin-top: 30px;
+    font-size: 16px;
+  }
+  
