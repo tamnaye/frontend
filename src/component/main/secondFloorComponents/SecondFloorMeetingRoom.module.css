@@ -31,9 +31,14 @@
   border: none;
   font-size: 11px;
   font-weight: 500;
-  cursor: not-allowed;
   background-color: #8f8f8f;
   color: white;
+  cursor: not-allowed;
+}
+
+.full a {
+  color: white;
+  cursor: not-allowed;
 }
 
 .notfull {
@@ -46,6 +51,10 @@
   font-weight: 500;
   cursor: pointer;
   background-color: #46a1fd;
+  color: white;
+}
+
+.notfull a {
   color: white;
 }
 

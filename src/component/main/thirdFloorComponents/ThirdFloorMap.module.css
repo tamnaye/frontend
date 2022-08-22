@@ -30,6 +30,10 @@
   border-radius: 5px;
 }
 
+.mapContainer a {
+  color: #fff;
+}
+
 .mapContainer div {
   color: #fff;
   display: flex;
