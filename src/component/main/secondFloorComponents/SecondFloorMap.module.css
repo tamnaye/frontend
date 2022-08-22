@@ -26,6 +26,11 @@
   border: 1px solid rgb(193, 193, 193);
   border-radius: 5px;
 }
+
+.mapContainer div a {
+  color: #fff;
+}
+
 .mapContainer div {
   color: #fff;
   display: flex;
