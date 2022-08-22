@@ -12,7 +12,7 @@ const SecondFloorNaRoom = () => {
   const secondFloorNaBoxState = secondFloorNaBox.map((room) => room.room_full)
   const [NaBoxState, setNaBoxState] = useState(secondFloorNaBoxState)
 
-  //
+  //2층 나박스 API 사용 정보 불러오기
 
   const Secondroomsinfo = useFetch('http://144.24.91.218:8000/rooms/').filter(
     (rooms) => rooms.floor === 2
@@ -21,7 +21,6 @@ const SecondFloorNaRoom = () => {
   const SecondNaboxinfo = Secondroomsinfo.filter(
     (rooms) => rooms.room_id >= 212
   )
-  console.log(SecondNaboxinfo)
 
   return (
     <div className={styles.NaBoxContainer}>

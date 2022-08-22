@@ -17,7 +17,7 @@ const SecondFloorMeetingRoom = () => {
     secondFloorMeetingRoomState
   )
 
-  //
+  //2층 미팅룸 API 사용 정보 불러오기
 
   const Secondroomsinfo = useFetch('http://144.24.91.218:8000/rooms/').filter(
     (rooms) => rooms.floor === 2
@@ -25,8 +25,6 @@ const SecondFloorMeetingRoom = () => {
   const SecondMeetingRoominfo = Secondroomsinfo.filter(
     (rooms) => rooms.room_id <= 211
   )
-
-  console.log(SecondMeetingRoominfo)
 
   return (
     <div className={styles.MeetingRoomContainer}>

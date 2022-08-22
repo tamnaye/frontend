@@ -1,6 +1,8 @@
 import styles from './ThirdFloorMap.module.css'
 import dummy from '../../../db/data.json'
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
+import useFetch from '../../../hooks/useFetch'
 
 const ThirdFloorMap = () => {
   //3층 meetingroom
@@ -22,25 +24,38 @@ const ThirdFloorMap = () => {
 
   const [NaBoxState, setNaBoxState] = useState(thirdFloorNaBoxState)
 
+  //3층 API 정보 가져오기
+  const Thirdroomsinfo = useFetch('http://144.24.91.218:8000/rooms/').filter(
+    (rooms) => rooms.floor === 3
+  )
+  const ThirdMeetingRoominfo = Thirdroomsinfo.filter(
+    (rooms) => rooms.room_id <= 304
+  )
+  const ThirdNaboxinfo = Thirdroomsinfo.filter((rooms) => rooms.room_id >= 305)
+
   return (
     <div className={styles.container}>
       <div className={styles.mapContainer}>
-        {thirdFloorMeetingRoom.map((rooms, idx) => (
+        {ThirdMeetingRoominfo.map((rooms, idx) => (
           <div
             key={rooms.room_id}
             className={styles[rooms.room_name]}
             id={MeetingRoomState[idx] ? [styles.full] : [styles.MeetingRoom]}
           >
-            {MeetingRoomState[idx] ? '마감' : rooms.room_name}
+            <Link to={`/booking/${rooms.room_id}`}>
+              {MeetingRoomState[idx] ? '마감' : rooms.room_name}
+            </Link>
           </div>
         ))}
-        {thirdFloorNaBox.map((rooms, idx) => (
+        {ThirdNaboxinfo.map((rooms, idx) => (
           <div
             key={rooms.room_id}
             className={styles[rooms.room_name]}
             id={NaBoxState[idx] ? [styles.full] : [styles.NaBax]}
           >
-            {NaBoxState[idx] ? '마감' : rooms.room_name}
+            <Link to={`/booking/${rooms.room_id}`}>
+              {NaBoxState[idx] ? '마감' : rooms.room_name}
+            </Link>
           </div>
         ))}
 

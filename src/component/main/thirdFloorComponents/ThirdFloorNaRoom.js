@@ -12,14 +12,12 @@ const ThirdFloorNaRoom = () => {
   const thirdFloorNaBoxState = thirdFloorNaBox.map((room) => room.room_full)
   const [NaBoxState, setNaBoxState] = useState(thirdFloorNaBoxState)
 
-  //
+  //3층 나박스 API 사용 정보 불러오기
   const Thirdroomsinfo = useFetch('http://144.24.91.218:8000/rooms/').filter(
     (rooms) => rooms.floor === 3
   )
 
   const ThirdNaboxinfo = Thirdroomsinfo.filter((rooms) => rooms.room_id >= 305)
-
-  console.log(ThirdNaboxinfo)
 
   return (
     <div className={styles.NaBoxContainer}>
