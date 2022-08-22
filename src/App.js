@@ -2,9 +2,9 @@ import './App.module.css';
 import Login from './component/login/Login';
 import { Route, Routes, useLocation } from "react-router-dom";
 import EmptyPage from './component/EmptyPage';
-import Header from './component/HeaderComponents/Header';
-import MainTemplate from './component/mainComponents/MainTemplate';
-import ReservationState from './component/ReservationStateComponents/ReservationState'
+import Header from './component/header/Header';
+import MainTemplate from './component/main/MainTemplate';
+import ReservationState from './component/reservation/ReservationState'
 import BookPage from './component/bookpage/BookPage'
 import MyPage from './component/mypage/MyPage'
 
