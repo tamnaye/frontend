@@ -1,0 +1,22 @@
+@media screen and (max-width: 600px) {
+  #table #thead #theadTr #text {
+    font-size: 7px;
+  }
+  #table #tbody #tbodyTr .time {
+    font-size: 7px;
+  }
+}
+
+#table th {
+  font-size: 12px;
+  padding: 5px auto;
+  text-align: center;
+}
+
+#table .roomstate:hover {
+  background-color: rgb(180, 180, 180);
+}
+
+#time {
+  width: 50px;
+}

@@ -1,0 +1,132 @@
+@media screen and (max-width: 600px) {
+  .container .mapContainer {
+    font-size: 5px;
+    font-weight: 500;
+    gap: 5px;
+    padding: 5px;
+    line-height: 10px;
+  }
+}
+
+.mapContainer {
+  display: grid;
+  grid-template-columns: 3fr 2fr 1fr 1fr 0.2fr 0.4fr 0.6fr 1.5fr 1.5fr;
+  grid-template-rows: 1fr 1fr 1fr 1.5fr 1.5fr;
+  grid-template-areas:
+    'Lounge Lounge Lounge Lounge 거문오름 거문오름 NaBox1 더큰내일스튜디오 다랑쉬오름'
+    'Lounge Lounge Lounge Lounge 거문오름 거문오름 NaBox2 더큰내일스튜디오 용눈이오름'
+    'Lounge Lounge Lounge Lounge 거문오름 거문오름 NaBox3 더큰내일스튜디오 따라비오름'
+    'space수월봉 . Stair EV . Stair2 Stair2 space일출봉 space일출봉'
+    'space수월봉 화장실 Stair EV . Stair2 Stair2 space일출봉 space일출봉';
+
+  height: 100%;
+  font-size: 6px;
+  font-weight: 600;
+  column-gap: 8px;
+  row-gap: 8px;
+  margin-bottom: 30px;
+  padding: 10px;
+  border: 1px solid rgb(193, 193, 193);
+  border-radius: 5px;
+}
+
+.mapContainer div {
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border-radius: 5px;
+}
+
+#notSelect {
+  background-color: rgb(192, 192, 192);
+  cursor: default;
+}
+
+#MeetingRoom {
+  background-color: #46a1fd;
+}
+
+#MeetingRoom:hover {
+  background-color: rgb(73, 117, 144);
+}
+
+#NaBax {
+  background-color: rgb(255, 163, 42);
+  font-size: 11px;
+  word-break: break-all;
+}
+
+#NaBax:hover {
+  background-color: rgb(156, 99, 0);
+}
+
+.Lounge {
+  grid-area: Lounge;
+  cursor: pointer;
+}
+
+#full {
+  background-color: rgb(97, 97, 97);
+  cursor: not-allowed;
+}
+
+.거문오름 {
+  grid-area: 거문오름;
+  cursor: pointer;
+}
+
+.Nabox1 {
+  grid-area: NaBox1;
+  cursor: pointer;
+}
+
+.Nabox2 {
+  grid-area: NaBox2;
+  cursor: pointer;
+}
+.Nabox3 {
+  grid-area: NaBox3;
+  cursor: pointer;
+}
+.더큰내일스튜디오 {
+  grid-area: 더큰내일스튜디오;
+  cursor: pointer;
+}
+.다랑쉬오름 {
+  grid-area: 다랑쉬오름;
+  cursor: pointer;
+}
+.용눈이오름 {
+  grid-area: 용눈이오름;
+  cursor: pointer;
+}
+.따라비오름 {
+  grid-area: 따라비오름;
+  cursor: pointer;
+}
+.space수월봉 {
+  grid-area: space수월봉;
+  cursor: pointer;
+}
+.화장실 {
+  grid-area: 화장실;
+  cursor: pointer;
+}
+.Stair {
+  grid-area: Stair;
+  cursor: pointer;
+}
+.EV {
+  grid-area: EV;
+  cursor: pointer;
+}
+
+.Stair2 {
+  grid-area: Stair2;
+  cursor: pointer;
+}
+.space일출봉 {
+  grid-area: space일출봉;
+}

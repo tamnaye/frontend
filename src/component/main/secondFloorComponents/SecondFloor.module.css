@@ -1,0 +1,55 @@
+@media screen and (max-width: 600px) {
+  .MainSecondFloor .SecondFloor h2 {
+    font-size: 20px;
+  }
+  .MainSecondFloor .SecondFloor .SecondFloorcontainer {
+    margin-top: 10px;
+    width: 320px;
+    display: grid;
+    grid-template-columns: 320px;
+    grid-template-rows: 300px 330px;
+    grid-template-areas:
+      'map map'
+      'rooms rooms';
+  }
+}
+
+.SecondFloor h2 {
+  color: rgb(52, 52, 52);
+  font-size: 25px;
+}
+.MainSecondFloor {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
+}
+
+.SecondFloor {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.SecondFloorcontainer {
+  margin-top: 10px;
+  width: 520px;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 320px 0.3fr;
+  grid-template-areas:
+    'map map'
+    'rooms rooms';
+}
+
+.SecondFloorMap {
+  grid-area: map;
+}
+
+.RoomContainer {
+  margin-top: 10px;
+  grid-area: rooms;
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+}

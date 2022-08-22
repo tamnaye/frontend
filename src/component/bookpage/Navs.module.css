@@ -1,0 +1,24 @@
+@media screen and (max-width: 700px) {
+    .wrap {
+        /* background-color: aquamarine;
+        width: 350px;
+        안먹음.. */
+        
+    }
+}
+
+.wrap {
+    width: 850px;
+    margin: auto;
+    display: flex;
+    column-gap: 5px;
+    margin-top: 50px;
+}
+.box {
+    border-radius: 3px;
+    border: 2px solid rgb(193, 224, 249);
+    border-bottom: none;
+}
+.toggle {
+    font-size: 14px;
+}

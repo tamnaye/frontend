@@ -1,0 +1,44 @@
+/* RoomImg */
+@media screen and (max-width: 700px) {
+  .wrap .roomName {
+    margin-top: 50px;
+    font-size: 15px;
+  }
+}
+
+.wrap {
+  padding: 10px;
+  width: 350px;
+  margin: 0px auto;
+}
+
+.roomName {
+    margin-top: 16px;
+    margin-bottom: 16px;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.line {
+  border: 0;
+  height: 3px;
+  background: rgba(0, 0, 0, 0.85);
+}
+
+.room_img {
+  display: block;
+  margin: auto;
+  width: 100%;
+  height: 220px;
+  border: 2px solid #D9DDDC;
+}
+
+.note {
+  margin-top: 16px;
+  color: #D46B42;
+}
+.contents {
+  padding: 10px 0px 0px 10px;
+  border: 1px solid #D9DDDC;
+}

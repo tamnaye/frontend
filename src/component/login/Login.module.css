@@ -1,0 +1,11 @@
+.centerName{
+    font-family: 'Sunflower', sans-serif;
+    color: #3695f5;
+  }
+.container{
+  width: 100vw;
+  height: 80vh;
+  display:flex;
+  justify-content: center;
+  align-items:center;
+}

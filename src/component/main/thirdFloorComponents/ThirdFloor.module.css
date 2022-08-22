@@ -1,0 +1,53 @@
+@media screen and (max-width: 600px) {
+  .MainThirdFloor .ThirdFloor h2 {
+    font-size: 20px;
+  }
+  .MainThirdFloor .ThirdFloor .ThirdFloorcontainer {
+    margin-top: 10px;
+    width: 320px;
+    display: grid;
+    grid-template-columns: 320px;
+    grid-template-rows: 300px 200px;
+    grid-template-areas:
+      'map map'
+      'rooms rooms';
+  }
+  .MainThirdFloor {
+    margin-top: 15px;
+    margin-bottom: 0px;
+  }
+}
+
+.ThirdFloor h2 {
+  color: rgb(52, 52, 52);
+  font-size: 25px;
+}
+
+.MainThirdFloor {
+  display: flex;
+  margin-bottom: 40px;
+  justify-content: center;
+  align-items: center;
+}
+
+.ThirdFloorcontainer {
+  margin-top: 10px;
+  width: 520px;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 320px 1fr;
+  grid-template-areas:
+    'map map'
+    'rooms rooms';
+}
+
+.ThirdFloorMap {
+  grid-area: map;
+}
+
+.RoomContainer {
+  margin-top: 10px;
+  grid-area: rooms;
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+}

@@ -1,0 +1,50 @@
+@media screen and (max-width: 600px) {
+}
+
+.ReservationStateContainer {
+  display: grid;
+  grid-template-rows: 30px 50px 1fr;
+  grid-template-areas:
+    'h2'
+    'buttonContainer'
+    'reservationtable';
+  width: 80vw;
+  margin: 30px auto;
+}
+
+.ReservationStateContainer h2 {
+  font-size: 20px;
+  font-weight: 700;
+  grid-area: h2;
+  display: flex;
+  justify-content: center;
+}
+
+.ReservationStateContainer .buttonContainer {
+  display: flex;
+  justify-content: right;
+  grid-area: buttonContainer;
+}
+
+.button {
+  width: 50px;
+  height: 25px;
+  margin: 5px;
+  border-radius: 15px;
+  border: none;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  background-color: #46a1fd;
+  color: white;
+}
+
+.reservationTable {
+  grid-area: reservationtable;
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

@@ -1,0 +1,26 @@
+@media screen and (max-width: 700px) {
+  div .container {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(2, 1fr);
+    width: 360px;
+    
+  }
+}
+
+.container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: 50px;
+  border-top: 2px solid rgb(193, 224, 249);
+  width:900px;
+  border-radius: 20px;
+  margin: auto;
+  margin-top: 5px;
+}
+
+.infowrap {
+  padding: 10px;
+  width: 350px;
+  margin: auto;
+}
