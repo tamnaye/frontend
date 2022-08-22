@@ -14,7 +14,7 @@ export default function Login() {
 
   const userid = values.userid
   const userpwd = values.userpwd
-  const encrypted_pwd = encrypt(userpwd)
+  const encrypted_pwd = encrypt(userpwd) //pwd 암호화
 
     fetch("/api/user/login", {
       
