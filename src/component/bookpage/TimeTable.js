@@ -3,6 +3,7 @@ import styles from './TimeTable.module.css';
 //useHook
 import { useNavigate } from 'react-router-dom';
 import React from 'react';
+import { Button } from 'antd';
 
 function TimeTable() {
   // 로컬 자체에서 배열을 만들어 줘서 맵 사용해야 코드가 효율적
@@ -25,7 +26,7 @@ function TimeTable() {
           <p className={styles.text}>오전</p>
           <div className={styles.timebtn}>
             {morning.map((item, index) => (
-              <button key={index}>{item}</button>
+              <button key={index}  >{item}</button>
             ))}
           </div>
         </div>
