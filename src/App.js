@@ -7,7 +7,7 @@ import MainTemplate from './component/main/MainTemplate';
 import ReservationState from './component/reservation/ReservationState'
 import BookPage from './component/bookpage/BookPage'
 import MyPage from './component/mypage/MyPage'
-import Timetable_test from './test/Timetable_test';
+import TimeTableTest from './test/TimeTableTest';
 
 function App() {
   let location = useLocation();
@@ -22,7 +22,7 @@ function App() {
         <Route path='/booking/:spaceName' element={<BookPage/>} />
         <Route path='/mypage' element={<MyPage />} />
         <Route path='*' element={<EmptyPage />} />
-        <Route path='/test' element={<Timetable_test/>} />
+        <Route path='/test' element={<TimeTableTest/>} />
         
       </Routes>
 
