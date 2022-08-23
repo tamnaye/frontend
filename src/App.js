@@ -9,7 +9,7 @@ import BookPage from './component/bookpage/BookPage';
 import MyPage from './component/mypage/MyPage';
 
 function App() {
-  let location = useLocation();
+  let location = useLocation()
   return (
     <div>
       {location.pathname !== '/login' ? <Header /> : null}
@@ -23,7 +23,7 @@ function App() {
         <Route path='*' element={<EmptyPage />} />
       </Routes>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
