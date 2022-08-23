@@ -5,13 +5,6 @@ import styles from './ThirdFloorNaRoom.module.css'
 import useFetch from '../../../hooks/useFetch'
 
 const ThirdFloorNaRoom = () => {
-  const thirdFloorNaBox = dummy.thirdFloor.filter(
-    (rooms) => rooms.room_type === 'nabox'
-  )
-
-  const thirdFloorNaBoxState = thirdFloorNaBox.map((room) => room.room_full)
-  const [NaBoxState, setNaBoxState] = useState(thirdFloorNaBoxState)
-
   //3층 나박스 API 사용 정보 불러오기
   const Thirdroomsinfo = useFetch('http://144.24.91.218:8000/rooms/').filter(
     (rooms) => rooms.floor === 3
@@ -19,14 +12,43 @@ const ThirdFloorNaRoom = () => {
 
   const ThirdNaboxinfo = Thirdroomsinfo.filter((rooms) => rooms.room_id >= 305)
 
+  // roomFull 함수
+  const roomFull = (roomid) => {
+    const roomState = dummy.bookingData2.filter(
+      (room) => room.roomId === roomid
+    )
+
+    const TimeToString = (time) => {
+      let newTime
+      if (time === '09:00') {
+        newTime = time.substr(1, 1)
+      } else {
+        newTime = time.substr(0, 2)
+      }
+      return newTime
+    }
+
+    const roomBookingState = roomState.map(
+      (room) =>
+        TimeToString(room.endTime) - Number(TimeToString(room.startTime))
+    )
+    const sum = roomBookingState.reduce(function add(sum, currValue) {
+      return sum + currValue
+    }, 0)
+
+    return sum === 12
+  }
+
   return (
     <div className={styles.NaBoxContainer}>
       <h4 className={styles.title}>Na Box</h4>
       <div className={styles.roomContainer}>
-        {ThirdNaboxinfo.map((room, ind) => (
+        {ThirdNaboxinfo.map((room) => (
           <button
             key={room.room_id}
-            className={NaBoxState[ind] ? [styles.full] : [styles.notfull]}
+            className={
+              roomFull(room.room_id) ? [styles.full] : [styles.notfull]
+            }
           >
             <Link to={`/booking/${room.room_id}`}>{room.room_name}</Link>
           </button>
