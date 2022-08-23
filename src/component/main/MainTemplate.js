@@ -1,8 +1,8 @@
 import SecondFloor from './secondFloorComponents/SecondFloor'
 import ThirdFloor from './thirdFloorComponents/ThirdFloor'
 import styles from './MainTemplate.module.css'
-import { useParams } from 'react-router-dom'
-import useFetch from '../../hooks/useFetch'
+// import { useParams } from 'react-router-dom'
+// import useFetch from '../../hooks/useFetch'
 
 const MainTemplate = () => {
   //  classes 활용
@@ -26,8 +26,8 @@ const MainTemplate = () => {
       <div className={styles.floorContainer}>
         {/* classes 활용 */}
         {userClasses === MaxClasses
-          ? [<ThirdFloor className={styles.thirdFloor} />]
-          : [<SecondFloor className={styles.secondFloor} />]}
+          ? [<ThirdFloor key="2" className={styles.thirdFloor} />]
+          : [<SecondFloor key="3" className={styles.secondFloor} />]}
       </div>
     </div>
   )
