@@ -1,8 +1,10 @@
-import { useParams } from 'react-router-dom'; //App.js 동적 라우팅을 넘겨받기 위해서
+import { useParams } from 'react-router-dom';
+import dummy from '../../db/roomData.json';
 //import useFetch from '../../hooks/useFetch';
 //styles
 import styles from './RoomInfo.module.css';
 //component
+import logo from './img/logo.png';
 import geomun from './img/geomun.jpeg';
 import darrenche from './img/darrenche.jpeg';
 import yongnuni from './img/yongnuni.jpeg';
@@ -10,52 +12,127 @@ import darabi from './img/darabi.jpeg';
 import nabox from './img/nabox.jpeg';
 
 function RoomInfo() {
-  // const room = useFetch('http://144.24.91.218:8000/rooms/');
-  // console.log(room);
+  const { id } = useParams(); //App.js 동적 라우팅을 넘겨받은 데이터 변수 지정하기!
 
-  const { spaceName } = useParams(); //App.js 동적 라우팅을 넘겨받은 데이터 변수 지정하기!
-  //두가지 방법
-  //딕셔너리안에 키값을 넣기위해서는 예시로 room.room이렇게 갖고 와야하는데 변수 {} 지정해주이 이미 딕션너리 안에 키값을 가져온거니깐 그냥 사용하면 됨!
-  //const room_name = useParams(); //<h3>{room_name.room_name} 회의실</h3>
-  const rooms = [
+  //1.더미 데이터 사용
+  const roomsInfo = dummy.roomData;
+  const [roomInfo] = roomsInfo.filter((info) => info.roomId === Number(id));
+  const spaceName = roomInfo.roomName;
+
+  //2.서버에서 데이터 받아와서 roomId와 Params로 받아온 Id를 비교해서 roomName데이터 가져오기
+  // const roomName = useFetch(
+  //   'http://192.168.5.60:8080/api/booking?userId=22106040&roomId=201'
+  // );
+  //const roomsInfo = roomName.roomData;
+  //const [roomInfo] = roomsInfo.filter((info) => info.roomId === Number(id)); //Params로 받아온 id타입이 string이기 때문에
+  //const spaceName = roomInfo.roomName;
+
+  //3.로컬 자체에 room 이미지 저장해서 서버에서 받아온 roomId와 동일할 떄 원하는 이미지 불러오기
+  const roomsImg = [
     {
-      room_name: '다랑쉬오름',
+      room_id: 201,
+      img: logo,
+    },
+    {
+      room_id: 202,
+      img: logo,
+    },
+    {
+      room_id: 203,
+      img: logo,
+    },
+    {
+      room_id: 204,
+      img: logo,
+    },
+    {
+      room_id: 205,
+      img: logo,
+    },
+    {
+      room_id: 206,
+      img: logo,
+    },
+    {
+      room_id: 207,
+      img: logo,
+    },
+    {
+      room_id: 208,
+      img: logo,
+    },
+    {
+      room_id: 209,
+      img: logo,
+    },
+    {
+      room_id: 210,
+      img: logo,
+    },
+    {
+      room_id: 211,
+      img: logo,
+    },
+    {
+      room_id: 212,
+      img: nabox,
+    },
+    {
+      room_id: 213,
+      img: nabox,
+    },
+    {
+      room_id: 214,
+      img: nabox,
+    },
+    {
+      room_id: 215,
+      img: nabox,
+    },
+    {
+      room_id: 216,
+      img: nabox,
+    },
+    {
+      room_id: 217,
+      img: nabox,
+    },
+    {
+      room_id: 301,
       img: darrenche,
     },
     {
-      room_name: '용눈이오름',
+      room_id: 302,
       img: yongnuni,
     },
     {
-      room_name: '따라비오름',
+      room_id: 303,
       img: darabi,
     },
     {
-      room_name: '거문오름',
+      room_id: 304,
       img: geomun,
     },
     {
-      room_name: 'NaBox1',
+      room_id: 305,
       img: nabox,
     },
     {
-      room_name: 'NaBox2',
+      room_id: 306,
       img: nabox,
     },
     {
-      room_name: 'NaBox3',
+      room_id: 307,
       img: nabox,
     },
   ];
+  const [roomImg] = roomsImg.filter((img) => img.room_id === Number(id));
+  const spaceImg = roomImg.img;
 
-  const [roominfo] = rooms.filter((room) => room.room_name === spaceName);
-  //console.log(roominfo);
-  //const roominfo = rooms.filter((room) => room.room_name === space);
-  //console.log(roominfo[0]);
   return (
     <div className={styles.wrap}>
-      <h3 className={styles.roomName}>{roominfo.room_name} 공간</h3>
-      <img className={styles.room_img} alt='room_img' src={roominfo.img}></img>
+      <h3 className={styles.roomName}>{spaceName} 공간</h3>
+      <img className={styles.room_img} alt='room_img' src={spaceImg}></img>
       <div>
         <h6 className={styles.note}> 공간 사용 안내 </h6>
         <div className={styles.contents}>

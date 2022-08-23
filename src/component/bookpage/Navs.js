@@ -1,31 +1,28 @@
 //styles
 import styles from './Navs.module.css';
 import Dropdown from 'react-bootstrap/Dropdown';
+//hook
+//import useFetch from '../../hooks/useFetch';
+import { useParams } from 'react-router-dom';
+import dummy from '../../db/roomData.json';
 
 function Navs() {
-  const meetingRoom2 = [
-    '협재',
-    '곽지',
-    '이호',
-    '함덕',
-    '김녕',
-    '월정',
-    '신양',
-    '하모',
-    '화순',
-    '중문',
-    '표선',
-  ];
-  const studyRoom2 = [
-    'NaBox1',
-    'NaBox2',
-    'NaBox3',
-    'NaBox4',
-    'NaBox5',
-    'NaBox6',
-  ];
-  const meetingRoom3 = ['거문오름', '다랑쉬오름', '용눈이오름', '따라비오름'];
-  const studyRoom3 = ['NaBox1', 'NaBox2', 'NaBox3'];
+  const { id } = useParams();
+  console.log(id);
+
+  //----더미 데이터 이용----//
+  //2층 미팅룸 데이터 추출
+  const rooms = dummy.roomData;
+  console.log(rooms);
+  const floor2 = rooms.filter((room) => room.floor === 2);
+  const floor2Meeting = floor2.filter((room) => room.roomType === 'meeting');
+  //2층 나박스 데이터 추출
+  const floor2Nabox = floor2.filter((room) => room.roomType === 'nabax');
+  //3층 미팅룸 데이터 추출
+  const floor3 = rooms.filter((room) => room.floor === 3);
+  const floor3Meeting = floor3.filter((room) => room.roomType === 'meeting');
+  //3층 나박스 데이터 추출
+  const floor3Nabax = floor3.filter((room) => room.roomType === 'nabax');
 
   return (
     <div className={styles.wrap}>
@@ -38,15 +35,15 @@ function Navs() {
           2층 예약실
         </Dropdown.Toggle>
         <Dropdown.Menu>
-          {meetingRoom2.map((item, index) => (
-            <Dropdown.Item href={`/booking/${item}`} key={index}>
-              {item}
+          {floor2Meeting.map((item, index) => (
+            <Dropdown.Item href={`/booking/${item.roomId}`} key={index}>
+              {item.roomName}
             </Dropdown.Item>
           ))}
           <Dropdown.Divider />
-          {studyRoom2.map((item, index) => (
-            <Dropdown.Item href={'/booking/' + item} key={index}>
-              {item}
+          {floor2Nabox.map((item, index) => (
+            <Dropdown.Item href={`/booking/${item.roomId}`} key={index}>
+              {item.roomName}
             </Dropdown.Item>
           ))}
         </Dropdown.Menu>
@@ -60,15 +57,15 @@ function Navs() {
           3층 예약실
         </Dropdown.Toggle>
         <Dropdown.Menu>
-          {meetingRoom3.map((item, index) => (
-            <Dropdown.Item href={`/booking/${item}`} key={index}>
-              {item}
+          {floor3Meeting.map((item, index) => (
+            <Dropdown.Item href={`/booking/${item.roomId}`} key={index}>
+              {item.roomName}
             </Dropdown.Item>
           ))}
           <Dropdown.Divider />
-          {studyRoom3.map((item, index) => (
-            <Dropdown.Item href={'/booking/' + item} key={index}>
-              {item}
+          {floor3Nabax.map((item, index) => (
+            <Dropdown.Item href={`/booking/${item.roomId}`} key={index}>
+              {item.roomName}
             </Dropdown.Item>
           ))}
         </Dropdown.Menu>
