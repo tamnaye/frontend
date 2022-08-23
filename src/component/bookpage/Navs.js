@@ -1,7 +1,6 @@
 //styles
 import styles from './Navs.module.css';
 import Dropdown from 'react-bootstrap/Dropdown';
-//hook
 //import useFetch from '../../hooks/useFetch';
 import { useParams } from 'react-router-dom';
 import dummy from '../../db/roomData.json';
