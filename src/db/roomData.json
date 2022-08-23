@@ -1,0 +1,147 @@
+{ "roomData": [
+    {
+      "roomType": "meeting",
+      "floor": 2,
+      "roomId": 201,
+      "roomName": "협재" 
+    },
+    {
+      "roomType": "meeting",
+      "floor": 2,
+      "roomId": 202,
+      "roomName": "곽지"
+    },
+    {
+      "roomType": "meeting",
+      "floor": 2,
+      "roomId": 203,
+      "roomName": "이호"
+    },
+    {
+      "roomType": "meeting",
+      "floor": 2,
+      "roomId": 204,
+      "roomName": "함덕"
+    },
+    {
+      "roomType": "meeting",
+      "floor": 2,
+      "roomId": 205,
+      "roomName": "김녕"
+    },
+    {
+      "roomType": "meeting",
+      "floor": 2,
+      "roomId": 206,
+      "roomName": "월정"
+    },
+    {
+      "roomType": "meeting",
+      "floor": 2,
+      "roomId": 207,
+      "roomName": "신양"
+    },
+    {
+      "roomType": "meeting",
+      "floor": 2,
+      "roomId": 208,
+      "roomName": "하모"
+    },
+    {
+      "roomType": "meeting",
+      "floor": 2,
+      "roomId": 209,
+      "roomName": "화순"
+    },
+    {
+      "roomType": "meeting",
+      "floor": 2,
+      "roomId": 210,
+      "roomName": "중문"
+    },
+    {
+      "roomType": "meeting",
+      "floor": 2,
+      "roomId": 211,
+      "roomName": "표선"
+    },
+    {
+      "roomType": "nabax",
+      "floor": 2,
+      "roomId": 212,
+      "roomName": "NA Box1"
+    },
+    {
+      "roomType": "nabax",
+      "floor": 2,
+      "roomId": 213,
+      "roomName": "NA Box2"
+    },
+    {
+      "roomType": "nabax",
+      "floor": 2,
+      "roomId": 214,
+      "roomName": "NA Box3"
+    },
+    {
+      "roomType": "nabax",
+      "floor": 2,
+      "roomId": 215,
+      "roomName": "NA Box4"
+    },
+    {
+      "roomType": "nabax",
+      "floor": 2,
+      "roomId": 216,
+      "roomName": "NA Box5"
+    },
+    {
+      "roomType": "nabax",
+      "floor": 2,
+      "roomId": 217,
+      "roomName": "NA Box6"
+    },
+    {
+      "roomType": "meeting",
+      "floor": 3,
+      "roomId": 301,
+      "roomName": "다랑쉬오름"
+    },
+    {
+      "roomType": "meeting",
+      "floor": 3,
+      "roomId": 302,
+      "roomName": "용눈이오름"
+    },
+    {
+      "roomType": "meeting",
+      "floor": 3,
+      "roomId": 303,
+      "roomName": "따라비오름"
+    },
+    {
+      "roomType": "meeting",
+      "floor": 3,
+      "roomId": 304,
+      "roomName": "거문오름"
+    },
+    {
+      "roomType": "nabax",
+      "floor": 3,
+      "roomId": 305,
+      "roomName": "NA Box1"
+    },
+    {
+      "roomType": "nabax",
+      "floor": 3,
+      "roomId": 306,
+      "roomName": "NA Box2"
+    },
+    {
+      "roomType": "nabax",
+      "floor": 3,
+      "roomId": 307,
+      "roomName": "NA Box3"
+    }
+  ]
+}
