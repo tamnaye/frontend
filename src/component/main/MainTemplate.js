@@ -1,13 +1,33 @@
 import SecondFloor from './secondFloorComponents/SecondFloor'
 import ThirdFloor from './thirdFloorComponents/ThirdFloor'
 import styles from './MainTemplate.module.css'
+import { useParams } from 'react-router-dom'
+import useFetch from '../../hooks/useFetch'
 
 const MainTemplate = () => {
+  //  classes 활용
+  const userClasses = 5
+  const MaxClasses = 6
+
+  // const { id } = useParams()
+
+  // const Data = useFetch(`http://192.168.5.60:8080/api/user/data?userId=${id}`)
+
+  // console.log(Data)
+
+  // const userClasses = Data.userData.classes
+  // const MaxClasses = Data.maxClasses
+
+  // console.log(userClasses)
+  // console.log(MaxClasses)
+
   return (
     <div>
       <div className={styles.floorContainer}>
-        <SecondFloor className={styles.secondFloor} />
-        <ThirdFloor className={styles.thirdFloor} />
+        {/* classes 활용 */}
+        {userClasses === MaxClasses
+          ? [<ThirdFloor className={styles.thirdFloor} />]
+          : [<SecondFloor className={styles.secondFloor} />]}
       </div>
     </div>
   )

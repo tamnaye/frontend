@@ -12,10 +12,10 @@
       'map map'
       'rooms rooms';
   }
-  .MainThirdFloor {
+  /* .MainThirdFloor {
     margin-top: 15px;
     margin-bottom: 0px;
-  }
+  } */
 }
 
 .ThirdFloor h2 {
@@ -25,6 +25,7 @@
 
 .MainThirdFloor {
   display: flex;
+  margin-top: 30px;
   margin-bottom: 40px;
   justify-content: center;
   align-items: center;
