@@ -1,4 +1,3 @@
-//style commit test test test test
 import styles from './MyBookTable.module.css';
 
 function MyBookTable() {
