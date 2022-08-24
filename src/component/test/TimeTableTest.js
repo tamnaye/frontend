@@ -1,7 +1,9 @@
+
 import { Button } from 'react-bootstrap'
 import { useState } from 'react'
 import dummy from '../../db/booking_data.json'
 import './Timetable_test.module.css'
+
 
 function TimeTableTest() {
   //length = 12
@@ -23,6 +25,8 @@ function TimeTableTest() {
     { id: 11, time: '19:00', current: false },
     { id: 12, time: '20:00', current: false },
   ]
+
+
   let currentTimes = baseTables.map((times) =>
     timeArray.includes(times.time) ? { ...times, current: true } : times
   )
@@ -45,7 +49,7 @@ function TimeTableTest() {
         <span key={time.id}>
           {category(time.id)}
           <Button
-            variant="success"
+            variant='success'
             disabled={time.current}
             style={{ margin: '10px' }}
           >
