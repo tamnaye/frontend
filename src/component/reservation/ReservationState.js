@@ -1,17 +1,13 @@
 import styles from './ReservationState.module.css'
 import ThirdFloorReservationState from './ThirdFloorStateComponents/ThirdFloorReservationState'
 import SecondFloorReservationState from './SecondFloorStateComponents/SecondFloorReservationState'
-import { useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
-import useFetch from '../../hooks/useFetch'
-import ThirdFloorMeetingRoomState from './ThirdFloorStateComponents/ThirdFloorMeetingRoomState'
-import ThirdFloorNaRoomState from './ThirdFloorStateComponents/ThirdFloorNaRoomState'
-import SecondFloorMeetingRoomState from './SecondFloorStateComponents/SecondFloorMeetingRoomState'
-import SecondFloorNaRoomState from './SecondFloorStateComponents/SecondFloorNaRoomState'
+// import { useState, useEffect } from 'react'
+// import { useParams } from 'react-router-dom'
+// import useFetch from '../../hooks/useFetch'
 
 const ReservationState = () => {
   const userClasses = 6
-  const MaxClasses = 7
+  const MaxClasses = 6
   //
   // const { id } = useParams()
   // console.log(id)
@@ -39,11 +35,6 @@ const ReservationState = () => {
       ) : (
         <SecondFloorReservationState className={styles.reservationTable} />
       )}
-      {/* {stair ? (
-        <SecondFloorReservationState className={styles.reservationTable} />
-      ) : (
-        <ThirdFloorReservationState className={styles.reservationTable} />
-      )} */}
     </div>
   )
 }
