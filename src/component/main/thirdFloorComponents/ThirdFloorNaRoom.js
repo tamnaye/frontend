@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import dummy from '../../../db/data.json'
 import styles from './ThirdFloorNaRoom.module.css'
@@ -7,11 +7,29 @@ import useFetch from '../../../hooks/useFetch'
 const ThirdFloorNaRoom = () => {
   //3층 나박스 API 사용 정보 불러오기
 
-  // const Thirdroomsinfo = useFetch('http://144.24.91.218:8000/rooms/').filter(
-  //   (rooms) => rooms.floor === 3
-  // )
+  const [data, setData] = useState([])
+  const [bookingData, setBookingData] = useState([])
+  const [roomData, setRoomData] = useState([])
 
-  // const ThirdNaboxinfo = Thirdroomsinfo.filter((rooms) => rooms.room_id >= 305)
+  useEffect(() => {
+    fetch(`http://192.168.5.100:8080/api/booking/main?floor=3`)
+      .then((res) => res.json())
+      .then((data) => {
+        setData(data)
+        setBookingData(data.BookingData)
+        setRoomData(data.RoomData)
+      })
+  }, [`http://192.168.5.100:8080/api/booking/main?floor=3`])
+  console.log(data)
+  console.log(bookingData)
+  console.log(roomData)
+
+  //old
+  const Thirdroomsinfo = useFetch('http://144.24.91.218:8000/rooms/').filter(
+    (rooms) => rooms.floor === 3
+  )
+
+  const ThirdNaboxinfo = Thirdroomsinfo.filter((rooms) => rooms.room_id >= 305)
 
   // roomFull 함수
   const roomFull = (roomid) => {
