@@ -1,4 +1,110 @@
 {
+  "bookingData2": [
+    {
+      "roomId": 202,
+      "startTime": "18:00",
+      "endTime": "20:00",
+      "special": false
+    },
+    {
+      "roomId": 204,
+      "startTime": "13:00",
+      "endTime": "15:00",
+      "special": false
+    },
+    {
+      "roomId": 205,
+      "startTime": "09:00",
+      "endTime": "11:00",
+      "special": false
+    },
+    {
+      "roomId": 205,
+      "startTime": "11:00",
+      "endTime": "13:00",
+      "special": false
+    },
+    {
+      "roomId": 205,
+      "startTime": "13:00",
+      "endTime": "15:00",
+      "special": false
+    },
+    {
+      "roomId": 205,
+      "startTime": "15:00",
+      "endTime": "17:00",
+      "special": false
+    },
+    {
+      "roomId": 205,
+      "startTime": "17:00",
+      "endTime": "19:00",
+      "special": false
+    },
+    {
+      "roomId": 205,
+      "startTime": "19:00",
+      "endTime": "21:00",
+      "special": false
+    },
+    {
+      "roomId": 207,
+      "startTime": "09:00",
+      "endTime": "10:00",
+      "special": false
+    },
+    {
+      "roomId": 207,
+      "startTime": "11:00",
+      "endTime": "12:00",
+      "special": false
+    },
+    {
+      "roomId": 202,
+      "startTime": "18:00",
+      "endTime": "20:00",
+      "special": false
+    },
+    {
+      "roomId": 202,
+      "startTime": "18:00",
+      "endTime": "20:00",
+      "special": false
+    }
+  ],
+  "bookingData3": [
+    {
+      "roomId": 302,
+      "startTime": "12:00",
+      "endTime": "13:00",
+      "special": false
+    },
+    {
+      "roomId": 305,
+      "startTime": "16:00",
+      "endTime": "18:00",
+      "special": false
+    },
+    {
+      "roomId": 305,
+      "startTime": "11:00",
+      "endTime": "13:00",
+      "special": false
+    },
+    {
+      "roomId": 307,
+      "startTime": "16:00",
+      "endTime": "18:00",
+      "special": false
+    },
+    {
+      "roomId": 308,
+      "startTime": "18:00",
+      "endTime": "20:00",
+      "special": false
+    }
+  ],
   "secondFloor": [
     {
       "room_id": 1,

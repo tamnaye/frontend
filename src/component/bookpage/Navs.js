@@ -1,19 +1,14 @@
 //styles
 import styles from './Navs.module.css';
 import Dropdown from 'react-bootstrap/Dropdown';
-//hook
 //import useFetch from '../../hooks/useFetch';
-import { useParams } from 'react-router-dom';
 import dummy from '../../db/roomData.json';
 
 function Navs() {
-  const { id } = useParams();
-  console.log(id);
-
   //----더미 데이터 이용----//
   //2층 미팅룸 데이터 추출
   const rooms = dummy.roomData;
-  console.log(rooms);
+  //console.log(rooms);
   const floor2 = rooms.filter((room) => room.floor === 2);
   const floor2Meeting = floor2.filter((room) => room.roomType === 'meeting');
   //2층 나박스 데이터 추출

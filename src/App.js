@@ -4,15 +4,12 @@ import { Route, Routes, useLocation } from 'react-router-dom';
 import EmptyPage from './component/EmptyPage';
 import Header from './component/header/Header';
 import MainTemplate from './component/main/MainTemplate';
-
 import ReservationState from './component/reservation/ReservationState'
 import BookPage from './component/bookpage/BookPage'
 import MyPage from './component/mypage/MyPage'
-import TimeTableTest from './test/TimeTableTest';
-
 
 function App() {
-  let location = useLocation();
+  let location = useLocation()
   return (
     <div>
       {location.pathname !== '/login' ? <Header /> : null}
@@ -24,11 +21,10 @@ function App() {
         <Route path='/booking/:id' element={<BookPage />} />
         <Route path='/mypage' element={<MyPage />} />
         <Route path='*' element={<EmptyPage />} />
-        <Route path='/test' element={<TimeTableTest/>} />
-        
+        <Route path='/test' element={<TimeTableTest/>} />   
       </Routes>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App

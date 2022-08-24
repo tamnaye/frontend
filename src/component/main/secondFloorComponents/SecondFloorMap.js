@@ -5,23 +5,6 @@ import { Link } from 'react-router-dom'
 import useFetch from '../../../hooks/useFetch'
 
 const SecondFloorMap = () => {
-  //2층 meeitngroom
-  const secondFloorMeetingRoom = dummy.secondFloor.filter(
-    (rooms) => rooms.room_type === 'meetingRoom'
-  )
-  const secondFloorMeetingRoomState = secondFloorMeetingRoom.map(
-    (room) => room.room_full
-  )
-  const [MeetingRoomState, setMeetingRoomState] = useState(
-    secondFloorMeetingRoomState
-  )
-  //2층 nabox
-  const secondFloorNaBox = dummy.secondFloor.filter(
-    (rooms) => rooms.room_type === 'nabox'
-  )
-  const secondFloorNaBoxState = secondFloorNaBox.map((room) => room.room_full)
-  const [NaBoxState, setNaBoxState] = useState(secondFloorNaBoxState)
-
   //2층 API 정보 가져오기
   const Secondroomsinfo = useFetch('http://144.24.91.218:8000/rooms/').filter(
     (rooms) => rooms.floor === 2
@@ -33,28 +16,55 @@ const SecondFloorMap = () => {
     (rooms) => rooms.room_id >= 212
   )
 
+  // roomFull 함수 설정
+  const roomFull = (roomid) => {
+    const roomState = dummy.bookingData2.filter(
+      (room) => room.roomId === roomid
+    )
+
+    const TimeToString = (time) => {
+      let newTime
+      if (time === '09:00') {
+        newTime = time.substr(1, 1)
+      } else {
+        newTime = time.substr(0, 2)
+      }
+      return newTime
+    }
+
+    const roomBookingState = roomState.map(
+      (room) =>
+        TimeToString(room.endTime) - Number(TimeToString(room.startTime))
+    )
+    const sum = roomBookingState.reduce(function add(sum, currValue) {
+      return sum + currValue
+    }, 0)
+
+    return sum === 12
+  }
+
   return (
     <div className={styles.Container}>
       <div className={styles.mapContainer}>
-        {SecondMeetingRoominfo.map((rooms, idx) => (
+        {SecondMeetingRoominfo.map((rooms) => (
           <div
             key={rooms.room_id}
             className={styles[rooms.room_name]}
-            id={MeetingRoomState[idx] ? [styles.full] : [styles.MeetingRoom]}
+            id={roomFull(rooms.room_id) ? [styles.full] : [styles.MeetingRoom]}
           >
             <Link to={`/booking/${rooms.room_id}`}>
-              {MeetingRoomState[idx] ? '마감' : rooms.room_name}
+              {roomFull(rooms.room_id) ? '마감' : rooms.room_name}
             </Link>
           </div>
         ))}
-        {SecondNaboxinfo.map((rooms, idx) => (
+        {SecondNaboxinfo.map((rooms) => (
           <div
             key={rooms.room_id}
             className={styles[rooms.room_name]}
-            id={NaBoxState[idx] ? [styles.full] : [styles.NaBax]}
+            id={roomFull(rooms.room_id) ? [styles.full] : [styles.NaBax]}
           >
             <Link to={`/booking/${rooms.room_id}`}>
-              {NaBoxState[idx] ? '마감' : rooms.room_name}
+              {roomFull(rooms.room_id) ? '마감' : rooms.room_name}
             </Link>
           </div>
         ))}
