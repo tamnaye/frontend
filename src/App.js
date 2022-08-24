@@ -19,7 +19,7 @@ function App() {
         <Route path='/' element={<MainTemplate />} />
         <Route path='main/:id' element={<MainTemplate />} />
         <Route path='/state' element={<ReservationState />} />
-        <Route path='/booking/:id' element={<BookPage />} />
+        <Route path='/booking/:roomId/:id' element={<BookPage />} />
         <Route path='/mypage' element={<MyPage />} />
         <Route path='*' element={<EmptyPage />} />
         <Route path='/test' element={<TimeTableTest />} />

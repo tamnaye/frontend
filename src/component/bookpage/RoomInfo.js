@@ -12,11 +12,11 @@ import darabi from './img/darabi.jpeg';
 import nabox from './img/nabox.jpeg';
 
 function RoomInfo() {
-  const { id } = useParams(); //App.js 동적 라우팅을 넘겨받은 데이터 변수 지정하기!
+  const { roomId } = useParams(); //App.js 동적 라우팅을 넘겨받은 데이터 변수 지정하기!
 
   //1.더미 데이터 사용
   const roomsInfo = dummy.roomData;
-  const [roomInfo] = roomsInfo.filter((info) => info.roomId === Number(id));
+  const [roomInfo] = roomsInfo.filter((info) => info.roomId === Number(roomId));
   const spaceName = roomInfo.roomName;
 
   //2.서버에서 데이터 받아와서 roomId와 Params로 받아온 Id를 비교해서 roomName데이터 가져오기
@@ -37,7 +37,7 @@ function RoomInfo() {
   //   'http://192.168.5.121:8080/api/booking?userId=22106040&roomId=201'
   // );
   // const roomsInfo = roomName.roomData;
-  // const [roomInfo] = roomsInfo.filter((info) => info.roomId === Number(id)); //Params로 받아온 id타입이 string이기 때문에
+  // const [roomInfo] = roomsInfo.filter((info) => info.roomId === Number(roomId)); //Params로 받아온 id타입이 string이기 때문에
   // const spaceName = roomInfo.roomName;
 
   //3.로컬 자체에 room 이미지 저장해서 서버에서 받아온 roomId와 동일할 떄 원하는 이미지 불러오기
@@ -139,7 +139,7 @@ function RoomInfo() {
       img: nabox,
     },
   ];
-  const [roomImg] = roomsImg.filter((img) => img.room_id === Number(id));
+  const [roomImg] = roomsImg.filter((img) => img.room_id === Number(roomId));
   const spaceImg = roomImg.img;
 
   return (
