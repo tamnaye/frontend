@@ -4,7 +4,6 @@ import styles from './TimeTable.module.css';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import React from 'react';
-import { Button } from 'antd';
 
 function TimeTable() {
   const [ablebtn, setAblebtn] = useState(true); //예약시간이 아닐 떄 상태변경(true일 때 버튼 활성화!)
@@ -31,7 +30,7 @@ function TimeTable() {
   const nowHour = pluszero(NowHour);
   const nowMins = pluszero(NowMins);
   const nowTime = nowHour + nowMins;
-  console.log(nowTime);
+  //console.log(nowTime);
 
   const startTime = '0830';
   const endTime = '2100';
@@ -42,7 +41,7 @@ function TimeTable() {
       setAblebtn(true);
     }
   }, []); //useEffect써서 한번만 렌더링 해줌
-  console.log(ablebtn);
+  //console.log(ablebtn);
 
   //버튼 클릭시 alert 띄어주기
   const BookingConfirm = () => {
