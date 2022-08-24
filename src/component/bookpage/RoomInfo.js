@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom';
 import dummy from '../../db/roomData.json';
-//import useFetch from '../../hooks/useFetch';
+// import { useState, useEffect } from 'react';
 //styles
 import styles from './RoomInfo.module.css';
 //component
@@ -20,12 +20,25 @@ function RoomInfo() {
   const spaceName = roomInfo.roomName;
 
   //2.서버에서 데이터 받아와서 roomId와 Params로 받아온 Id를 비교해서 roomName데이터 가져오기
+  //-------useHooks 안쓰고 가져오기---------//
+  //  const [data, setData] = useState([]);
+  //  useEffect(()=>{
+  //   fetch('http://192.168.5.100:8080/api/booking?userId=22106040&roomId=201')
+  //   .then(res=>{
+  //     return res.json()
+  //   })
+  //   .then(data=>{
+  //     setData(data);
+  //   })
+  //  }, ['http://192.168.5.121:8080/api/booking?userId=22106040&roomId=201'])
+
+  //-------useHooks 쓰고 가져오기---------//
   // const roomName = useFetch(
-  //   'http://192.168.5.60:8080/api/booking?userId=22106040&roomId=201'
+  //   'http://192.168.5.121:8080/api/booking?userId=22106040&roomId=201'
   // );
-  //const roomsInfo = roomName.roomData;
-  //const [roomInfo] = roomsInfo.filter((info) => info.roomId === Number(id)); //Params로 받아온 id타입이 string이기 때문에
-  //const spaceName = roomInfo.roomName;
+  // const roomsInfo = roomName.roomData;
+  // const [roomInfo] = roomsInfo.filter((info) => info.roomId === Number(id)); //Params로 받아온 id타입이 string이기 때문에
+  // const spaceName = roomInfo.roomName;
 
   //3.로컬 자체에 room 이미지 저장해서 서버에서 받아온 roomId와 동일할 떄 원하는 이미지 불러오기
   const roomsImg = [

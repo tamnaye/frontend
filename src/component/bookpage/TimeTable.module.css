@@ -52,4 +52,16 @@ margin: 0px 16px;
     margin-top: 30px;
     font-size: 16px;
   }
+  .bookbtnOff {
+    background-color: #67b4f8;
+    width: 200px;
+    height: 30px;
+    color: whitesmoke;
+    border: 0px;
+    display: block;
+    margin: auto;
+    margin-top: 30px;
+    font-size: 16px;
+    opacity: 40%;
+  }
   
