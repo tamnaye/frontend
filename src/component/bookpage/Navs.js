@@ -1,31 +1,31 @@
 //styles
-import styles from './Navs.module.css';
-import Dropdown from 'react-bootstrap/Dropdown';
+import styles from './Navs.module.css'
+import Dropdown from 'react-bootstrap/Dropdown'
 //import useFetch from '../../hooks/useFetch';
-import dummy from '../../db/roomData.json';
+import dummy from '../../db/roomData.json'
 
 function Navs() {
   //----더미 데이터 이용----//
   //2층 미팅룸 데이터 추출
-  const rooms = dummy.roomData;
+  const rooms = dummy.roomData
   //console.log(rooms);
-  const floor2 = rooms.filter((room) => room.floor === 2);
-  const floor2Meeting = floor2.filter((room) => room.roomType === 'meeting');
+  const floor2 = rooms.filter((room) => room.floor === 2)
+  const floor2Meeting = floor2.filter((room) => room.roomType === 'meeting')
   //2층 나박스 데이터 추출
-  const floor2Nabox = floor2.filter((room) => room.roomType === 'nabax');
+  const floor2Nabox = floor2.filter((room) => room.roomType === 'nabax')
   //3층 미팅룸 데이터 추출
-  const floor3 = rooms.filter((room) => room.floor === 3);
-  const floor3Meeting = floor3.filter((room) => room.roomType === 'meeting');
+  const floor3 = rooms.filter((room) => room.floor === 3)
+  const floor3Meeting = floor3.filter((room) => room.roomType === 'meeting')
   //3층 나박스 데이터 추출
-  const floor3Nabax = floor3.filter((room) => room.roomType === 'nabax');
+  const floor3Nabax = floor3.filter((room) => room.roomType === 'nabax')
 
   return (
     <div className={styles.wrap}>
       <Dropdown className={styles.box}>
         <Dropdown.Toggle
           className={styles.toggle}
-          variant=''
-          id='dropdown-basic'
+          variant=""
+          id="dropdown-basic"
         >
           2층 예약실
         </Dropdown.Toggle>
@@ -46,8 +46,8 @@ function Navs() {
       <Dropdown className={styles.box}>
         <Dropdown.Toggle
           className={styles.toggle}
-          variant=''
-          id='dropdown-basic'
+          variant=""
+          id="dropdown-basic"
         >
           3층 예약실
         </Dropdown.Toggle>
@@ -66,7 +66,7 @@ function Navs() {
         </Dropdown.Menu>
       </Dropdown>
     </div>
-  );
+  )
 }
 
-export default Navs;
+export default Navs

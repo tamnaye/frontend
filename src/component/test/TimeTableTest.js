@@ -1,14 +1,16 @@
-import { Button } from 'react-bootstrap';
-import { useState } from 'react';
-import dummy from '../../db/booking_data.json';
-import './Timetable_test.module.css';
+
+import { Button } from 'react-bootstrap'
+import { useState } from 'react'
+import dummy from '../../db/booking_data.json'
+import './Timetable_test.module.css'
+
 
 function TimeTableTest() {
   //length = 12
-  const booking_data = dummy.booking;
-  const timeArray = [];
-  booking_data.map((booking) => timeArray.push(booking.time_start));
-  booking_data.map((booking) => timeArray.push(booking.time_end));
+  const booking_data = dummy.booking
+  const timeArray = []
+  booking_data.map((booking) => timeArray.push(booking.time_start))
+  booking_data.map((booking) => timeArray.push(booking.time_end))
   const baseTables = [
     { id: 1, time: '09:00', current: false },
     { id: 2, time: '10:00', current: false },
@@ -22,22 +24,24 @@ function TimeTableTest() {
     { id: 10, time: '18:00', current: false },
     { id: 11, time: '19:00', current: false },
     { id: 12, time: '20:00', current: false },
-  ];
+  ]
+
+
   let currentTimes = baseTables.map((times) =>
     timeArray.includes(times.time) ? { ...times, current: true } : times
-  );
-  const [times, setTimes] = useState(currentTimes);
+  )
+  const [times, setTimes] = useState(currentTimes)
   function category(id) {
     if (id === 1) {
-      return <p>오전</p>;
+      return <p>오전</p>
     } else if (id === 5) {
-      return <p>오후</p>;
+      return <p>오후</p>
     } else if (id === 10) {
-      return <p>야간</p>;
+      return <p>야간</p>
     }
   }
   function onClick(id) {
-    console.log(id);
+    console.log(id)
   }
   return (
     <div>
@@ -54,6 +58,6 @@ function TimeTableTest() {
         </span>
       ))}
     </div>
-  );
+  )
 }
-export default TimeTableTest;
+export default TimeTableTest
