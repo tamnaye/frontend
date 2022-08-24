@@ -11,7 +11,6 @@ export default function Login() {
   const navigate = useNavigate();
 
   const onFinish = (values) => {
-
   const userid = values.userid
   const userpwd = values.userpwd //get pwd
   const encrypted_pwd = encrypt(userpwd) //pwd 암호화
