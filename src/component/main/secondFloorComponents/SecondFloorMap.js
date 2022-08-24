@@ -1,26 +1,34 @@
 import styles from './SecondFloorMap.module.css'
-import dummy from '../../../db/data.json'
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
-import useFetch from '../../../hooks/useFetch'
+import { useState, useEffect } from 'react'
+import { Link, useParams } from 'react-router-dom'
 
 const SecondFloorMap = () => {
+  const { id } = useParams()
+
   //2층 API 정보 가져오기
-  const Secondroomsinfo = useFetch('http://144.24.91.218:8000/rooms/').filter(
-    (rooms) => rooms.floor === 2
+  const [bookingData, setBookingData] = useState([])
+  const [roomData, setRoomData] = useState([])
+
+  useEffect(() => {
+    fetch(`http://172.30.1.50:8080/api/booking/main?floor=2`, {
+      method: 'GET',
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setBookingData(data.BookingData)
+        setRoomData(data.RoomData)
+      })
+  }, [`htttp://172.30.1.50:8080/api/booking/main?floor=2`])
+
+  const SecondMeetingRoominfo = roomData.filter(
+    (rooms) => rooms.roomType === 'meeting'
   )
-  const SecondMeetingRoominfo = Secondroomsinfo.filter(
-    (rooms) => rooms.room_id <= 211
-  )
-  const SecondNaboxinfo = Secondroomsinfo.filter(
-    (rooms) => rooms.room_id >= 212
-  )
+
+  const SecondNaboxinfo = roomData.filter((rooms) => rooms.roomType === 'nabox')
 
   // roomFull 함수 설정
   const roomFull = (roomid) => {
-    const roomState = dummy.bookingData2.filter(
-      (room) => room.roomId === roomid
-    )
+    const roomState = bookingData.filter((room) => room.roomId === roomid)
 
     const TimeToString = (time) => {
       let newTime
@@ -48,23 +56,23 @@ const SecondFloorMap = () => {
       <div className={styles.mapContainer}>
         {SecondMeetingRoominfo.map((rooms) => (
           <div
-            key={rooms.room_id}
-            className={styles[rooms.room_name]}
-            id={roomFull(rooms.room_id) ? [styles.full] : [styles.MeetingRoom]}
+            key={rooms.roomId}
+            className={styles[rooms.roomName]}
+            id={roomFull(rooms.roomId) ? [styles.full] : [styles.MeetingRoom]}
           >
-            <Link to={`/booking/${rooms.room_id}`}>
-              {roomFull(rooms.room_id) ? '마감' : rooms.room_name}
+            <Link to={`/booking/${rooms.roomId}/${id}`}>
+              {roomFull(rooms.roomId) ? '마감' : rooms.roomName}
             </Link>
           </div>
         ))}
         {SecondNaboxinfo.map((rooms) => (
           <div
-            key={rooms.room_id}
-            className={styles[rooms.room_name]}
-            id={roomFull(rooms.room_id) ? [styles.full] : [styles.NaBax]}
+            key={rooms.roomId}
+            className={styles[rooms.roomName]}
+            id={roomFull(rooms.roomId) ? [styles.full] : [styles.NaBax]}
           >
-            <Link to={`/booking/${rooms.room_id}`}>
-              {roomFull(rooms.room_id) ? '마감' : rooms.room_name}
+            <Link to={`/booking/${rooms.roomId}/${id}`}>
+              {roomFull(rooms.roomId) ? '마감' : rooms.roomName}
             </Link>
           </div>
         ))}

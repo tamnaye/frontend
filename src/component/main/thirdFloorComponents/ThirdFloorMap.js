@@ -1,24 +1,34 @@
 import styles from './ThirdFloorMap.module.css'
-import dummy from '../../../db/data.json'
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
-import useFetch from '../../../hooks/useFetch'
+import { useState, useEffect } from 'react'
+import { Link, useParams } from 'react-router-dom'
 
 const ThirdFloorMap = () => {
+  const { id } = useParams()
+
   //3층 API 정보 가져오기
-  const Thirdroomsinfo = useFetch('http://144.24.91.218:8000/rooms/').filter(
-    (rooms) => rooms.floor === 3
+  const [bookingData, setBookingData] = useState([])
+  const [roomData, setRoomData] = useState([])
+
+  useEffect(() => {
+    fetch(`http://172.30.1.50:8080/api/booking/main?floor=3`, {
+      method: 'GET',
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setBookingData(data.BookingData)
+        setRoomData(data.RoomData)
+      })
+  }, [`htttp://172.30.1.50:8080/api/booking/main?floor=3`])
+
+  const ThirdMeetingRoominfo = roomData.filter(
+    (rooms) => rooms.roomType === 'meeting'
   )
-  const ThirdMeetingRoominfo = Thirdroomsinfo.filter(
-    (rooms) => rooms.room_id <= 304
-  )
-  const ThirdNaboxinfo = Thirdroomsinfo.filter((rooms) => rooms.room_id >= 305)
+
+  const ThirdNaboxinfo = roomData.filter((rooms) => rooms.roomType === 'nabox')
 
   // roomFull 함수 설정
   const roomFull = (roomid) => {
-    const roomState = dummy.bookingData2.filter(
-      (room) => room.roomId === roomid
-    )
+    const roomState = bookingData.filter((room) => room.roomId === roomid)
 
     const TimeToString = (time) => {
       let newTime
@@ -44,25 +54,25 @@ const ThirdFloorMap = () => {
   return (
     <div className={styles.container}>
       <div className={styles.mapContainer}>
-        {ThirdMeetingRoominfo.map((rooms, idx) => (
+        {ThirdMeetingRoominfo.map((rooms) => (
           <div
-            key={rooms.room_id}
-            className={styles[rooms.room_name]}
-            id={roomFull(rooms.room_id) ? [styles.full] : [styles.MeetingRoom]}
+            key={rooms.roomId}
+            className={styles[rooms.roomName]}
+            id={roomFull(rooms.roomId) ? [styles.full] : [styles.MeetingRoom]}
           >
-            <Link to={`/booking/${rooms.room_id}`}>
-              {roomFull(rooms.room_id) ? '마감' : rooms.room_name}
+            <Link to={`/booking/${rooms.roomId}/${id}`}>
+              {roomFull(rooms.roomId) ? '마감' : rooms.roomName}
             </Link>
           </div>
         ))}
-        {ThirdNaboxinfo.map((rooms, idx) => (
+        {ThirdNaboxinfo.map((rooms) => (
           <div
-            key={rooms.room_id}
-            className={styles[rooms.room_name]}
-            id={roomFull(rooms.room_id) ? [styles.full] : [styles.NaBax]}
+            key={rooms.roomId}
+            className={styles[rooms.roomName]}
+            id={roomFull(rooms.roomId) ? [styles.full] : [styles.NaBax]}
           >
-            <Link to={`/booking/${rooms.room_id}`}>
-              {roomFull(rooms.room_id) ? '마감' : rooms.room_name}
+            <Link to={`/booking/${rooms.roomId}/${id}`}>
+              {roomFull(rooms.roomId) ? '마감' : rooms.roomName}
             </Link>
           </div>
         ))}

@@ -1,24 +1,32 @@
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
-import dummy from '../../../db/data.json'
+import { useState, useEffect } from 'react'
+import { Link, useParams } from 'react-router-dom'
 import styles from './ThirdFloorMeetingRoom.module.css'
-import useFetch from '../../../hooks/useFetch'
 
 const ThirdFloorMeetingRoom = () => {
-  //3층 미팅룸 API 사용 정보 불러오기
-  const Thirdroomsinfo = useFetch('http://144.24.91.218:8000/rooms/').filter(
-    (rooms) => rooms.floor === 3
-  )
+  const { id } = useParams()
 
-  const ThirdMeetingRoominfo = Thirdroomsinfo.filter(
-    (rooms) => rooms.room_id <= 304
+  //3층 미팅룸 API 사용 정보 불러오기
+  const [bookingData, setBookingData] = useState([])
+  const [roomData, setRoomData] = useState([])
+
+  useEffect(() => {
+    fetch(`http://172.30.1.50:8080/api/booking/main?floor=3`, {
+      method: 'GET',
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setBookingData(data.BookingData)
+        setRoomData(data.RoomData)
+      })
+  }, [`htttp://172.30.1.50:8080/api/booking/main?floor=3`])
+
+  const ThirdMeetingRoominfo = roomData.filter(
+    (rooms) => rooms.roomType === 'meeting'
   )
 
   // roomFull 함수
   const roomFull = (roomid) => {
-    const roomState = dummy.bookingData2.filter(
-      (room) => room.roomId === roomid
-    )
+    const roomState = bookingData.filter((room) => room.roomId === roomid)
 
     const TimeToString = (time) => {
       let newTime
@@ -47,12 +55,10 @@ const ThirdFloorMeetingRoom = () => {
       <div className={styles.roomContainer}>
         {ThirdMeetingRoominfo.map((room) => (
           <button
-            key={room.room_id}
-            className={
-              roomFull(room.room_id) ? [styles.full] : [styles.notfull]
-            }
+            key={room.roomId}
+            className={roomFull(room.roomId) ? [styles.full] : [styles.notfull]}
           >
-            <Link to={`/booking/${room.room_id}`}>{room.room_name}</Link>
+            <Link to={`/booking/${room.roomId}/${id}`}>{room.roomName}</Link>
           </button>
         ))}
       </div>
