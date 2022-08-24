@@ -16,7 +16,7 @@ const Header = () => {
       </div>
       <div className={styles.menu}>
         <Link to="/state">실시간예약현황</Link>
-        <Link to="/booking/거문오름">예약하기</Link>
+        <Link to="/booking/301">예약하기</Link>
       </div>
     </div>
   )
