@@ -1,7 +1,6 @@
 import { useParams } from 'react-router-dom';
 import dummy from '../../db/roomData.json';
 // import { useState, useEffect } from 'react';
-//import useFetch from '../../hooks/useFetch';
 //styles
 import styles from './RoomInfo.module.css';
 //component
@@ -24,7 +23,7 @@ function RoomInfo() {
   //-------useHooks 안쓰고 가져오기---------//
   //  const [data, setData] = useState([]);
   //  useEffect(()=>{
-  //   fetch('http://192.168.5.121:8080/api/booking?userId=22106040&roomId=201')
+  //   fetch('http://192.168.5.100:8080/api/booking?userId=22106040&roomId=201')
   //   .then(res=>{
   //     return res.json()
   //   })
