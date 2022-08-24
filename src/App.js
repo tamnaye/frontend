@@ -16,9 +16,9 @@ function App() {
       {location.pathname !== '/login' ? <Header /> : null}
       <Routes>
         <Route path="login" element={<Login />} />
-        <Route path="/" element={<MainTemplate />} />
-        <Route path="main/:id" element={<MainTemplate />} />
-        <Route path="/state" element={<ReservationState />} />
+        <Route path="/:id" element={<MainTemplate />} />
+        <Route path="/main/:id" element={<MainTemplate />} />
+        <Route path="/state/:id" element={<ReservationState />} />
         <Route path="/booking/:roomId/:id" element={<BookPage />} />
         <Route path="/mypage" element={<MyPage />} />
         <Route path="*" element={<EmptyPage />} />

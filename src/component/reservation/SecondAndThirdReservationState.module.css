@@ -1,0 +1,28 @@
+.button {
+  width: 70px;
+  height: 25px;
+  margin: 5px;
+  border-radius: 15px;
+  border: none;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  background-color: #46a1fd;
+  color: white;
+}
+
+.ReservationStateContainer .buttonContainer {
+  display: flex;
+  justify-content: right;
+  grid-area: buttonContainer;
+}
+
+.ReservationStateContainer {
+  display: grid;
+  grid-template-rows: 50px 1fr;
+  grid-template-areas:
+    'buttonContainer'
+    'reservationtable';
+  width: 80vw;
+  margin-top: 10px;
+}

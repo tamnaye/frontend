@@ -1,19 +1,18 @@
-import { useState } from 'react';
-import ThirdFloorNaRoomState from './ThirdFloorNaRoomState';
-import ThirdFloorMeetingRoomState from './ThirdFloorMeetingRoomState';
-import styles from './ThirdFloorReservationState.module.css';
+import { useState } from 'react'
+import ThirdFloorNaRoomState from './ThirdFloorNaRoomState'
+import ThirdFloorMeetingRoomState from './ThirdFloorMeetingRoomState'
+import styles from './ThirdFloorReservationState.module.css'
 
 const ThirdFloorReservationState = () => {
-  const [RoomType, setRoomType] = useState(true);
-  const MeetingRoom = true;
-  const NaBox = false;
+  const [RoomType, setRoomType] = useState(true)
+  const MeetingRoom = true
+  const NaBox = false
   const MeetingRoomOnClick = () => {
-    setRoomType(MeetingRoom);
-  };
+    setRoomType(MeetingRoom)
+  }
   const NaboxOnClick = () => {
-    setRoomType(NaBox);
-  };
-
+    setRoomType(NaBox)
+  }
   return (
     <div>
       <div className={styles.ReservationStateContainer}>
@@ -34,7 +33,7 @@ const ThirdFloorReservationState = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default ThirdFloorReservationState;
+export default ThirdFloorReservationState

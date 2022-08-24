@@ -1,36 +1,33 @@
 import styles from './ReservationState.module.css'
 import ThirdFloorReservationState from './ThirdFloorStateComponents/ThirdFloorReservationState'
 import SecondFloorReservationState from './SecondFloorStateComponents/SecondFloorReservationState'
-// import { useState, useEffect } from 'react'
-// import { useParams } from 'react-router-dom'
-// import useFetch from '../../hooks/useFetch'
+import SecondAndThirdReservationState from './SecondAndThirdReservationState'
+import { useParams } from 'react-router-dom'
+import { useEffect, useState } from 'react'
 
 const ReservationState = () => {
-  const userClasses = 6
-  const MaxClasses = 6
-  //
-  // const { id } = useParams()
-  // console.log(id)
+  const { id } = useParams()
 
-  // const [data, setData] = useState([])
-  // useEffect(() => {
-  //   fetch(`http://192.168.5.60:8080/api/user/data?userId=22106045`, {
-  //     method: 'GET',
-  //   })
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       setData(data)
-  //     })
-  // }, [`http://192.168.5.60:8080/api/user/data?userId=22106045`])
-  // console.log(data)
-  // const userClasses = data.userData.classes
-  // const MaxClasses = data.maxClasses
-  //
+  const [userClasses, setUserClasses] = useState('')
+  const [maxClasses, setMaxClasses] = useState('')
+
+  useEffect(() => {
+    fetch(`http://172.30.1.50:8080/api/user/data?userId=${id}`, {
+      method: 'GET',
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setUserClasses(data.userData.classes)
+        setMaxClasses(data.maxClasses)
+      })
+  }, [`http://172.30.1.50:8080/api/user/data?userId=${id}`, id])
 
   return (
     <div className={styles.ReservationStateContainer}>
       <h2>시간대별 예약현황</h2>
-      {userClasses === MaxClasses ? (
+      {userClasses === 0 ? (
+        <SecondAndThirdReservationState className={styles.reservationTable} />
+      ) : userClasses === maxClasses ? (
         <ThirdFloorReservationState className={styles.reservationTable} />
       ) : (
         <SecondFloorReservationState className={styles.reservationTable} />

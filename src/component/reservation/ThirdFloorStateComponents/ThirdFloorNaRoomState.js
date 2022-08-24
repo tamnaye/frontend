@@ -1,33 +1,66 @@
 import React from 'react'
-import dummy from '../../../db/data.json'
+import { useState, useEffect } from 'react'
 import styles from './ThirdFloorNaRoomState.module.css'
-import useFetch from '../../../hooks/useFetch'
 
 const ThirdFloorNaRoomState = () => {
-  // const thirdFloor = dummy.thirdFloor
-  // const thirdFloorNaboxlist = thirdFloor.filter(
-  //   (thirdFloor) => thirdFloor.room_type === 'nabox'
-  // )
+  // API 3층 나박스 가져오기
+  const [bookingData, setBookingData] = useState([])
+  const [roomData, setRoomData] = useState([])
 
-  // 무결님 데이터에서 3층 나박스 가져오기
-  const Thirdroomsinfo = useFetch('http://144.24.91.218:8000/rooms/').filter(
-    (rooms) => rooms.floor === 3
-  )
-  const ThirdNaboxinfo = Thirdroomsinfo.filter((rooms) => rooms.room_id >= 305)
-  console.log(ThirdNaboxinfo)
+  useEffect(() => {
+    fetch(`http://172.30.1.50:8080/api/booking/main?floor=3`, {
+      method: 'GET',
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setBookingData(data.BookingData)
+        setRoomData(data.RoomData)
+      })
+  }, [`htttp://172.30.1.50:8080/api/booking/main?floor=3`])
 
-  // 더미에서 부킹 상황 가져오기
-  const roomState = dummy.bookingData3
-  // const roomBooking = (roomid) => {
-  //   const roomState = dummy.bookingData3.filter(
-  //     (room) => room.roomId === roomid
-  //   )
-  // }
-  console.log(roomState)
+  const ThirdNaboxinfo = roomData.filter((rooms) => rooms.roomType === 'nabox')
 
+  // 타임 리스트 돌리기
   let timeList = []
   for (let i = 9; i <= 20; i++) {
     timeList.push(i + '시')
+  }
+
+  // 09:00 형태 9로 숫자만 뽑아주는 함수
+  const TimeToString = (time) => {
+    let newTime
+    if (time === '09:00') {
+      newTime = time.substr(1, 1)
+    } else {
+      newTime = time.substr(0, 2)
+    }
+    return newTime
+  }
+
+  // 9시 형태 9로 숫자만 뽑아주는 함수
+  const onlyTime = (time) => {
+    let newTime
+    if (time === '9시') {
+      newTime = time.substr(0, 1)
+    } else {
+      newTime = time.substr(0, 2)
+    }
+    return newTime
+  }
+
+  // 시간당 룸의 예약 데이터 불러오는 함수
+  const TimeAndRoomFilter = (Time, Room) => {
+    let timedata = bookingData.filter(
+      (room) =>
+        room.roomId === Room && TimeToString(room.startTime) === onlyTime(Time)
+    )
+    return timedata
+  }
+
+  // 시간당 룸의 예약이 있는지 없는지 함수
+  const IsThisTimeRoombooked = (Time, Room) => {
+    const IsTrue = TimeAndRoomFilter(Time, Room).length !== 0
+    return IsTrue
   }
 
   return (
@@ -36,23 +69,30 @@ const ThirdFloorNaRoomState = () => {
         <thead className="table-light" id={styles.thead}>
           <tr id={styles.theadTr}>
             <th className="table-primary text-break" id={styles.time}></th>
-
             {/* 룸 값 불러오기 */}
             {ThirdNaboxinfo.map((room) => (
-              <th key={room.room_id} className="table-primary" id={styles.text}>
-                {room.room_name}
+              <th key={room.roomId} className="table-primary" id={styles.text}>
+                {room.roomName}
               </th>
             ))}
           </tr>
         </thead>
         <tbody id={styles.tbody}>
-          {/* 시간 값 불러오기 */}
-          {timeList.map((time, idx) => (
-            <tr id={styles.tbodyTr}>
+          {/* 시간을 맵으로 돌려 전체 상태값 전달 */}
+          {timeList.map((time) => (
+            <tr key={time} id={styles.tbodyTr}>
               <th className={styles.time}>{time}</th>
-              <th className={styles.roomstate}></th>
-              <th className={styles.roomstate}></th>
-              <th className={styles.roomstate}></th>
+
+              {/* 룸을 맵으로 돌려 하나의 시간에 상태값 전달 */}
+              {ThirdNaboxinfo.map((room) => (
+                <th key={room.roomId} className={styles.roomstate}>
+                  {IsThisTimeRoombooked(time, room.roomId)
+                    ? `${
+                        TimeAndRoomFilter(time, room.roomId)[0].roomId
+                      } : 예약 완료`
+                    : null}
+                </th>
+              ))}
             </tr>
           ))}
         </tbody>
