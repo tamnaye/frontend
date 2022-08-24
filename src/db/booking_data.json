@@ -1,0 +1,36 @@
+{
+    "booking": [
+      {
+        "booking_id": 1,
+        "time_start": "11:00",
+        "time_end": "10:00",
+        "room_full": false
+      },
+      {
+        "booking_id": 2,
+        "time_start": "14:00",
+        "time_end": "15:00",
+        "room_full": false
+      },
+      {
+        "booking_id": 3,
+        "time_start": "18:00",
+        "time_end": "19:00",
+        "room_full": false
+      },
+      {
+        "booking_id": 4,
+        "time_start": "20:00",
+        "time_end": "20:00",
+        "room_full": true
+      },
+      {
+        "booking_id": 5,
+        "time_start": "12:00",
+        "time_end": "12:00",
+        "room_full": false
+      }
+   
+    ]
+  }
+  

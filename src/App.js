@@ -7,6 +7,7 @@ import MainTemplate from './component/main/MainTemplate';
 import ReservationState from './component/reservation/ReservationState';
 import BookPage from './component/bookpage/BookPage';
 import MyPage from './component/mypage/MyPage';
+import TimeTableTest from './component/test/TimeTableTest'
 
 function App() {
   let location = useLocation()
@@ -21,7 +22,8 @@ function App() {
         <Route path='/booking/:id' element={<BookPage />} />
         <Route path='/mypage' element={<MyPage />} />
         <Route path='*' element={<EmptyPage />} />
-      </Routes>
+        <Route path='/test' element={<TimeTableTest/>} />
+   </Routes>
     </div>
   )
 }
