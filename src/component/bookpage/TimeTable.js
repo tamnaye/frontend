@@ -2,7 +2,7 @@
 import styles from './TimeTable.module.css';
 //useHook
 import { useNavigate } from 'react-router-dom';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import React from 'react';
 import { Button } from 'antd';
 
@@ -64,7 +64,7 @@ function TimeTable() {
           <p className={styles.text}>오전</p>
           <div className={styles.timebtn}>
             {morning.map((item, index) => (
-              <button key={index}  >{item}</button>
+              <button key={index}>{item}</button>
             ))}
           </div>
         </div>
