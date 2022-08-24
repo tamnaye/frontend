@@ -1,46 +1,39 @@
-import { useParams } from 'react-router-dom'
-import dummy from '../../db/roomData.json'
-// import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+//import dummy from '../../db/roomData.json';
 //styles
-import styles from './RoomInfo.module.css'
+import styles from './RoomInfo.module.css';
 //component
-import logo from './img/logo.png'
-import geomun from './img/geomun.jpeg'
-import darrenche from './img/darrenche.jpeg'
-import yongnuni from './img/yongnuni.jpeg'
-import darabi from './img/darabi.jpeg'
-import nabox from './img/nabox.jpeg'
+import logo from './img/logo.png';
+import geomun from './img/geomun.jpeg';
+import darrenche from './img/darrenche.jpeg';
+import yongnuni from './img/yongnuni.jpeg';
+import darabi from './img/darabi.jpeg';
+import nabox from './img/nabox.jpeg';
 
 function RoomInfo() {
-  const { roomId } = useParams() //App.js 동적 라우팅을 넘겨받은 데이터 변수 지정하기!
+  const { roomId } = useParams(); //App.js 동적 라우팅을 넘겨받은 데이터 변수 지정하기!
+  const [roomData, setRoomData] = useState([]);
+  const url = `http://172.30.1.50:8080/api/booking?floor=0&roomId=${roomId}`;
+  useEffect(() => {
+    fetch(url, { method: 'GET' })
+      .then((res) => res.json())
+      .then((data) => {
+        setRoomData(data.roomData);
+      });
+  }, [url]);
+  //------아직 하는 중입니다.. ㅎㅎ ///////////
+  // const [roomInfo] =
+  // roomData && roomData.filter((info) => info.roomId === Number(roomId));
+  // console.log(roomInfo);
+  // console.log(roomInfo.roomName);
 
-  //1.더미 데이터 사용
-  const roomsInfo = dummy.roomData
-  const [roomInfo] = roomsInfo.filter((info) => info.roomId === Number(roomId))
-  const spaceName = roomInfo.roomName
-
-  //2.서버에서 데이터 받아와서 roomId와 Params로 받아온 Id를 비교해서 roomName데이터 가져오기
-  //-------useHooks 안쓰고 가져오기---------//
-  //  const [data, setData] = useState([]);
-  //  useEffect(()=>{
-  //   fetch('http://192.168.5.100:8080/api/booking?userId=22106040&roomId=201')
-  //   .then(res=>{
-  //     return res.json()
-  //   })
-  //   .then(data=>{
-  //     setData(data);
-  //   })
-  //  }, ['http://192.168.5.121:8080/api/booking?userId=22106040&roomId=201'])
-
-  //-------useHooks 쓰고 가져오기---------//
-  // const roomName = useFetch(
-  //   'http://192.168.5.121:8080/api/booking?userId=22106040&roomId=201'
-  // );
-  // const roomsInfo = roomName.roomData;
-  // const [roomInfo] = roomsInfo.filter((info) => info.roomId === Number(id)); //Params로 받아온 id타입이 string이기 때문에
+  //----더미 데이터 사용----//
+  // const roomsInfo = dummy.roomData;
+  // const [roomInfo] = roomsInfo.filter((info) => info.roomId === Number(roomId));
   // const spaceName = roomInfo.roomName;
 
-  //3.로컬 자체에 room 이미지 저장해서 서버에서 받아온 roomId와 동일할 떄 원하는 이미지 불러오기
+  //로컬 자체에 room 이미지 저장해서 서버에서 받아온 roomId와 동일할 떄 원하는 이미지 불러오기
   const roomsImg = [
     {
       room_id: 201,
@@ -138,14 +131,13 @@ function RoomInfo() {
       room_id: 307,
       img: nabox,
     },
-  ]
-  const [roomImg] = roomsImg.filter((img) => img.room_id === Number(roomId))
-  const spaceImg = roomImg.img
+  ];
+  const [roomImg] = roomsImg.filter((img) => img.room_id === Number(roomId));
 
   return (
     <div className={styles.wrap}>
-      <h3 className={styles.roomName}>{spaceName} 공간</h3>
-      <img className={styles.room_img} alt="room_img" src={spaceImg}></img>
+      <h3 className={styles.roomName}> 공간</h3>
+      <img className={styles.room_img} alt='room_img' src={roomImg.img}></img>
       <div>
         <h6 className={styles.note}> 공간 사용 안내 </h6>
         <div className={styles.contents}>
@@ -157,6 +149,6 @@ function RoomInfo() {
         </div>
       </div>
     </div>
-  )
+  );
 }
-export default RoomInfo
+export default RoomInfo;
