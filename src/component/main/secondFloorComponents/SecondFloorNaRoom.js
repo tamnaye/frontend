@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import dummy from '../../../db/data.json'
 import styles from './SecondFloorNaRoom.module.css'
 
 const SecondFloorNaRoom = () => {
