@@ -1,6 +1,6 @@
+import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-//import dummy from '../../db/roomData.json';
 //styles
 import styles from './RoomInfo.module.css';
 //component
@@ -13,25 +13,26 @@ import nabox from './img/nabox.jpeg';
 
 function RoomInfo() {
   const { roomId } = useParams(); //App.js 동적 라우팅을 넘겨받은 데이터 변수 지정하기!
+  const [data, setData] = useState([]);
   const [roomData, setRoomData] = useState([]);
-  const url = `http://172.30.1.50:8080/api/booking?floor=0&roomId=${roomId}`;
+  const [roomInfo, setRoomInfo] = useState('');
   useEffect(() => {
-    fetch(url, { method: 'GET' })
+    fetch(`http://192.168.5.103:8080/api/booking?floor=0&roomId=${roomId}`, {
+      method: 'GET',
+    })
       .then((res) => res.json())
       .then((data) => {
+        setData(data);
         setRoomData(data.roomData);
+        setRoomInfo(
+          data.roomData.filter((info) => info.roomId === Number(roomId))[0]
+            .roomName
+        );
       });
-  }, [url]);
-  //------아직 하는 중입니다.. ㅎㅎ ///////////
-  // const [roomInfo] =
-  // roomData && roomData.filter((info) => info.roomId === Number(roomId));
-  // console.log(roomInfo);
-  // console.log(roomInfo.roomName);
-
-  //----더미 데이터 사용----//
-  // const roomsInfo = dummy.roomData;
-  // const [roomInfo] = roomsInfo.filter((info) => info.roomId === Number(roomId));
-  // const spaceName = roomInfo.roomName;
+  }, [`http://172.30.1.50:8080/api/booking?floor=0&roomId=${roomId}`]);
+  console.log(data);
+  console.log(roomData);
+  console.log(roomInfo);
 
   //로컬 자체에 room 이미지 저장해서 서버에서 받아온 roomId와 동일할 떄 원하는 이미지 불러오기
   const roomsImg = [
@@ -136,7 +137,7 @@ function RoomInfo() {
 
   return (
     <div className={styles.wrap}>
-      <h3 className={styles.roomName}> 공간</h3>
+      <h3 className={styles.roomName}> {roomInfo} 공간</h3>
       <img className={styles.room_img} alt='room_img' src={roomImg.img}></img>
       <div>
         <h6 className={styles.note}> 공간 사용 안내 </h6>

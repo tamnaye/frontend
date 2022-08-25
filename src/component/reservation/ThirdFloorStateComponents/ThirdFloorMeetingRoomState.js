@@ -1,80 +1,80 @@
-import React from 'react'
-import { useState, useEffect } from 'react'
-import styles from './ThirdFloorMeetingRoomState.module.css'
+import React from 'react';
+import { useState, useEffect } from 'react';
+import styles from './ThirdFloorMeetingRoomState.module.css';
 
 const ThirdFloorMeetingRoomState = () => {
   // API 3층 회의실 가져오기
-  const [bookingData, setBookingData] = useState([])
-  const [roomData, setRoomData] = useState([])
+  const [bookingData, setBookingData] = useState([]);
+  const [roomData, setRoomData] = useState([]);
 
   useEffect(() => {
-    fetch(`http://172.30.1.50:8080/api/booking/main?floor=3`, {
+    fetch(`http://192.168.5.103:8080/api/booking/main?floor=3`, {
       method: 'GET',
     })
       .then((res) => res.json())
       .then((data) => {
-        setBookingData(data.BookingData)
-        setRoomData(data.RoomData)
-      })
-  }, [`htttp://172.30.1.50:8080/api/booking/main?floor=3`])
+        setBookingData(data.BookingData);
+        setRoomData(data.RoomData);
+      });
+  }, [`htttp://192.168.5.103:8080/api/booking/main?floor=3`]);
 
   const ThirdMeetingRoominfo = roomData.filter(
     (rooms) => rooms.roomType === 'meeting'
-  )
+  );
 
   // 타임 리스트 돌리기
-  let timeList = []
+  let timeList = [];
   for (let i = 9; i <= 20; i++) {
-    timeList.push(i + '시')
+    timeList.push(i + '시');
   }
 
   // 09:00 형태 9로 숫자만 뽑아주는 함수
   const TimeToString = (time) => {
-    let newTime
+    let newTime;
     if (time === '09:00') {
-      newTime = time.substr(1, 1)
+      newTime = time.substr(1, 1);
     } else {
-      newTime = time.substr(0, 2)
+      newTime = time.substr(0, 2);
     }
-    return newTime
-  }
+    return newTime;
+  };
 
   // 9시 형태 9로 숫자만 뽑아주는 함수
   const onlyTime = (time) => {
-    let newTime
+    let newTime;
     if (time === '9시') {
-      newTime = time.substr(0, 1)
+      newTime = time.substr(0, 1);
     } else {
-      newTime = time.substr(0, 2)
+      newTime = time.substr(0, 2);
     }
-    return newTime
-  }
+    return newTime;
+  };
 
   // 시간당 룸의 예약 데이터 불러오는 함수
   const TimeAndRoomFilter = (Time, Room) => {
     let timedata = bookingData.filter(
       (room) =>
         room.roomId === Room && TimeToString(room.startTime) === onlyTime(Time)
-    )
-    return timedata
-  }
+    );
+    return timedata;
+  };
 
   // 시간당 룸의 예약이 있는지 없는지 함수
   const IsThisTimeRoombooked = (Time, Room) => {
-    const IsTrue = TimeAndRoomFilter(Time, Room).length !== 0
-    return IsTrue
-  }
+    const IsTrue = TimeAndRoomFilter(Time, Room).length !== 0;
+    return IsTrue;
+  };
 
   return (
     <div className={styles.tableBox}>
-      <table className="table table-bordered" id={styles.table}>
-        <thead className="table-light" id={styles.thead}>
+      <table className='table table-bordered' id={styles.table}>
+        <thead className='table-light' id={styles.thead}>
           <tr id={styles.theadTr}>
-            <th className="table-primary" id={styles.time}></th>
+            <th className='table-primary' id={styles.time}></th>
 
             {/* 룸 값 불러오기 */}
             {ThirdMeetingRoominfo.map((value) => (
-              <th key={value.roomId} className="table-primary" id={styles.text}>
+              <th key={value.roomId} className='table-primary' id={styles.text}>
                 {value.roomName}
               </th>
             ))}
@@ -101,7 +101,7 @@ const ThirdFloorMeetingRoomState = () => {
         </tbody>
       </table>
     </div>
-  )
-}
+  );
+};
 
-export default ThirdFloorMeetingRoomState
+export default ThirdFloorMeetingRoomState;
