@@ -7,6 +7,7 @@ import { useParams } from 'react-router-dom';
 
 function NavsFloor2() {
   const { roomId } = useParams();
+  const { id } = useParams();
 
   //----/api/booking----//
   //const [data, setData] = useState([]);
@@ -15,7 +16,7 @@ function NavsFloor2() {
   const floor2Meeting = roomData.filter((room) => room.roomType === 'meeting');
   const floor2Nabox = roomData.filter((room) => room.roomType === 'nabox');
 
-  const url = `http://172.30.1.50:8080/api/booking?floor=2&roomId=${roomId}`;
+  const url = `http://192.168.5.103:8080/api/booking?floor=2&roomId=${roomId}`;
   useEffect(() => {
     fetch(url, { method: 'GET' })
       .then((res) => res.json())
@@ -46,7 +47,7 @@ function NavsFloor2() {
         </Dropdown.Toggle>
         <Dropdown.Menu>
           {floor2Meeting.map((item, index) => (
-            <Dropdown.Item href={`/booking/${item.roomId}`} key={index}>
+            <Dropdown.Item href={`/booking/${item.roomId}/${id}`} key={index}>
               {item.roomName}
             </Dropdown.Item>
           ))}
@@ -62,7 +63,7 @@ function NavsFloor2() {
         </Dropdown.Toggle>
         <Dropdown.Menu>
           {floor2Nabox.map((item, index) => (
-            <Dropdown.Item href={`/booking/${item.roomId}`} key={index}>
+            <Dropdown.Item href={`/booking/${item.roomId}/${id}`} key={index}>
               {item.roomName}
             </Dropdown.Item>
           ))}
