@@ -4,6 +4,7 @@ import styles from './TimeTable.module.css';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import React from 'react';
+import Times from './Times';
 
 function TimeTable() {
   const [ablebtn, setAblebtn] = useState(true); //예약시간이 아닐 떄 상태변경(true일 때 버튼 활성화!)
@@ -58,32 +59,7 @@ function TimeTable() {
   return (
     <div className={styles.timewrap}>
       <h6 className={styles.time}> 시간 선택 </h6>
-      <div className={styles.timetable}>
-        <div>
-          <p className={styles.text}>오전</p>
-          <div className={styles.timebtn}>
-            {morning.map((item, index) => (
-              <button key={index}>{item}</button>
-            ))}
-          </div>
-        </div>
-        <div>
-          <p className={styles.text}>오후</p>
-          <div className={styles.timebtn}>
-            {afternoon.map((item, index) => (
-              <button key={index}>{item}</button>
-            ))}
-          </div>
-        </div>
-        <div>
-          <p className={styles.text}>야근</p>
-          <div className={styles.timebtn}>
-            {night.map((item, index) => (
-              <button key={index}>{item}</button>
-            ))}
-          </div>
-        </div>
-      </div>
+      <Times/>
       <button
         className={ablebtn === true ? styles.bookbtn : styles.bookbtnOff}
         onClick={BookingConfirm}
