@@ -11,25 +11,25 @@ function NavsAdmin() {
   //----/api/booking----//
   //미팅룸 데이터 추출
   const [data, setData] = useState([]);
-  console.log(data);
+  //console.log(data);
   const [roomData, setRoomData] = useState([]);
-  console.log(roomData);
+  //console.log(roomData);
   //2층 룸리스트 추출 -> 미팅룸리스트 개인자습룸리스트 추출
   const floor2 = roomData.filter((room) => room.floor === 2);
-  console.log(floor2);
+  //console.log(floor2);
   const floor2Meeting = floor2.filter((room) => room.roomType === 'meeting');
-  console.log(floor2Meeting);
+  //console.log(floor2Meeting);
   const floor2Nabox = floor2.filter((room) => room.roomType === 'nabox');
-  console.log(floor2Nabox);
+  //console.log(floor2Nabox);
   //3층 룸리스트 추출 -> 미팅룸리스트, 개인자습룸리스트 추출
   const floor3 = roomData.filter((room) => room.floor === 3);
-  console.log(floor3);
+  //console.log(floor3);
   const floor3Meeting = floor3.filter((room) => room.roomType === 'meeting');
-  console.log(floor3Meeting);
+  //console.log(floor3Meeting);
   const floor3Nabox = floor3.filter((room) => room.roomType === 'nabox');
-  console.log(floor3Nabox);
+  //console.log(floor3Nabox);
 
-  const url = `http://192.168.5.103:8080/api/booking?floor=0&roomId=${roomId}`;
+  const url = `http://172.30.1.26:8080/api/booking?floor=0&roomId=${roomId}`;
   useEffect(() => {
     fetch(url, { method: 'GET' })
       .then((res) => res.json())
