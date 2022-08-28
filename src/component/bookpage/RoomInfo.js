@@ -17,7 +17,7 @@ function RoomInfo() {
   const [roomData, setRoomData] = useState([]);
   const [roomInfo, setRoomInfo] = useState('');
   useEffect(() => {
-    fetch(`http://192.168.5.103:8080/api/booking?floor=0&roomId=${roomId}`, {
+    fetch(`http://172.30.1.26:8080/api/booking?floor=0&roomId=${roomId}`, {
       method: 'GET',
     })
       .then((res) => res.json())
@@ -29,10 +29,10 @@ function RoomInfo() {
             .roomName
         );
       });
-  }, [`http://172.30.1.50:8080/api/booking?floor=0&roomId=${roomId}`]);
-  console.log(data);
-  console.log(roomData);
-  console.log(roomInfo);
+  }, [`http://172.30.1.26:8080/api/booking?floor=0&roomId=${roomId}`]);
+  //console.log(data);
+  //console.log(roomData);
+  //console.log(roomInfo);
 
   //로컬 자체에 room 이미지 저장해서 서버에서 받아온 roomId와 동일할 떄 원하는 이미지 불러오기
   const roomsImg = [
