@@ -12,7 +12,7 @@ const MainTemplate = () => {
   const [maxClasses, setMaxClasses] = useState('');
 
   useEffect(() => {
-    fetch(`http://192.168.5.103:8080/api/user/data?userId=${id}`, {
+    fetch(`http://172.30.1.26:8080/api/user/data?userId=${id}`, {
       method: 'GET',
     })
       .then((res) => res.json())
@@ -20,7 +20,7 @@ const MainTemplate = () => {
         setUserClasses(data.userData.classes);
         setMaxClasses(data.maxClasses);
       });
-  }, [`http://192.168.5.103:8080/api/user/data?userId=${id}`, id]);
+  }, [`http://172.30.1.26:8080/api/user/data?userId=${id}`, id]);
 
   return (
     <div>

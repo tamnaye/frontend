@@ -8,7 +8,7 @@ const ThirdFloorNaRoomState = () => {
   const [roomData, setRoomData] = useState([])
 
   useEffect(() => {
-    fetch(`http://192.168.5.103:8080/api/booking/main?floor=3`, {
+    fetch(`http://172.30.1.26:8080/api/booking/main?floor=3`, {
       method: 'GET',
     })
       .then((res) => res.json())
@@ -16,7 +16,7 @@ const ThirdFloorNaRoomState = () => {
         setBookingData(data.BookingData)
         setRoomData(data.RoomData)
       })
-  }, [`htttp://192.168.5.103:8080/api/booking/main?floor=3`])
+  }, [`htttp://172.30.1.26:8080/api/booking/main?floor=3`])
 
   const ThirdNaboxinfo = roomData.filter((rooms) => rooms.roomType === 'nabox')
 
@@ -85,12 +85,24 @@ const ThirdFloorNaRoomState = () => {
 
               {/* 룸을 맵으로 돌려 하나의 시간에 상태값 전달 */}
               {ThirdNaboxinfo.map((room) => (
-                <th key={room.roomId} className={styles.roomstate}>
-                  {IsThisTimeRoombooked(time, room.roomId)
+                <th
+                  key={room.roomId}
+                  className={styles.roomstate}
+                  style={{ padding: '0' }}
+                >
+                  {/* {IsThisTimeRoombooked(time, room.roomId)
                     ? `${
                         TimeAndRoomFilter(time, room.roomId)[0].roomId
                       } : 예약 완료`
-                    : null}
+                    : null} */}
+
+                  {IsThisTimeRoombooked(time, room.roomId) ? (
+                    <button className={styles.booking2Time}>
+                      <i className="bi bi-emoji-smile-fill"></i>
+                      {TimeAndRoomFilter(time, room.roomId)[0].roomId} : 예약
+                      완료
+                    </button>
+                  ) : null}
                 </th>
               ))}
             </tr>

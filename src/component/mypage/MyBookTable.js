@@ -1,6 +1,24 @@
 import styles from './MyBookTable.module.css';
+import dummy from '../../db/userBookingData.json';
 
 function MyBookTable() {
+  //----dummy데이터 이용----//
+  const userBookingData = dummy.userBookingData;
+  //console.log(userBookingData);
+  const roomName = userBookingData.map((room) => room.roomName);
+  //console.log(roomName);
+  const startTime = userBookingData.map((time) => time.startTime);
+  const endTime = userBookingData.map((time) => time.endTime);
+  //console.log(startTime);
+  //console.log(endTime);
+  const applicant = userBookingData.map((appli) => appli.applicant);
+  console.log(applicant);
+  const members = userBookingData.map((member) => member.participant);
+  console.log(...members);
+
+  // const person = members.join('[]');
+  // console.log(person);
+
   const Cancel = () => {
     return window.confirm('예약을 취소하시겠습니까?');
   };
@@ -12,31 +30,27 @@ function MyBookTable() {
           <tr>
             <th scope='col'>공간</th>
             <th scope='col'>시간</th>
+            <th scope='col'>신청자</th>
             <th scope='col'>팀원</th>
             <th scope='col'>예약수정</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>거문오름</td>
-            <td>09:00~11:00</td>
-            <td>송민아 조무결 안수빈</td>
-            <td>
-              <button className={styles.cancel} onClick={Cancel}>
-                취소하기
-              </button>
-            </td>
-          </tr>
-          <tr>
-            <td>NaBox1</td>
-            <td>11:00~13:00</td>
-            <td></td>
-            <td>
-              <button className={styles.cancel} onClick={Cancel}>
-                취소하기
-              </button>
-            </td>
-          </tr>
+          {userBookingData.map((item, index) => (
+            <tr key={index}>
+              <td>{item.roomName}</td>
+              <td>
+                {item.startTime}-{item.endTime}
+              </td>
+              <td>{item.applicant}</td>
+              <td>{item.members}</td>
+              <td>
+                <button className={styles.cancel} onClick={Cancel}>
+                  취소하기
+                </button>
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </div>

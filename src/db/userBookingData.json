@@ -1,0 +1,23 @@
+{ "user": [
+    {
+      "userId": 22106060,
+      "userName": "이현정"
+    }
+  ],
+  "userBookingData": [
+    {
+      "applicant": "이현정",
+      "roomName": "거문오름",
+      "startTime": "13:00",
+      "endTime": "14:00",
+      "participant": ["송민아", "조무결", "안수빈"]
+      },
+      {
+        "applicant": "이현정",
+        "roomName": "NA Box1",
+        "startTime": "15:00",
+        "endTime": "18:00",
+        "participant": ["이현정", "이주원"]
+      }
+  ]
+}

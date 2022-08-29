@@ -8,7 +8,7 @@ const ThirdFloorMeetingRoomState = () => {
   const [roomData, setRoomData] = useState([]);
 
   useEffect(() => {
-    fetch(`http://192.168.5.103:8080/api/booking/main?floor=3`, {
+    fetch(`http://172.30.1.26:8080/api/booking/main?floor=3`, {
       method: 'GET',
     })
       .then((res) => res.json())
@@ -16,7 +16,7 @@ const ThirdFloorMeetingRoomState = () => {
         setBookingData(data.BookingData);
         setRoomData(data.RoomData);
       });
-  }, [`htttp://192.168.5.103:8080/api/booking/main?floor=3`]);
+  }, [`htttp://172.30.1.26:8080/api/booking/main?floor=3`]);
 
   const ThirdMeetingRoominfo = roomData.filter(
     (rooms) => rooms.roomType === 'meeting'
