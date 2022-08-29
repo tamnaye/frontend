@@ -13,6 +13,10 @@ const ThirdFloorReservationState = () => {
   const NaboxOnClick = () => {
     setRoomType(NaBox)
   }
+
+  //
+
+  //
   return (
     <div>
       <div className={styles.ReservationStateContainer}>

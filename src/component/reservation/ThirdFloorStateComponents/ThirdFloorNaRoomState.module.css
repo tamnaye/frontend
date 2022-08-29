@@ -5,8 +5,23 @@
   #table #tbody #tbodyTr .time {
     font-size: 7px;
   }
+  #table #tbody #tbodyTr .roomstate .booking1Time {
+    height: 32.5px;
+    width: 25%;
+    font-size: 5px;
+    padding: 6px 8px 2px 8px;
+  }
   #table #tbody #tbodyTr .roomstate .booking2Time {
     height: 65px;
+    width: 25%;
+    font-size: 8px;
+    padding: 10px;
+  }
+  #table #tbody #tbodyTr .roomstate .booking3Time {
+    height: 97.5px;
+    width: 25%;
+    font-size: 8px;
+    padding: 10px;
   }
 }
 
@@ -15,10 +30,6 @@
   padding: 5px auto;
   text-align: center;
 }
-
-/* #table .roomstate:hover {
-  background-color: rgb(180, 180, 180);
-} */
 
 #time {
   width: 50px;
@@ -33,15 +44,47 @@
 #tbodyTr .time .roomstate {
   position: relative;
 }
+.booking1Time {
+  position: absolute;
+  top: 0%;
+  height: 35px;
+  width: 28%;
+  margin-left: 0.5vw;
+  background-color: #74b8fc;
+  color: whitesmoke;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  border-radius: 5px;
+  font-size: 12px;
+  font-weight: 700;
+}
 
 .booking2Time {
   position: absolute;
   top: 0%;
   height: 70px;
-  width: 25%;
-  /* padding-left: 10px;
-  padding-right: 10px; */
-  background-color: #46a1fd;
+  width: 28%;
+  margin-left: 0.5vw;
+  background-color: #74b8fc;
+  color: whitesmoke;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  border-radius: 5px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.booking3Time {
+  position: absolute;
+  top: 0%;
+  height: 105px;
+  width: 28%;
+  margin-left: 0.5vw;
+  background-color: #74b8fc;
   color: whitesmoke;
   display: flex;
   justify-content: center;
