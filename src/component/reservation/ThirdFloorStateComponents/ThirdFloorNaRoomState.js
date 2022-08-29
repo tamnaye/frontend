@@ -8,7 +8,7 @@ const ThirdFloorNaRoomState = () => {
   const [roomData, setRoomData] = useState([])
 
   useEffect(() => {
-    fetch(`http://172.30.1.26:8080/api/booking/main?floor=3`, {
+    fetch(`http://192.168.5.127:8080/api/booking/main?floor=3`, {
       method: 'GET',
     })
       .then((res) => res.json())
@@ -16,7 +16,7 @@ const ThirdFloorNaRoomState = () => {
         setBookingData(data.BookingData)
         setRoomData(data.RoomData)
       })
-  }, [`htttp://172.30.1.26:8080/api/booking/main?floor=3`])
+  }, [`htttp://192.168.5.127:8080/api/booking/main?floor=3`])
 
   const ThirdNaboxinfo = roomData.filter((rooms) => rooms.roomType === 'nabox')
 
