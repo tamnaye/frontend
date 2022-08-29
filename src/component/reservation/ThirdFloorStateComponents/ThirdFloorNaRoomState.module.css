@@ -5,6 +5,9 @@
   #table #tbody #tbodyTr .time {
     font-size: 7px;
   }
+  #table #tbody #tbodyTr .roomstate .booking2Time {
+    height: 65px;
+  }
 }
 
 #table th {
@@ -13,10 +16,38 @@
   text-align: center;
 }
 
-#table .roomstate:hover {
+/* #table .roomstate:hover {
   background-color: rgb(180, 180, 180);
-}
+} */
 
 #time {
   width: 50px;
+}
+
+#tbodyTr {
+  position: relative;
+}
+#tbodyTr .time {
+  position: relative;
+}
+#tbodyTr .time .roomstate {
+  position: relative;
+}
+
+.booking2Time {
+  position: absolute;
+  top: 0%;
+  height: 70px;
+  width: 25%;
+  /* padding-left: 10px;
+  padding-right: 10px; */
+  background-color: #46a1fd;
+  color: whitesmoke;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  border-radius: 5px;
+  font-size: 12px;
+  font-weight: 700;
 }

@@ -1,0 +1,174 @@
+{
+  "BookingData": [
+    {
+      "bookingId": 1,
+      "roomId": 201,
+      "dates": "2022-01-12",
+      "applicant": "안수빈",
+      "participants": ["송민아", "조무결", "이현정"],
+      "startTime": "09:00",
+      "endTime": "12:00",
+      "special": false
+    },
+    {
+      "bookingId": 2,
+      "roomId": 201,
+      "startTime": "12:00",
+      "endTime": "15:00",
+      "special": false
+    },
+    {
+      "bookingId": 3,
+      "roomId": 201,
+      "startTime": "15:00",
+      "endTime": "18:00",
+      "special": false
+    },
+    {
+      "bookingId": 4,
+      "roomId": 201,
+      "startTime": "18:00",
+      "endTime": "21:00",
+      "special": false
+    },
+    {
+      "bookingId": 5,
+      "roomId": 202,
+      "startTime": "17:00",
+      "endTime": "19:00",
+      "special": false
+    },
+    {
+      "bookingId": 6,
+      "roomId": 203,
+      "startTime": "18:00",
+      "endTime": "21:00",
+      "special": false
+    },
+    {
+      "bookingId": 7,
+      "roomId": 206,
+      "startTime": "18:00",
+      "endTime": "21:00",
+      "special": false
+    }
+  ],
+  "Participants": [
+    {
+      "bookingId": 1,
+      "dates": "2022-01-12",
+      "member": {
+        "applicant": { "userId": "안수빈" },
+        "participants": [
+          { "userId": "송민아" },
+          { "userId": "조무결" },
+          { "userId": "이현정" }
+        ]
+      }
+    }
+  ],
+  "RoomData": [
+    {
+      "floor": 2,
+      "roomId": 201,
+      "roomName": "협재",
+      "roomType": "meeting"
+    },
+    {
+      "floor": 2,
+      "roomId": 202,
+      "roomName": "곽지",
+      "roomType": "meeting"
+    },
+    {
+      "floor": 2,
+      "roomId": 203,
+      "roomName": "이호",
+      "roomType": "meeting"
+    },
+    {
+      "floor": 2,
+      "roomId": 204,
+      "roomName": "함덕",
+      "roomType": "meeting"
+    },
+    {
+      "floor": 2,
+      "roomId": 205,
+      "roomName": "김녕",
+      "roomType": "meeting"
+    },
+    {
+      "floor": 2,
+      "roomId": 206,
+      "roomName": "월정",
+      "roomType": "meeting"
+    },
+    {
+      "floor": 2,
+      "roomId": 207,
+      "roomName": "신양",
+      "roomType": "meeting"
+    },
+    {
+      "floor": 2,
+      "roomId": 208,
+      "roomName": "하모",
+      "roomType": "meeting"
+    },
+    {
+      "floor": 2,
+      "roomId": 209,
+      "roomName": "화순",
+      "roomType": "meeting"
+    },
+    {
+      "floor": 2,
+      "roomId": 210,
+      "roomName": "중문",
+      "roomType": "meeting"
+    },
+    {
+      "floor": 2,
+      "roomId": 211,
+      "roomName": "표선",
+      "roomType": "meeting"
+    },
+    {
+      "floor": 2,
+      "roomId": 212,
+      "roomName": "NA Box1",
+      "roomType": "nabox"
+    },
+    {
+      "floor": 2,
+      "roomId": 213,
+      "roomName": "NA Box2",
+      "roomType": "nabox"
+    },
+    {
+      "floor": 2,
+      "roomId": 214,
+      "roomName": "NA Box3",
+      "roomType": "nabox"
+    },
+    {
+      "floor": 2,
+      "roomId": 215,
+      "roomName": "NA Box4",
+      "roomType": "nabox"
+    },
+    {
+      "floor": 2,
+      "roomId": 216,
+      "roomName": "NA Box5",
+      "roomType": "nabox"
+    },
+    {
+      "floor": 2,
+      "roomId": 217,
+      "roomName": "NA Box6",
+      "roomType": "nabox"
+    }
+  ]
+}
