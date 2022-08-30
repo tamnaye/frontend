@@ -1,18 +1,16 @@
 //styles
 import styles from './TimeTable.module.css';
 //useHook
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+//component
 import React from 'react';
 import Times from './Times';
 
 function TimeTable() {
+  const { id } = useParams();
   const [ablebtn, setAblebtn] = useState(true); //예약시간이 아닐 떄 상태변경(true일 때 버튼 활성화!)
   const navigate = useNavigate();
-  // 로컬 자체에서 배열을 만들어 줘서 맵 사용해야 코드가 효율적
-  const morning = ['09:00', '10:00', '11:00', '12:00'];
-  const afternoon = ['13:00', '14:00', '15:00', '16:00', '17:00'];
-  const night = ['18:00', '19:00', '20:00'];
 
   //21:00-08:30까지 예약 버튼 비활성화 함수
   const Now = new Date(); //현재 날짜 및 시간 -> Tue Aug 23 2022 16:33:51 GMT+0900
@@ -50,16 +48,17 @@ function TimeTable() {
       alert(
         '예약할 수 없는 시간입니다!\n오전8:30부터 오후21:00까지 예약이 가능합니다.'
       );
+      navigate(`/${id}`);
     } else {
       alert('🎉 예약 되었습니다 🎉 마이페이지로 이동합니다 :)');
-      navigate('/mypage');
+      navigate(`/mypage/${id}`);
     }
   };
 
   return (
     <div className={styles.timewrap}>
       <h6 className={styles.time}> 시간 선택 </h6>
-      <Times/>
+      <Times />
       <button
         className={ablebtn === true ? styles.bookbtn : styles.bookbtnOff}
         onClick={BookingConfirm}

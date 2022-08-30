@@ -2,19 +2,23 @@
 import styles from './MyPage.module.css';
 //MyPage - component
 import MyBookTable from './MyBookTable';
-import dummy from '../../db/userBookingData.json';
-//import useFetch from '../../hooks/useFetch';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
 function MyPage() {
-  //----dummy데이터 이용----//
-  const [user] = dummy.user;
-  //console.log(user);
-  const userName = user.userName;
-  //console.log(userName);
-
-  //----무결님 서버 이용중----//
-  //const user = useFetch('http://144.24.91.218:8000/users/22106060');
-  //아래에 {user.user_name}
+  const { id } = useParams();
+  //----로그인 시 userName 데이터 가져오기----//
+  const [userName, setUserName] = useState('');
+  const [userId, setUserId] = useState('');
+  const url = `http://192.168.5.157:8080/api/user/data?userId=${id}`;
+  useEffect(() => {
+    fetch(url, { method: 'GET' })
+      .then((res) => res.json())
+      .then((data) => {
+        setUserName(data.userData.userName);
+        setUserId(data.userData.userId);
+      });
+  }, []);
 
   return (
     <div className={styles.container}>

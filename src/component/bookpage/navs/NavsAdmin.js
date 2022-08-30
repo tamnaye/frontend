@@ -1,43 +1,43 @@
 //styles
-import styles from './Navs.module.css'
-import Dropdown from 'react-bootstrap/Dropdown'
-import { useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import styles from './Navs.module.css';
+import Dropdown from 'react-bootstrap/Dropdown';
+import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 //import dummy from '../../../db/roomData.json';
 
 function NavsAdmin() {
-  const { roomId } = useParams()
-  const { id } = useParams()
+  const { roomId } = useParams();
+  const { id } = useParams();
   //----/api/booking----//
   //미팅룸 데이터 추출
-  const [data, setData] = useState([])
+  const [data, setData] = useState([]);
   //console.log(data);
-  const [roomData, setRoomData] = useState([])
+  const [roomData, setRoomData] = useState([]);
   //console.log(roomData);
   //2층 룸리스트 추출 -> 미팅룸리스트 개인자습룸리스트 추출
-  const floor2 = roomData.filter((room) => room.floor === 2)
+  const floor2 = roomData.filter((room) => room.floor === 2);
   //console.log(floor2);
-  const floor2Meeting = floor2.filter((room) => room.roomType === 'meeting')
+  const floor2Meeting = floor2.filter((room) => room.roomType === 'meeting');
   //console.log(floor2Meeting);
-  const floor2Nabox = floor2.filter((room) => room.roomType === 'nabox')
+  const floor2Nabox = floor2.filter((room) => room.roomType === 'nabox');
   //console.log(floor2Nabox);
   //3층 룸리스트 추출 -> 미팅룸리스트, 개인자습룸리스트 추출
-  const floor3 = roomData.filter((room) => room.floor === 3)
+  const floor3 = roomData.filter((room) => room.floor === 3);
   //console.log(floor3);
-  const floor3Meeting = floor3.filter((room) => room.roomType === 'meeting')
+  const floor3Meeting = floor3.filter((room) => room.roomType === 'meeting');
   //console.log(floor3Meeting);
-  const floor3Nabox = floor3.filter((room) => room.roomType === 'nabox')
+  const floor3Nabox = floor3.filter((room) => room.roomType === 'nabox');
   //console.log(floor3Nabox);
 
-  const url = `http://192.168.5.127:8080/api/booking?floor=0&roomId=${roomId}`
+  const url = `http://192.168.5.157:8080/api/booking?floor=0&roomId=${roomId}`;
   useEffect(() => {
     fetch(url, { method: 'GET' })
       .then((res) => res.json())
       .then((data) => {
-        setData(data)
-        setRoomData(data.roomData)
-      })
-  }, [url])
+        setData(data);
+        setRoomData(data.roomData);
+      });
+  }, [url]);
 
   //----더미 데이터 이용----//
   //미팅룸 데이터 추출
@@ -59,8 +59,8 @@ function NavsAdmin() {
       <Dropdown className={styles.box}>
         <Dropdown.Toggle
           className={styles.toggle}
-          variant=""
-          id="dropdown-basic"
+          variant=''
+          id='dropdown-basic'
         >
           2층 예약실
         </Dropdown.Toggle>
@@ -81,8 +81,8 @@ function NavsAdmin() {
       <Dropdown className={styles.box}>
         <Dropdown.Toggle
           className={styles.toggle}
-          variant=""
-          id="dropdown-basic"
+          variant=''
+          id='dropdown-basic'
         >
           3층 예약실
         </Dropdown.Toggle>
@@ -101,7 +101,7 @@ function NavsAdmin() {
         </Dropdown.Menu>
       </Dropdown>
     </div>
-  )
+  );
 }
 
-export default NavsAdmin
+export default NavsAdmin;
