@@ -5,6 +5,7 @@ import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import Popover from 'react-bootstrap/Popover'
 import Poplay from '../Poplay'
 import { Link, useParams } from 'react-router-dom'
+import { EmojiSmileFill } from 'react-bootstrap-icons'
 
 const SecondFloorMeetingRoomState = () => {
   // API 2층 회의실 가져오기
@@ -154,7 +155,7 @@ const SecondFloorMeetingRoomState = () => {
                         variant="secondary"
                       >
                         <p>
-                          <i className="bi bi-emoji-smile-fill"></i>
+                          <EmojiSmileFill />
                           {
                             TimeAndRoomFilter(time, room.roomId)[0].applicant
                               .userName

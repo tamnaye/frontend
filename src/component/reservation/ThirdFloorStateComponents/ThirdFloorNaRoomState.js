@@ -5,6 +5,7 @@ import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import Popover from 'react-bootstrap/Popover'
 import PoplayNabox from '../PoplayNabox'
 import { Link, useParams } from 'react-router-dom'
+import { EmojiSmileFill } from 'react-bootstrap-icons'
 
 const ThirdFloorNaRoomState = () => {
   // API 3층 나박스 가져오기
@@ -147,7 +148,7 @@ const ThirdFloorNaRoomState = () => {
                         variant="secondary"
                       >
                         <p>
-                          <i className="bi bi-emoji-smile-fill"></i>
+                          <EmojiSmileFill />
                           &nbsp;&nbsp;
                           {
                             TimeAndRoomFilter(time, room.roomId)[0].applicant
