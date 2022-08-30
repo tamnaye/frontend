@@ -1,27 +1,22 @@
 @media screen and (max-width: 600px) {
   #table #thead #theadTr #text {
     font-size: 7px;
+    padding: 8px 2px;
+    word-break: break-all;
   }
   #table #tbody #tbodyTr .time {
+    height: 36px;
     font-size: 7px;
+    padding: 8px 5px;
   }
-  #table #tbody #tbodyTr .roomstate .booking1Time {
-    height: 32.5px;
-    width: 25%;
+  #table #tbody #tbodyTr .booking1Time {
+    border-radius: 2px;
     font-size: 5px;
     padding: 6px 8px 2px 8px;
   }
-  #table #tbody #tbodyTr .roomstate .booking2Time {
-    height: 65px;
-    width: 25%;
-    font-size: 8px;
-    padding: 10px;
-  }
-  #table #tbody #tbodyTr .roomstate .booking3Time {
-    height: 97.5px;
-    width: 25%;
-    font-size: 8px;
-    padding: 10px;
+
+  #table {
+    width: 80vw;
   }
 }
 
@@ -31,8 +26,10 @@
   text-align: center;
 }
 
-#time {
-  width: 50px;
+tbody .time {
+  font-size: 11px;
+  word-break: keep-all;
+  width: 15%;
 }
 
 #tbodyTr {
@@ -44,12 +41,12 @@
 #tbodyTr .time .roomstate {
   position: relative;
 }
-.booking1Time {
+.bookingTime {
   position: absolute;
   top: 0%;
-  height: 35px;
-  width: 28%;
-  margin-left: 0.5vw;
+  transform: translateX(-0.5rem);
+  width: 28.2%;
+
   background-color: #74b8fc;
   color: whitesmoke;
   display: flex;
@@ -59,38 +56,9 @@
   border-radius: 5px;
   font-size: 12px;
   font-weight: 700;
+  z-index: 1;
 }
 
-.booking2Time {
-  position: absolute;
-  top: 0%;
-  height: 70px;
-  width: 28%;
-  margin-left: 0.5vw;
-  background-color: #74b8fc;
-  color: whitesmoke;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: none;
-  border-radius: 5px;
-  font-size: 12px;
-  font-weight: 700;
-}
-
-.booking3Time {
-  position: absolute;
-  top: 0%;
-  height: 105px;
-  width: 28%;
-  margin-left: 0.5vw;
-  background-color: #74b8fc;
-  color: whitesmoke;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: none;
-  border-radius: 5px;
-  font-size: 12px;
-  font-weight: 700;
+#Manager {
+  background-color: rgb(128, 128, 128, 0.8);
 }
