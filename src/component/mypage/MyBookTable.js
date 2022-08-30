@@ -14,25 +14,31 @@ function MyBookTable() {
         setMyBookingList(data.myBookingDetailDataList);
       });
   }, [url]);
-  //console.log(myBookingList);
+  console.log(myBookingList);
 
   //useId랑 applicantUserId랑 같을 때 값 출력하기
-  const Cancel = (bid) => {
-    console.log(bid);
-    const postUrl = `http://192.168.5.157:8080/api/booking/cancellation`;
-    fetch(postUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        bookingId: bid,
-      }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-      });
+  const Cancel = (bid, index) => {
+    const arr = [...myBookingList];
+    //console.log(arr);
+    if (window.confirm('예약을 취소하시겠습니까?')) {
+      //console.log(bid);
+      const postUrl = `http://192.168.5.157:8080/api/booking/cancellation`;
+      fetch(postUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          bookingId: bid,
+        }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+          arr.splice(index, 1);
+          setMyBookingList(arr);
+        });
+    }
   };
 
   return (
@@ -60,7 +66,7 @@ function MyBookTable() {
                 <button
                   key={index}
                   className={styles.cancel}
-                  onClick={() => Cancel(item.bookingId)}
+                  onClick={() => Cancel(item.bookingId, index)}
                   disabled={item.applicant.userId === id ? false : true}
                 >
                   취소하기
