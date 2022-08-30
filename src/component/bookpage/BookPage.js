@@ -17,7 +17,7 @@ function BookPage() {
   const [userClasses, setUserClasses] = useState('');
   const [maxClasses, setMaxClasses] = useState('');
 
-  const url = `http://172.30.1.26:8080/api/user/data?userId=${id}`;
+  const url = `http://192.168.5.127:8080/api/user/data?userId=${id}`;
   useEffect(() => {
     fetch(url)
       .then((res) => res.json())

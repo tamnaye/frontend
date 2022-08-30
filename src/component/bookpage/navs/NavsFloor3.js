@@ -16,7 +16,7 @@ function NavsFloor3() {
   const floor3Meeting = roomData.filter((room) => room.roomType === 'meeting');
   const floor3Nabox = roomData.filter((room) => room.roomType === 'nabox');
 
-  const url = `http://172.30.1.26:8080/api/booking?floor=3&roomId=${roomId}`;
+  const url = `http://192.168.5.127:8080/api/booking?floor=3&roomId=${roomId}`;
   useEffect(() => {
     fetch(url, { method: 'GET' })
       .then((res) => res.json())

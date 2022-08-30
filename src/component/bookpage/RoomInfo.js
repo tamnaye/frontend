@@ -17,7 +17,7 @@ function RoomInfo() {
   const [roomData, setRoomData] = useState([]);
   const [roomInfo, setRoomInfo] = useState('');
   useEffect(() => {
-    fetch(`http://172.30.1.26:8080/api/booking?floor=0&roomId=${roomId}`, {
+    fetch(`http://192.168.5.127:8080/api/booking?floor=0&roomId=${roomId}`, {
       method: 'GET',
     })
       .then((res) => res.json())
@@ -29,7 +29,7 @@ function RoomInfo() {
             .roomName
         );
       });
-  }, [`http://172.30.1.26:8080/api/booking?floor=0&roomId=${roomId}`]);
+  }, [`http://192.168.5.127:8080/api/booking?floor=0&roomId=${roomId}`]);
   //console.log(data);
   //console.log(roomData);
   //console.log(roomInfo);

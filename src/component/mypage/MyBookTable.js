@@ -1,26 +1,38 @@
 import styles from './MyBookTable.module.css';
-import dummy from '../../db/userBookingData.json';
+import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 
 function MyBookTable() {
-  //----dummy데이터 이용----//
-  const userBookingData = dummy.userBookingData;
-  //console.log(userBookingData);
-  const roomName = userBookingData.map((room) => room.roomName);
-  //console.log(roomName);
-  const startTime = userBookingData.map((time) => time.startTime);
-  const endTime = userBookingData.map((time) => time.endTime);
-  //console.log(startTime);
-  //console.log(endTime);
-  const applicant = userBookingData.map((appli) => appli.applicant);
-  console.log(applicant);
-  const members = userBookingData.map((member) => member.participant);
-  console.log(...members);
+  const { id } = useParams();
+  //----서버데이터 불러오기----//
+  const [myBookingList, setMyBookingList] = useState([]);
+  const url = `http://192.168.5.127:8080/api/user/mypage?userId=${id}`;
+  useEffect(() => {
+    fetch(url, { method: 'GET' })
+      .then((res) => res.json())
+      .then((data) => {
+        setMyBookingList(data.myBookingDetailDataList);
+      });
+  }, [url]);
+  //console.log(myBookingList);
 
-  // const person = members.join('[]');
-  // console.log(person);
-
-  const Cancel = () => {
-    return window.confirm('예약을 취소하시겠습니까?');
+  //useId랑 applicantUserId랑 같을 때 값 출력하기
+  const Cancel = (bid) => {
+    console.log(bid);
+    const postUrl = `http://192.168.5.127:8080/api/booking/cancellation`;
+    fetch(postUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        bookingId: bid,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+      });
   };
 
   return (
@@ -36,16 +48,21 @@ function MyBookTable() {
           </tr>
         </thead>
         <tbody>
-          {userBookingData.map((item, index) => (
+          {myBookingList.map((item, index) => (
             <tr key={index}>
               <td>{item.roomName}</td>
               <td>
                 {item.startTime}-{item.endTime}
               </td>
-              <td>{item.applicant}</td>
-              <td>{item.members}</td>
+              <td>{item.applicant.userName}</td>
+              <td>{item.participants}</td>
               <td>
-                <button className={styles.cancel} onClick={Cancel}>
+                <button
+                  key={index}
+                  className={styles.cancel}
+                  onClick={() => Cancel(item.bookingId)}
+                  disabled={item.applicant.userId === id ? false : true}
+                >
                   취소하기
                 </button>
               </td>

@@ -1,7 +1,7 @@
 /* Info */
 @media screen and (max-width: 700px){
   .wrap .userinfo {
-    margin-top: -10px;
+    margin-top: -80px;
   }
 }
 
@@ -14,19 +14,16 @@
   padding: 10px 0px 0px 10px;
   border: 1px solid #D9DDDC;
 }
-
 .input {
   width: 210px;
   height: 3vh;
   margin-left: 20px;
   text-align: center;
 }
-
 .membersBox {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
 }
-
 .membersName {
   background-color: white;
   border: 1px solid #B1D8FB;
@@ -37,4 +34,9 @@
   margin: 0px 0px 18px 0px;
   font-size: 14px;
   color: #528FC4;
+}
+
+/* 팀원_팀원석택_모달창 */
+.memberBox {
+  display: flex;
 }
