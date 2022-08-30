@@ -13,24 +13,22 @@ import nabox from './img/nabox.jpeg';
 
 function RoomInfo() {
   const { roomId } = useParams(); //App.js 동적 라우팅을 넘겨받은 데이터 변수 지정하기!
-  const [data, setData] = useState([]);
   const [roomData, setRoomData] = useState([]);
   const [roomInfo, setRoomInfo] = useState('');
+  const url = `http://192.168.5.157:8080/api/booking?floor=0&roomId=${roomId}`;
   useEffect(() => {
-    fetch(`http://192.168.5.157:8080/api/booking?floor=0&roomId=${roomId}`, {
+    fetch(url, {
       method: 'GET',
     })
       .then((res) => res.json())
       .then((data) => {
-        setData(data);
         setRoomData(data.roomData);
         setRoomInfo(
           data.roomData.filter((info) => info.roomId === Number(roomId))[0]
             .roomName
         );
       });
-  }, [`http://192.168.5.157:8080/api/booking?floor=0&roomId=${roomId}`]);
-  //console.log(data);
+  }, [roomId, url]);
   //console.log(roomData);
   //console.log(roomInfo);
 
