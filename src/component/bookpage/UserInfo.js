@@ -25,7 +25,7 @@ function Info() {
 
   const [userName, setUserName] = useState('');
 
-  const url = `http://192.168.5.127:8080/api/user/data?userId=${id}`;
+  const url = `http://192.168.5.157:8080/api/user/data?userId=${id}`;
 
   useEffect(() => {
     fetch(url, { method: 'GET' })
@@ -37,7 +37,7 @@ function Info() {
   //console.log(userName);
 
   const postData = () => {
-    const postUrl = `http://192.168.5.127:8080/api/booking/conference`;
+    const postUrl = `http://192.168.5.157:8080/api/booking/conference`;
     fetch(postUrl, {
       method: 'POST',
       headers: {

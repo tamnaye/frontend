@@ -1,0 +1,16 @@
+#userName {
+  font-size: 12px;
+  font-weight: 700;
+}
+
+#time,
+#roomName {
+  font-size: 12px;
+  font-weight: 400;
+  margin: 3px;
+}
+
+hr {
+  margin-top: 10px;
+  margin-bottom: 5px;
+}

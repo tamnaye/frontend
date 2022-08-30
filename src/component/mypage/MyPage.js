@@ -10,7 +10,7 @@ function MyPage() {
   //----로그인 시 userName 데이터 가져오기----//
   const [userName, setUserName] = useState('');
   const [userId, setUserId] = useState('');
-  const url = `http://192.168.5.127:8080/api/user/data?userId=${id}`;
+  const url = `http://192.168.5.157:8080/api/user/data?userId=${id}`;
   useEffect(() => {
     fetch(url, { method: 'GET' })
       .then((res) => res.json())

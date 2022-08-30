@@ -1,14 +1,21 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import styles from './ThirdFloorNaRoomState.module.css';
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import Popover from 'react-bootstrap/Popover';
+import PoplayNabox from '../PoplayNabox';
+import { Link, useParams } from 'react-router-dom';
+import { EmojiSmileFill } from 'react-bootstrap-icons';
 
 const ThirdFloorNaRoomState = () => {
   // API 3층 나박스 가져오기
   const [bookingData, setBookingData] = useState([]);
   const [roomData, setRoomData] = useState([]);
 
+  const { id } = useParams();
+
   useEffect(() => {
-    fetch(`http://172.30.1.26:8080/api/booking/main?floor=3`, {
+    fetch(`http://192.168.5.157:8080/api/booking/details-booking?floor=3`, {
       method: 'GET',
     })
       .then((res) => res.json())
@@ -16,7 +23,7 @@ const ThirdFloorNaRoomState = () => {
         setBookingData(data.BookingData);
         setRoomData(data.RoomData);
       });
-  }, [`htttp://172.30.1.26:8080/api/booking/main?floor=3`]);
+  }, [`http://192.168.5.157:8080/api/booking/details-booking?floor=3`]);
 
   const ThirdNaboxinfo = roomData.filter((rooms) => rooms.roomType === 'nabox');
 
@@ -56,11 +63,19 @@ const ThirdFloorNaRoomState = () => {
     );
     return timedata;
   };
+  console.log(TimeAndRoomFilter('14:00', 306));
 
   // 시간당 룸의 예약이 있는지 없는지 함수
   const IsThisTimeRoombooked = (Time, Room) => {
     const IsTrue = TimeAndRoomFilter(Time, Room).length !== 0;
     return IsTrue;
+  };
+
+  // 예약 시간 함수
+  const bookingLength = (startTime, endTime) => {
+    let length =
+      Number(TimeToString(endTime)) - Number(TimeToString(startTime));
+    return length;
   };
 
   return (
@@ -72,7 +87,9 @@ const ThirdFloorNaRoomState = () => {
             {/* 룸 값 불러오기 */}
             {ThirdNaboxinfo.map((room) => (
               <th key={room.roomId} className='table-primary' id={styles.text}>
-                {room.roomName}
+                <Link to={`/booking/${room.roomId}/${id}`}>
+                  {room.roomName}
+                </Link>
               </th>
             ))}
           </tr>
@@ -86,11 +103,63 @@ const ThirdFloorNaRoomState = () => {
               {/* 룸을 맵으로 돌려 하나의 시간에 상태값 전달 */}
               {ThirdNaboxinfo.map((room) => (
                 <th key={room.roomId} className={styles.roomstate}>
-                  {IsThisTimeRoombooked(time, room.roomId)
-                    ? `${
-                        TimeAndRoomFilter(time, room.roomId)[0].roomId
-                      } : 예약 완료`
-                    : null}
+                  {IsThisTimeRoombooked(time, room.roomId) ? (
+                    <OverlayTrigger
+                      trigger='click'
+                      key={TimeAndRoomFilter(time, room.roomId)[0].bookingId}
+                      placement='left'
+                      overlay={
+                        <Popover id='popover-positioned-left'>
+                          <Popover.Body>
+                            <PoplayNabox
+                              userName={
+                                TimeAndRoomFilter(time, room.roomId)[0]
+                                  .applicant.userName
+                              }
+                              startTime={
+                                TimeAndRoomFilter(time, room.roomId)[0]
+                                  .startTime
+                              }
+                              endTime={
+                                TimeAndRoomFilter(time, room.roomId)[0].endTime
+                              }
+                              roomName={
+                                TimeAndRoomFilter(time, room.roomId)[0].roomName
+                              }
+                            />
+                          </Popover.Body>
+                        </Popover>
+                      }
+                    >
+                      <button
+                        className={
+                          bookingLength(
+                            TimeAndRoomFilter(time, room.roomId)[0].startTime,
+                            TimeAndRoomFilter(time, room.roomId)[0].endTime
+                          ) === 1
+                            ? [styles.booking1Time]
+                            : bookingLength(
+                                TimeAndRoomFilter(time, room.roomId)[0]
+                                  .startTime,
+                                TimeAndRoomFilter(time, room.roomId)[0].endTime
+                              ) === 2
+                            ? [styles.booking2Time]
+                            : [styles.booking3Time]
+                        }
+                        variant='secondary'
+                      >
+                        <p>
+                          <EmojiSmileFill />
+                          &nbsp;&nbsp;
+                          {
+                            TimeAndRoomFilter(time, room.roomId)[0].applicant
+                              .userName
+                          }
+                          님 예약
+                        </p>
+                      </button>
+                    </OverlayTrigger>
+                  ) : null}
                 </th>
               ))}
             </tr>

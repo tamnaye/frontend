@@ -6,7 +6,7 @@ function MyBookTable() {
   const { id } = useParams();
   //----서버데이터 불러오기----//
   const [myBookingList, setMyBookingList] = useState([]);
-  const url = `http://192.168.5.127:8080/api/user/mypage?userId=${id}`;
+  const url = `http://192.168.5.157:8080/api/user/mypage?userId=${id}`;
   useEffect(() => {
     fetch(url, { method: 'GET' })
       .then((res) => res.json())
@@ -19,7 +19,7 @@ function MyBookTable() {
   //useId랑 applicantUserId랑 같을 때 값 출력하기
   const Cancel = (bid) => {
     console.log(bid);
-    const postUrl = `http://192.168.5.127:8080/api/booking/cancellation`;
+    const postUrl = `http://192.168.5.157:8080/api/booking/cancellation`;
     fetch(postUrl, {
       method: 'POST',
       headers: {

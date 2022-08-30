@@ -11,7 +11,7 @@ const SecondFloorMeetingRoom = () => {
   const [roomData, setRoomData] = useState([]);
 
   useEffect(() => {
-    fetch(`http://192.168.5.127:8080/api/booking/main?floor=2`, {
+    fetch(`http://192.168.5.157:8080/api/booking/main?floor=2`, {
       method: 'GET',
     })
       .then((res) => res.json())
@@ -19,7 +19,7 @@ const SecondFloorMeetingRoom = () => {
         setBookingData(data.BookingData);
         setRoomData(data.RoomData);
       });
-  }, [`htttp://192.168.5.127:8080/api/booking/main?floor=2`]);
+  }, [`htttp://192.168.5.157:8080/api/booking/main?floor=2`]);
 
   const SecondMeetingRoominfo = roomData.filter(
     (rooms) => rooms.roomType === 'meeting'
