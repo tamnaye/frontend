@@ -1,26 +1,28 @@
-import styles from './ReservationState.module.css';
-import ThirdFloorReservationState from './ThirdFloorStateComponents/ThirdFloorReservationState';
-import SecondFloorReservationState from './SecondFloorStateComponents/SecondFloorReservationState';
-import SecondAndThirdReservationState from './SecondAndThirdReservationState';
-import { useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import styles from './ReservationState.module.css'
+import ThirdFloorReservationState from './ThirdFloorStateComponents/ThirdFloorReservationState'
+import SecondFloorReservationState from './SecondFloorStateComponents/SecondFloorReservationState'
+import SecondAndThirdReservationState from './SecondAndThirdReservationState'
+import { useParams } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import UseUrl from '../../hooks/UseUrl'
 
 const ReservationState = () => {
-  const { id } = useParams();
+  const { id } = useParams()
+  const myUrl = UseUrl()
 
-  const [userClasses, setUserClasses] = useState('');
-  const [maxClasses, setMaxClasses] = useState('');
+  const [userClasses, setUserClasses] = useState('')
+  const [maxClasses, setMaxClasses] = useState('')
 
   useEffect(() => {
-    fetch(`http://192.168.5.157:8080/api/user/data?userId=${id}`, {
+    fetch(`http://${myUrl}/api/user/data?userId=${id}`, {
       method: 'GET',
     })
       .then((res) => res.json())
       .then((data) => {
-        setUserClasses(data.userData.classes);
-        setMaxClasses(data.maxClasses);
-      });
-  }, [`http://192.168.5.157:8080/api/user/data?userId=${id}`, id]);
+        setUserClasses(data.userData.classes)
+        setMaxClasses(data.maxClasses)
+      })
+  }, [`http://${myUrl}/api/user/data?userId=${id}`, id])
 
   return (
     <div className={styles.ReservationStateContainer}>
@@ -33,7 +35,7 @@ const ReservationState = () => {
         <SecondFloorReservationState className={styles.reservationTable} />
       )}
     </div>
-  );
-};
+  )
+}
 
-export default ReservationState;
+export default ReservationState

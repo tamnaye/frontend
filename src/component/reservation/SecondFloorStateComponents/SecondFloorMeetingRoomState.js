@@ -6,6 +6,7 @@ import Popover from 'react-bootstrap/Popover'
 import Poplay from '../Poplay'
 import { Link, useParams } from 'react-router-dom'
 import { EmojiSmileFill, ArrowRightCircleFill } from 'react-bootstrap-icons'
+import UseUrl from '../../../hooks/UseUrl'
 
 const SecondFloorMeetingRoomState = () => {
   // API 2층 회의실 가져오기
@@ -14,7 +15,8 @@ const SecondFloorMeetingRoomState = () => {
   const [roomData, setRoomData] = useState([])
 
   const { id } = useParams()
-  const url = `http://192.168.5.157:8080/api/booking/details-booking?floor=2`
+  const myUrl = UseUrl()
+  const url = `http://${myUrl}api/booking/details-booking?floor=2`
   useEffect(() => {
     fetch(url, {
       method: 'GET',
@@ -109,7 +111,7 @@ const SecondFloorMeetingRoomState = () => {
                 <th key={room.roomId} className={styles.roomstate}>
                   {IsThisTimeRoombooked(time, room.roomId) ? (
                     <OverlayTrigger
-                      trigger="click"
+                      trigger="focus"
                       key={TimeAndRoomFilter(time, room.roomId)[0].bookingId}
                       placement="top"
                       overlay={
