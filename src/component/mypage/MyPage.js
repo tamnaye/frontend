@@ -5,6 +5,7 @@ import MyBookTable from './MyBookTable';
 import MyBookTableEmpty from './MyBookTableEmpty';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { Container } from 'react-bootstrap';
 
 function MyPage() {
   const { id } = useParams();
@@ -23,17 +24,19 @@ function MyPage() {
   console.log(bookingCount);
 
   return (
-    <div className={styles.container}>
-      <h6 className={styles.userInfo}>
-        탐나는인재 <span className={styles.user_name}>{userName}</span>
-        님의 예약 현황
-      </h6>
-      {Array.isArray(bookingCount) && bookingCount.length === 0 ? (
-        <MyBookTableEmpty />
-      ) : (
-        <MyBookTable />
-      )}
-    </div>
+    <Container>
+      <div className={styles.container}>
+        <h6 className={styles.userInfo}>
+          탐나는인재 <span className={styles.user_name}>{userName}</span>
+          님의 예약 현황
+        </h6>
+        {Array.isArray(bookingCount) && bookingCount.length === 0 ? (
+          <MyBookTableEmpty />
+        ) : (
+          <MyBookTable />
+        )}
+      </div>
+    </Container>
   );
 }
 export default MyPage;
