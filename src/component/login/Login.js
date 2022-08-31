@@ -34,7 +34,7 @@ export default function Login() {
         } else {
           alert(data.message)
         }
-        console.log("decrypt data.b : ",decrypt(data.b))
+        // console.log("decrypt data.b : ",decrypt(data.b))
       })
   };
 

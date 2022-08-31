@@ -42,9 +42,8 @@ function TimeTable() {
       setAblebtn(true);
     }
   }, []); //useEffect써서 한번만 렌더링 해줌
-  //console.log(ablebtn);
 
-  //버튼 클릭시 alert 띄어주기
+  //예약하기 버튼 클릭시 alert 띄어주기
   const BookingConfirm = () => {
     if (startTime > nowTime || endTime < nowTime) {
       alert(
@@ -56,6 +55,7 @@ function TimeTable() {
       navigate(`/mypage/${id}`);
     }
   };
+
   const times = [
     '09:00',
     '10:00',
@@ -84,14 +84,13 @@ function TimeTable() {
     defaultDisabledList.push(bookedTimes.includes(time) ? true : false)
   );
   const [disabledState, setDisabledState] = useState(defaultDisabledList);
-  // console.log("disabledState => ", disabledState);
 
   const [checkedState, setCheckedState] = useState(new Array(12).fill(false));
-  //console.log('checkedState below usestate=> ', checkedState);
 
   // i의 최소값이 0, 최대값은 11이기 때문에 처음 시간과 마지막 시간일때의 예외처리는 반복문에서 자연스럽게 처리됨
-  // 클릭한 시간 전꺼, 다음꺼 중 만약 이미 예약이 된것들은 이미 disabled : true인 상태이기 때문에 첫번째 if문에서 예외처리됨
-  // 클릭한 시간, 클릭한 시간 전꺼와 다음꺼 제외하고 나머지 중 disabled false인 것들 true로 바꿔줌
+  // 클릭한 시간 전꺼, 다음꺼 중 만약 이미 예약이 된것들은 이미 disabled : true인 상태이기 때문에
+  // onChange 첫번째 if문에서 예외처리됨 (checkedStateLength === 0 )
+  // 나머지 중 disabled false인 것들 disabled = true로 바꿔줌
   function updateDisabledList(index) {
     //최초 클릭 시 disablesState update
     const disableUpdateList = [...disabledState];
@@ -104,12 +103,13 @@ function TimeTable() {
     }
     setDisabledState(disableUpdateList);
   }
-
-  //checkedState length return
+  //checkedState 길이 반환
   function checkedStateLength() {
     return checkedState.filter((bool) => bool === true).length;
   }
 
+  //indexOf 메소드는 체크된 인덱스 반환해줌,
+  //하지만 버튼 두개 눌린 생태에서 다음 버튼 클릭의 인덱스랑 비교하려면 클릭 된 체크박스 인덱스들을 배열로 가지고 있어야함
   function getCheckedIndexArray(checkedState) {
     var arr = [];
     var index = checkedState.indexOf(true);
@@ -119,12 +119,13 @@ function TimeTable() {
     }
     return arr;
   }
+
+  //체크된 체크박스 checkedState 배열로 관리해주기 위함
+  //기본적으로 onChange에서 호출해줌, 하지만 체크 false로 강제해야하는 조건에서는 호출 하지 않음
   function updatedCheckedState(index) {
-    // console.log("cycle => onChange : checkedState  =>",checkedState)
     const updatedCheckedState = checkedState.map((item, id) =>
       id === index ? !item : item
     );
-    // console.log("cycle => onChange : updatedCheckedState  =>",updatedCheckedState)
     setCheckedState(updatedCheckedState);
   }
 
@@ -135,8 +136,7 @@ function TimeTable() {
     } else if (checkedStateLength() === 1) {
       updatedCheckedState(index);
       if (checkedState.indexOf(true) === index) {
-        //체크해제 + 내일 할일 : 체크 해제했을때 디스에이블드 풀어주기 & array 코드 간결하게 하는법 찾기
-        setDisabledState(defaultDisabledList);
+        setDisabledState(defaultDisabledList); //체크해제
       } else {
         //pass
       }
@@ -155,7 +155,6 @@ function TimeTable() {
       <div className={styles.timetable}>
         {times.map((time, index) => (
           <span key={index}>
-            {/* {category(index)} */}
             <Checkbox
               onChange={() => onChange(index)}
               checked={checkedState[index]}
