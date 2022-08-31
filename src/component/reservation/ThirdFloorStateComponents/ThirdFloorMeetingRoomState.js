@@ -6,6 +6,7 @@ import Popover from 'react-bootstrap/Popover'
 import Poplay from '../Poplay'
 import { Link, useParams } from 'react-router-dom'
 import { EmojiSmileFill, ArrowRightCircleFill } from 'react-bootstrap-icons'
+import UseUrl from '../../../hooks/UseUrl'
 
 const ThirdFloorMeetingRoomState = () => {
   // API 3층 회의실 가져오기
@@ -13,9 +14,10 @@ const ThirdFloorMeetingRoomState = () => {
   const [roomData, setRoomData] = useState([])
 
   const { id } = useParams()
+  const myUrl = UseUrl()
 
   useEffect(() => {
-    fetch(`http://192.168.5.157:8080/api/booking/details-booking?floor=3`, {
+    fetch(`http://${myUrl}/api/booking/details-booking?floor=3`, {
       method: 'GET',
     })
       .then((res) => res.json())
@@ -23,7 +25,7 @@ const ThirdFloorMeetingRoomState = () => {
         setBookingData(data.BookingData)
         setRoomData(data.RoomData)
       })
-  }, [`http://192.168.5.157:8080/api/booking/details-booking?floor=3`])
+  }, [`http://${myUrl}/api/booking/details-booking?floor=3`])
 
   const ThirdMeetingRoominfo = roomData.filter(
     (rooms) => rooms.roomType === 'meeting'

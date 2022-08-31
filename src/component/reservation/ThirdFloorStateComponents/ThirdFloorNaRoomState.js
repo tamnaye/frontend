@@ -6,6 +6,7 @@ import Popover from 'react-bootstrap/Popover'
 import PoplayNabox from '../PoplayNabox'
 import { Link, useParams } from 'react-router-dom'
 import { EmojiSmileFill, ArrowRightCircleFill } from 'react-bootstrap-icons'
+import UseUrl from '../../../hooks/UseUrl'
 
 const ThirdFloorNaRoomState = () => {
   // API 3층 나박스 가져오기
@@ -13,9 +14,10 @@ const ThirdFloorNaRoomState = () => {
   const [roomData, setRoomData] = useState([])
 
   const { id } = useParams()
+  const myUrl = UseUrl()
 
   useEffect(() => {
-    fetch(`http://192.168.5.157:8080/api/booking/details-booking?floor=3`, {
+    fetch(`http://${myUrl}/api/booking/details-booking?floor=3`, {
       method: 'GET',
     })
       .then((res) => res.json())
@@ -23,7 +25,7 @@ const ThirdFloorNaRoomState = () => {
         setBookingData(data.BookingData)
         setRoomData(data.RoomData)
       })
-  }, [`http://192.168.5.157:8080/api/booking/details-booking?floor=3`])
+  }, [`http://${myUrl}/api/booking/details-booking?floor=3`])
 
   const ThirdNaboxinfo = roomData.filter((rooms) => rooms.roomType === 'nabox')
 
