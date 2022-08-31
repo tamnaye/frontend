@@ -19,7 +19,7 @@ function MyBookTable() {
   //useId랑 applicantUserId랑 같을 때 값 출력하기
   const Cancel = (bid, index) => {
     const arr = [...myBookingList];
-    //console.log(arr);
+    //console.log(arr)
     if (window.confirm('예약을 취소하시겠습니까?')) {
       //console.log(bid);
       const postUrl = `http://192.168.5.66:8080/api/booking/cancellation`;
