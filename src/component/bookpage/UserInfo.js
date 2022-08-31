@@ -1,45 +1,46 @@
 //styles
-import styles from './UserInfo.module.css'
+import styles from './UserInfo.module.css';
 //useHooks
-import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
-import UseUrl from '../../hooks/UseUrl'
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import UseUrl from '../../hooks/UseUrl';
 
 function Info() {
   //input 값 입력 시 실제 돔에 불러오기//
-  const [name, setName] = useState('')
-  const [names, setNames] = useState([])
-  const onChange = (event) => setName(event.target.value)
+  const [name, setName] = useState('');
+  const [names, setNames] = useState([]);
+  const onChange = (event) => setName(event.target.value);
   const onSubmit = (event) => {
-    event.preventDefault()
+    event.preventDefault();
     if (name === '') {
-      return //빈칸이면 함수를 실행하지 않음
+      return; //빈칸이면 함수를 실행하지 않음
     }
     setNames((currentArray) => {
-      return [...currentArray, name]
-    })
-    setName('')
-  }
+      return [...currentArray, name];
+    });
+    setName('');
+  };
 
   //신청자명 데이터 로그인정보에서 불러오기 -> post//
-  const { id } = useParams()
-  const myUrl = UseUrl()
+  const { id } = useParams();
+  const myUrl = UseUrl();
 
-  const [userName, setUserName] = useState('')
+  const [userName, setUserName] = useState('');
 
-  const url = `http://${myUrl}/api/user/data?userId=${id}`
+  const url = `http://${myUrl}/api/user/data?userId=${id}`;
 
   useEffect(() => {
     fetch(url, { method: 'GET' })
       .then((res) => res.json())
       .then((data) => {
-        setUserName(data.userData.userName)
-      })
-  }, [url])
+        setUserName(data.userData.userName);
+      });
+  }, [url]);
   //console.log(userName);
 
+  //값보내는 거 이따!!!!!!!!!!!
   const postData = () => {
-    const postUrl = `http://${myUrl}/api/booking/conference`
+    const postUrl = `http://${myUrl}/api/booking/conference`;
     fetch(postUrl, {
       method: 'POST',
       headers: {
@@ -60,9 +61,9 @@ function Info() {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data)
-      })
-  }
+        console.log(data);
+      });
+  };
 
   return (
     <div className={styles.wrap}>
@@ -72,8 +73,8 @@ function Info() {
           신청자명
           <input
             className={styles.input}
-            type="text"
-            name="val"
+            type='text'
+            name='val'
             placeholder={userName}
             disabled
           />
@@ -85,8 +86,8 @@ function Info() {
               className={styles.input}
               onChange={onChange}
               value={name}
-              type="text"
-              placeholder="검색"
+              type='text'
+              placeholder='검색'
               required
             />
           </p>
@@ -101,6 +102,6 @@ function Info() {
         </form>
       </div>
     </div>
-  )
+  );
 }
-export default Info
+export default Info;
