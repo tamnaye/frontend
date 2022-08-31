@@ -6,6 +6,7 @@ import Popover from 'react-bootstrap/Popover'
 import PoplayNabox from '../PoplayNabox'
 import { Link, useParams } from 'react-router-dom'
 import { EmojiSmileFill, ArrowRightCircleFill } from 'react-bootstrap-icons'
+import UseUrl from '../../../hooks/UseUrl'
 
 const SecondFloorNaRoomState = () => {
   // API 2층 나박스 가져오기
@@ -13,9 +14,10 @@ const SecondFloorNaRoomState = () => {
   const [roomData, setRoomData] = useState([])
 
   const { id } = useParams()
+  const myUrl = UseUrl()
 
   useEffect(() => {
-    fetch(`http://192.168.5.157:8080/api/booking/details-booking?floor=2`, {
+    fetch(`http://${myUrl}/api/booking/details-booking?floor=2`, {
       method: 'GET',
     })
       .then((res) => res.json())
@@ -23,7 +25,7 @@ const SecondFloorNaRoomState = () => {
         setBookingData(data.BookingData)
         setRoomData(data.RoomData)
       })
-  }, [`http://192.168.5.157:8080/api/booking/details-booking?floor=2`])
+  }, [`http://${myUrl}/api/booking/details-booking?floor=2`])
 
   const secondFloorNaboxinfo = roomData.filter(
     (rooms) => rooms.roomType === 'nabox'
@@ -107,7 +109,7 @@ const SecondFloorNaRoomState = () => {
                 <th key={room.roomId} className={styles.roomstate}>
                   {IsThisTimeRoombooked(time, room.roomId) ? (
                     <OverlayTrigger
-                      trigger="click"
+                      trigger="focus"
                       key={TimeAndRoomFilter(time, room.roomId)[0].bookingId}
                       placement="top"
                       overlay={

@@ -1,57 +1,57 @@
-import styles from './SecondFloorMap.module.css';
-import { useState, useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import styles from './SecondFloorMap.module.css'
+import { useState, useEffect } from 'react'
+import { Link, useParams } from 'react-router-dom'
+import UseUrl from '../../../hooks/UseUrl'
 
 const SecondFloorMap = () => {
-  const { id } = useParams();
+  const { id } = useParams()
+  const myUrl = UseUrl()
 
   //2층 API 정보 가져오기
-  const [bookingData, setBookingData] = useState([]);
-  const [roomData, setRoomData] = useState([]);
+  const [bookingData, setBookingData] = useState([])
+  const [roomData, setRoomData] = useState([])
 
   useEffect(() => {
-    fetch(`http://192.168.5.157:8080/api/booking/main?floor=2`, {
+    fetch(`http://${myUrl}/api/booking/main?floor=2`, {
       method: 'GET',
     })
       .then((res) => res.json())
       .then((data) => {
-        setBookingData(data.BookingData);
-        setRoomData(data.RoomData);
-      });
-  }, [`htttp://192.168.5.157:8080/api/booking/main?floor=2`]);
+        setBookingData(data.BookingData)
+        setRoomData(data.RoomData)
+      })
+  }, [`htttp://${myUrl}/api/booking/main?floor=2`])
 
   const SecondMeetingRoominfo = roomData.filter(
     (rooms) => rooms.roomType === 'meeting'
-  );
+  )
 
-  const SecondNaboxinfo = roomData.filter(
-    (rooms) => rooms.roomType === 'nabox'
-  );
+  const SecondNaboxinfo = roomData.filter((rooms) => rooms.roomType === 'nabox')
 
   // roomFull 함수 설정
   const roomFull = (roomid) => {
-    const roomState = bookingData.filter((room) => room.roomId === roomid);
+    const roomState = bookingData.filter((room) => room.roomId === roomid)
 
     const TimeToString = (time) => {
-      let newTime;
+      let newTime
       if (time === '09:00') {
-        newTime = time.substr(1, 1);
+        newTime = time.substr(1, 1)
       } else {
-        newTime = time.substr(0, 2);
+        newTime = time.substr(0, 2)
       }
-      return newTime;
-    };
+      return newTime
+    }
 
     const roomBookingState = roomState.map(
       (room) =>
         TimeToString(room.endTime) - Number(TimeToString(room.startTime))
-    );
+    )
     const sum = roomBookingState.reduce(function add(sum, currValue) {
-      return sum + currValue;
-    }, 0);
+      return sum + currValue
+    }, 0)
 
-    return sum === 12;
-  };
+    return sum === 12
+  }
 
   return (
     <div className={styles.Container}>
@@ -106,7 +106,7 @@ const SecondFloorMap = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default SecondFloorMap;
+export default SecondFloorMap
