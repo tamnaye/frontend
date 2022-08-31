@@ -1,0 +1,74 @@
+@media screen and (max-width: 700px){
+    .wrap .userinfo {
+      margin-top: -70px;
+    }
+  }
+  
+  /* Info */
+  .userinfo {
+    margin-top: 12px;
+    color: #D46B42;
+  }
+  
+  .list {
+    padding: 10px 0px 0px 10px;
+    border: 1px solid #D9DDDC;
+  }
+  .input {
+    width: 210px;
+    height: 3vh;
+    margin-left: 20px;
+    text-align: center;
+  }
+  .membersBox {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .membersName {
+    background-color: white;
+    border: 1px solid #B1D8FB;
+    border-radius: 50px;
+    width: 68px;
+    height: 3.5vh;
+    justify-content: center;
+    margin: 0px 0px 18px 0px;
+    font-size: 14px;
+    color: #528FC4;
+  }
+
+  /*TimeTable */
+.time {
+  margin-top: 16px;
+  color: #D46B42;
+}
+.timetable {
+  padding: 10px 0px 10px 15px;
+  border: 1px solid #D9DDDC;
+}
+
+/*booking button */
+.bookbtn {
+  background-color: #67b4f8;
+  cursor: pointer;
+  width: 200px;
+  height: 30px;
+  color: whitesmoke;
+  border: 0px;
+  display: block;
+  margin: auto;
+  margin-top: 30px;
+  font-size: 16px;
+}
+.bookbtnOff {
+  background-color: #67b4f8;
+  width: 200px;
+  height: 30px;
+  color: whitesmoke;
+  border: 0px;
+  display: block;
+  margin: auto;
+  margin-top: 30px;
+  font-size: 16px;
+  opacity: 40%;
+  cursor: not-allowed;
+}
