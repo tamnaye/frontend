@@ -11,7 +11,7 @@ import dummy from '../../db/booking_data.json';
 
 function TimeTable() {
   const { id } = useParams();
-  const [ablebtn, setAblebtn] = useState(true); //예약시간이 아닐 떄 상태변경(true일 때 버튼 활성화!)
+  const [ablebtn, setAblebtn] = useState(true); //예약시간이 아닐 때 상태변경(true일 때 버튼 활성화!)
   const navigate = useNavigate();
 
   //21:00-08:30까지 예약 버튼 비활성화 함수
@@ -48,11 +48,11 @@ function TimeTable() {
   const BookingConfirm = () => {
     if (startTime > nowTime || endTime < nowTime) {
       alert(
-        '예약할 수 없는 시간입니다!\n오전8:30부터 오후21:00까지 예약이 가능합니다.'
+        '예약할 수 없는 시간입니다!\n오전08:30부터 오후21:00까지 예약이 가능합니다.'
       );
       navigate(`/${id}`);
     } else {
-      alert('🎉 예약 되었습니다 🎉 마이페이지로 이동합니다 :)');
+      alert('예약이 완료 되었습니다. 마이페이지로 이동합니다 :)');
       navigate(`/mypage/${id}`);
     }
   };
@@ -153,26 +153,26 @@ function TimeTable() {
     <div className={styles.timewrap}>
       <h6 className={styles.time}> 시간 선택 </h6>
       <div className={styles.timetable}>
-      {times.map((time, index) => (
-        <span key={index}>
-          {/* {category(index)} */}
-          <Checkbox
-            onChange={() => onChange(index)}
-            checked={checkedState[index]}
-            variant='success'
-            disabled={disabledState[index]}
-            style={{
-              margin: '10px',
-              color: 'green',
-              fontSize: '16px',
-              fontWeight: 'bold',
-            }}
-          >
-            {time}
-          </Checkbox>
-        </span>
-      ))}
-    </div>
+        {times.map((time, index) => (
+          <span key={index}>
+            {/* {category(index)} */}
+            <Checkbox
+              onChange={() => onChange(index)}
+              checked={checkedState[index]}
+              variant='success'
+              disabled={disabledState[index]}
+              style={{
+                margin: '10px',
+                color: 'green',
+                fontSize: '16px',
+                fontWeight: 'bold',
+              }}
+            >
+              {time}
+            </Checkbox>
+          </span>
+        ))}
+      </div>
       <button
         className={ablebtn === true ? styles.bookbtn : styles.bookbtnOff}
         onClick={BookingConfirm}

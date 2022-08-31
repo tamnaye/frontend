@@ -141,7 +141,7 @@ function RoomInfo() {
         <h6 className={styles.note}> 공간 사용 안내 </h6>
         <div className={styles.contents}>
           <p>- 모든 공간은 당일 예약만 가능</p>
-          <p>- 1일 최대 사용 가능 시간 : 2시간</p>
+          <p>- 최대 사용 가능 시간 : 2층-3시간 / 3층-2시간</p>
           <p>- 회의실은 1인 사용 및 예약 불가 </p>
           <p>- NaBox는 1인만 사용 가능 </p>
           <p>- 사용 후 기재 정리 및 모든 전원 OFF</p>
