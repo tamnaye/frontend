@@ -11,7 +11,7 @@ import dummy from '../../db/booking_data.json';
 
 function TimeTable() {
   const { id } = useParams();
-  const [ablebtn, setAblebtn] = useState(true); //예약시간이 아닐 떄 상태변경(true일 때 버튼 활성화!)
+  const [ablebtn, setAblebtn] = useState(true); //예약시간이 아닐 때 상태변경(true일 때 버튼 활성화!)
   const navigate = useNavigate();
 
   //21:00-08:30까지 예약 버튼 비활성화 함수
@@ -47,15 +47,14 @@ function TimeTable() {
   const BookingConfirm = () => {
     if (startTime > nowTime || endTime < nowTime) {
       alert(
-        '예약할 수 없는 시간입니다!\n오전8:30부터 오후21:00까지 예약이 가능합니다.'
+        '예약할 수 없는 시간입니다!\n오전08:30부터 오후21:00까지 예약이 가능합니다.'
       );
       navigate(`/${id}`);
     } else {
-      alert('🎉 예약 되었습니다 🎉 마이페이지로 이동합니다 :)');
+      alert('예약이 완료 되었습니다. 마이페이지로 이동합니다 :)');
       navigate(`/mypage/${id}`);
     }
   };
-
 
   const times = [
     '09:00',
@@ -89,7 +88,7 @@ function TimeTable() {
   const [checkedState, setCheckedState] = useState(new Array(12).fill(false));
 
   // i의 최소값이 0, 최대값은 11이기 때문에 처음 시간과 마지막 시간일때의 예외처리는 반복문에서 자연스럽게 처리됨
-  // 클릭한 시간 전꺼, 다음꺼 중 만약 이미 예약이 된것들은 이미 disabled : true인 상태이기 때문에 
+  // 클릭한 시간 전꺼, 다음꺼 중 만약 이미 예약이 된것들은 이미 disabled : true인 상태이기 때문에
   // onChange 첫번째 if문에서 예외처리됨 (checkedStateLength === 0 )
   // 나머지 중 disabled false인 것들 disabled = true로 바꿔줌
   function updateDisabledList(index) {
@@ -104,13 +103,13 @@ function TimeTable() {
     }
     setDisabledState(disableUpdateList);
   }
-  //checkedState 길이 반환 
+  //checkedState 길이 반환
   function checkedStateLength() {
     return checkedState.filter((bool) => bool === true).length;
   }
 
-  //indexOf 메소드는 체크된 인덱스 반환해줌, 
-  //하지만 버튼 두개 눌린 생태에서 다음 버튼 클릭의 인덱스랑 비교하려면 클릭 된 체크박스 인덱스들을 배열로 가지고 있어야함 
+  //indexOf 메소드는 체크된 인덱스 반환해줌,
+  //하지만 버튼 두개 눌린 생태에서 다음 버튼 클릭의 인덱스랑 비교하려면 클릭 된 체크박스 인덱스들을 배열로 가지고 있어야함
   function getCheckedIndexArray(checkedState) {
     var arr = [];
     var index = checkedState.indexOf(true);
@@ -121,7 +120,7 @@ function TimeTable() {
     return arr;
   }
 
-  //체크된 체크박스 checkedState 배열로 관리해주기 위함 
+  //체크된 체크박스 checkedState 배열로 관리해주기 위함
   //기본적으로 onChange에서 호출해줌, 하지만 체크 false로 강제해야하는 조건에서는 호출 하지 않음
   function updatedCheckedState(index) {
     const updatedCheckedState = checkedState.map((item, id) =>
@@ -137,7 +136,7 @@ function TimeTable() {
     } else if (checkedStateLength() === 1) {
       updatedCheckedState(index);
       if (checkedState.indexOf(true) === index) {
-        setDisabledState(defaultDisabledList);//체크해제
+        setDisabledState(defaultDisabledList); //체크해제
       } else {
         //pass
       }
@@ -154,25 +153,25 @@ function TimeTable() {
     <div className={styles.timewrap}>
       <h6 className={styles.time}> 시간 선택 </h6>
       <div className={styles.timetable}>
-      {times.map((time, index) => (
-        <span key={index}>
-          <Checkbox
-            onChange={() => onChange(index)}
-            checked={checkedState[index]}
-            variant='success'
-            disabled={disabledState[index]}
-            style={{
-              margin: '10px',
-              color: 'green',
-              fontSize: '16px',
-              fontWeight: 'bold',
-            }}
-          >
-            {time}
-          </Checkbox>
-        </span>
-      ))}
-    </div>
+        {times.map((time, index) => (
+          <span key={index}>
+            <Checkbox
+              onChange={() => onChange(index)}
+              checked={checkedState[index]}
+              variant='success'
+              disabled={disabledState[index]}
+              style={{
+                margin: '10px',
+                color: 'green',
+                fontSize: '16px',
+                fontWeight: 'bold',
+              }}
+            >
+              {time}
+            </Checkbox>
+          </span>
+        ))}
+      </div>
       <button
         className={ablebtn === true ? styles.bookbtn : styles.bookbtnOff}
         onClick={BookingConfirm}

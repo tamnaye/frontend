@@ -85,6 +85,7 @@ function Info() {
               value={name}
               type='text'
               placeholder='검색'
+              required
             />
           </p>
           <div className={styles.membersBox}>
