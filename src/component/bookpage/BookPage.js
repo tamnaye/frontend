@@ -5,8 +5,6 @@ import NavsAdmin from './navs/NavsAdmin';
 import NavsFloor2 from './navs/NavsFloor2';
 import NavsFloor3 from './navs/NavsFloor3';
 import RoomInfo from './RoomInfo';
-// import UserInfo from './UserInfo';
-// import TimeTable from './TimeTable';
 import UserInfoTimeData from './UserInfoTimeData';
 //hooks
 import UseUrl from '../../hooks/UseUrl';
@@ -49,8 +47,6 @@ function BookPage() {
         <RoomInfo />
         <div className={styles.infowrap}>
           <UserInfoTimeData />
-          {/* <UserInfo />
-          <TimeTable /> */}
         </div>
       </div>
     </div>
