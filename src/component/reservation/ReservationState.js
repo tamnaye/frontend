@@ -1,17 +1,17 @@
-import styles from './ReservationState.module.css'
-import ThirdFloorReservationState from './ThirdFloorStateComponents/ThirdFloorReservationState'
-import SecondFloorReservationState from './SecondFloorStateComponents/SecondFloorReservationState'
-import SecondAndThirdReservationState from './SecondAndThirdReservationState'
-import { useParams } from 'react-router-dom'
-import { useEffect, useState } from 'react'
-import UseUrl from '../../hooks/UseUrl'
+import styles from './ReservationState.module.css';
+import ThirdFloorReservationState from './ThirdFloorStateComponents/ThirdFloorReservationState';
+import SecondFloorReservationState from './SecondFloorStateComponents/SecondFloorReservationState';
+import SecondAndThirdReservationState from './SecondAndThirdReservationState';
+import { useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import useUrl from '../../hooks/useUrl';
 
 const ReservationState = () => {
-  const { id } = useParams()
-  const myUrl = UseUrl()
+  const { id } = useParams();
+  const myUrl = useUrl();
 
-  const [userClasses, setUserClasses] = useState('')
-  const [maxClasses, setMaxClasses] = useState('')
+  const [userClasses, setUserClasses] = useState('');
+  const [maxClasses, setMaxClasses] = useState('');
 
   useEffect(() => {
     fetch(`http://${myUrl}/api/user/data?userId=${id}`, {
@@ -19,10 +19,10 @@ const ReservationState = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        setUserClasses(data.userData.classes)
-        setMaxClasses(data.maxClasses)
-      })
-  }, [`http://${myUrl}/api/user/data?userId=${id}`, id])
+        setUserClasses(data.userData.classes);
+        setMaxClasses(data.maxClasses);
+      });
+  }, [`http://${myUrl}/api/user/data?userId=${id}`, id]);
 
   return (
     <div className={styles.ReservationStateContainer}>
@@ -35,7 +35,7 @@ const ReservationState = () => {
         <SecondFloorReservationState className={styles.reservationTable} />
       )}
     </div>
-  )
-}
+  );
+};
 
-export default ReservationState
+export default ReservationState;

@@ -1,6 +1,7 @@
+
 import { useState, useEffect } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import UseUrl from '../../../hooks/UseUrl'
+import useUrl from '../../../hooks/useUrl';
 import useTimeAlert from '../../../hooks/useTimeAlert'
 import styles from './SecondFloorNaRoom.module.css'
 
@@ -9,9 +10,10 @@ const SecondFloorNaRoom = () => {
   const myUrl = UseUrl()
   const [ablebtn, BookingConfirm] = useTimeAlert()
 
+
   //2층 나박스 API 사용 정보 불러오기
-  const [bookingData, setBookingData] = useState([])
-  const [roomData, setRoomData] = useState([])
+  const [bookingData, setBookingData] = useState([]);
+  const [roomData, setRoomData] = useState([]);
 
   useEffect(() => {
     fetch(`http://${myUrl}/api/booking/main?floor=2`, {
@@ -19,37 +21,43 @@ const SecondFloorNaRoom = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        setBookingData(data.BookingData)
-        setRoomData(data.RoomData)
-      })
-  }, [`htttp://${myUrl}/api/booking/main?floor=2`])
+        setBookingData(data.BookingData);
+        setRoomData(data.RoomData);
+      });
+  }, [`htttp://${myUrl}/api/booking/main?floor=2`]);
 
-  const SecondNaboxinfo = roomData.filter((rooms) => rooms.roomType === 'nabox')
+  const SecondNaboxinfo = roomData.filter(
+    (rooms) => rooms.roomType === 'nabox'
+  );
 
   // roomFull 함수 설정
+
   const notroomFull = (roomid) => {
     const roomState = bookingData.filter((room) => room.roomId === roomid)
 
+
     const TimeToString = (time) => {
-      let newTime
+      let newTime;
       if (time === '09:00') {
-        newTime = time.substr(1, 1)
+        newTime = time.substr(1, 1);
       } else {
-        newTime = time.substr(0, 2)
+        newTime = time.substr(0, 2);
       }
-      return newTime
-    }
+      return newTime;
+    };
 
     const roomBookingState = roomState.map(
       (room) =>
         TimeToString(room.endTime) - Number(TimeToString(room.startTime))
-    )
+    );
     const sum = roomBookingState.reduce(function add(sum, currValue) {
-      return sum + currValue
-    }, 0)
+      return sum + currValue;
+    }, 0);
+
 
     return sum !== 12
   }
+
 
   return (
     <div className={styles.NaBoxContainer}>
@@ -71,7 +79,7 @@ const SecondFloorNaRoom = () => {
         ))}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default SecondFloorNaRoom
+export default SecondFloorNaRoom;

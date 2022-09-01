@@ -1,30 +1,30 @@
-import styles from './MyBookTable.module.css'
-import { useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
-import UseUrl from '../../hooks/UseUrl'
+import styles from './MyBookTable.module.css';
+import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import useUrl from '../../hooks/useUrl';
 
 function MyBookTable() {
-  const { id } = useParams()
-  const myUrl = UseUrl()
+  const { id } = useParams();
+  const myUrl = useUrl();
   //----서버데이터 불러오기----//
-  const [myBookingList, setMyBookingList] = useState([])
-  const url = `http://${myUrl}/api/user/mypage?userId=${id}`
+  const [myBookingList, setMyBookingList] = useState([]);
+  const url = `http://${myUrl}/api/user/mypage?userId=${id}`;
   useEffect(() => {
     fetch(url, { method: 'GET' })
       .then((res) => res.json())
       .then((data) => {
-        setMyBookingList(data.myBookingDetailDataList)
-      })
-  }, [url])
-  console.log(myBookingList)
+        setMyBookingList(data.myBookingDetailDataList);
+      });
+  }, [url]);
+  console.log(myBookingList);
 
   //useId랑 applicantUserId랑 같을 때 값 출력하기
   const Cancel = (bid, index) => {
-    const arr = [...myBookingList]
+    const arr = [...myBookingList];
     //console.log(arr)
     if (window.confirm('예약을 취소하시겠습니까?')) {
       //console.log(bid);
-      const postUrl = `http://${myUrl}/api/booking/cancellation`
+      const postUrl = `http://${myUrl}/api/booking/cancellation`;
       fetch(postUrl, {
         method: 'POST',
         headers: {
@@ -36,24 +36,24 @@ function MyBookTable() {
       })
         .then((res) => res.json())
         .then((data) => {
-          console.log(data)
-          arr.splice(index, 1)
-          setMyBookingList(arr)
-        })
+          console.log(data);
+          arr.splice(index, 1);
+          setMyBookingList(arr);
+        });
     }
-  }
+  };
 
   return (
     <div className={styles.wrap}>
       <div id={styles.bookingBox}>
-        <table className="table caption-top">
+        <table className='table caption-top'>
           <thead>
             <tr>
-              <th scope="col">공간</th>
-              <th scope="col">시간</th>
-              <th scope="col">신청자</th>
-              <th scope="col">팀원</th>
-              <th scope="col">예약취소</th>
+              <th scope='col'>공간</th>
+              <th scope='col'>시간</th>
+              <th scope='col'>신청자</th>
+              <th scope='col'>팀원</th>
+              <th scope='col'>예약취소</th>
             </tr>
           </thead>
           <tbody>
@@ -76,7 +76,11 @@ function MyBookTable() {
                     onClick={() => Cancel(item.bookingId, index)}
                     disabled={item.applicant.userId === id ? false : true}
                   >
-                    {item.applicant.userId === id ? '취소가능' : '취소불가'}
+                    {item.mode === 'cancel'
+                      ? '공식일정'
+                      : item.applicant.userId === id
+                      ? '취소가능'
+                      : '취소불가'}
                   </button>
                 </td>
               </tr>
@@ -88,6 +92,6 @@ function MyBookTable() {
         </p>
       </div>
     </div>
-  )
+  );
 }
-export default MyBookTable
+export default MyBookTable;

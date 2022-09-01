@@ -1,9 +1,10 @@
+
 import SecondFloor from './secondFloorComponents/SecondFloor'
 import ThirdFloor from './thirdFloorComponents/ThirdFloor'
 import styles from './MainTemplate.module.css'
 import { useParams } from 'react-router-dom'
 import { useEffect, useState, useNavigate } from 'react'
-import UseUrl from '../../hooks/UseUrl'
+import useUrl from '../../hooks/useUrl'
 // import useFetch from '../../hooks/useFetch'
 
 const MainTemplate = () => {
@@ -11,21 +12,24 @@ const MainTemplate = () => {
   window.localStorage.setItem('userid', id)
   const myUrl = UseUrl()
 
-  const [userClasses, setUserClasses] = useState('')
-  const [maxClasses, setMaxClasses] = useState('')
 
-  const url = `http://${myUrl}/api/user/data?userId=${id}`
+  const [userClasses, setUserClasses] = useState('');
+  const [maxClasses, setMaxClasses] = useState('');
+
+  const url = `http://${myUrl}/api/user/data?userId=${id}`;
   useEffect(() => {
     fetch(url, {
       method: 'GET',
     })
       .then((res) => res.json())
       .then((data) => {
+
         setUserClasses(data.userData.classes)
         setMaxClasses(data.maxClasses)
         window.localStorage.setItem('class', data.userData.classes)
       })
   }, [id, url])
+
 
   const [ablebtn, setAblebtn] = useState(true) //예약시간이 아닐 때 상태변경(true일 때 버튼 활성화!)
 
@@ -69,17 +73,17 @@ const MainTemplate = () => {
         {/* classes 활용 */}
         {userClasses === 0 ? (
           [
-            <SecondFloor key="3" className={styles.secondFloor} />,
-            <ThirdFloor key="2" className={styles.thirdFloor} />,
+            <SecondFloor key='3' className={styles.secondFloor} />,
+            <ThirdFloor key='2' className={styles.thirdFloor} />,
           ]
         ) : userClasses === maxClasses ? (
-          <ThirdFloor key="2" className={styles.thirdFloor} />
+          <ThirdFloor key='2' className={styles.thirdFloor} />
         ) : (
-          <SecondFloor key="3" className={styles.secondFloor} />
+          <SecondFloor key='3' className={styles.secondFloor} />
         )}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default MainTemplate
+export default MainTemplate;

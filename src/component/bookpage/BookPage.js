@@ -1,44 +1,44 @@
 //styles
-import styles from './BookPage.module.css'
+import styles from './BookPage.module.css';
 //BookingPage - component
-import NavsAdmin from './navs/NavsAdmin'
-import NavsFloor2 from './navs/NavsFloor2'
-import NavsFloor3 from './navs/NavsFloor3'
-import RoomInfo from './RoomInfo'
-import UserInfo from './UserInfo'
-import TimeTable from './TimeTable'
-import { useParams } from 'react-router-dom'
-import UseUrl from '../../hooks/UseUrl'
-import { useState, useEffect } from 'react'
+import NavsAdmin from './navs/NavsAdmin';
+import NavsFloor2 from './navs/NavsFloor2';
+import NavsFloor3 from './navs/NavsFloor3';
+import RoomInfo from './RoomInfo';
+import UserInfoTimeData from './UserInfoTimeData';
+//hooks
+import useUrl from '../../hooks/useUrl';
+import { useParams } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 
 function BookPage() {
-  const { id } = useParams()
-  const myUrl = UseUrl()
+  const { id } = useParams();
+  const myUrl = useUrl();
 
   //const [data, setData] = useState([]);
-  const [userClasses, setUserClasses] = useState('')
-  const [maxClasses, setMaxClasses] = useState('')
+  const [userClass, setUserClass] = useState('');
+  const [maxClass, setMaxClass] = useState('');
 
-  const url = `http://${myUrl}/api/user/data?userId=${id}`
+  const url = `http://${myUrl}/api/user/data?userId=${id}`;
   useEffect(() => {
     fetch(url)
       .then((res) => res.json())
       .then((data) => {
         //setData(data);
-        setUserClasses(data.userData.classes)
-        setMaxClasses(data.maxClasses)
-      })
-  }, [url])
+        setUserClass(data.userData.classes);
+        setMaxClass(data.maxClasses);
+      });
+  }, [url]);
   //console.log(id);
   //console.log(data);
-  //console.log(userClasses);
-  //console.log(maxClasses);
+  console.log(userClass);
+  console.log(maxClass);
 
   return (
     <div>
-      {userClasses === 0 ? (
+      {userClass === 0 ? (
         <NavsAdmin />
-      ) : userClasses === maxClasses ? (
+      ) : userClass === maxClass ? (
         <NavsFloor3 />
       ) : (
         <NavsFloor2 />
@@ -46,11 +46,10 @@ function BookPage() {
       <div className={styles.container}>
         <RoomInfo />
         <div className={styles.infowrap}>
-          <UserInfo />
-          <TimeTable />
+          <UserInfoTimeData userClass={userClass} />
         </div>
       </div>
     </div>
-  )
+  );
 }
-export default BookPage
+export default BookPage;
