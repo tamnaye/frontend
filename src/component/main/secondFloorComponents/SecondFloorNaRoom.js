@@ -1,12 +1,13 @@
 import { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import useUrl from '../../../hooks/useUrl';
-
+import useTimeAlert from '../../../hooks/useTimeAlert';
 import styles from './SecondFloorNaRoom.module.css';
 
 const SecondFloorNaRoom = () => {
   const { id } = useParams();
   const myUrl = useUrl();
+  const [ablebtn, BookingConfirm] = useTimeAlert();
 
   //2층 나박스 API 사용 정보 불러오기
   const [bookingData, setBookingData] = useState([]);
@@ -28,7 +29,8 @@ const SecondFloorNaRoom = () => {
   );
 
   // roomFull 함수 설정
-  const roomFull = (roomid) => {
+
+  const notroomFull = (roomid) => {
     const roomState = bookingData.filter((room) => room.roomId === roomid);
 
     const TimeToString = (time) => {
@@ -49,7 +51,7 @@ const SecondFloorNaRoom = () => {
       return sum + currValue;
     }, 0);
 
-    return sum === 12;
+    return sum !== 12;
   };
 
   return (
@@ -57,12 +59,18 @@ const SecondFloorNaRoom = () => {
       <h4 className={styles.title}>Na Box</h4>
       <div className={styles.roomContainer}>
         {SecondNaboxinfo.map((room) => (
-          <button
-            key={room.roomId}
-            className={roomFull(room.roomId) ? [styles.full] : [styles.notfull]}
-          >
-            <Link to={`/booking/${room.roomId}/${id}`}>{room.roomName}</Link>
-          </button>
+          <Link to={`/booking/${room.roomId}`} key={room.roomId}>
+            <button
+              className={
+                notroomFull(room.roomId) && ablebtn
+                  ? [styles.notfull]
+                  : [styles.full]
+              }
+              onClick={BookingConfirm}
+            >
+              {room.roomName}
+            </button>
+          </Link>
         ))}
       </div>
     </div>

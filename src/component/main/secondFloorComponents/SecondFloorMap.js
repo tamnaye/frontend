@@ -2,10 +2,12 @@ import styles from './SecondFloorMap.module.css';
 import { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import useUrl from '../../../hooks/useUrl';
+import useTimeAlert from '../../../hooks/useTimeAlert';
 
 const SecondFloorMap = () => {
   const { id } = useParams();
   const myUrl = useUrl();
+  const [ablebtn, BookingConfirm] = useTimeAlert();
 
   //2층 API 정보 가져오기
   const [bookingData, setBookingData] = useState([]);
@@ -31,7 +33,8 @@ const SecondFloorMap = () => {
   );
 
   // roomFull 함수 설정
-  const roomFull = (roomid) => {
+
+  const notroomFull = (roomid) => {
     const roomState = bookingData.filter((room) => room.roomId === roomid);
 
     const TimeToString = (time) => {
@@ -52,59 +55,78 @@ const SecondFloorMap = () => {
       return sum + currValue;
     }, 0);
 
-    return sum === 12;
+    return sum !== 12;
   };
 
   return (
     <div className={styles.Container}>
       <div className={styles.mapContainer}>
+        {ablebtn ? null : (
+          <div className={styles.TimeNotAllow}>
+            지금은 예약 가능 시간이 아닙니다
+          </div>
+        )}
         {SecondMeetingRoominfo.map((rooms) => (
-          <div
+          <Link
+            to={`/booking/${rooms.roomId}`}
             key={rooms.roomId}
             className={styles[rooms.roomName]}
-            id={roomFull(rooms.roomId) ? [styles.full] : [styles.MeetingRoom]}
+            id={
+              notroomFull(rooms.roomId) && ablebtn
+                ? [styles.MeetingRoom]
+                : [styles.full]
+            }
+            onClick={BookingConfirm}
           >
-            <Link to={`/booking/${rooms.roomId}/${id}`}>
-              {roomFull(rooms.roomId) ? '마감' : rooms.roomName}
-            </Link>
-          </div>
+            <div>
+              {notroomFull(rooms.roomId) && ablebtn ? rooms.roomName : '마감'}
+            </div>
+          </Link>
         ))}
         {SecondNaboxinfo.map((rooms) => (
-          <div
+          <Link
+            to={`/booking/${rooms.roomId}`}
             key={rooms.roomId}
-            className={styles[rooms.roomName]}
-            id={roomFull(rooms.roomId) ? [styles.full] : [styles.NaBax]}
+            className={styles[`NaBox${rooms.roomId}`]}
+            id={
+              notroomFull(rooms.roomId) && ablebtn
+                ? [styles.NaBox]
+                : [styles.full]
+            }
+            onClick={BookingConfirm}
           >
-            <Link to={`/booking/${rooms.roomId}/${id}`}>
-              {roomFull(rooms.roomId) ? '마감' : rooms.roomName}
-            </Link>
-          </div>
+            <div>
+              {notroomFull(rooms.roomId) && ablebtn
+                ? rooms.roomName.substr(6, 1)
+                : '마감'}
+            </div>
+          </Link>
         ))}
 
         <div className={styles.space범섬} id={styles.notSelect}>
-          space 범섬
+          {`space\n범섬`}
         </div>
         <div className={styles.Lounge} id={styles.notSelect}>
-          내일-Lounge
+          {`내일\nLounge`}
         </div>
 
         <div className={styles.화장실} id={styles.notSelect}>
-          화<br />장 <br />실
+          {`화\n장\n실`}
         </div>
         <div className={styles.stair} id={styles.notSelect}>
-          stair
+          {`계\n단`}
         </div>
         <div className={styles.EV} id={styles.notSelect}>
           E.V
         </div>
         <div className={styles.Stair2} id={styles.notSelect}>
-          Stair
+          {`계\n단`}
         </div>
         <div className={styles.space우도} id={styles.notSelect}>
-          space 우도
+          {`space\n우도`}
         </div>
         <div className={styles.space비양도} id={styles.notSelect}>
-          space 비양도
+          {`space\n비양도`}
         </div>
       </div>
     </div>

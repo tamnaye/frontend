@@ -6,6 +6,9 @@
     padding: 5px;
     line-height: 10px;
   }
+  .container .mapContainer #MeetingRoom {
+    padding: 3px;
+  }
 }
 
 .mapContainer {
@@ -32,6 +35,12 @@
 
 .mapContainer a {
   color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border-radius: 5px;
+  white-space: inherit;
 }
 
 .mapContainer div {
@@ -41,6 +50,7 @@
   justify-content: center;
   text-align: center;
   border-radius: 5px;
+  white-space: break-spaces;
 }
 
 #notSelect {
@@ -56,13 +66,13 @@
   background-color: rgb(73, 117, 144);
 }
 
-#NaBax {
+#NaBox {
   background-color: rgb(255, 163, 42);
   font-size: 11px;
   word-break: break-all;
 }
 
-#NaBax:hover {
+#NaBox:hover {
   background-color: rgb(156, 99, 0);
 }
 

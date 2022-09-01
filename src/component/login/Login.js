@@ -28,7 +28,8 @@ export default function Login() {
       .then((data) => {
         console.log('data received : ', data)
         if (data.code === 405) {
-          navigate(`/main/${userid}`)
+           window.localStorage.setItem('userid', userid);
+          navigate(`/`)
         } else {
           alert(data.message)
         }
