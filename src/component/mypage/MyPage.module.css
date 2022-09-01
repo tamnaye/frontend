@@ -1,9 +1,12 @@
-.container {
-    text-align: center;
-  }
+@media screen and (max-width: 700px) {
+    .container .userInfo {
+        margin: 40px 0px;
+        font-size: 13px;
+    }
+   }
 
 .userInfo {
-    margin: 10% 0%;
+    margin: 100px 0px;
     text-align: center;
     font-size: 20px;
 }  

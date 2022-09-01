@@ -1,25 +1,23 @@
-/* 마이페이지 table */
-#bookingBox {
-    width: 900px;
-    margin: auto;
+/*mypage_bookingTable*/
+@media screen and (max-width: 700px) {
+ .tableTr .tableTh {
+    font-size: 10px;
+ }
+ div .warning .warning1 {
+    font-size: 10px;
+ }
+ div .warning .warning2 {
+    font-size: 10px;
+ }
 }
 
-tr {
+.tableTr {
     table-layout: fixed;
     text-align: center;
     font-size: 18px;
 }
 
-td {
-    height: 25px;
-    text-align: center;
-    font-size: 18px;
-}
-
 .applicantCancel {
-    width: 80px;
-    height: 25px;
-    font-size: 18px;
     color: #D46B42;
     background-color: white;
     border: none;
@@ -29,17 +27,25 @@ td {
     color: tomato;
 }
 .memberCancel {
-    width: 80px;
-    height: 25px;
-    font-size: 18px;
     color: #888;
     background-color: white;
     border: none;
 }
+.managerCancel {
+    color: #2090ff;
+    background-color: white;
+    border: none;
+}
 
+/* warning */
 .warning {
-    margin-top: 20px;
-    font-size: 16px;
+    margin-top: 10px;
     text-align: end;
-    color: #D46B42;
+}
+.warning1 {
+    margin: 0px;
+    font-size: 17px;
+}
+.warning2 {
+    font-size: 17px;
 }
