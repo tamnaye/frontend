@@ -1,13 +1,13 @@
-
 import styles from './SecondFloorMap.module.css';
 import { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import useUrl from '../../../hooks/useUrl';
+import useTimeAlert from '../../../hooks/useTimeAlert';
 
 const SecondFloorMap = () => {
   const { id } = useParams();
   const myUrl = useUrl();
-
+  const [ablebtn, BookingConfirm] = useTimeAlert();
 
   //2층 API 정보 가져오기
   const [bookingData, setBookingData] = useState([]);
@@ -35,8 +35,7 @@ const SecondFloorMap = () => {
   // roomFull 함수 설정
 
   const notroomFull = (roomid) => {
-    const roomState = bookingData.filter((room) => room.roomId === roomid)
-
+    const roomState = bookingData.filter((room) => room.roomId === roomid);
 
     const TimeToString = (time) => {
       let newTime;
@@ -56,10 +55,8 @@ const SecondFloorMap = () => {
       return sum + currValue;
     }, 0);
 
-
-    return sum !== 12
-  }
-
+    return sum !== 12;
+  };
 
   return (
     <div className={styles.Container}>
