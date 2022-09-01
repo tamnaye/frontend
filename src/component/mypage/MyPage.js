@@ -25,7 +25,7 @@ function MyPage() {
         setBookingCount(data.myBookingDetailDataList);
       });
   }, [url]);
-  console.log(bookingCount);
+  //onsole.log(bookingCount);
 
   return (
     <Container>

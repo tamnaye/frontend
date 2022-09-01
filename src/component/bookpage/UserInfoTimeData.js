@@ -57,9 +57,9 @@ const UserInfoTimeData = ({ userClasses }) => {
         classes: userClasses,
         roomId: roomId,
         roomType: roomType,
-        startTime: '19:00',
-        endTime: '20:00',
-        teamMate: [],
+        startTime: '12:00',
+        endTime: '13:00',
+        teamMate: ['이현정'],
         userId: id,
         userName: userName,
       }),
@@ -67,12 +67,7 @@ const UserInfoTimeData = ({ userClasses }) => {
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-        if (startTime > nowTime || endTime < nowTime) {
-          alert(
-            '예약할 수 없는 시간입니다!\n오전08:30부터 오후21:00까지 예약이 가능합니다.'
-          );
-          navigate(`/${id}`);
-        } else if (data.message.success) {
+        if (data.message.success) {
           //console.log(data.message.success);
           alert(data.message.success);
           navigate(`/mypage/${id}`);
@@ -264,6 +259,7 @@ const UserInfoTimeData = ({ userClasses }) => {
         <button
           className={ablebtn === true ? styles.bookbtn : styles.bookbtnOff}
           onClick={BookingConfirm}
+          disabled={ablebtn === true ? false : true}
         >
           예약하기
         </button>
