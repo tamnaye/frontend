@@ -1,16 +1,14 @@
-
-import React from 'react'
-import { useState, useEffect } from 'react'
-import { Link, useParams } from 'react-router-dom'
-import styles from './SecondFloorMeetingRoom.module.css'
+import React from 'react';
+import { useState, useEffect } from 'react';
+import { Link, useParams } from 'react-router-dom';
+import styles from './SecondFloorMeetingRoom.module.css';
 import useUrl from '../../../hooks/useUrl';
-import useTimeAlert from '../../../hooks/useTimeAlert'
+import useTimeAlert from '../../../hooks/useTimeAlert';
 
 const SecondFloorMeetingRoom = () => {
-  const { id } = useParams()
-  const myUrl = UseUrl()
-  const [ablebtn, BookingConfirm] = useTimeAlert()
-
+  const { id } = useParams();
+  const myUrl = useUrl();
+  const [ablebtn, BookingConfirm] = useTimeAlert();
 
   //2층 미팅룸 API 사용 정보 불러오기
   const [bookingData, setBookingData] = useState([]);
@@ -31,10 +29,8 @@ const SecondFloorMeetingRoom = () => {
     (rooms) => rooms.roomType === 'meeting'
   );
 
-
   const notroomFull = (roomid) => {
-    const roomState = bookingData.filter((room) => room.roomId === roomid)
-
+    const roomState = bookingData.filter((room) => room.roomId === roomid);
 
     const TimeToString = (time) => {
       let newTime;
@@ -54,10 +50,8 @@ const SecondFloorMeetingRoom = () => {
       return sum + currValue;
     }, 0);
 
-
-    return sum !== 12
-  }
-
+    return sum !== 12;
+  };
 
   return (
     <div className={styles.MeetingRoomContainer}>

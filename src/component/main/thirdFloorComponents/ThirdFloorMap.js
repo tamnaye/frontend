@@ -1,15 +1,13 @@
-
-import styles from './ThirdFloorMap.module.css'
-import { useState, useEffect } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import styles from './ThirdFloorMap.module.css';
+import { useState, useEffect } from 'react';
+import { Link, useParams } from 'react-router-dom';
 import useUrl from '../../../hooks/useUrl';
-import useTimeAlert from '../../../hooks/useTimeAlert'
+import useTimeAlert from '../../../hooks/useTimeAlert';
 
 const ThirdFloorMap = () => {
-  const { id } = useParams()
-  const myUrl = UseUrl()
-  const [ablebtn, BookingConfirm] = useTimeAlert()
-
+  const { id } = useParams();
+  const myUrl = useUrl();
+  const [ablebtn, BookingConfirm] = useTimeAlert();
 
   //3층 API 정보 가져오기
   const [bookingData, setBookingData] = useState([]);
@@ -35,8 +33,7 @@ const ThirdFloorMap = () => {
   // roomFull 함수 설정
 
   const notroomFull = (roomid) => {
-    const roomState = bookingData.filter((room) => room.roomId === roomid)
-
+    const roomState = bookingData.filter((room) => room.roomId === roomid);
 
     const TimeToString = (time) => {
       let newTime;
@@ -56,10 +53,8 @@ const ThirdFloorMap = () => {
       return sum + currValue;
     }, 0);
 
-
-    return sum !== 12
-  }
-
+    return sum !== 12;
+  };
 
   return (
     <div className={styles.container}>
