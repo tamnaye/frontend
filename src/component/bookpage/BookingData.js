@@ -16,19 +16,21 @@ import useTimes from "../../hooks/useTimes";
 //백에서 booking id 별 start,end Time 받아와야함 (endTime -1시간 해줘야함)
 //post 보낼 때 endtime + 1시간 해줘야함
 
-const BookingData = ({ userClass }) => {
+const BookingData = () => {
   //starttime, endtime,
-  const { id } = useParams();
+  const id  = window.localStorage.getItem("userid")
   const { roomId } = useParams();
   const myUrl = useUrl();
   const [userName, setUserName] = useState("");
   const [roomType, setRoomType] = useState(""); // meeting / nabax
+  const userClass = window.localStorage.getItem("class")
+  
 
   const times = useTimes();
   const [disabledState, setDisabledState] = useState([]);
   const [defaultDisabledList, setDefaultDisabledList] = useState([]);
   const url = `http://${myUrl}/api/booking?roomId=${roomId}&userId=${id}&classes=${userClass}`;
-
+  console.log("url", url)
   const [memberNames, setMemberNames] = useState([]);
 
 
