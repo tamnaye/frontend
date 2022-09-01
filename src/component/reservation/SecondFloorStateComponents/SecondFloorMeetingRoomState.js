@@ -14,9 +14,11 @@ const SecondFloorMeetingRoomState = () => {
   const [bookingData, setBookingData] = useState([]);
   const [roomData, setRoomData] = useState([]);
 
+
   const { id } = useParams();
   const myUrl = useUrl();
   const url = `http://${myUrl}api/booking/details-booking?floor=2`;
+
   useEffect(() => {
     fetch(url, {
       method: 'GET',
@@ -94,7 +96,6 @@ const SecondFloorMeetingRoomState = () => {
               <th key={room.roomId} className='table-primary' id={styles.text}>
                 <Link to={`/booking/${room.roomId}/${id}`}>
                   <ArrowRightCircleFill />
-                  &nbsp;
                   {room.roomName}
                 </Link>
               </th>
@@ -148,7 +149,7 @@ const SecondFloorMeetingRoomState = () => {
                             bookingLength(
                               TimeAndRoomFilter(time, room.roomId)[0].startTime,
                               TimeAndRoomFilter(time, room.roomId)[0].endTime
-                            ) * 36
+                            ) * 35
                           }px`,
                         }}
                         className={styles.bookingTime}
