@@ -31,8 +31,8 @@ function BookPage() {
   }, [url]);
   //console.log(id);
   //console.log(data);
-  console.log(userClass);
-  console.log(maxClass);
+  // console.log(userClass);
+  // console.log(maxClass);
 
   return (
     <div>

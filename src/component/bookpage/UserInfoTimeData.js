@@ -28,26 +28,37 @@ const UserInfoTimeData = ({ userClass }) => {
   const [disabledState, setDisabledState] = useState([]); //test
   const [defaultDisabledList, setDefaultDisabledList] = useState([]); //test
   const url = `http://${myUrl}/api/booking?roomId=${roomId}&userId=${id}&classes=${userClass}`;
-  console.log("url : " ,userClass )
+  console.log(" main thread url : " ,url )
+
+  const [memberNames, setMemberNames] = useState([])
   useEffect(() => {
     fetch(url, { method: "GET" })
       .then((res) => res.json())
       .then((data) => {
         setUserName(data.userData.userName);
         setRoomType(data.roomData.roomType);
-        console.log("data.booking", data.bookingData);
-        const bookedTimes = [];
-        data.bookingData.map((booking) =>
-          bookedTimes.push(booking.startTime, booking.endTime)
-        );
-        const arr = [...defaultDisabledList];
-        times.map((time) =>
-          arr.push(bookedTimes.includes(time) ? true : false)
-        );
-        setDefaultDisabledList(arr);
-        setDisabledState(arr);
+        setDefaultDisabledList(bookingdDataHandler(data.bookingData));
+        setDisabledState(bookingdDataHandler(data.bookingData));
+        setMemberNames(data.namesData)
+
+
       });
   }, [url]);
+
+ 
+  function bookingdDataHandler (bookingData){
+    const bookedTimes = [];
+    bookingData.map((booking) =>
+      bookedTimes.push(booking.startTime, booking.endTime)
+    );
+    const arr = [...defaultDisabledList];
+    times.map((time) =>
+      arr.push(bookedTimes.includes(time) ? true : false)
+    );
+    return arr;
+  }
+
+
 
   //----무결님 버튼 클릭 작업----//
 
@@ -112,15 +123,6 @@ const UserInfoTimeData = ({ userClass }) => {
   };
 
   //--------팀원 검색 기능---------//
-  const membersData = dummy_names.members;
-  const memberNames = [];
-  membersData.map(
-    (member) =>
-      member.classe === userClass && // 기수
-      member.name !== userName && // '나'제외
-      memberNames.push(member.name)
-  );
-
   const [searchedNameState, setSearchedNameState] = useState([]);
   const [selectedNameState, setSelectedNameState] = useState([]);
   const [inputName, setInputName] = useState("");
@@ -193,7 +195,7 @@ const UserInfoTimeData = ({ userClass }) => {
   const nowHour = pluszero(NowHour);
   const nowMins = pluszero(NowMins);
   const nowTime = nowHour + nowMins;
-  //console.log(nowTime);
+  console.log("nowHour",nowHour);
   const startTime = "0830";
   const endTime = "2100";
   useEffect(() => {
