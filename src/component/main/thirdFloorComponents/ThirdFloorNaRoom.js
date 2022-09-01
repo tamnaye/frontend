@@ -58,7 +58,7 @@ const ThirdFloorNaRoom = () => {
       <h4 className={styles.title}>Na Box</h4>
       <div className={styles.roomContainer}>
         {ThirdNaboxinfo.map((room) => (
-          <Link to={`/booking/${room.roomId}/${id}`} key={room.roomId}>
+          <Link to={`/booking/${room.roomId}`} key={room.roomId}>
             <button
               className={
                 notroomFull(room.roomId) && ablebtn

@@ -59,7 +59,7 @@ const ThirdFloorMeetingRoom = () => {
       <h4 className={styles.title}>회의실</h4>
       <div className={styles.roomContainer}>
         {ThirdMeetingRoominfo.map((room) => (
-          <Link to={`/booking/${room.roomId}/${id}`} key={room.roomId}>
+          <Link to={`/booking/${room.roomId}`} key={room.roomId}>
             <button
               className={
                 notroomFull(room.roomId) && ablebtn

@@ -61,7 +61,7 @@ const ThirdFloorMap = () => {
       <div className={styles.mapContainer}>
         {ThirdMeetingRoominfo.map((rooms) => (
           <Link
-            to={`/booking/${rooms.roomId}/${id}`}
+            to={`/booking/${rooms.roomId}`}
             key={rooms.roomId}
             className={styles[rooms.roomName]}
             id={
@@ -78,7 +78,7 @@ const ThirdFloorMap = () => {
         ))}
         {ThirdNaboxinfo.map((rooms) => (
           <Link
-            to={`/booking/${rooms.roomId}/${id}`}
+            to={`/booking/${rooms.roomId}`}
             key={rooms.roomId}
             className={styles[rooms.roomName]}
             id={
