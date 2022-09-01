@@ -23,10 +23,12 @@ const UserInfoTimeData = ({ userClass }) => {
   const myUrl = useUrl();
   const [userName, setUserName] = useState("");
   const [roomType, setRoomType] = useState(""); // 나박스 / 회의실
+
   const times = useTimes();
   const [disabledState, setDisabledState] = useState([]); //test
   const [defaultDisabledList, setDefaultDisabledList] = useState([]); //test
-  const url = `http://${myUrl}/api/booking?roomId=${roomId}&userId=${id}`;
+  const url = `http://${myUrl}/api/booking?roomId=${roomId}&userId=${id}&classes=${userClass}`;
+  console.log("url : " ,userClass )
   useEffect(() => {
     fetch(url, { method: "GET" })
       .then((res) => res.json())
@@ -129,7 +131,7 @@ const UserInfoTimeData = ({ userClass }) => {
     const str = e.target.value;
     let arr = [...memberNames];
     arr =
-      str === "" ? (arr = []) : arr.filter((member) => member.includes(str));
+      str === "" ? (arr = []) : arr.filter((member) => member.includes(str) && member !== userName);
     //타이핑할때 깜빡거리는거 안되게 예외처리하려고 했는데 한글 특성상 어려움.. 글자 단위로 처리할 수 있어야함
     // const check = JSON.stringify(arr) === JSON.stringify(searchedNameState);
     // console.log("check", check);
