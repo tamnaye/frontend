@@ -11,7 +11,6 @@ import UseUrl from "../../hooks/UseUrl";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import useTimes from "../../hooks/useTimes";
-import getBookingData from "../../hooks/getBookingData";
 //더큰내일센터 인원들 로컬 데이터베이스 만들기 (객체 배열) : (id, class, 이름)
 //백에서 booking id 별 start,end Time 받아와야함 (endTime -1시간 해줘야함)
 //post 보낼 때 endtime + 1시간 해줘야함
