@@ -5,8 +5,14 @@
     word-break: break-all;
   }
   #table #tbody #tbodyTr .time {
+    height: 36px;
     font-size: 7px;
     padding: 8px 3px;
+  }
+  #table #tbody #tbodyTr .roomstate .bookingTime {
+    border-radius: 2px;
+    font-size: 5px;
+    padding: 6px 8px 2px 8px;
   }
   #table {
     width: 80vw;
@@ -15,11 +21,8 @@
 
 #table th {
   font-size: 12px;
+  padding: 5px auto;
   text-align: center;
-}
-
-#table .roomstate:hover {
-  background-color: rgb(180, 180, 180);
 }
 
 tbody .time {
@@ -27,6 +30,37 @@ tbody .time {
   word-break: keep-all;
 }
 
+#tbodyTr {
+  position: relative;
+}
+#tbodyTr .time {
+  position: relative;
+}
+#tbodyTr .time .roomstate {
+  position: relative;
+}
+.bookingTime {
+  position: absolute;
+  top: 0%;
+  transform: translateX(-0.5rem);
+  width: 8.5%;
+
+  background-color: #74b8fc;
+  color: whitesmoke;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  border-radius: 5px;
+  font-size: 12px;
+  font-weight: 700;
+  z-index: 1;
+}
+
 #text {
   width: 100px;
+}
+
+#Manager {
+  background-color: rgb(128, 128, 128, 0.8);
 }

@@ -1,66 +1,72 @@
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
-import dummy from '../../../db/data.json'
-import styles from './SecondFloorNaRoom.module.css'
-import useFetch from '../../../hooks/useFetch'
+import { useState, useEffect } from 'react';
+import { Link, useParams } from 'react-router-dom';
+import useUrl from '../../../hooks/useUrl';
+
+import styles from './SecondFloorNaRoom.module.css';
 
 const SecondFloorNaRoom = () => {
-  //2층 나박스 API 사용 정보 불러오기 (무결)
+  const { id } = useParams();
+  const myUrl = useUrl();
 
-  const Secondroomsinfo = useFetch('http://144.24.91.218:8000/rooms/').filter(
-    (rooms) => rooms.floor === 2
-  )
-  const SecondNaboxinfo = Secondroomsinfo.filter(
-    (rooms) => rooms.room_id >= 212
-  )
+  //2층 나박스 API 사용 정보 불러오기
+  const [bookingData, setBookingData] = useState([]);
+  const [roomData, setRoomData] = useState([]);
 
-  // dummy에서 booking데이터 받아오기
-  console.log(dummy.bookingData2)
+  useEffect(() => {
+    fetch(`http://${myUrl}/api/booking/main?floor=2`, {
+      method: 'GET',
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setBookingData(data.BookingData);
+        setRoomData(data.RoomData);
+      });
+  }, [`htttp://${myUrl}/api/booking/main?floor=2`]);
+
+  const SecondNaboxinfo = roomData.filter(
+    (rooms) => rooms.roomType === 'nabox'
+  );
 
   // roomFull 함수 설정
   const roomFull = (roomid) => {
-    const roomState = dummy.bookingData2.filter(
-      (room) => room.roomId === roomid
-    )
+    const roomState = bookingData.filter((room) => room.roomId === roomid);
 
     const TimeToString = (time) => {
-      let newTime
+      let newTime;
       if (time === '09:00') {
-        newTime = time.substr(1, 1)
+        newTime = time.substr(1, 1);
       } else {
-        newTime = time.substr(0, 2)
+        newTime = time.substr(0, 2);
       }
-      return newTime
-    }
+      return newTime;
+    };
 
     const roomBookingState = roomState.map(
       (room) =>
         TimeToString(room.endTime) - Number(TimeToString(room.startTime))
-    )
+    );
     const sum = roomBookingState.reduce(function add(sum, currValue) {
-      return sum + currValue
-    }, 0)
+      return sum + currValue;
+    }, 0);
 
-    return sum === 12
-  }
+    return sum === 12;
+  };
 
   return (
     <div className={styles.NaBoxContainer}>
       <h4 className={styles.title}>Na Box</h4>
       <div className={styles.roomContainer}>
-        {SecondNaboxinfo.map((room, ind) => (
+        {SecondNaboxinfo.map((room) => (
           <button
-            key={room.room_id}
-            className={
-              roomFull(room.room_id) ? [styles.full] : [styles.notfull]
-            }
+            key={room.roomId}
+            className={roomFull(room.roomId) ? [styles.full] : [styles.notfull]}
           >
-            <Link to={`/booking/${room.room_id}`}>{room.room_name}</Link>
+            <Link to={`/booking/${room.roomId}/${id}`}>{room.roomName}</Link>
           </button>
         ))}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default SecondFloorNaRoom
+export default SecondFloorNaRoom;

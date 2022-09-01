@@ -1,13 +1,14 @@
 .container {
-    width: 100vw;
+    text-align: center;
   }
 
 .userInfo {
-    margin: 10% 0% 6% 0%;
+    margin: 10% 0%;
     text-align: center;
-    font-size: 1.7vw; /*h6태그 기본사이즈*/
+    font-size: 20px;
 }  
 
 .user_name {
-    color : blue;
+    color : #3373CC;
+    font-weight: bold;
 }

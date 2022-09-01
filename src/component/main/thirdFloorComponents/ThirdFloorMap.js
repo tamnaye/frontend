@@ -1,68 +1,80 @@
-import styles from './ThirdFloorMap.module.css'
-import dummy from '../../../db/data.json'
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
-import useFetch from '../../../hooks/useFetch'
+import styles from './ThirdFloorMap.module.css';
+import { useState, useEffect } from 'react';
+import { Link, useParams } from 'react-router-dom';
+import useUrl from '../../../hooks/useUrl';
 
 const ThirdFloorMap = () => {
+  const { id } = useParams();
+  const myUrl = useUrl();
+
   //3층 API 정보 가져오기
-  const Thirdroomsinfo = useFetch('http://144.24.91.218:8000/rooms/').filter(
-    (rooms) => rooms.floor === 3
-  )
-  const ThirdMeetingRoominfo = Thirdroomsinfo.filter(
-    (rooms) => rooms.room_id <= 304
-  )
-  const ThirdNaboxinfo = Thirdroomsinfo.filter((rooms) => rooms.room_id >= 305)
+  const [bookingData, setBookingData] = useState([]);
+  const [roomData, setRoomData] = useState([]);
+
+  useEffect(() => {
+    fetch(`http://${myUrl}/api/booking/main?floor=3`, {
+      method: 'GET',
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setBookingData(data.BookingData);
+        setRoomData(data.RoomData);
+      });
+  }, [`htttp://${myUrl}/api/booking/main?floor=3`]);
+
+  const ThirdMeetingRoominfo = roomData.filter(
+    (rooms) => rooms.roomType === 'meeting'
+  );
+
+  const ThirdNaboxinfo = roomData.filter((rooms) => rooms.roomType === 'nabox');
 
   // roomFull 함수 설정
   const roomFull = (roomid) => {
-    const roomState = dummy.bookingData2.filter(
-      (room) => room.roomId === roomid
-    )
+    const roomState = bookingData.filter((room) => room.roomId === roomid);
 
     const TimeToString = (time) => {
-      let newTime
+      let newTime;
       if (time === '09:00') {
-        newTime = time.substr(1, 1)
+        newTime = time.substr(1, 1);
       } else {
-        newTime = time.substr(0, 2)
+        newTime = time.substr(0, 2);
       }
-      return newTime
-    }
+      return newTime;
+    };
 
     const roomBookingState = roomState.map(
       (room) =>
         TimeToString(room.endTime) - Number(TimeToString(room.startTime))
-    )
+    );
     const sum = roomBookingState.reduce(function add(sum, currValue) {
-      return sum + currValue
-    }, 0)
+      return sum + currValue;
+    }, 0);
 
-    return sum === 12
-  }
+    return sum === 12;
+  };
 
   return (
     <div className={styles.container}>
       <div className={styles.mapContainer}>
-        {ThirdMeetingRoominfo.map((rooms, idx) => (
+        {ThirdMeetingRoominfo.map((rooms) => (
           <div
-            key={rooms.room_id}
-            className={styles[rooms.room_name]}
-            id={roomFull(rooms.room_id) ? [styles.full] : [styles.MeetingRoom]}
+            key={rooms.roomId}
+            className={styles[rooms.roomName]}
+            id={roomFull(rooms.roomId) ? [styles.full] : [styles.MeetingRoom]}
           >
-            <Link to={`/booking/${rooms.room_id}`}>
-              {roomFull(rooms.room_id) ? '마감' : rooms.room_name}
+            <Link to={`/booking/${rooms.roomId}/${id}`}>
+              {roomFull(rooms.roomId) ? '마감' : rooms.roomName}
             </Link>
           </div>
         ))}
-        {ThirdNaboxinfo.map((rooms, idx) => (
+        {ThirdNaboxinfo.map((rooms) => (
           <div
-            key={rooms.room_id}
-            className={styles[rooms.room_name]}
-            id={roomFull(rooms.room_id) ? [styles.full] : [styles.NaBax]}
+            key={rooms.roomId}
+            className={styles[rooms.roomName]}
+            id={roomFull(rooms.roomId) ? [styles.full] : [styles.NaBax]}
           >
-            <Link to={`/booking/${rooms.room_id}`}>
-              {roomFull(rooms.room_id) ? '마감' : rooms.room_name}
+            <Link to={`/booking/${rooms.roomId}/${id}`}>
+              {roomFull(rooms.roomId) ? '마감' : rooms.roomName}
             </Link>
           </div>
         ))}
@@ -94,7 +106,7 @@ const ThirdFloorMap = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ThirdFloorMap
+export default ThirdFloorMap;

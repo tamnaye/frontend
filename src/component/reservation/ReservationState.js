@@ -1,51 +1,41 @@
-import styles from './ReservationState.module.css'
-import ThirdFloorReservationState from './ThirdFloorStateComponents/ThirdFloorReservationState'
-import SecondFloorReservationState from './SecondFloorStateComponents/SecondFloorReservationState'
-import { useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
-import useFetch from '../../hooks/useFetch'
-import ThirdFloorMeetingRoomState from './ThirdFloorStateComponents/ThirdFloorMeetingRoomState'
-import ThirdFloorNaRoomState from './ThirdFloorStateComponents/ThirdFloorNaRoomState'
-import SecondFloorMeetingRoomState from './SecondFloorStateComponents/SecondFloorMeetingRoomState'
-import SecondFloorNaRoomState from './SecondFloorStateComponents/SecondFloorNaRoomState'
+import styles from './ReservationState.module.css';
+import ThirdFloorReservationState from './ThirdFloorStateComponents/ThirdFloorReservationState';
+import SecondFloorReservationState from './SecondFloorStateComponents/SecondFloorReservationState';
+import SecondAndThirdReservationState from './SecondAndThirdReservationState';
+import { useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import useUrl from '../../hooks/useUrl';
 
 const ReservationState = () => {
-  const userClasses = 6
-  const MaxClasses = 7
-  //
-  // const { id } = useParams()
-  // console.log(id)
+  const { id } = useParams();
+  const myUrl = useUrl();
 
-  // const [data, setData] = useState([])
-  // useEffect(() => {
-  //   fetch(`http://192.168.5.60:8080/api/user/data?userId=22106045`, {
-  //     method: 'GET',
-  //   })
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       setData(data)
-  //     })
-  // }, [`http://192.168.5.60:8080/api/user/data?userId=22106045`])
-  // console.log(data)
-  // const userClasses = data.userData.classes
-  // const MaxClasses = data.maxClasses
-  //
+  const [userClasses, setUserClasses] = useState('');
+  const [maxClasses, setMaxClasses] = useState('');
+
+  useEffect(() => {
+    fetch(`http://${myUrl}/api/user/data?userId=${id}`, {
+      method: 'GET',
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setUserClasses(data.userData.classes);
+        setMaxClasses(data.maxClasses);
+      });
+  }, [`http://${myUrl}/api/user/data?userId=${id}`, id]);
 
   return (
     <div className={styles.ReservationStateContainer}>
       <h2>시간대별 예약현황</h2>
-      {userClasses === MaxClasses ? (
+      {userClasses === 0 ? (
+        <SecondAndThirdReservationState className={styles.reservationTable} />
+      ) : userClasses === maxClasses ? (
         <ThirdFloorReservationState className={styles.reservationTable} />
       ) : (
         <SecondFloorReservationState className={styles.reservationTable} />
       )}
-      {/* {stair ? (
-        <SecondFloorReservationState className={styles.reservationTable} />
-      ) : (
-        <ThirdFloorReservationState className={styles.reservationTable} />
-      )} */}
     </div>
-  )
-}
+  );
+};
 
-export default ReservationState
+export default ReservationState;
