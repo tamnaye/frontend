@@ -7,7 +7,7 @@ import NavsFloor3 from './navs/NavsFloor3';
 import RoomInfo from './RoomInfo';
 import UserInfoTimeData from './UserInfoTimeData';
 //hooks
-import UseUrl from '../../hooks/useUrl';
+import UseUrl from '../../hooks/UseUrl';
 import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 

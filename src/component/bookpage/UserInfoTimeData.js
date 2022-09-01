@@ -11,6 +11,7 @@ import UseUrl from "../../hooks/UseUrl";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import useTimes from "../../hooks/useTimes";
+import getBookingData from "../../hooks/getBookingData";
 //더큰내일센터 인원들 로컬 데이터베이스 만들기 (객체 배열) : (id, class, 이름)
 //백에서 booking id 별 start,end Time 받아와야함 (endTime -1시간 해줘야함)
 //post 보낼 때 endtime + 1시간 해줘야함
@@ -20,18 +21,20 @@ const UserInfoTimeData = ({ userClass }) => {
   const { id } = useParams();
   const { roomId } = useParams();
   const myUrl = UseUrl();
-  // const [userName, setUserName] = useState("");
-  // const [roomType, setRoomType] = useState(""); // 나박스 / 회의실
-  // const url = `http://${myUrl}/api/booking?roomId=${roomId}&userId=${id}`;
-  // useEffect(() => {
-  //   fetch(url, { method: "GET" })
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       setUserName(data.userData.userName);
-  //       setRoomType(data.roomData.roomType);
-  //     });
-  // }, [url]);
-  //console.log(roomType);
+  const [userName, setUserName] = useState("");
+  const [roomType, setRoomType] = useState(""); // 나박스 / 회의실
+  const url = `http://${myUrl}/api/booking?roomId=${roomId}&userId=${id}`;
+  useEffect(() => {
+    fetch(url, { method: "GET" })
+      .then((res) => res.json())
+      .then((data) => {
+        setUserName(data.userData.userName);
+        setRoomType(data.roomData.roomType);
+      });
+  }, [url]);
+  console.log(roomType);
+  
+
 
   //--------팀원 검색 기능---------//
   const membersData = dummy_names.members;

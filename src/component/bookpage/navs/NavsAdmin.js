@@ -4,7 +4,7 @@ import Dropdown from 'react-bootstrap/Dropdown';
 //hooks
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import UseUrl from '../../../hooks/useUrl';
+import UseUrl from '../../../hooks/UseUrl';
 
 function NavsAdmin() {
   const { roomId } = useParams();
