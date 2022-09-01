@@ -1,5 +1,5 @@
 //styles
-import styles from './UserInfoTime.module.css';
+import styles from './UserInfoTimeData.module.css';
 import 'antd/dist/antd.min.css';
 import { Checkbox } from 'antd';
 //component
@@ -10,8 +10,9 @@ import UseUrl from '../../hooks/UseUrl';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
-const UserInfoTimeData = () => {
+const UserInfoTimeData = ({ userClasses }) => {
   const { id } = useParams();
+  const { roomId } = useParams();
 
   //input 값 입력 시 실제 돔에 불러오기//
   const [name, setName] = useState('');
@@ -30,14 +31,57 @@ const UserInfoTimeData = () => {
   //----신청자명 데이터 로그인정보에서 불러오기 -> post----//
   const myUrl = UseUrl();
   const [userName, setUserName] = useState('');
-  const url = `http://${myUrl}/api/user/data?userId=${id}`;
+  const [roomType, setRoomType] = useState('');
+  const url = `http://${myUrl}/api/booking?roomId=${roomId}&userId=${id}`;
+
   useEffect(() => {
     fetch(url, { method: 'GET' })
       .then((res) => res.json())
       .then((data) => {
         setUserName(data.userData.userName);
+        setRoomType(data.roomData.roomType);
       });
   }, [url]);
+  //console.log(roomType);
+
+  //----예약 데이터 보내기----//
+  const BookingConfirm = () => {
+    const postUrl = `http://${myUrl}/api/booking/conference`;
+    fetch(postUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        //값 입력
+        classes: userClasses,
+        roomId: roomId,
+        roomType: roomType,
+        startTime: '19:00',
+        endTime: '20:00',
+        teamMate: [],
+        userId: id,
+        userName: userName,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        if (startTime > nowTime || endTime < nowTime) {
+          alert(
+            '예약할 수 없는 시간입니다!\n오전08:30부터 오후21:00까지 예약이 가능합니다.'
+          );
+          navigate(`/${id}`);
+        } else if (data.message.success) {
+          //console.log(data.message.success);
+          alert(data.message.success);
+          navigate(`/mypage/${id}`);
+        } else {
+          //console.log(data.message.fail);
+          alert(data.message.fail);
+        }
+      });
+  };
 
   //----예약시간에 따른 버튼 비활성화를 함수----//
   const [ablebtn, setAblebtn] = useState(true); //예약시간이 아닐 때 상태변경(true일 때 버튼 활성화!)
@@ -68,19 +112,6 @@ const UserInfoTimeData = () => {
       setAblebtn(true);
     }
   }, []); //useEffect써서 한번만 렌더링 해줌
-
-  //예약하기 버튼 클릭시 alert 띄어주기
-  const BookingConfirm = () => {
-    if (startTime > nowTime || endTime < nowTime) {
-      alert(
-        '예약할 수 없는 시간입니다!\n오전08:30부터 오후21:00까지 예약이 가능합니다.'
-      );
-      navigate(`/${id}`);
-    } else {
-      alert('예약이 완료 되었습니다. 마이페이지로 이동합니다 :)');
-      navigate(`/mypage/${id}`);
-    }
-  };
 
   //----무결님 버튼 클릭 작업----//
   const times = [
@@ -194,6 +225,7 @@ const UserInfoTimeData = () => {
                 value={name}
                 type='text'
                 placeholder='팀원 선택하기'
+                required
               />
             </p>
             <div className={styles.membersBox}>

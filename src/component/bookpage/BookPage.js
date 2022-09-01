@@ -46,7 +46,7 @@ function BookPage() {
       <div className={styles.container}>
         <RoomInfo />
         <div className={styles.infowrap}>
-          <UserInfoTimeData />
+          <UserInfoTimeData userClasses={userClasses} />
         </div>
       </div>
     </div>

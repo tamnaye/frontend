@@ -10,18 +10,16 @@ function NavsFloor3() {
   const { id } = useParams();
   const myUrl = UseUrl();
   //----/api/booking----//
-  //const [data, setData] = useState([]);
   const [roomData, setRoomData] = useState([]);
   //3층 룸리스트 추출 -> 미팅룸리스트 개인자습룸리스트 추출
   const floor3Meeting = roomData.filter((room) => room.roomType === 'meeting');
   const floor3Nabox = roomData.filter((room) => room.roomType === 'nabox');
 
-  const url = `http://${myUrl}/api/booking?floor=3&roomId=${roomId}`;
+  const url = `http://${myUrl}/api/booking/room-data?floor=3&roomId=${roomId}`;
   useEffect(() => {
     fetch(url, { method: 'GET' })
       .then((res) => res.json())
       .then((data) => {
-        //setData(data);
         setRoomData(data.roomData);
       });
   }, [url]);
