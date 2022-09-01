@@ -1,0 +1,51 @@
+{
+    "members": [
+      {
+        "member_id": 1,
+        "classe" : 6,
+        "name": "조무결"
+      },
+      {
+        "member_id": 2,
+        "classe" : 6,
+        "name": "송민아"
+      },
+      {
+        "member_id": 3,
+        "classe" : 6,
+        "name": "이현정"
+      },
+      {
+        "member_id": 4,
+        "classe" : 6,
+        "name": "안수빈"
+      },
+      {
+        "member_id": 4,
+        "classe" : 6,
+        "name": "안민식"
+      },
+      {
+        "member_id": 5,
+        "classe" : 0,
+        "name": "부현진"
+      },
+      {
+        "member_id": 6,
+        "classe" : 0,
+        "name": "김종현"
+      },
+      {
+        "member_id": 7,
+        "classe" : 5,
+        "name": "홍길동"
+      },
+      {
+        "member_id": 8,
+        "classe" : 5,
+        "name": "저팔계"
+      }
+   
+    ]
+  }
+  

@@ -5,35 +5,24 @@ import { Checkbox } from 'antd';
 //component
 import React from 'react';
 import dummy from '../../db/booking_data.json';
+import dummy_names from '../../db/tamnaMembers.json';
 //hooks
 import UseUrl from '../../hooks/UseUrl';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import useTimes from '../../hooks/useTimes';
+//더큰내일센터 인원들 로컬 데이터베이스 만들기 (객체 배열) : (id, class, 이름)
+//백에서 booking id 별 start,end Time 받아와야함 (endTime -1시간 해줘야함)
+//post 보낼 때 endtime + 1시간 해줘야함
 
-const UserInfoTimeData = ({ userClasses }) => {
+const UserInfoTimeData = ({ userClass }) => {
+  //starttime, endtime,
   const { id } = useParams();
   const { roomId } = useParams();
-
-  //input 값 입력 시 실제 돔에 불러오기//
-  const [name, setName] = useState('');
-  const [names, setNames] = useState([]);
-  const onChange = (event) => setName(event.target.value);
-  const onSubmit = (event) => {
-    event.preventDefault();
-    if (name === '') {
-      return; //빈칸이면 함수를 실행하지 않음
-    }
-    setNames((currentArray) => {
-      return [...currentArray, name];
-    });
-    setName('');
-  };
-  //----신청자명 데이터 로그인정보에서 불러오기 -> post----//
   const myUrl = UseUrl();
   const [userName, setUserName] = useState('');
-  const [roomType, setRoomType] = useState('');
+  const [roomType, setRoomType] = useState(''); // 나박스 / 회의실
   const url = `http://${myUrl}/api/booking?roomId=${roomId}&userId=${id}`;
-
   useEffect(() => {
     fetch(url, { method: 'GET' })
       .then((res) => res.json())
@@ -42,87 +31,76 @@ const UserInfoTimeData = ({ userClasses }) => {
         setRoomType(data.roomData.roomType);
       });
   }, [url]);
-  //console.log(roomType);
+  console.log(roomType);
 
-  //----예약 데이터 보내기----//
-  const BookingConfirm = () => {
-    const postUrl = `http://${myUrl}/api/booking/conference`;
-    fetch(postUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        //값 입력
-        classes: userClasses,
-        roomId: roomId,
-        roomType: roomType,
-        startTime: '12:00',
-        endTime: '13:00',
-        teamMate: ['이현정'],
-        userId: id,
-        userName: userName,
-      }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        if (data.message.success) {
-          //console.log(data.message.success);
-          alert(data.message.success);
-          navigate(`/mypage/${id}`);
-        } else {
-          //console.log(data.message.fail);
-          alert(data.message.fail);
-        }
-      });
-  };
+  //--------팀원 검색 기능---------//
+  const membersData = dummy_names.members;
+  const memberNames = [];
+  membersData.map(
+    (member) =>
+      member.classe === userClass && // 기수
+      member.name !== userName && // '나'제외
+      memberNames.push(member.name)
+  );
 
-  //----예약시간에 따른 버튼 비활성화를 함수----//
-  const [ablebtn, setAblebtn] = useState(true); //예약시간이 아닐 때 상태변경(true일 때 버튼 활성화!)
-  const navigate = useNavigate();
-  //21:00-08:30까지 예약 버튼 비활성화 함수
-  const Now = new Date();
-  const NowHour = Now.getHours();
-  const NowMins = Now.getMinutes();
-  function pluszero(times) {
-    let time = times.toString(); //시간을 숫자에서 문자로 변환
-    if (time.length < 2) {
-      time = '0' + time; //숫자 앞에 0을 붙여줌
-      return time;
+  const [searchedNameState, setSearchedNameState] = useState([]);
+  const [selectedNameState, setSelectedNameState] = useState([]);
+  const [inputName, setInputName] = useState('');
+
+  function onChange(e) {
+    console.log('TAG : onChange');
+    setInputName(e.target.value);
+    const str = e.target.value;
+    let arr = [...memberNames];
+    arr =
+      str === '' ? (arr = []) : arr.filter((member) => member.includes(str));
+    //타이핑할때 깜빡거리는거 안되게 예외처리하려고 했는데 한글 특성상 어려움.. 글자 단위로 처리할 수 있어야함
+    // const check = JSON.stringify(arr) === JSON.stringify(searchedNameState);
+    // console.log("check", check);
+    // if (!check)
+    setSearchedNameState(arr);
+  }
+  function onClickSearched(name) {
+    console.log('TAG : onClickSearched');
+    setInputName('');
+    setSearchedNameState([]);
+
+    const arr = [...selectedNameState];
+    arr.push(name);
+    setSelectedNameState(arr);
+  }
+  function onClickSelected(index) {
+    console.log('TAG : onClickSelected');
+    const arr = [...selectedNameState];
+    arr.splice(index, 1);
+    setSelectedNameState(arr);
+    alert('해제?');
+  }
+
+  function onSubmit(e) {
+    e.preventDefault();
+    console.log('TAG : onSubmit', inputName);
+
+    if (searchedNameState.length === 1) {
+      //이미 선택할 팀원이 나옴
+      setInputName('');
+      setSearchedNameState([]);
+      const arr = [...selectedNameState];
+      arr.push(searchedNameState[0]);
+      setSelectedNameState(arr);
+    } else if (searchedNameState > 1) {
+      //검색 결과 두명 이상 나왔을 때 엔터친 경우
+      alert('팀원을 한명씩 선택해 주세요 !');
     } else {
-      return time;
+      //검색 안되는 이름 치고 엔터친 경우
+      setInputName('');
+      setSearchedNameState([]);
+      alert('더큰내일센터 인원이 아닙니다 !\n팀원의 이름을 확인해주세요!');
     }
   }
-  const nowHour = pluszero(NowHour);
-  const nowMins = pluszero(NowMins);
-  const nowTime = nowHour + nowMins;
-  //console.log(nowTime);
-  const startTime = '0830';
-  const endTime = '2100';
-  useEffect(() => {
-    if (startTime > nowTime || endTime < nowTime) {
-      setAblebtn(false);
-    } else {
-      setAblebtn(true);
-    }
-  }, []); //useEffect써서 한번만 렌더링 해줌
 
   //----무결님 버튼 클릭 작업----//
-  const times = [
-    '09:00',
-    '10:00',
-    '11:00',
-    '12:00',
-    '13:00',
-    '14:00',
-    '15:00',
-    '16:00',
-    '17:00',
-    '18:00',
-    '19:00',
-    '20:00',
-  ];
+  const times = useTimes();
   //예약된 시간 추출
   const booking_data = dummy.booking;
   const bookedTimes = [];
@@ -194,7 +172,73 @@ const UserInfoTimeData = ({ userClasses }) => {
       }
     }
   };
+  //----예약시간에 따른 버튼 비활성화를 함수----//
+  const [ablebtn, setAblebtn] = useState(true); //예약시간이 아닐 때 상태변경(true일 때 버튼 활성화!)
+  const navigate = useNavigate();
+  //21:00-08:30까지 예약 버튼 비활성화 함수
+  const Now = new Date();
+  const NowHour = Now.getHours();
+  const NowMins = Now.getMinutes();
+  function pluszero(times) {
+    let time = times.toString(); //시간을 숫자에서 문자로 변환
+    if (time.length < 2) {
+      time = '0' + time; //숫자 앞에 0을 붙여줌
+      return time;
+    } else {
+      return time;
+    }
+  }
+  const nowHour = pluszero(NowHour);
+  const nowMins = pluszero(NowMins);
+  const nowTime = nowHour + nowMins;
+  //console.log(nowTime);
+  const startTime = '0830';
+  const endTime = '2100';
+  useEffect(() => {
+    if (startTime > nowTime || endTime < nowTime) {
+      setAblebtn(false);
+    } else {
+      setAblebtn(true);
+    }
+  }, []); //useEffect써서 한번만 렌더링 해줌
 
+  console.log('selectedNameState', selectedNameState);
+  //----예약 데이터 보내기----//
+  const BookingConfirm = () => {
+    const postUrl = `http://${myUrl}/api/booking/conference`;
+    fetch(postUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        //값 입력
+        classes: userClass,
+        roomId: roomId,
+        roomType: roomType,
+
+        // 시간 한시간일때랑 두시간일 때 예외처리 해줘야할듯
+        startTime: '19:00', //checked state에서 index 찾아서 times 배열에서 뽑아냄
+        endTime: '20:00', // checked state에서  index 찾아서 times 배열에서 뽑아내서 +1
+        teamMate: selectedNameState,
+
+        userId: id,
+        userName: userName,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        if (data.message.success) {
+          //console.log(data.message.success);
+          alert(data.message.success);
+          navigate(`/mypage/${id}`);
+        } else {
+          //console.log(data.message.fail);
+          alert(data.message.fail);
+        }
+      });
+  };
   return (
     <div>
       <div className={styles.wrap}>
@@ -217,20 +261,32 @@ const UserInfoTimeData = ({ userClasses }) => {
               <input
                 className={styles.input}
                 onChange={onChange}
-                value={name}
+                value={inputName}
                 type='text'
-                placeholder='팀원 선택하기'
+                placeholder='검색'
                 required
               />
             </p>
-            <div className={styles.membersBox}>
-              {names.map((item, index) => (
-                <button key={index} className={styles.membersName}>
-                  {item}
-                </button>
-              ))}
-            </div>
           </form>
+
+          <div>
+            {searchedNameState.map((item, index) => (
+              <button
+                onClick={() => onClickSearched(item)}
+                key={index}
+                className={styles.membersName}
+              >
+                {item}
+              </button>
+            ))}
+          </div>
+          <div className={styles.membersBox}>
+            {selectedNameState.map((item, index) => (
+              <button onClick={() => onClickSelected(index)} key={index}>
+                {`${item} (x)`}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
       <div>

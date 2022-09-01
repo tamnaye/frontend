@@ -16,8 +16,8 @@ function BookPage() {
   const myUrl = UseUrl();
 
   //const [data, setData] = useState([]);
-  const [userClasses, setUserClasses] = useState('');
-  const [maxClasses, setMaxClasses] = useState('');
+  const [userClass, setUserClass] = useState('');
+  const [maxClass, setMaxClass] = useState('');
 
   const url = `http://${myUrl}/api/user/data?userId=${id}`;
   useEffect(() => {
@@ -25,20 +25,20 @@ function BookPage() {
       .then((res) => res.json())
       .then((data) => {
         //setData(data);
-        setUserClasses(data.userData.classes);
-        setMaxClasses(data.maxClasses);
+        setUserClass(data.userData.classes);
+        setMaxClass(data.maxClass);
       });
   }, [url]);
   //console.log(id);
   //console.log(data);
-  //console.log(userClasses);
-  //console.log(maxClasses);
+  //console.log(userClass);
+  //console.log(maxClass);
 
   return (
     <div>
-      {userClasses === 0 ? (
+      {userClass === 0 ? (
         <NavsAdmin />
-      ) : userClasses === maxClasses ? (
+      ) : userClass === maxClass ? (
         <NavsFloor3 />
       ) : (
         <NavsFloor2 />
@@ -46,7 +46,7 @@ function BookPage() {
       <div className={styles.container}>
         <RoomInfo />
         <div className={styles.infowrap}>
-          <UserInfoTimeData userClasses={userClasses} />
+          <UserInfoTimeData userClass={userClass} />
         </div>
       </div>
     </div>
