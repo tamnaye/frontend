@@ -7,7 +7,7 @@ import React from "react";
 import dummy from "../../db/booking_data.json";
 import dummy_names from "../../db/tamnaMembers.json";
 //hooks
-import UseUrl from "../../hooks/UseUrl";
+import useUrl from "../../hooks/useUrl";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import useTimes from "../../hooks/useTimes";
@@ -19,20 +19,104 @@ const UserInfoTimeData = ({ userClass }) => {
   //starttime, endtime,
   const { id } = useParams();
   const { roomId } = useParams();
-  const myUrl = UseUrl();
+  const myUrl = useUrl();
   const [userName, setUserName] = useState("");
   const [roomType, setRoomType] = useState(""); // 나박스 / 회의실
-  const url = `http://${myUrl}/api/booking?roomId=${roomId}&userId=${id}`;
+const times = useTimes();
+const [bookingData, setBookingData] = useState([]); 
+const [disabledState, setDisabledState] = useState([]); //test
+const [defaultDisabledList, setDefaultDisabledList] = useState([]); //test
+const url = `http://${myUrl}/api/booking?roomId=${roomId}&userId=${id}`;
   useEffect(() => {
     fetch(url, { method: "GET" })
       .then((res) => res.json())
       .then((data) => {
         setUserName(data.userData.userName);
         setRoomType(data.roomData.roomType);
+        const bookedTimes = [];
+  data.bookingData.map((booking) =>
+    bookedTimes.push(booking.startTime, booking.endTime)
+  );
+  const arr = [...defaultDisabledList];
+  times.map((time) =>
+    arr.push(bookedTimes.includes(time) ? true : false)
+  );
+  setDefaultDisabledList(arr)
+  setDisabledState(arr)
       });
   }, [url]);
   console.log(roomType);
   
+
+
+//----무결님 버튼 클릭 작업----//
+
+
+const [checkedState, setCheckedState] = useState(new Array(12).fill(false));
+// i의 최소값이 0, 최대값은 11이기 때문에 처음 시간과 마지막 시간일때의 예외처리는 반복문에서 자연스럽게 처리됨
+// 클릭한 시간 전꺼, 다음꺼 중 만약 이미 예약이 된것들은 이미 disabled : true인 상태이기 때문에
+// onChange 첫번째 if문에서 예외처리됨 (checkedStateLength === 0 )
+// 나머지 중 disabled false인 것들 disabled = true로 바꿔줌
+function updateDisabledList(index) {
+  //최초 클릭 시 disablesState update
+  const disableUpdateList = [...disabledState];
+  for (let i = 0; i < times.length; i++) {
+    if (i !== index && i !== index + 1 && i !== index - 1) {
+      if (disableUpdateList[i] !== true) {
+        disableUpdateList[i] = true;
+      }
+    }
+  }
+  setDisabledState(disableUpdateList);
+}
+//checkedState 길이 반환
+function checkedStateLength() {
+  return checkedState.filter((bool) => bool === true).length;
+}
+//indexOf 메소드는 체크된 인덱스 반환해줌,
+//하지만 버튼 두개 눌린 생태에서 다음 버튼 클릭의 인덱스랑 비교하려면 클릭 된 체크박스 인덱스들을 배열로 가지고 있어야함
+function getCheckedIndexArray(checkedState) {
+  var arr = [];
+  var index = checkedState.indexOf(true);
+  while (index !== -1) {
+    arr.push(index);
+    index = checkedState.indexOf(true, index + 1);
+  }
+  return arr;
+}
+//체크된 체크박스 checkedState 배열로 관리해주기 위함
+//기본적으로 onChange에서 호출해줌, 하지만 체크 false로 강제해야하는 조건에서는 호출 하지 않음
+function updatedCheckedState(index) {
+  const updatedCheckedState = checkedState.map((item, id) =>
+    id === index ? !item : item
+  );
+  setCheckedState(updatedCheckedState);
+}
+const onChangeInput = (index) => {
+  if (checkedStateLength() === 0) {
+    updateDisabledList(index);
+    updatedCheckedState(index);
+  } else if (checkedStateLength() === 1) {
+    updatedCheckedState(index);
+    if (checkedState.indexOf(true) === index) {
+      setDisabledState(defaultDisabledList); //체크해제
+    } else {
+      //pass
+    }
+  } else if (checkedStateLength() === 2) {
+    if (getCheckedIndexArray(checkedState).includes(index) === false) {
+      alert("최대 예약시간은 2시간입니다 !");
+    } else {
+      updatedCheckedState(index);
+    }
+  }
+};
+
+
+
+
+
+
 
 
   //--------팀원 검색 기능---------//
@@ -63,7 +147,6 @@ const UserInfoTimeData = ({ userClass }) => {
     setSearchedNameState(arr);
   }
   function onClickSearched(name) {
-    console.log("TAG : onClickSearched");
     setInputName("");
     setSearchedNameState([]);
 
@@ -72,7 +155,6 @@ const UserInfoTimeData = ({ userClass }) => {
     setSelectedNameState(arr);
   }
   function onClickSelected(index) {
-    console.log("TAG : onClickSelected");
     const arr = [...selectedNameState];
     arr.splice(index, 1);
     setSelectedNameState(arr);
@@ -81,7 +163,6 @@ const UserInfoTimeData = ({ userClass }) => {
 
   function onSubmit(e) {
     e.preventDefault();
-    console.log("TAG : onSubmit", inputName);
 
     if (searchedNameState.length === 1) {
       //이미 선택할 팀원이 나옴
@@ -101,79 +182,7 @@ const UserInfoTimeData = ({ userClass }) => {
     }
   }
 
-  //----무결님 버튼 클릭 작업----//
-  const times = useTimes();
-  //예약된 시간 추출
-  const booking_data = dummy.booking;
-  const bookedTimes = [];
-  booking_data.map((booking) =>
-    bookedTimes.push(booking.time_start, booking.time_end)
-  );
-  //예약된 시간 적용한 disabledList 생성
-  const defaultDisabledList = [];
-  times.map((time) =>
-    defaultDisabledList.push(bookedTimes.includes(time) ? true : false)
-  );
-  const [disabledState, setDisabledState] = useState(defaultDisabledList);
-  const [checkedState, setCheckedState] = useState(new Array(12).fill(false));
-  // i의 최소값이 0, 최대값은 11이기 때문에 처음 시간과 마지막 시간일때의 예외처리는 반복문에서 자연스럽게 처리됨
-  // 클릭한 시간 전꺼, 다음꺼 중 만약 이미 예약이 된것들은 이미 disabled : true인 상태이기 때문에
-  // onChange 첫번째 if문에서 예외처리됨 (checkedStateLength === 0 )
-  // 나머지 중 disabled false인 것들 disabled = true로 바꿔줌
-  function updateDisabledList(index) {
-    //최초 클릭 시 disablesState update
-    const disableUpdateList = [...disabledState];
-    for (let i = 0; i < times.length; i++) {
-      if (i !== index && i !== index + 1 && i !== index - 1) {
-        if (disableUpdateList[i] !== true) {
-          disableUpdateList[i] = true;
-        }
-      }
-    }
-    setDisabledState(disableUpdateList);
-  }
-  //checkedState 길이 반환
-  function checkedStateLength() {
-    return checkedState.filter((bool) => bool === true).length;
-  }
-  //indexOf 메소드는 체크된 인덱스 반환해줌,
-  //하지만 버튼 두개 눌린 생태에서 다음 버튼 클릭의 인덱스랑 비교하려면 클릭 된 체크박스 인덱스들을 배열로 가지고 있어야함
-  function getCheckedIndexArray(checkedState) {
-    var arr = [];
-    var index = checkedState.indexOf(true);
-    while (index !== -1) {
-      arr.push(index);
-      index = checkedState.indexOf(true, index + 1);
-    }
-    return arr;
-  }
-  //체크된 체크박스 checkedState 배열로 관리해주기 위함
-  //기본적으로 onChange에서 호출해줌, 하지만 체크 false로 강제해야하는 조건에서는 호출 하지 않음
-  function updatedCheckedState(index) {
-    const updatedCheckedState = checkedState.map((item, id) =>
-      id === index ? !item : item
-    );
-    setCheckedState(updatedCheckedState);
-  }
-  const onChangeInput = (index) => {
-    if (checkedStateLength() === 0) {
-      updateDisabledList(index);
-      updatedCheckedState(index);
-    } else if (checkedStateLength() === 1) {
-      updatedCheckedState(index);
-      if (checkedState.indexOf(true) === index) {
-        setDisabledState(defaultDisabledList); //체크해제
-      } else {
-        //pass
-      }
-    } else if (checkedStateLength() === 2) {
-      if (getCheckedIndexArray(checkedState).includes(index) === false) {
-        alert("최대 예약시간은 2시간입니다 !");
-      } else {
-        updatedCheckedState(index);
-      }
-    }
-  };
+  
   //----예약시간에 따른 버튼 비활성화를 함수----//
   const [ablebtn, setAblebtn] = useState(true); //예약시간이 아닐 때 상태변경(true일 때 버튼 활성화!)
   const navigate = useNavigate();
