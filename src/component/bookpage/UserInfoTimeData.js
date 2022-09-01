@@ -7,7 +7,7 @@ import React from 'react';
 import dummy from '../../db/booking_data.json';
 import dummy_names from '../../db/tamnaMembers.json';
 //hooks
-import UseUrl from '../../hooks/UseUrl';
+import useUrl from '../../hooks/useUrl';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import useTimes from '../../hooks/useTimes';
@@ -19,7 +19,7 @@ const UserInfoTimeData = ({ userClass }) => {
   //starttime, endtime,
   const { id } = useParams();
   const { roomId } = useParams();
-  const myUrl = UseUrl();
+  const myUrl = useUrl();
   const [userName, setUserName] = useState('');
   const [roomType, setRoomType] = useState(''); // 나박스 / 회의실
   const url = `http://${myUrl}/api/booking?roomId=${roomId}&userId=${id}`;

@@ -5,13 +5,13 @@ import { Container } from 'react-bootstrap';
 import MyBookTable from './MyBookTable';
 import MyBookTableEmpty from './MyBookTableEmpty';
 //hooks
-import UseUrl from '../../hooks/UseUrl';
+import useUrl from '../../hooks/useUrl';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 function MyPage() {
   const { id } = useParams();
-  const myUrl = UseUrl();
+  const myUrl = useUrl();
 
   //----로그인 시 userName 데이터 가져오기----//
   const [bookingCount, setBookingCount] = useState([]);

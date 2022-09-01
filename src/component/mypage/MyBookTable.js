@@ -1,11 +1,11 @@
 import styles from './MyBookTable.module.css';
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import UseUrl from '../../hooks/UseUrl';
+import useUrl from '../../hooks/useUrl';
 
 function MyBookTable() {
   const { id } = useParams();
-  const myUrl = UseUrl();
+  const myUrl = useUrl();
   //----서버데이터 불러오기----//
   const [myBookingList, setMyBookingList] = useState([]);
   const url = `http://${myUrl}/api/user/mypage?userId=${id}`;

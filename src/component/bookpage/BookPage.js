@@ -7,13 +7,13 @@ import NavsFloor3 from './navs/NavsFloor3';
 import RoomInfo from './RoomInfo';
 import UserInfoTimeData from './UserInfoTimeData';
 //hooks
-import UseUrl from '../../hooks/UseUrl';
+import useUrl from '../../hooks/useUrl';
 import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
 function BookPage() {
   const { id } = useParams();
-  const myUrl = UseUrl();
+  const myUrl = useUrl();
 
   //const [data, setData] = useState([]);
   const [userClass, setUserClass] = useState('');

@@ -4,12 +4,12 @@ import Dropdown from 'react-bootstrap/Dropdown';
 //hooks
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import UseUrl from '../../../hooks/UseUrl';
+import useUrl from '../../../hooks/useUrl';
 
 function NavsAdmin() {
   const { roomId } = useParams();
   const { id } = useParams();
-  const myUrl = UseUrl();
+  const myUrl = useUrl();
   //----/api/booking----//
   //미팅룸 데이터 추출
   const [roomData, setRoomData] = useState([]);
