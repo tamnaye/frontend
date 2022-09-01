@@ -19,7 +19,7 @@ function RoomInfo() {
 
   const [roomData, setRoomData] = useState([]);
   const [roomInfo, setRoomInfo] = useState('');
-  const url = `http://${myUrl}/api/booking?floor=0&roomId=${roomId}`;
+  const url = `http://${myUrl}/api/booking/room-data?floor=0&roomId=${roomId}`;
   useEffect(() => {
     fetch(url, {
       method: 'GET',
