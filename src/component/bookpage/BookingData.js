@@ -1,5 +1,5 @@
 //styles
-import styles from "./UserInfoTimeData.module.css";
+import styles from "./BookingData.module.css";
 import "antd/dist/antd.min.css";
 import { Checkbox } from "antd";
 //component
@@ -16,49 +16,59 @@ import useTimes from "../../hooks/useTimes";
 //백에서 booking id 별 start,end Time 받아와야함 (endTime -1시간 해줘야함)
 //post 보낼 때 endtime + 1시간 해줘야함
 
-const UserInfoTimeData = ({ userClass }) => {
+const BookingData = ({ userClass }) => {
   //starttime, endtime,
   const { id } = useParams();
   const { roomId } = useParams();
   const myUrl = useUrl();
   const [userName, setUserName] = useState("");
-  const [roomType, setRoomType] = useState(""); // 나박스 / 회의실
+  const [roomType, setRoomType] = useState(""); // meeting / nabax
 
   const times = useTimes();
-  const [disabledState, setDisabledState] = useState([]); //test
-  const [defaultDisabledList, setDefaultDisabledList] = useState([]); //test
+  const [disabledState, setDisabledState] = useState([]);
+  const [defaultDisabledList, setDefaultDisabledList] = useState([]);
   const url = `http://${myUrl}/api/booking?roomId=${roomId}&userId=${id}&classes=${userClass}`;
-  console.log(" main thread url : " ,url )
 
-  const [memberNames, setMemberNames] = useState([])
+  const [memberNames, setMemberNames] = useState([]);
+
+
   useEffect(() => {
     fetch(url, { method: "GET" })
       .then((res) => res.json())
       .then((data) => {
+        console.log(" useEffect data : ", data);
         setUserName(data.userData.userName);
         setRoomType(data.roomData.roomType);
         setDefaultDisabledList(bookingdDataHandler(data.bookingData));
         setDisabledState(bookingdDataHandler(data.bookingData));
-        setMemberNames(data.namesData)
-
-
+        setMemberNames(data.namesData);
       });
   }, [url]);
 
- 
-  function bookingdDataHandler (bookingData){
-    const bookedTimes = [];
-    bookingData.map((booking) =>
-      bookedTimes.push(booking.startTime, booking.endTime)
-    );
-    const arr = [...defaultDisabledList];
-    times.map((time) =>
-      arr.push(bookedTimes.includes(time) ? true : false)
-    );
-    return arr;
+  function timeHandler (endTime, int){  
+    const str = endTime.substring(0,2)
+    const time = Number(str)+int
+    const timestr = String(time)
+    let changedTime = '';
+    if(timestr.length<2){
+      changedTime = "0"+timestr+":00"
+      return changedTime
+    }else{
+      changedTime = timestr+":00"
+      return changedTime
+    }
+
   }
 
-
+  function bookingdDataHandler(bookingData) {
+    const bookedTimes = [];
+    bookingData.map((booking) =>
+      bookedTimes.push(booking.startTime, timeHandler(booking.endTime,-1) )
+    );
+    const arr = [...defaultDisabledList];
+    times.map((time) => arr.push(bookedTimes.includes(time) ? true : false));
+    return arr;
+  }
 
   //----무결님 버튼 클릭 작업----//
 
@@ -94,6 +104,13 @@ const UserInfoTimeData = ({ userClass }) => {
     }
     return arr;
   }
+  function getStartAndEndTime(checkedState) {
+    const object = {
+      startTime: times[getCheckedIndexArray(checkedState)[0]],
+      timeLength: getCheckedIndexArray(checkedState).length,
+    };
+    return object;
+  }
   //체크된 체크박스 checkedState 배열로 관리해주기 위함
   //기본적으로 onChange에서 호출해줌, 하지만 체크 false로 강제해야하는 조건에서는 호출 하지 않음
   function updatedCheckedState(index) {
@@ -128,12 +145,13 @@ const UserInfoTimeData = ({ userClass }) => {
   const [inputName, setInputName] = useState("");
 
   function onChange(e) {
-    console.log("TAG : onChange");
     setInputName(e.target.value);
     const str = e.target.value;
     let arr = [...memberNames];
     arr =
-      str === "" ? (arr = []) : arr.filter((member) => member.includes(str) && member !== userName);
+      str === ""
+        ? (arr = [])
+        : arr.filter((member) => member.includes(str) && member !== userName && !selectedNameState.includes(member));
     //타이핑할때 깜빡거리는거 안되게 예외처리하려고 했는데 한글 특성상 어려움.. 글자 단위로 처리할 수 있어야함
     // const check = JSON.stringify(arr) === JSON.stringify(searchedNameState);
     // console.log("check", check);
@@ -152,7 +170,6 @@ const UserInfoTimeData = ({ userClass }) => {
     const arr = [...selectedNameState];
     arr.splice(index, 1);
     setSelectedNameState(arr);
-    alert("해제?");
   }
 
   function onSubmit(e) {
@@ -165,14 +182,14 @@ const UserInfoTimeData = ({ userClass }) => {
       const arr = [...selectedNameState];
       arr.push(searchedNameState[0]);
       setSelectedNameState(arr);
-    } else if (searchedNameState > 1) {
+    } else if (searchedNameState.length > 1) {
       //검색 결과 두명 이상 나왔을 때 엔터친 경우
       alert("팀원을 한명씩 선택해 주세요 !");
     } else {
       //검색 안되는 이름 치고 엔터친 경우
       setInputName("");
       setSearchedNameState([]);
-      alert("더큰내일센터 인원이 아닙니다 !\n팀원의 이름을 확인해주세요!");
+      alert("팀원의 이름을 확인해주세요!");
     }
   }
 
@@ -195,7 +212,6 @@ const UserInfoTimeData = ({ userClass }) => {
   const nowHour = pluszero(NowHour);
   const nowMins = pluszero(NowMins);
   const nowTime = nowHour + nowMins;
-  console.log("nowHour",nowHour);
   const startTime = "0830";
   const endTime = "2100";
   useEffect(() => {
@@ -207,46 +223,52 @@ const UserInfoTimeData = ({ userClass }) => {
   }, []); //useEffect써서 한번만 렌더링 해줌
 
   //----예약 데이터 보내기----//
-  const BookingConfirm = () => {
-    const postUrl = `http://${myUrl}/api/booking/conference`;
-    fetch(postUrl, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        //값 입력
-        classes: userClass,
-        roomId: roomId,
-        roomType: roomType,
+  const roomTypeArr = ["meeting", "nabax"];
+  function bookingConfirm() {
+    if(roomType === roomTypeArr[0] && selectedNameState.length < 1 && getStartAndEndTime(checkedState).timeLength === 0){
+      alert("회의 참여자와 회의 시간을 선택해 주세요")
+    }
+    else if (roomType === roomTypeArr[0] && selectedNameState.length < 1) {
+      alert("회의 참여자를 1명 이상 선택해주세요");
+    } else if (getStartAndEndTime(checkedState).timeLength === 0) {
+      alert("시간을 선택해 주세요");
+    } else {
+      const postUrl = `http://${myUrl}/api/booking/conference`;
+      fetch(postUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          //값 입력
+          classes: userClass,
+          roomId: roomId,
+          roomType: roomType,
 
-        // 시간 한시간일때랑 두시간일 때 예외처리 해줘야할듯
-        startTime: "19:00", //checked state에서 index 찾아서 times 배열에서 뽑아냄
-        endTime: "20:00", // checked state에서  index 찾아서 times 배열에서 뽑아내서 +1
-        teamMate: selectedNameState,
+          // 시간 한시간일때랑 두시간일 때 예외처리 해줘야할듯
+          startTime: getStartAndEndTime(checkedState).startTime, //checked state에서 index 찾아서 times 배열에서 뽑아냄
+          endTime: timeHandler(getStartAndEndTime(checkedState).startTime,getStartAndEndTime(checkedState).timeLength), // checked state에서  index 찾아서 times 배열에서 뽑아내서 +1
+          teamMate: selectedNameState,
 
-        userId: id,
-        userName: userName,
-      }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        if (startTime > nowTime || endTime < nowTime) {
-          alert(
-            "예약할 수 없는 시간입니다!\n오전08:30부터 오후21:00까지 예약이 가능합니다."
-          );
-          navigate(`/${id}`);
-        } else if (data.message.success) {
-          //console.log(data.message.success);
-          alert(data.message.success);
-          navigate(`/mypage/${id}`);
-        } else {
-          //console.log(data.message.fail);
-          alert(data.message.fail);
-        }
-      });
-  };
+          userId: id,
+          userName: userName,
+        }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+          if (data.message.success) {
+            //console.log(data.message.success);
+            alert(data.message.success);
+            navigate(`/mypage/${id}`);
+          } else {
+            //console.log(data.message.fail);
+            alert(data.message.fail);
+          }
+        });
+    }
+
+  }
   return (
     <div>
       <div className={styles.wrap}>
@@ -263,20 +285,20 @@ const UserInfoTimeData = ({ userClass }) => {
               disabled
             />
           </p>
-          <form onSubmit={onSubmit}>
-            <p>
-              팀원선택
-              <input
-                className={styles.input}
-                onChange={onChange}
-                value={inputName}
-                type="text"
-                placeholder="검색"
-                required
-              />
-            </p>
-          </form>
-
+          {roomType === roomTypeArr[0] ? (
+            <form onSubmit={onSubmit}>
+              <p>
+                팀원선택
+                <input
+                  className={styles.input}
+                  onChange={onChange}
+                  value={inputName}
+                  type="text"
+                  placeholder="검색"
+                />
+              </p>
+            </form>
+          ) : null}
           <div>
             {searchedNameState.map((item, index) => (
               <button
@@ -322,7 +344,8 @@ const UserInfoTimeData = ({ userClass }) => {
 
         <button
           className={ablebtn === true ? styles.bookbtn : styles.bookbtnOff}
-          onClick={BookingConfirm}
+          onClick={bookingConfirm}
+          disabled={ablebtn ? false : true}
         >
           예약하기
         </button>
@@ -331,4 +354,4 @@ const UserInfoTimeData = ({ userClass }) => {
   );
 };
 
-export default UserInfoTimeData;
+export default BookingData;

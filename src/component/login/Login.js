@@ -28,6 +28,7 @@ export default function Login() {
       .then((data) => {
         console.log('data received : ', data)
         if (data.code === 405) {
+          
           navigate(`/${userid}`)
         } else {
           alert(data.message)

@@ -5,7 +5,7 @@ import NavsAdmin from './navs/NavsAdmin';
 import NavsFloor2 from './navs/NavsFloor2';
 import NavsFloor3 from './navs/NavsFloor3';
 import RoomInfo from './RoomInfo';
-import UserInfoTimeData from './UserInfoTimeData';
+import BookingData from './BookingData';
 //hooks
 import useUrl from '../../hooks/useUrl';
 import { useParams } from 'react-router-dom';
@@ -46,7 +46,7 @@ function BookPage() {
       <div className={styles.container}>
         <RoomInfo />
         <div className={styles.infowrap}>
-          <UserInfoTimeData userClass={userClass} />
+          <BookingData userClass={userClass} />
         </div>
       </div>
     </div>
