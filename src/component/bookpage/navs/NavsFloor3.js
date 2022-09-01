@@ -3,12 +3,12 @@ import styles from './Navs.module.css';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import UseUrl from '../../../hooks/UseUrl';
+import useUrl from '../../../hooks/useUrl';
 
 function NavsFloor3() {
   const { roomId } = useParams();
   const { id } = useParams();
-  const myUrl = UseUrl();
+  const myUrl = useUrl();
   //----/api/booking----//
   const [roomData, setRoomData] = useState([]);
   //3층 룸리스트 추출 -> 미팅룸리스트 개인자습룸리스트 추출

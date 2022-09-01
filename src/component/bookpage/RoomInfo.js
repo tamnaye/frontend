@@ -11,11 +11,11 @@ import styles from './RoomInfo.module.css';
 //hooks
 import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import UseUrl from '../../hooks/UseUrl';
+import useUrl from '../../hooks/useUrl';
 
 function RoomInfo() {
   const { roomId } = useParams(); //App.js 동적 라우팅을 넘겨받은 데이터 변수 지정하기!
-  const myUrl = UseUrl();
+  const myUrl = useUrl();
 
   const [roomData, setRoomData] = useState([]);
   const [roomInfo, setRoomInfo] = useState('');
