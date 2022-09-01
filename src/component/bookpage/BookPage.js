@@ -26,13 +26,13 @@ function BookPage() {
       .then((data) => {
         //setData(data);
         setUserClass(data.userData.classes);
-        setMaxClass(data.maxClass);
+        setMaxClass(data.maxClasses);
       });
   }, [url]);
   //console.log(id);
   //console.log(data);
-  //console.log(userClass);
-  //console.log(maxClass);
+  console.log(userClass);
+  console.log(maxClass);
 
   return (
     <div>
