@@ -174,7 +174,6 @@ const BookingData = ({ userClass }) => {
 
   function onSubmit(e) {
     e.preventDefault();
-
     if (searchedNameState.length === 1) {
       //이미 선택할 팀원이 나옴
       setInputName("");
