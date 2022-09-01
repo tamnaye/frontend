@@ -28,7 +28,7 @@ function NavsAdmin() {
   const floor3Nabox = floor3.filter((room) => room.roomType === 'nabox')
   //console.log(floor3Nabox);
 
-  const url = `http://${myUrl}:8080/api/booking?floor=0&roomId=${roomId}`
+  const url = `http://${myUrl}/api/booking?floor=0&roomId=${roomId}`
   useEffect(() => {
     fetch(url, { method: 'GET' })
       .then((res) => res.json())

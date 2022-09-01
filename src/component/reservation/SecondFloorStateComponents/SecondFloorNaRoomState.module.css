@@ -1,13 +1,14 @@
 @media screen and (max-width: 600px) {
   #table #thead #theadTr #text {
     font-size: 7px;
-    padding: 8px 2px;
+    padding: 8px;
     word-break: break-all;
+    white-space: break-spaces;
   }
   #table #tbody #tbodyTr .time {
     height: 36px;
     font-size: 7px;
-    padding: 8px 5px;
+    padding: 8px 6px;
   }
   #table #tbody #tbodyTr .roomstate .bookingTime {
     border-radius: 2px;
@@ -42,7 +43,7 @@ tbody .time {
   position: absolute;
   top: 0%;
   transform: translateX(-0.5rem);
-  width: 15.5%;
+  width: 15.1%;
 
   background-color: #74b8fc;
   color: whitesmoke;

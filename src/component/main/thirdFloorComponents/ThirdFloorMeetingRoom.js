@@ -2,10 +2,12 @@ import { useState, useEffect } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import styles from './ThirdFloorMeetingRoom.module.css'
 import UseUrl from '../../../hooks/UseUrl'
+import useTimeAlert from '../../../hooks/useTimeAlert'
 
 const ThirdFloorMeetingRoom = () => {
   const { id } = useParams()
   const myUrl = UseUrl()
+  const [ablebtn, BookingConfirm] = useTimeAlert()
 
   //3층 미팅룸 API 사용 정보 불러오기
   const [bookingData, setBookingData] = useState([])
@@ -27,7 +29,7 @@ const ThirdFloorMeetingRoom = () => {
   )
 
   // roomFull 함수
-  const roomFull = (roomid) => {
+  const notroomFull = (roomid) => {
     const roomState = bookingData.filter((room) => room.roomId === roomid)
 
     const TimeToString = (time) => {
@@ -48,7 +50,7 @@ const ThirdFloorMeetingRoom = () => {
       return sum + currValue
     }, 0)
 
-    return sum === 12
+    return sum !== 12
   }
 
   return (
@@ -56,12 +58,18 @@ const ThirdFloorMeetingRoom = () => {
       <h4 className={styles.title}>회의실</h4>
       <div className={styles.roomContainer}>
         {ThirdMeetingRoominfo.map((room) => (
-          <button
-            key={room.roomId}
-            className={roomFull(room.roomId) ? [styles.full] : [styles.notfull]}
-          >
-            <Link to={`/booking/${room.roomId}/${id}`}>{room.roomName}</Link>
-          </button>
+          <Link to={`/booking/${room.roomId}/${id}`} key={room.roomId}>
+            <button
+              className={
+                notroomFull(room.roomId) && ablebtn
+                  ? [styles.notfull]
+                  : [styles.full]
+              }
+              onClick={BookingConfirm}
+            >
+              {room.roomName}
+            </button>
+          </Link>
         ))}
       </div>
     </div>

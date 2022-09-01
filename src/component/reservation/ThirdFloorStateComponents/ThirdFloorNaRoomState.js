@@ -139,7 +139,7 @@ const ThirdFloorNaRoomState = () => {
                             bookingLength(
                               TimeAndRoomFilter(time, room.roomId)[0].startTime,
                               TimeAndRoomFilter(time, room.roomId)[0].endTime
-                            ) * 36
+                            ) * 35
                           }px`,
                         }}
                         className={styles.bookingTime}
