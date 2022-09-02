@@ -1,23 +1,26 @@
-import styles from './Header.module.css'
-import logo from './img/ci_png.png'
-import { Link, useNavigate } from 'react-router-dom'
-import { useParams } from 'react-router-dom'
-import { useEffect } from 'react'
+import styles from './Header.module.css';
+import logo from './img/ci_png.png';
+import { Link, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import { useEffect } from 'react';
 // import { useEffect, useState } from 'react'
 
 const Header = () => {
-  const userid = window.localStorage.getItem("userid")
+  const userid = window.localStorage.getItem('userid');
 
-  
   return (
     <div className={styles.HeaderContainer}>
       <div className={styles.Header}>
         <Link to={`/`}>
-          <img className={styles.img} src={logo} alt="logo"></img>
+          <img className={styles.img} src={logo} alt='logo'></img>
         </Link>
         <div className={styles.anker}>
-          {userid===null ?<Link to="/login">Login</Link> : <Link to="/logout">Logout</Link> }
-          
+          {userid === null ? (
+            <Link to='/login'>Login</Link>
+          ) : (
+            <Link to='/logout'>Logout</Link>
+          )}
+
           <Link to={`/mypage/${userid}`}>My page</Link>
         </div>
       </div>
@@ -26,7 +29,7 @@ const Header = () => {
         {/* <Link to={`/booking/301/${userid}`}>예약하기</Link> */}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;

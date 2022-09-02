@@ -12,9 +12,9 @@ import { useState, useEffect } from 'react';
 import BookingData from './BookingData';
 
 function BookPage() {
-  const id = window.localStorage.getItem("userid")
+  const id = window.localStorage.getItem('userid');
   const myUrl = useUrl();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   //const [data, setData] = useState([]);
   const [userClass, setUserClass] = useState('');
@@ -22,19 +22,19 @@ function BookPage() {
 
   const url = `http://${myUrl}/api/user/data?userId=${id}`;
   useEffect(() => {
-    if(id===null){
-      alert("로그인 후 사용 가능합니다.")
-      navigate(`/login`)
-    }else{
-    fetch(url)
-      .then((res) => res.json())
-      .then((data) => {
-        //setData(data);
-        setUserClass(data.userData.classes);
-        setMaxClass(data.maxClasses);
-      });
+    if (id === null) {
+      alert('로그인 후 사용 가능합니다.');
+      navigate(`/login`);
+    } else {
+      fetch(url)
+        .then((res) => res.json())
+        .then((data) => {
+          //setData(data);
+          setUserClass(data.userData.classes);
+          setMaxClass(data.maxClasses);
+        });
     }
-  }, [url],navigate);
+  }, [url, navigate]);
   //console.log(id);
   //console.log(data);
   console.log(userClass);
@@ -52,7 +52,7 @@ function BookPage() {
       <div className={styles.container}>
         <RoomInfo />
         <div className={styles.infowrap}>
-          <BookingData  />
+          <BookingData />
         </div>
       </div>
     </div>
