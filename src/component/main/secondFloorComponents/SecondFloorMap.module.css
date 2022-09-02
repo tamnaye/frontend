@@ -1,6 +1,6 @@
 @media screen and (max-width: 600px) {
   .Container .mapContainer {
-    font-size: 5px;
+    font-size: 10px;
     font-weight: 500;
     gap: 5px;
     padding: 5px;
@@ -18,7 +18,7 @@
     'space범섬 . 하모 화순 중문 표선 . . . space우도'
     'space범섬 NaBox4 NaBox5 NaBox6 화장실 stair EV . Stair2 space우도';
   height: 100%;
-  font-size: 6px;
+  font-size: 11px;
   column-gap: 8px;
   row-gap: 8px;
   font-weight: 600;
