@@ -31,6 +31,7 @@
   padding: 10px;
   border: 1px solid rgb(193, 193, 193);
   border-radius: 5px;
+  position: relative;
 }
 
 .mapContainer a {
@@ -41,6 +42,21 @@
   text-align: center;
   border-radius: 5px;
   white-space: inherit;
+}
+
+.mapContainer .alert {
+  position: absolute;
+  color: #46a1fd;
+  font-weight: 700;
+  white-space: nowrap;
+  background-color: rgba(255, 255, 255, 0.8);
+  width: 100%;
+  height: 100%;
+  font-size: 23px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
 }
 
 .mapContainer div {

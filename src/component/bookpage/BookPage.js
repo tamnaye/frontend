@@ -20,6 +20,7 @@ function BookPage() {
   const [maxClass, setMaxClass] = useState('');
 
   const url = `http://${myUrl}/api/user/data?userId=${id}`;
+
   useEffect(
     () => {
       if (id === null) {
@@ -37,6 +38,7 @@ function BookPage() {
     [url],
     navigate
   );
+
   //console.log(id);
   //console.log(data);
   // console.log(userClass);

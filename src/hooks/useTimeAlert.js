@@ -36,7 +36,7 @@ const useTimeAlert = () => {
       alert(
         '예약할 수 없는 시간입니다!\n오전08:30부터 오후21:00까지 예약이 가능합니다.'
       )
-    } 
+    }
   }
   return [ablebtn, BookingConfirm]
 }
