@@ -9,7 +9,7 @@ import useUrl from '../../../hooks/useUrl';
 function NavsFloor2() {
   const { roomId } = useParams();
   const myUrl = useUrl();
-  //----/api/booking----//
+
   const [roomData, setRoomData] = useState([]);
   //2층 룸리스트 추출 -> 미팅룸리스트 개인자습룸리스트 추출
   const floor2Meeting = roomData.filter((room) => room.roomType === 'meeting');

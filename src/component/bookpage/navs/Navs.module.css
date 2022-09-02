@@ -1,11 +1,8 @@
 @media screen and (max-width: 700px) {
-    .wrap {
-        /* background-color: aquamarine;
-        width: 350px;
-        안먹음.. */
-        
+    body .wrap {
+            width: 350px;
+        }
     }
-}
 
 .wrap {
     width: 850px;

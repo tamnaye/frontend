@@ -8,6 +8,7 @@ import ReservationState from './component/reservation/ReservationState';
 import BookPage from './component/bookpage/BookPage';
 import MyPage from './component/mypage/MyPage';
 import Logout from './component/logout/Logout';
+import Feedback from './component/Feedback';
 
 function App() {
   let location = useLocation();
@@ -22,6 +23,7 @@ function App() {
         <Route path='/booking/:roomId' element={<BookPage />} />
         <Route path='/mypage/:id' element={<MyPage />} />
         <Route path='*' element={<EmptyPage />} />
+        <Route path='/feedback' element={<Feedback />} />
       </Routes>
     </div>
   );
