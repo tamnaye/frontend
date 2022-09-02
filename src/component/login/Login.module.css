@@ -1,11 +1,31 @@
-.centerName{
-    font-family: 'Sunflower', sans-serif;
-    color: #3695f5;
+@media screen and (max-width: 700px) {
+  .container .box .centerName {
+     font-size: 22px;
+     text-align: center;
   }
-.container{
+ }
+
+ .container{
   width: 100vw;
   height: 80vh;
   display:flex;
   justify-content: center;
   align-items:center;
 }
+
+ .box {
+  width: 350px;
+  height: 300px;
+  text-align: center;
+  padding: 0px 30px;
+ }
+
+
+.centerName{
+    font-family: 'Sunflower', sans-serif;
+    color: #3695f5;
+    text-align: center;
+    margin-bottom: 32px;
+    font-size: 25px;
+  }
+

@@ -54,7 +54,7 @@ function MyBookTable() {
     return output;
   };
 
-  //----시간이 지난경우 표시해주기 ----//
+  //----시간이 지난경우 표시해주기 ----// 실패 : 반복문안에 useState를 쓸수 없음!!
   // const Now = new Date();
   // const NowHour = Now.getHours();
   // console.log(NowHour); //12
@@ -75,19 +75,15 @@ function MyBookTable() {
   // console.log(passedTime);
   // PassTime("10:00")
 
-  //----시간이 지난경우 표시해주기 ----//
   const Now = new Date();
   const NowHour = Now.getHours();
-  console.log(NowHour); //13
-
-  const passEndTime = myBookingList.filter((end) => end.endTime);
-  console.log(passEndTime);
+  console.log(NowHour); //15
 
   return (
     <div>
       <Table responsive>
         <thead>
-          <tr className={styles.tableTr}>
+          <tr className={styles.tableTrTitle}>
             <th className={styles.tableTh} scope='col'>
               공간
             </th>
@@ -107,16 +103,24 @@ function MyBookTable() {
         </thead>
         <tbody>
           {myBookingList.map((item, index) => (
-            <tr key={index} className={styles.tableTr}>
-              <td className={styles.tableTh}>{item.roomName}</td>
-              <td className={styles.tableTh}>
+            <tr
+              key={index}
+              className={
+                Number(NowHour) > Number(item.endTime.substr(0, 2)) ||
+                item.mode === 'cancel'
+                  ? [styles.tableTrContentPast]
+                  : [styles.tableTrContent]
+              }
+            >
+              <td className={styles.tableTd}>{item.roomName}</td>
+              <td className={styles.tableTd}>
                 {item.startTime}-{item.endTime}
               </td>
-              <td className={styles.tableTh}>{item.applicant.userName}</td>
+              <td className={styles.tableTd}>{item.applicant.userName}</td>
               {/* 배열자체를 가져와서 문자열로 보여주기 -> `${item.participants}` //출력 : 송민아,이현정 */}
               {/* 팀원들을 for문을 돌려서 띄어쓰기로 보여주기 */}
-              <td className={styles.tableTh}>{Listout(item.participants)}</td>
-              <td className={styles.tableTh}>
+              <td className={styles.tableTd}>{Listout(item.participants)}</td>
+              <td className={styles.tableTd}>
                 <button
                   key={index}
                   className={
