@@ -7,7 +7,6 @@ import MainTemplate from './component/main/MainTemplate';
 import ReservationState from './component/reservation/ReservationState';
 import BookPage from './component/bookpage/BookPage';
 import MyPage from './component/mypage/MyPage';
-import TimeTableTest from './test/TimeTableTest';
 import Logout from './component/logout/Logout';
 
 function App() {
@@ -16,9 +15,9 @@ function App() {
     <div>
       {location.pathname !== '/login' ? <Header /> : null}
       <Routes>
-        <Route path='/login' element={<Login />} />
+        <Route path='/' element={<Login />} />
         <Route path='/logout' element={<Logout />} />
-        <Route path='/' element={<MainTemplate />} />
+        <Route path='/main' element={<MainTemplate />} />
         <Route path='/state' element={<ReservationState />} />
         <Route path='/booking/:roomId' element={<BookPage />} />
         <Route path='/mypage/:id' element={<MyPage />} />
