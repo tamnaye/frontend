@@ -44,6 +44,44 @@ function MyBookTable() {
         });
     }
   };
+  //팀원 띄어쓰기로 보여주기//
+  const Listout = (list) => {
+    //console.log(list);
+    let output = '';
+    for (let people of list) {
+      output += people + ' ';
+    }
+    return output;
+  };
+
+  //----시간이 지난경우 표시해주기 ----//
+  // const Now = new Date();
+  // const NowHour = Now.getHours();
+  // console.log(NowHour); //12
+
+  // const [passedTime, setPassedTime] = useState(true);
+  // const PassTime = (pass) => {
+  //   useEffect(() => {
+  //     console.log(pass);
+  //     let passEndTime = pass.substr(0, 2);
+  //     console.log(passEndTime);
+  //     if (Number(NowHour) < Number(passEndTime)) {
+  //       setPassedTime(false);
+  //     } else {
+  //       setPassedTime(true);
+  //     }
+  //   }, [NowHour]);
+  // };
+  // console.log(passedTime);
+  // PassTime("10:00")
+
+  //----시간이 지난경우 표시해주기 ----//
+  const Now = new Date();
+  const NowHour = Now.getHours();
+  console.log(NowHour); //13
+
+  const passEndTime = myBookingList.filter((end) => end.endTime);
+  console.log(passEndTime);
 
   return (
     <div>
@@ -75,7 +113,9 @@ function MyBookTable() {
                 {item.startTime}-{item.endTime}
               </td>
               <td className={styles.tableTh}>{item.applicant.userName}</td>
-              <td className={styles.tableTh}>{item.participants}</td>
+              {/* 배열자체를 가져와서 문자열로 보여주기 -> `${item.participants}` //출력 : 송민아,이현정 */}
+              {/* 팀원들을 for문을 돌려서 띄어쓰기로 보여주기 */}
+              <td className={styles.tableTh}>{Listout(item.participants)}</td>
               <td className={styles.tableTh}>
                 <button
                   key={index}

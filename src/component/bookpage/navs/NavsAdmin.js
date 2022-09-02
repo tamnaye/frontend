@@ -8,7 +8,6 @@ import useUrl from '../../../hooks/useUrl';
 
 function NavsAdmin() {
   const { roomId } = useParams();
-  const { id } = useParams();
   const myUrl = useUrl();
   //----/api/booking----//
   //미팅룸 데이터 추출
@@ -28,7 +27,6 @@ function NavsAdmin() {
   //console.log(floor3Meeting);
   const floor3Nabox = floor3.filter((room) => room.roomType === 'nabox');
   //console.log(floor3Nabox);
-
 
   const url = `http://${myUrl}/api/booking/room-data?floor=0&roomId=${roomId}`;
   useEffect(() => {
@@ -51,13 +49,13 @@ function NavsAdmin() {
         </Dropdown.Toggle>
         <Dropdown.Menu>
           {floor2Meeting.map((item, index) => (
-            <Dropdown.Item href={`/booking/${item.roomId}/${id}`} key={index}>
+            <Dropdown.Item href={`/booking/${item.roomId}`} key={index}>
               {item.roomName}
             </Dropdown.Item>
           ))}
           <Dropdown.Divider />
           {floor2Nabox.map((item, index) => (
-            <Dropdown.Item href={`/booking/${item.roomId}/${id}`} key={index}>
+            <Dropdown.Item href={`/booking/${item.roomId}`} key={index}>
               {item.roomName}
             </Dropdown.Item>
           ))}
@@ -73,13 +71,13 @@ function NavsAdmin() {
         </Dropdown.Toggle>
         <Dropdown.Menu>
           {floor3Meeting.map((item, index) => (
-            <Dropdown.Item href={`/booking/${item.roomId}/${id}`} key={index}>
+            <Dropdown.Item href={`/booking/${item.roomId}`} key={index}>
               {item.roomName}
             </Dropdown.Item>
           ))}
           <Dropdown.Divider />
           {floor3Nabox.map((item, index) => (
-            <Dropdown.Item href={`/booking/${item.roomId}/${id}`} key={index}>
+            <Dropdown.Item href={`/booking/${item.roomId}`} key={index}>
               {item.roomName}
             </Dropdown.Item>
           ))}

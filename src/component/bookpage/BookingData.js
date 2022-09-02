@@ -1,16 +1,16 @@
 //styles
-import styles from "./BookingData.module.css";
-import "antd/dist/antd.min.css";
-import { Checkbox } from "antd";
+import styles from './BookingData.module.css';
+import 'antd/dist/antd.min.css';
+import { Checkbox } from 'antd';
 //component
-import React from "react";
-import dummy from "../../db/booking_data.json";
-import dummy_names from "../../db/tamnaMembers.json";
+import React from 'react';
+import dummy from '../../db/booking_data.json';
+import dummy_names from '../../db/tamnaMembers.json';
 //hooks
-import useUrl from "../../hooks/useUrl";
-import { useNavigate, useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
-import useTimes from "../../hooks/useTimes";
+import useUrl from '../../hooks/useUrl';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import useTimes from '../../hooks/useTimes';
 
 //더큰내일센터 인원들 로컬 데이터베이스 만들기 (객체 배열) : (id, class, 이름)
 //백에서 booking id 별 start,end Time 받아와야함 (endTime -1시간 해줘야함)
@@ -18,27 +18,25 @@ import useTimes from "../../hooks/useTimes";
 
 const BookingData = () => {
   //starttime, endtime,
-  const id  = window.localStorage.getItem("userid")
+  const id = window.localStorage.getItem('userid');
   const { roomId } = useParams();
   const myUrl = useUrl();
-  const [userName, setUserName] = useState("");
-  const [roomType, setRoomType] = useState(""); // meeting / nabax
-  const userClass = window.localStorage.getItem("class")
-  
+  const [userName, setUserName] = useState('');
+  const [roomType, setRoomType] = useState(''); // meeting / nabax
+  const userClass = window.localStorage.getItem('class');
 
   const times = useTimes();
   const [disabledState, setDisabledState] = useState([]);
   const [defaultDisabledList, setDefaultDisabledList] = useState([]);
   const url = `http://${myUrl}/api/booking?roomId=${roomId}&userId=${id}&classes=${userClass}`;
-  console.log("url", url)
+  console.log('url', url);
   const [memberNames, setMemberNames] = useState([]);
 
-
   useEffect(() => {
-    fetch(url, { method: "GET" })
+    fetch(url, { method: 'GET' })
       .then((res) => res.json())
       .then((data) => {
-        console.log(" useEffect data : ", data);
+        console.log(' useEffect data : ', data);
         setUserName(data.userData.userName);
         setRoomType(data.roomData.roomType);
         setDefaultDisabledList(bookingdDataHandler(data.bookingData));
@@ -47,33 +45,34 @@ const BookingData = () => {
       });
   }, [url]);
 
-  function timePlusMinus (endTime, int){  
-    const str = endTime.substring(0,2)
-    const time = Number(str)+int
-    const timestr = String(time)
+  function timePlusMinus(endTime, int) {
+    const str = endTime.substring(0, 2);
+    const time = Number(str) + int;
+    const timestr = String(time);
     let changedTime = '';
-    if(timestr.length<2){
-      changedTime = "0"+timestr+":00"
-      return changedTime
-    }else{
-      changedTime = timestr+":00"
-      return changedTime
+    if (timestr.length < 2) {
+      changedTime = '0' + timestr + ':00';
+      return changedTime;
+    } else {
+      changedTime = timestr + ':00';
+      return changedTime;
     }
-
   }
-  function checkPast(time){
-    const nowH = Now.getHours()
-    const timeH = Number(time.substring(0,2))
-    return timeH <= nowH ? true : false //ex. 현재시간 = 9:10, time="09:00" 일때 timeH=9 <= nowH = 9 -> true
+  function checkPast(time) {
+    const nowH = Now.getHours();
+    const timeH = Number(time.substring(0, 2));
+    return timeH <= nowH ? true : false; //ex. 현재시간 = 9:10, time="09:00" 일때 timeH=9 <= nowH = 9 -> true
   }
 
   function bookingdDataHandler(bookingData) {
     const bookedTimes = [];
     bookingData.map((booking) =>
-      bookedTimes.push(booking.startTime, timePlusMinus(booking.endTime,-1) )
+      bookedTimes.push(booking.startTime, timePlusMinus(booking.endTime, -1))
     );
     const arr = [...defaultDisabledList];
-    times.map((time) => arr.push(bookedTimes.includes(time) || checkPast(time) ? true : false));
+    times.map((time) =>
+      arr.push(bookedTimes.includes(time) || checkPast(time) ? true : false)
+    );
     return arr;
   }
 
@@ -139,7 +138,7 @@ const BookingData = () => {
       }
     } else if (checkedStateLength() === 2) {
       if (getCheckedIndexArray(checkedState).includes(index) === false) {
-        alert("최대 예약시간은 2시간입니다 !");
+        alert('최대 예약시간은 2시간입니다 !');
       } else {
         updatedCheckedState(index);
       }
@@ -149,16 +148,21 @@ const BookingData = () => {
   //--------팀원 검색 기능---------//
   const [searchedNameState, setSearchedNameState] = useState([]);
   const [selectedNameState, setSelectedNameState] = useState([]);
-  const [inputName, setInputName] = useState("");
+  const [inputName, setInputName] = useState('');
 
   function onChange(e) {
     setInputName(e.target.value);
     const str = e.target.value;
     let arr = [...memberNames];
     arr =
-      str === ""
+      str === ''
         ? (arr = [])
-        : arr.filter((member) => member.includes(str) && member !== userName && !selectedNameState.includes(member));
+        : arr.filter(
+            (member) =>
+              member.includes(str) &&
+              member !== userName &&
+              !selectedNameState.includes(member)
+          );
     //타이핑할때 깜빡거리는거 안되게 예외처리하려고 했는데 한글 특성상 어려움.. 글자 단위로 처리할 수 있어야함
     // const check = JSON.stringify(arr) === JSON.stringify(searchedNameState);
     // console.log("check", check);
@@ -166,7 +170,7 @@ const BookingData = () => {
     setSearchedNameState(arr);
   }
   function onClickSearched(name) {
-    setInputName("");
+    setInputName('');
     setSearchedNameState([]);
 
     const arr = [...selectedNameState];
@@ -183,19 +187,19 @@ const BookingData = () => {
     e.preventDefault();
     if (searchedNameState.length === 1) {
       //이미 선택할 팀원이 나옴
-      setInputName("");
+      setInputName('');
       setSearchedNameState([]);
       const arr = [...selectedNameState];
       arr.push(searchedNameState[0]);
       setSelectedNameState(arr);
     } else if (searchedNameState.length > 1) {
       //검색 결과 두명 이상 나왔을 때 엔터친 경우
-      alert("팀원을 한명씩 선택해 주세요 !");
+      alert('팀원을 한명씩 선택해 주세요 !');
     } else {
       //검색 안되는 이름 치고 엔터친 경우
-      setInputName("");
+      setInputName('');
       setSearchedNameState([]);
-      alert("팀원의 이름을 확인해주세요!");
+      alert('팀원의 이름을 확인해주세요!');
     }
   }
 
@@ -209,7 +213,7 @@ const BookingData = () => {
   function pluszero(times) {
     let time = times.toString(); //시간을 숫자에서 문자로 변환
     if (time.length < 2) {
-      time = "0" + time; //숫자 앞에 0을 붙여줌
+      time = '0' + time; //숫자 앞에 0을 붙여줌
       return time;
     } else {
       return time;
@@ -218,8 +222,8 @@ const BookingData = () => {
   const nowHour = pluszero(NowHour);
   const nowMins = pluszero(NowMins);
   const nowTime = nowHour + nowMins;
-  const startTime = "0830";
-  const endTime = "2100";
+  const startTime = '0830';
+  const endTime = '2100';
   useEffect(() => {
     if (startTime > nowTime || endTime < nowTime) {
       setAblebtn(false);
@@ -229,21 +233,24 @@ const BookingData = () => {
   }, []); //useEffect써서 한번만 렌더링 해줌
 
   //----예약 데이터 보내기----//
-  const roomTypeArr = ["meeting", "nabax"];
+  const roomTypeArr = ['meeting', 'nabax'];
   function bookingConfirm() {
-    if(roomType === roomTypeArr[0] && selectedNameState.length < 1 && getStartAndEndTime(checkedState).timeLength === 0){
-      alert("회의 참여자와 회의 시간을 선택해 주세요")
-    }
-    else if (roomType === roomTypeArr[0] && selectedNameState.length < 1) {
-      alert("회의 참여자를 1명 이상 선택해주세요");
+    if (
+      roomType === roomTypeArr[0] &&
+      selectedNameState.length < 1 &&
+      getStartAndEndTime(checkedState).timeLength === 0
+    ) {
+      alert('회의 참여자와 회의 시간을 선택해 주세요');
+    } else if (roomType === roomTypeArr[0] && selectedNameState.length < 1) {
+      alert('회의 참여자를 1명 이상 선택해주세요');
     } else if (getStartAndEndTime(checkedState).timeLength === 0) {
-      alert("시간을 선택해 주세요");
+      alert('시간을 선택해 주세요');
     } else {
       const postUrl = `http://${myUrl}/api/booking/conference`;
       fetch(postUrl, {
-        method: "POST",
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           //값 입력
@@ -253,7 +260,10 @@ const BookingData = () => {
 
           // 시간 한시간일때랑 두시간일 때 예외처리 해줘야할듯
           startTime: getStartAndEndTime(checkedState).startTime, //checked state에서 index 찾아서 times 배열에서 뽑아냄
-          endTime: timePlusMinus(getStartAndEndTime(checkedState).startTime,getStartAndEndTime(checkedState).timeLength), // checked state에서  index 찾아서 times 배열에서 뽑아내서 +1
+          endTime: timePlusMinus(
+            getStartAndEndTime(checkedState).startTime,
+            getStartAndEndTime(checkedState).timeLength
+          ), // checked state에서  index 찾아서 times 배열에서 뽑아내서 +1
           teamMate: selectedNameState,
 
           userId: id,
@@ -273,7 +283,6 @@ const BookingData = () => {
           }
         });
     }
-
   }
   return (
     <div>
@@ -283,10 +292,10 @@ const BookingData = () => {
           <p>
             신청자명
             <input
-              style={{ fontWeight: "bold" }}
+              style={{ fontWeight: 'bold' }}
               className={styles.input}
-              type="text"
-              name="val"
+              type='text'
+              name='val'
               placeholder={userName}
               disabled
             />
@@ -299,8 +308,8 @@ const BookingData = () => {
                   className={styles.input}
                   onChange={onChange}
                   value={inputName}
-                  type="text"
-                  placeholder="검색"
+                  type='text'
+                  placeholder='검색'
                 />
               </p>
             </form>
@@ -333,13 +342,13 @@ const BookingData = () => {
               <Checkbox
                 onChange={() => onChangeInput(index)}
                 checked={checkedState[index]}
-                variant="success"
+                variant='success'
                 disabled={disabledState[index]}
                 style={{
-                  margin: "10px",
-                  color: "green",
-                  fontSize: "16px",
-                  fontWeight: "bold",
+                  margin: '10px',
+                  color: 'green',
+                  fontSize: '16px',
+                  fontWeight: 'bold',
                 }}
               >
                 {time}
