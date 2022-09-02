@@ -16,29 +16,31 @@ function BookPage() {
   const myUrl = useUrl();
   const navigate = useNavigate();
 
-  //const [data, setData] = useState([]);
   const [userClass, setUserClass] = useState('');
   const [maxClass, setMaxClass] = useState('');
 
   const url = `http://${myUrl}/api/user/data?userId=${id}`;
-  useEffect(() => {
-    if (id === null) {
-      alert('로그인 후 사용 가능합니다.');
-      navigate(`/login`);
-    } else {
-      fetch(url)
-        .then((res) => res.json())
-        .then((data) => {
-          //setData(data);
-          setUserClass(data.userData.classes);
-          setMaxClass(data.maxClasses);
-        });
-    }
-  }, [url, navigate]);
+  useEffect(
+    () => {
+      if (id === null) {
+        alert('로그인 후 사용 가능합니다.');
+        navigate(`/`);
+      } else {
+        fetch(url)
+          .then((res) => res.json())
+          .then((data) => {
+            setUserClass(data.userData.classes);
+            setMaxClass(data.maxClasses);
+          });
+      }
+    },
+    [url],
+    navigate
+  );
   //console.log(id);
   //console.log(data);
-  console.log(userClass);
-  console.log(maxClass);
+  // console.log(userClass);
+  // console.log(maxClass);
 
   return (
     <div>

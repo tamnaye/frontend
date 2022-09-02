@@ -1,9 +1,6 @@
 import styles from './Header.module.css';
 import logo from './img/ci_png.png';
-import { Link, useNavigate } from 'react-router-dom';
-import { useParams } from 'react-router-dom';
-import { useEffect } from 'react';
-// import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom';
 
 const Header = () => {
   const userid = window.localStorage.getItem('userid');
@@ -11,16 +8,15 @@ const Header = () => {
   return (
     <div className={styles.HeaderContainer}>
       <div className={styles.Header}>
-        <Link to={`/`}>
+        <Link to={`/main`}>
           <img className={styles.img} src={logo} alt='logo'></img>
         </Link>
         <div className={styles.anker}>
           {userid === null ? (
-            <Link to='/login'>Login</Link>
+            <Link to='/'>Login</Link>
           ) : (
             <Link to='/logout'>Logout</Link>
           )}
-
           <Link to={`/mypage/${userid}`}>My page</Link>
         </div>
       </div>

@@ -45,7 +45,7 @@ const BookingData = () => {
       });
   }, [url]);
 
-  function timeHandler(endTime, int) {
+  function timePlusMinus(endTime, int) {
     const str = endTime.substring(0, 2);
     const time = Number(str) + int;
     const timestr = String(time);
@@ -58,14 +58,21 @@ const BookingData = () => {
       return changedTime;
     }
   }
+  function checkPast(time) {
+    const nowH = Now.getHours();
+    const timeH = Number(time.substring(0, 2));
+    return timeH <= nowH ? true : false; //ex. 현재시간 = 9:10, time="09:00" 일때 timeH=9 <= nowH = 9 -> true
+  }
 
   function bookingdDataHandler(bookingData) {
     const bookedTimes = [];
     bookingData.map((booking) =>
-      bookedTimes.push(booking.startTime, timeHandler(booking.endTime, -1))
+      bookedTimes.push(booking.startTime, timePlusMinus(booking.endTime, -1))
     );
     const arr = [...defaultDisabledList];
-    times.map((time) => arr.push(bookedTimes.includes(time) ? true : false));
+    times.map((time) =>
+      arr.push(bookedTimes.includes(time) || checkPast(time) ? true : false)
+    );
     return arr;
   }
 
@@ -253,7 +260,7 @@ const BookingData = () => {
 
           // 시간 한시간일때랑 두시간일 때 예외처리 해줘야할듯
           startTime: getStartAndEndTime(checkedState).startTime, //checked state에서 index 찾아서 times 배열에서 뽑아냄
-          endTime: timeHandler(
+          endTime: timePlusMinus(
             getStartAndEndTime(checkedState).startTime,
             getStartAndEndTime(checkedState).timeLength
           ), // checked state에서  index 찾아서 times 배열에서 뽑아내서 +1

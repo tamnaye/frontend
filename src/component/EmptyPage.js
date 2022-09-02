@@ -7,12 +7,12 @@ export default function EmptyPage() {
   useEffect(() => {
     if (id === null) {
       alert("잘못된 접근입니다.");
-      navigate("/login");
+      navigate("/");
     } else {
       alert("잘못된 접근입니다.");
-      navigate("/");
+      navigate("/main");
     }
-  },[navigate]);
+  },[id,navigate]);
 
   return <div></div>;
 }

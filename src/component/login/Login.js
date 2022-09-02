@@ -4,17 +4,25 @@ import { useNavigate } from 'react-router-dom'
 import 'antd/dist/antd.min.css'
 import styles from './Login.module.css'
 import encrypt from '../../hooks/encrypt'
-import decrypt from '../../hooks/decrypt'
+import { useEffect } from 'react'
 
 export default function Login() {
   const navigate = useNavigate()
+  const id = window.localStorage.getItem("userid")
+  useEffect(()=>{
+    if(id!==null){
+      navigate('/main')
+    }
+  },[id,navigate])
 
   const onFinish = (values) => {
     const userid = values.userid
     const userpwd = values.userpwd //get pwd
     const encrypted_pwd = encrypt(userpwd) //pwd 암호화
 
-    fetch('/api/user/login', {
+    fetch(
+      '/api/user/login', {
+      // 'https://lms.jdnc.or.kr/api/user/login', {
       method: 'POST',
       headers: {
         'content-type': 'application/json',
@@ -29,7 +37,7 @@ export default function Login() {
         console.log('data received : ', data)
         if (data.code === 405) {
            window.localStorage.setItem('userid', userid);
-          navigate(`/`)
+          navigate(`/main`)
         } else {
           alert(data.message)
         }
