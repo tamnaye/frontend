@@ -7,7 +7,7 @@ import NavsFloor3 from './navs/NavsFloor3';
 import RoomInfo from './RoomInfo';
 //hooks
 import useUrl from '../../hooks/useUrl';
-import { Navigate, useNavigate, useParams } from 'react-router-dom';
+import {  useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import BookingData from './BookingData';
 
@@ -35,7 +35,7 @@ function BookPage() {
           });
       }
     },
-    [url],
+    [url,id,navigate],
     navigate
   );
 

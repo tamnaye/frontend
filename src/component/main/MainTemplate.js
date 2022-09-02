@@ -1,7 +1,7 @@
 import SecondFloor from './secondFloorComponents/SecondFloor';
 import ThirdFloor from './thirdFloorComponents/ThirdFloor';
 import styles from './MainTemplate.module.css';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import useUrl from '../../hooks/useUrl';
 

@@ -31,7 +31,7 @@ function MyPage() {
         setBookingCount(data.myBookingDetailDataList);
       });
     }
-  }, [url],navigate);
+  }, [url,navigate,id]);
   //onsole.log(bookingCount);
 
   return (
