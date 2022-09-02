@@ -1,38 +1,37 @@
-import SecondFloor from './secondFloorComponents/SecondFloor';
-import ThirdFloor from './thirdFloorComponents/ThirdFloor';
-import styles from './MainTemplate.module.css';
-import { useNavigate, useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import useUrl from '../../hooks/useUrl';
+import SecondFloor from "./secondFloorComponents/SecondFloor";
+import ThirdFloor from "./thirdFloorComponents/ThirdFloor";
+import styles from "./MainTemplate.module.css";
+import { useNavigate, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import useUrl from "../../hooks/useUrl";
 
 const MainTemplate = () => {
-  const id= window.localStorage.getItem("userid")
-  console.log("mainTemplete : ",id)
-  const navigate = useNavigate()
- 
+  const id = window.localStorage.getItem("userid");
+  console.log("mainTemplete : ", id);
+  const navigate = useNavigate();
+
   const myUrl = useUrl();
 
-  const [userClasses, setUserClasses] = useState('');
-  const [maxClasses, setMaxClasses] = useState('');
+  const [userClasses, setUserClasses] = useState("");
+  const [maxClasses, setMaxClasses] = useState("");
 
   const url = `http://${myUrl}/api/user/data?userId=${id}`;
   useEffect(() => {
-    if(id===null){
-      alert("로그인 후 사용 가능합니다.")
-      navigate(`/`)
-    }else{
+    if (id === null) {
+      alert("로그인 후 사용 가능합니다.");
+      navigate(`/`);
+    } else {
       fetch(url, {
-        method: 'GET',
+        method: "GET",
       })
         .then((res) => res.json())
         .then((data) => {
           setUserClasses(data.userData.classes);
           setMaxClasses(data.maxClasses);
-          window.localStorage.setItem('class', data.userData.classes);
+          window.localStorage.setItem("class", data.userData.classes);
         });
     }
-  
-  }, [id, url,navigate]);
+  }, [id, url, navigate]);
 
   const [ablebtn, setAblebtn] = useState(true); //예약시간이 아닐 때 상태변경(true일 때 버튼 활성화!)
 
@@ -44,7 +43,7 @@ const MainTemplate = () => {
   function pluszero(times) {
     let time = times.toString(); //시간을 숫자에서 문자로 변환
     if (time.length < 2) {
-      time = '0' + time; //숫자 앞에 0을 붙여줌
+      time = "0" + time; //숫자 앞에 0을 붙여줌
       return time;
     } else {
       return time;
@@ -54,8 +53,8 @@ const MainTemplate = () => {
   const nowMins = pluszero(NowMins);
   const nowTime = nowHour + nowMins;
 
-  const startTime = '0830';
-  const endTime = '2000';
+  const startTime = "0830";
+  const endTime = "2000";
   useEffect(() => {
     if (startTime > nowTime || endTime < nowTime) {
       setAblebtn(false);
@@ -76,13 +75,13 @@ const MainTemplate = () => {
         {/* classes 활용 */}
         {userClasses === 0 ? (
           [
-            <SecondFloor key='3' className={styles.secondFloor} />,
-            <ThirdFloor key='2' className={styles.thirdFloor} />,
+            <SecondFloor key="3" className={styles.secondFloor} />,
+            <ThirdFloor key="2" className={styles.thirdFloor} />,
           ]
         ) : userClasses === maxClasses ? (
-          <ThirdFloor key='2' className={styles.thirdFloor} />
+          <ThirdFloor key="2" className={styles.thirdFloor} />
         ) : (
-          <SecondFloor key='3' className={styles.secondFloor} />
+          <SecondFloor key="3" className={styles.secondFloor} />
         )}
       </div>
     </div>
