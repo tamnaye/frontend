@@ -1,3 +1,4 @@
+
 //styles
 import styles from './MyPage.module.css';
 import { Container } from 'react-bootstrap';
@@ -7,7 +8,7 @@ import MyBookTableEmpty from './MyBookTableEmpty';
 //hooks
 import useUrl from '../../hooks/useUrl';
 import { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 function MyPage() {
   const id = window.localStorage.getItem("userid")

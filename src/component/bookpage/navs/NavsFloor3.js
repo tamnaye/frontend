@@ -7,7 +7,6 @@ import useUrl from '../../../hooks/useUrl';
 
 function NavsFloor3() {
   const { roomId } = useParams();
-  const { id } = useParams();
   const myUrl = useUrl();
   //----/api/booking----//
   const [roomData, setRoomData] = useState([]);
@@ -36,7 +35,7 @@ function NavsFloor3() {
         </Dropdown.Toggle>
         <Dropdown.Menu>
           {floor3Meeting.map((item, index) => (
-            <Dropdown.Item href={`/booking/${item.roomId}/${id}`} key={index}>
+            <Dropdown.Item href={`/booking/${item.roomId}`} key={index}>
               {item.roomName}
             </Dropdown.Item>
           ))}
@@ -52,7 +51,7 @@ function NavsFloor3() {
         </Dropdown.Toggle>
         <Dropdown.Menu>
           {floor3Nabox.map((item, index) => (
-            <Dropdown.Item href={`/booking/${item.roomId}/${id}`} key={index}>
+            <Dropdown.Item href={`/booking/${item.roomId}`} key={index}>
               {item.roomName}
             </Dropdown.Item>
           ))}
