@@ -41,7 +41,7 @@ const BookingData = () => {
         setDisabledState(bookingdDataHandler(data.bookingData));
         setMemberNames(data.namesData);
       });
-  }, [url]);
+  }, [url]); //의존성 경고문 없애기 (콜백 방식 알아볼것)
 
   function timePlusMinus(endTime, int) {
     const str = endTime.substring(0, 2);
