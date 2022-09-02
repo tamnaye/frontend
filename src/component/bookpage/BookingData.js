@@ -16,12 +16,12 @@ import useTimes from '../../hooks/useTimes';
 
 const BookingData = () => {
   //starttime, endtime,
-  const id = window.localStorage.getItem('userid');
-  const { roomId } = useParams();
   const myUrl = useUrl();
+  const id = window.localStorage.getItem('userid');
+  const userClass = window.localStorage.getItem('class');
+  const { roomId } = useParams();
   const [userName, setUserName] = useState('');
   const [roomType, setRoomType] = useState(''); // meeting / nabax
-  const userClass = window.localStorage.getItem('class');
 
   const times = useTimes();
   const [disabledState, setDisabledState] = useState([]);
@@ -73,8 +73,6 @@ const BookingData = () => {
     );
     return arr;
   }
-
-  //----무결님 버튼 클릭 작업----//
 
   const [checkedState, setCheckedState] = useState(new Array(12).fill(false));
   // i의 최소값이 0, 최대값은 11이기 때문에 처음 시간과 마지막 시간일때의 예외처리는 반복문에서 자연스럽게 처리됨
@@ -255,7 +253,6 @@ const BookingData = () => {
           classes: userClass,
           roomId: roomId,
           roomType: roomType,
-
           // 시간 한시간일때랑 두시간일 때 예외처리 해줘야할듯
           startTime: getStartAndEndTime(checkedState).startTime, //checked state에서 index 찾아서 times 배열에서 뽑아냄
           endTime: timePlusMinus(
@@ -263,7 +260,6 @@ const BookingData = () => {
             getStartAndEndTime(checkedState).timeLength
           ), // checked state에서  index 찾아서 times 배열에서 뽑아내서 +1
           teamMate: selectedNameState,
-
           userId: id,
           userName: userName,
         }),
@@ -325,8 +321,12 @@ const BookingData = () => {
           </div>
           <div className={styles.membersBox}>
             {selectedNameState.map((item, index) => (
-              <button onClick={() => onClickSelected(index)} key={index}>
-                {`${item} (x)`}
+              <button
+                className={styles.selectMembers}
+                onClick={() => onClickSelected(index)}
+                key={index}
+              >
+                {`${item} ✗`}
               </button>
             ))}
           </div>
@@ -354,7 +354,6 @@ const BookingData = () => {
             </span>
           ))}
         </div>
-
         <button
           className={ablebtn === true ? styles.bookbtn : styles.bookbtnOff}
           onClick={bookingConfirm}

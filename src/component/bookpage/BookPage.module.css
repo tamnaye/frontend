@@ -1,5 +1,5 @@
 @media screen and (max-width: 700px) {
-  div .container {
+  div .roomInfo {
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: repeat(2, 1fr);
@@ -8,7 +8,7 @@
   }
 }
 
-.container {
+.roomInfo {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   column-gap: 50px;
@@ -19,7 +19,7 @@
   margin-top: 5px;
 }
 
-.infowrap {
+.bookingInfo {
   padding: 10px;
   width: 350px;
   margin: auto;

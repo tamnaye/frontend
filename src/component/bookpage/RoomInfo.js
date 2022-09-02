@@ -9,7 +9,7 @@ import useUrl from '../../hooks/useUrl';
 import useRoomImg from '../../hooks/useRoomImg';
 
 function RoomInfo() {
-  const { roomId } = useParams(); //App.js 동적 라우팅을 넘겨받은 데이터 변수 지정하기!
+  const { roomId } = useParams();
   const myUrl = useUrl();
 
   const [roomInfo, setRoomInfo] = useState('');
@@ -26,7 +26,6 @@ function RoomInfo() {
         );
       });
   }, [roomId, url]);
-  //console.log(roomInfo);
 
   //로컬 자체에 room 이미지 저장해서 서버에서 받아온 roomId와 동일할 떄 원하는 이미지 불러오기
   const roomsImg = useRoomImg(); //useRoomImg 훅에서 가져옴
