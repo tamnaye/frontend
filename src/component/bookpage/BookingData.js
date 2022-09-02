@@ -4,8 +4,6 @@ import 'antd/dist/antd.min.css';
 import { Checkbox } from 'antd';
 //component
 import React from 'react';
-import dummy from '../../db/booking_data.json';
-import dummy_names from '../../db/tamnaMembers.json';
 //hooks
 import useUrl from '../../hooks/useUrl';
 import { useNavigate, useParams } from 'react-router-dom';

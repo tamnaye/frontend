@@ -1,7 +1,7 @@
 import SecondFloor from './secondFloorComponents/SecondFloor';
 import ThirdFloor from './thirdFloorComponents/ThirdFloor';
 import styles from './MainTemplate.module.css';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import useUrl from '../../hooks/useUrl';
 
@@ -17,10 +17,12 @@ const MainTemplate = () => {
 
   const url = `http://${myUrl}/api/user/data?userId=${id}`;
   useEffect(() => {
+
     if (id === null) {
       alert('로그인 후 사용 가능합니다.');
       navigate(`/`);
     } else {
+
       fetch(url, {
         method: 'GET',
       })

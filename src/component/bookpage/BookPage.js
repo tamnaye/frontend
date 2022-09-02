@@ -7,7 +7,7 @@ import NavsFloor3 from './navs/NavsFloor3';
 import RoomInfo from './RoomInfo';
 //hooks
 import useUrl from '../../hooks/useUrl';
-import { Navigate, useNavigate, useParams } from 'react-router-dom';
+import {  useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import BookingData from './BookingData';
 
@@ -20,6 +20,7 @@ function BookPage() {
   const [maxClass, setMaxClass] = useState('');
 
   const url = `http://${myUrl}/api/user/data?userId=${id}`;
+
   useEffect(
     () => {
       if (id === null) {
@@ -34,9 +35,10 @@ function BookPage() {
           });
       }
     },
-    [url],
+    [url,id,navigate],
     navigate
   );
+
   //console.log(id);
   //console.log(data);
   // console.log(userClass);
