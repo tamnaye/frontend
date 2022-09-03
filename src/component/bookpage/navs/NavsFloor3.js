@@ -41,7 +41,7 @@ function NavsFloor3() {
           ))}
         </Dropdown.Menu>
       </Dropdown>
-      <Dropdown className={styles.box}>
+      <Dropdown className={styles.boxNabox}>
         <Dropdown.Toggle
           className={styles.toggle}
           variant=''
