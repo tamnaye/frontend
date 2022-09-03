@@ -206,6 +206,12 @@ const BookingData = () => {
   const Now = new Date();
   const NowHour = Now.getHours();
   const NowMins = Now.getMinutes();
+  //주말 예약 버튼 비활성화
+  const day = ['일', '월', '화', '수', '목', '금', '토'];
+  const NowDay = Now.getDay();
+  const weekDay = day[NowDay];
+  console.log(weekDay);
+
   function pluszero(times) {
     let time = times.toString(); //시간을 숫자에서 문자로 변환
     if (time.length < 2) {
@@ -221,7 +227,12 @@ const BookingData = () => {
   const startTime = '0830';
   const endTime = '2100';
   useEffect(() => {
-    if (startTime > nowTime || endTime < nowTime) {
+    if (
+      startTime > nowTime ||
+      endTime < nowTime ||
+      weekDay === '토' ||
+      weekDay === '일'
+    ) {
       setAblebtn(false);
     } else {
       setAblebtn(true);
