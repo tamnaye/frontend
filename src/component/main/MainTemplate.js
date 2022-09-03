@@ -1,9 +1,11 @@
-import SecondFloor from './secondFloorComponents/SecondFloor'
-import ThirdFloor from './thirdFloorComponents/ThirdFloor'
-import styles from './MainTemplate.module.css'
-import { useNavigate } from 'react-router-dom'
-import { useEffect, useState } from 'react'
-import useUrl from '../../hooks/useUrl'
+
+import SecondFloor from './secondFloorComponents/SecondFloor';
+import ThirdFloor from './thirdFloorComponents/ThirdFloor';
+import styles from './MainTemplate.module.css';
+import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import useUrl from '../../hooks/useUrl';
+
 
 const MainTemplate = () => {
   const id = window.localStorage.getItem('userid')

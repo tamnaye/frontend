@@ -1,4 +1,8 @@
 @media screen and (max-width: 700px) {
+    .comtainer {
+        padding-right: 0px;
+        padding-left: 0px;
+    }
     .container .userInfo {
         margin: 40px 0px;
         font-size: 13px;
