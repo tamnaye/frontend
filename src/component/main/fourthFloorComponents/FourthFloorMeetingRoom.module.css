@@ -1,15 +1,16 @@
 @media screen and (max-width: 600px) {
-  .NaBoxContainer .roomContainer {
+  .MeetingRoomContainer .roomContainer {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 40px);
   }
-  .NaBoxContainer .title {
+  .MeetingRoomContainer .title {
     font-size: 15px;
     margin: 5px;
   }
 }
 
-.NaBoxContainer h4 {
+.MeetingRoomContainer h4 {
   margin: 10px;
   font-size: 20px;
   font-weight: 600;
@@ -48,7 +49,7 @@
   font-size: 11px;
   font-weight: 500;
   cursor: pointer;
-  background-color: rgb(255, 163, 42);
+  background-color: #46a1fd;
   color: white;
 }
 
@@ -57,5 +58,5 @@
 }
 
 .notfull:hover {
-  background-color: rgb(156, 99, 0);
+  background-color: rgb(73, 117, 144);
 }

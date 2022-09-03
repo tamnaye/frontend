@@ -4,7 +4,7 @@ import styles from './ThirdFloorNaRoomState.module.css'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import Popover from 'react-bootstrap/Popover'
 import PoplayNabox from '../PoplayNabox'
-import { Link, useParams } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { EmojiSmileFill, ArrowRightCircleFill } from 'react-bootstrap-icons'
 import useUrl from '../../../hooks/useUrl'
 
@@ -13,7 +13,6 @@ const ThirdFloorNaRoomState = () => {
   const [bookingData, setBookingData] = useState([])
   const [roomData, setRoomData] = useState([])
 
-  const { id } = useParams()
   const myUrl = useUrl()
 
   useEffect(() => {
@@ -87,7 +86,7 @@ const ThirdFloorNaRoomState = () => {
             {/* 룸 값 불러오기 */}
             {ThirdNaboxinfo.map((room) => (
               <th key={room.roomId} className="table-primary" id={styles.text}>
-                <Link to={`/booking/${room.roomId}/${id}`} id={styles.roomA}>
+                <Link to={`/booking/${room.roomId}`} id={styles.roomA}>
                   <ArrowRightCircleFill />
                   &nbsp;
                   {room.roomName}
@@ -107,8 +106,7 @@ const ThirdFloorNaRoomState = () => {
                 <th key={room.roomId} className={styles.roomstate}>
                   {IsThisTimeRoombooked(time, room.roomId) ? (
                     <OverlayTrigger
-                      onClick=""
-                      trigger="hover"
+                      trigger={('hover', 'focus')}
                       key={TimeAndRoomFilter(time, room.roomId)[0].bookingId}
                       placement="top"
                       overlay={

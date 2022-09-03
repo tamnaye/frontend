@@ -1,22 +1,27 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
-import styles from './SecondFloorNaRoomState.module.css'
+import styles from './FourthFloorMeetingRoomState.module.css'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import Popover from 'react-bootstrap/Popover'
-import PoplayNabox from '../PoplayNabox'
+import Poplay from '../Poplay'
 import { Link } from 'react-router-dom'
-import { EmojiSmileFill, ArrowRightCircleFill } from 'react-bootstrap-icons'
+import {
+  EmojiSmileFill,
+  ArrowRightCircleFill,
+  Calendar2CheckFill,
+} from 'react-bootstrap-icons'
 import useUrl from '../../../hooks/useUrl'
 
-const SecondFloorNaRoomState = () => {
-  // API 2층 나박스 가져오기
+const FourthFloorMeetingRoomState = () => {
+  // API 4층 회의실 가져오기
   const [bookingData, setBookingData] = useState([])
   const [roomData, setRoomData] = useState([])
 
   const myUrl = useUrl()
+  const url = `http://${myUrl}/api/booking/details-booking?floor=4`
 
   useEffect(() => {
-    fetch(`http://${myUrl}/api/booking/details-booking?floor=2`, {
+    fetch(url, {
       method: 'GET',
     })
       .then((res) => res.json())
@@ -24,11 +29,7 @@ const SecondFloorNaRoomState = () => {
         setBookingData(data.BookingData)
         setRoomData(data.RoomData)
       })
-  }, [`http://${myUrl}/api/booking/details-booking?floor=2`])
-
-  const secondFloorNaboxinfo = roomData.filter(
-    (rooms) => rooms.roomType === 'nabox'
-  )
+  }, [url, myUrl])
 
   // 타임 리스트 돌리기
   let timeList = []
@@ -85,11 +86,13 @@ const SecondFloorNaRoomState = () => {
         <thead className="table-light" id={styles.thead}>
           <tr id={styles.theadTr}>
             <th className="table-primary" id={styles.time}></th>
+
             {/* 룸 값 불러오기 */}
-            {secondFloorNaboxinfo.map((room) => (
+            {roomData.map((room) => (
               <th key={room.roomId} className="table-primary" id={styles.text}>
                 <Link to={`/booking/${room.roomId}`}>
                   <ArrowRightCircleFill />
+                  &nbsp;
                   {room.roomName}
                 </Link>
               </th>
@@ -103,7 +106,7 @@ const SecondFloorNaRoomState = () => {
               <th className={styles.time}>{time}</th>
 
               {/* 룸을 맵으로 돌려 하나의 시간에 상태값 전달 */}
-              {secondFloorNaboxinfo.map((room) => (
+              {roomData.map((room) => (
                 <th key={room.roomId} className={styles.roomstate}>
                   {IsThisTimeRoombooked(time, room.roomId) ? (
                     <OverlayTrigger
@@ -113,7 +116,7 @@ const SecondFloorNaRoomState = () => {
                       overlay={
                         <Popover id="popover-positioned-top">
                           <Popover.Body>
-                            <PoplayNabox
+                            <Poplay
                               userName={
                                 TimeAndRoomFilter(time, room.roomId)[0]
                                   .applicant.userName
@@ -127,6 +130,10 @@ const SecondFloorNaRoomState = () => {
                               }
                               roomName={
                                 TimeAndRoomFilter(time, room.roomId)[0].roomName
+                              }
+                              participants={
+                                TimeAndRoomFilter(time, room.roomId)[0]
+                                  .participants
                               }
                             />
                           </Popover.Body>
@@ -150,13 +157,22 @@ const SecondFloorNaRoomState = () => {
                         }
                         variant="secondary"
                       >
-                        <p>
-                          <EmojiSmileFill />
-                          {
-                            TimeAndRoomFilter(time, room.roomId)[0].applicant
-                              .userName
-                          }
-                        </p>
+                        {TimeAndRoomFilter(time, room.roomId)[0].official
+                          ? [
+                              <p>
+                                <Calendar2CheckFill />
+                                &nbsp;공식일정
+                              </p>,
+                            ]
+                          : [
+                              <p>
+                                <EmojiSmileFill />
+                                {
+                                  TimeAndRoomFilter(time, room.roomId)[0]
+                                    .applicant.userName
+                                }
+                              </p>,
+                            ]}
                       </button>
                     </OverlayTrigger>
                   ) : null}
@@ -170,4 +186,4 @@ const SecondFloorNaRoomState = () => {
   )
 }
 
-export default SecondFloorNaRoomState
+export default FourthFloorMeetingRoomState

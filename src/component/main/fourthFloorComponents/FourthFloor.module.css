@@ -1,53 +1,48 @@
 @media screen and (max-width: 600px) {
-  .MainThirdFloor .ThirdFloor h2 {
+  .MainFourthFloor .FourthFloor h2 {
     font-size: 20px;
   }
-  .MainThirdFloor .ThirdFloor .ThirdFloorcontainer {
+  .MainFourthFloor .FourthFloor .FourthFloorcontainer {
     margin-top: 10px;
     width: 320px;
     display: grid;
     grid-template-columns: 320px;
-    grid-template-rows: 300px 200px;
+    grid-template-rows: 100px 100px;
     grid-template-areas:
-      'map map'
-      'rooms rooms';
+      'map'
+      'rooms';
   }
-  /* .MainThirdFloor {
-    margin-top: 15px;
-    margin-bottom: 0px;
-  } */
 }
 
-.ThirdFloor h2 {
+.FourthFloor h2 {
   color: rgb(52, 52, 52);
   font-size: 25px;
 }
 
-.MainThirdFloor {
+.MainFourthFloor {
   display: flex;
   margin-top: 30px;
+  margin-bottom: 40px;
   justify-content: center;
   align-items: center;
 }
 
-.ThirdFloorcontainer {
+.FourthFloorcontainer {
   margin-top: 10px;
   width: 520px;
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 320px 1fr;
+  grid-template-rows: 150px 1fr;
   grid-template-areas:
-    'map map'
-    'rooms rooms';
+    'map '
+    'rooms';
 }
 
-.ThirdFloorMap {
+.FourthFloorMap {
   grid-area: map;
 }
 
 .RoomContainer {
   margin-top: 10px;
   grid-area: rooms;
-  display: grid;
-  grid-template-rows: 1fr 1fr;
 }

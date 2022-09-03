@@ -1,0 +1,95 @@
+@media screen and (max-width: 600px) {
+  .container .mapContainer {
+    font-size: 10px;
+    font-weight: 500;
+    gap: 5px;
+    padding: 5px;
+    line-height: 10px;
+  }
+  .container .mapContainer #MeetingRoom {
+    padding: 3px;
+  }
+}
+
+.mapContainer {
+  display: grid;
+  grid-template-columns: 1fr 1fr 0.2fr;
+  grid-template-areas: '영실 어리목 office';
+  height: 100%;
+  font-size: 11px;
+  font-weight: 600;
+  column-gap: 8px;
+  margin-bottom: 30px;
+  padding: 10px;
+  border: 1px solid rgb(193, 193, 193);
+  border-radius: 5px;
+  position: relative;
+}
+
+.mapContainer a {
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border-radius: 5px;
+  white-space: inherit;
+}
+
+.mapContainer .alert {
+  position: absolute;
+  color: #46a1fd;
+  font-weight: 700;
+  white-space: nowrap;
+  background-color: rgba(255, 255, 255, 0.8);
+  width: 100%;
+  height: 100%;
+  font-size: 23px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+}
+
+.mapContainer div {
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border-radius: 5px;
+  white-space: break-spaces;
+}
+
+#notSelect {
+  border: 1px solid rgb(138, 138, 138);
+  color: rgb(138, 138, 138);
+  cursor: default;
+}
+
+#MeetingRoom {
+  background-color: #46a1fd;
+}
+
+#MeetingRoom:hover {
+  background-color: rgb(73, 117, 144);
+}
+
+#full {
+  background-color: rgb(97, 97, 97);
+  cursor: not-allowed;
+}
+
+.영실 {
+  grid-area: 영실;
+  cursor: pointer;
+}
+
+.어리목 {
+  grid-area: 어리목;
+  cursor: pointer;
+}
+.office {
+  grid-area: office;
+  cursor: pointer;
+}
