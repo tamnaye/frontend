@@ -1,15 +1,14 @@
-
-import SecondFloor from './secondFloorComponents/SecondFloor';
-import ThirdFloor from './thirdFloorComponents/ThirdFloor';
-import styles from './MainTemplate.module.css';
-import { useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import useUrl from '../../hooks/useUrl';
-
+import SecondFloor from './secondFloorComponents/SecondFloor'
+import ThirdFloor from './thirdFloorComponents/ThirdFloor'
+import FourthFloor from './fourthFloorComponents/FourthFloor'
+import styles from './MainTemplate.module.css'
+import { useNavigate } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import useUrl from '../../hooks/useUrl'
 
 const MainTemplate = () => {
   const id = window.localStorage.getItem('userid')
-  console.log('mainTemplete : ', id)
+  // console.log('mainTemplete : ', id)
   const navigate = useNavigate()
 
   const myUrl = useUrl()
@@ -41,13 +40,14 @@ const MainTemplate = () => {
         {/* classes 활용 */}
         {userClasses === 0 ? (
           [
-            <SecondFloor key="3" className={styles.secondFloor} />,
-            <ThirdFloor key="2" className={styles.thirdFloor} />,
+            <SecondFloor key="2" className={styles.secondFloor} />,
+            <ThirdFloor key="3" className={styles.thirdFloor} />,
+            <FourthFloor key="4" className={styles.fourthFloor} />,
           ]
         ) : userClasses === maxClasses ? (
-          <ThirdFloor key="2" className={styles.thirdFloor} />
+          <ThirdFloor key="3" className={styles.thirdFloor} />
         ) : (
-          <SecondFloor key="3" className={styles.secondFloor} />
+          <SecondFloor key="2" className={styles.secondFloor} />
         )}
       </div>
     </div>

@@ -3,6 +3,7 @@ import SecondFloorMeetingRoomState from './SecondFloorStateComponents/SecondFloo
 import SecondFloorNaRoomState from './SecondFloorStateComponents/SecondFloorNaRoomState'
 import ThirdFloorNaRoomState from './ThirdFloorStateComponents/ThirdFloorNaRoomState'
 import ThirdFloorMeetingRoomState from './ThirdFloorStateComponents/ThirdFloorMeetingRoomState'
+import FourthFloorMeetingRoomState from './FourthFloorStateComponents/FourthFloorMeetingRoomState'
 import styles from './SecondAndThirdReservationState.module.css'
 
 const SecondAndThirdReservationState = () => {
@@ -35,6 +36,10 @@ const SecondAndThirdReservationState = () => {
                 />,
                 <ThirdFloorMeetingRoomState
                   key="3"
+                  className={styles.reservationTable}
+                />,
+                <FourthFloorMeetingRoomState
+                  key="4"
                   className={styles.reservationTable}
                 />,
               ]
