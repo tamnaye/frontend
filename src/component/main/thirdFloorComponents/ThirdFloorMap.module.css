@@ -1,6 +1,6 @@
 @media screen and (max-width: 600px) {
   .container .mapContainer {
-    font-size: 9px;
+    font-size: 10px;
     font-weight: 500;
     gap: 5px;
     padding: 5px;
@@ -13,17 +13,26 @@
 
 .mapContainer {
   display: grid;
-  grid-template-columns: 3fr 2fr 1fr 1fr 0.2fr 0.4fr 0.6fr 1.5fr 1.5fr;
+  grid-template-columns: 0.8fr 0.2fr 0.4fr 0.6fr 1.5fr 1.5fr;
+  grid-template-rows: 1fr 1fr 1fr 0.8fr;
+  grid-template-areas:
+    ' Lounge 거문오름 거문오름 NaBox1 더큰내일스튜디오 다랑쉬오름'
+    ' Lounge 거문오름 거문오름 NaBox2 더큰내일스튜디오 용눈이오름'
+    ' Lounge 거문오름 거문오름 NaBox3 더큰내일스튜디오 따라비오름'
+    'space수월봉 . . Stair2 space일출봉 space일출봉';
+
+  /* 구버전 */
+  /* grid-template-columns: 3fr 2fr 1fr 1fr 0.2fr 0.4fr 0.6fr 1.5fr 1.5fr;
   grid-template-rows: 1fr 1fr 1fr 1.5fr 1.5fr;
   grid-template-areas:
     'Lounge Lounge Lounge Lounge 거문오름 거문오름 NaBox1 더큰내일스튜디오 다랑쉬오름'
     'Lounge Lounge Lounge Lounge 거문오름 거문오름 NaBox2 더큰내일스튜디오 용눈이오름'
     'Lounge Lounge Lounge Lounge 거문오름 거문오름 NaBox3 더큰내일스튜디오 따라비오름'
     'space수월봉 . Stair EV . Stair2 Stair2 space일출봉 space일출봉'
-    'space수월봉 화장실 Stair EV . Stair2 Stair2 space일출봉 space일출봉';
+    'space수월봉 화장실 Stair EV . Stair2 Stair2 space일출봉 space일출봉'; */
 
   height: 100%;
-  font-size: 6px;
+  font-size: 11px;
   font-weight: 600;
   column-gap: 8px;
   row-gap: 8px;
@@ -70,7 +79,10 @@
 }
 
 #notSelect {
-  background-color: rgb(192, 192, 192);
+  /* 구버전 */
+  /* background-color: rgb(192, 192, 192); */
+  border: 1px solid rgb(138, 138, 138);
+  color: rgb(138, 138, 138);
   cursor: default;
 }
 
@@ -107,16 +119,16 @@
   cursor: pointer;
 }
 
-.Nabox1 {
+.Nabox305 {
   grid-area: NaBox1;
   cursor: pointer;
 }
 
-.Nabox2 {
+.Nabox306 {
   grid-area: NaBox2;
   cursor: pointer;
 }
-.Nabox3 {
+.Nabox307 {
   grid-area: NaBox3;
   cursor: pointer;
 }

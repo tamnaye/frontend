@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import useUrl from '../../../hooks/useUrl'
 import useTimeAlert from '../../../hooks/useTimeAlert'
-import { EmojiFrownFill } from 'react-bootstrap-icons'
+import { EmojiFrownFill, ChevronDoubleLeft } from 'react-bootstrap-icons'
 
 const ThirdFloorMap = () => {
   const myUrl = useUrl()
@@ -99,7 +99,7 @@ const ThirdFloorMap = () => {
           <Link
             to={`/booking/${rooms.roomId}`}
             key={rooms.roomId}
-            className={styles[rooms.roomName]}
+            className={styles[`NaBox${rooms.roomId}`]}
             id={
               notroomFull(rooms.roomId) && ablebtn
                 ? [styles.NaBox]
@@ -114,7 +114,6 @@ const ThirdFloorMap = () => {
             </div>
           </Link>
         ))}
-
         <div className={styles.Lounge} id={styles.notSelect}>
           {`더큰\nLounge`}
         </div>
@@ -124,15 +123,16 @@ const ThirdFloorMap = () => {
         <div className={styles.space수월봉} id={styles.notSelect}>
           {`space\n수월봉`}
         </div>
-        <div className={styles.화장실} id={styles.notSelect}>
+        {/* 구버전 */}
+        {/* <div className={styles.화장실} id={styles.notSelect}>
           화장실
-        </div>
-        <div className={styles.Stair} id={styles.notSelect}>
+        </div> */}
+        {/* <div className={styles.Stair} id={styles.notSelect}>
           계단
-        </div>
-        <div className={styles.EV} id={styles.notSelect}>
+        </div> */}
+        {/* <div className={styles.EV} id={styles.notSelect}>
           E.V
-        </div>
+        </div> */}
         <div className={styles.Stair2} id={styles.notSelect}>
           계단
         </div>

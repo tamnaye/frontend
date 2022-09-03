@@ -10,7 +10,7 @@
 
 .mapContainer {
   display: grid;
-  grid-template-columns: 3fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 3fr;
+  grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1.5fr;
   grid-template-rows: 1.5fr 1fr 1fr 1fr;
   grid-template-areas:
     '내일Lounge 내일Lounge 협재 곽지 이호 함덕 김녕 월정 신양 space비양도'
@@ -67,7 +67,10 @@
 }
 
 #notSelect {
-  background-color: rgb(192, 192, 192);
+  /* 구버전 */
+  /* background-color: rgb(192, 192, 192); */
+  border: 1px solid rgb(138, 138, 138);
+  color: rgb(138, 138, 138);
   cursor: default;
 }
 
