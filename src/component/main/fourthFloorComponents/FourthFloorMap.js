@@ -85,7 +85,9 @@ const FourthFloorMap = () => {
             onClick={BookingConfirm}
           >
             <div>
-              {notroomFull(rooms.roomId) && ablebtn ? rooms.roomName : '마감'}
+              {notroomFull(rooms.roomId) && ablebtn
+                ? rooms.roomName
+                : `${rooms.roomName}\n마감`}
             </div>
           </Link>
         ))}

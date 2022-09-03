@@ -90,7 +90,9 @@ const SecondFloorMap = () => {
             onClick={BookingConfirm}
           >
             <div>
-              {notroomFull(rooms.roomId) && ablebtn ? rooms.roomName : '마감'}
+              {notroomFull(rooms.roomId) && ablebtn
+                ? rooms.roomName
+                : `${rooms.roomName}\n마감`}
             </div>
           </Link>
         ))}
@@ -109,7 +111,7 @@ const SecondFloorMap = () => {
             <div>
               {notroomFull(rooms.roomId) && ablebtn
                 ? rooms.roomName.substr(6, 1)
-                : '마감'}
+                : `${rooms.roomName}\n마감`}
             </div>
           </Link>
         ))}
