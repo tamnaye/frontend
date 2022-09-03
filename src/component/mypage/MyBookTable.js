@@ -9,7 +9,7 @@ import useUrl from '../../hooks/useUrl';
 function MyBookTable() {
   const { id } = useParams();
   const myUrl = useUrl();
-  //----서버데이터 불러오기----//
+
   const [myBookingList, setMyBookingList] = useState([]);
   const url = `http://${myUrl}/api/user/mypage?userId=${id}`;
   useEffect(() => {
@@ -19,7 +19,8 @@ function MyBookTable() {
         setMyBookingList(data.myBookingDetailDataList);
       });
   }, [url]);
-  console.log(myBookingList);
+  //console.log(myBookingList);
+
   //useId랑 applicantUserId랑 같을 때 값 출력하기
   const Cancel = (bid, index) => {
     const arr = [...myBookingList];
@@ -39,12 +40,12 @@ function MyBookTable() {
         .then((res) => res.json())
         .then((data) => {
           console.log(data);
-          arr.splice(index, 1);
+          arr.splice(index, 1); //배열의 기존 요소를 삭제 또는 교체하거나 새 요소를 추가하여 배열의 내용을 변경
           setMyBookingList(arr);
         });
     }
   };
-  //팀원 띄어쓰기로 보여주기//
+  //팀원 띄어쓰기로 보여주기
   const Listout = (list) => {
     //console.log(list);
     let output = '';
@@ -54,40 +55,16 @@ function MyBookTable() {
     return output;
   };
 
-  //----시간이 지난경우 표시해주기 ----//
-  // const Now = new Date();
-  // const NowHour = Now.getHours();
-  // console.log(NowHour); //12
-
-  // const [passedTime, setPassedTime] = useState(true);
-  // const PassTime = (pass) => {
-  //   useEffect(() => {
-  //     console.log(pass);
-  //     let passEndTime = pass.substr(0, 2);
-  //     console.log(passEndTime);
-  //     if (Number(NowHour) < Number(passEndTime)) {
-  //       setPassedTime(false);
-  //     } else {
-  //       setPassedTime(true);
-  //     }
-  //   }, [NowHour]);
-  // };
-  // console.log(passedTime);
-  // PassTime("10:00")
-
-  //----시간이 지난경우 표시해주기 ----//
+  //PassedTime css
   const Now = new Date();
   const NowHour = Now.getHours();
-  console.log(NowHour); //13
-
-  const passEndTime = myBookingList.filter((end) => end.endTime);
-  console.log(passEndTime);
+  console.log(NowHour);
 
   return (
     <div>
       <Table responsive>
         <thead>
-          <tr className={styles.tableTr}>
+          <tr className={styles.tableTrTitle}>
             <th className={styles.tableTh} scope='col'>
               공간
             </th>
@@ -107,16 +84,24 @@ function MyBookTable() {
         </thead>
         <tbody>
           {myBookingList.map((item, index) => (
-            <tr key={index} className={styles.tableTr}>
-              <td className={styles.tableTh}>{item.roomName}</td>
-              <td className={styles.tableTh}>
+            <tr
+              key={index}
+              className={
+                Number(NowHour) > Number(item.endTime.substr(0, 2)) ||
+                item.mode === 'cancel'
+                  ? [styles.tableTrContentPast]
+                  : [styles.tableTrContent]
+              }
+            >
+              <td className={styles.tableTd}>{item.roomName}</td>
+              <td className={styles.tableTd}>
                 {item.startTime}-{item.endTime}
               </td>
-              <td className={styles.tableTh}>{item.applicant.userName}</td>
+              <td className={styles.tableTd}>{item.applicant.userName}</td>
               {/* 배열자체를 가져와서 문자열로 보여주기 -> `${item.participants}` //출력 : 송민아,이현정 */}
               {/* 팀원들을 for문을 돌려서 띄어쓰기로 보여주기 */}
-              <td className={styles.tableTh}>{Listout(item.participants)}</td>
-              <td className={styles.tableTh}>
+              <td className={styles.tableTd}>{Listout(item.participants)}</td>
+              <td className={styles.tableTd}>
                 <button
                   key={index}
                   className={
