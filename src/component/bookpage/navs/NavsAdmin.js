@@ -9,7 +9,6 @@ import useUrl from '../../../hooks/useUrl';
 function NavsAdmin() {
   const { roomId } = useParams();
   const myUrl = useUrl();
-
   //미팅룸 데이터 추출
   const [roomData, setRoomData] = useState([]);
   //console.log(roomData);

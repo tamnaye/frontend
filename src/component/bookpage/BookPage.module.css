@@ -12,7 +12,7 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   column-gap: 50px;
-  border-top: 2px solid rgb(193, 224, 249);
+  border-top: 2px solid #46a1fd;
   width:900px;
   border-radius: 20px;
   margin: auto;
