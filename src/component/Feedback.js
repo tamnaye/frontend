@@ -46,7 +46,7 @@ const Feedback = () => {
         setFeedbackDatas(data.FeedbackData);
       });
   }, [url]);
-  console.log(feedbackDatas);
+  //console.log(feedbackDatas);
 
   return (
     <Container style={{ marginTop: '60px' }}>
