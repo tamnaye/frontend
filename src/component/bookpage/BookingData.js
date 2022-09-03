@@ -27,14 +27,14 @@ const BookingData = () => {
   const [disabledState, setDisabledState] = useState([]);
   const [defaultDisabledList, setDefaultDisabledList] = useState([]);
   const url = `http://${myUrl}/api/booking?roomId=${roomId}&userId=${id}&classes=${userClass}`;
-  console.log('url', url);
+  //console.log('url', url);
   const [memberNames, setMemberNames] = useState([]);
 
   useEffect(() => {
     fetch(url, { method: 'GET' })
       .then((res) => res.json())
       .then((data) => {
-        console.log(' useEffect data : ', data);
+        //console.log(' useEffect data : ', data);
         setUserName(data.userData.userName);
         setRoomType(data.roomData.roomType);
         setDefaultDisabledList(bookingdDataHandler(data.bookingData));
@@ -210,7 +210,7 @@ const BookingData = () => {
   const day = ['일', '월', '화', '수', '목', '금', '토'];
   const NowDay = Now.getDay();
   const weekDay = day[NowDay];
-  console.log(weekDay);
+  //console.log(weekDay);
 
   function pluszero(times) {
     let time = times.toString(); //시간을 숫자에서 문자로 변환

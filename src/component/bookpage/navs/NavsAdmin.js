@@ -28,7 +28,7 @@ function NavsAdmin() {
   //console.log(floor3Nabox);
   //4층 룸리스트 추출 -> 미팅룸리스트
   const floor4 = roomData.filter((room) => room.floor === 4);
-  console.log(floor4);
+  //console.log(floor4);
 
   const url = `http://${myUrl}/api/booking/room-data?floor=0&roomId=${roomId}`;
   useEffect(() => {
