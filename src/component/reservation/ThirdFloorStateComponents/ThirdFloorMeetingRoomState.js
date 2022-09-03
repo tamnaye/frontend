@@ -4,8 +4,12 @@ import styles from './ThirdFloorMeetingRoomState.module.css'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import Popover from 'react-bootstrap/Popover'
 import Poplay from '../Poplay'
-import { Link, useParams } from 'react-router-dom'
-import { EmojiSmileFill, ArrowRightCircleFill } from 'react-bootstrap-icons'
+import { Link } from 'react-router-dom'
+import {
+  EmojiSmileFill,
+  ArrowRightCircleFill,
+  Calendar2CheckFill,
+} from 'react-bootstrap-icons'
 import useUrl from '../../../hooks/useUrl'
 
 const ThirdFloorMeetingRoomState = () => {
@@ -13,7 +17,6 @@ const ThirdFloorMeetingRoomState = () => {
   const [bookingData, setBookingData] = useState([])
   const [roomData, setRoomData] = useState([])
 
-  const { id } = useParams()
   const myUrl = useUrl()
 
   const url = `http://${myUrl}/api/booking/details-booking?floor=3`
@@ -91,7 +94,7 @@ const ThirdFloorMeetingRoomState = () => {
             {/* 룸 값 불러오기 */}
             {ThirdMeetingRoominfo.map((room) => (
               <th key={room.roomId} className="table-primary" id={styles.text}>
-                <Link to={`/booking/${room.roomId}/${id}`}>
+                <Link to={`/booking/${room.roomId}`}>
                   <ArrowRightCircleFill />
                   &nbsp;
                   {room.roomName}
@@ -111,7 +114,7 @@ const ThirdFloorMeetingRoomState = () => {
                 <th key={room.roomId} className={styles.roomstate}>
                   {IsThisTimeRoombooked(time, room.roomId) ? (
                     <OverlayTrigger
-                      trigger="hover"
+                      trigger={('hover', 'focus')}
                       key={TimeAndRoomFilter(time, room.roomId)[0].bookingId}
                       placement="top"
                       overlay={
@@ -158,15 +161,23 @@ const ThirdFloorMeetingRoomState = () => {
                         }
                         variant="secondary"
                       >
-                        <p>
-                          <EmojiSmileFill />
-                          &nbsp;&nbsp;
-                          {
-                            TimeAndRoomFilter(time, room.roomId)[0].applicant
-                              .userName
-                          }
-                          님 예약
-                        </p>
+                        {TimeAndRoomFilter(time, room.roomId)[0].official
+                          ? [
+                              <p>
+                                <Calendar2CheckFill />
+                                공식일정
+                              </p>,
+                            ]
+                          : [
+                              <p>
+                                <EmojiSmileFill />
+                                {
+                                  TimeAndRoomFilter(time, room.roomId)[0]
+                                    .applicant.userName
+                                }
+                                님 예약
+                              </p>,
+                            ]}
                       </button>
                     </OverlayTrigger>
                   ) : null}

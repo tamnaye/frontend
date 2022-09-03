@@ -29,9 +29,15 @@ const SecondFloorReservationState = () => {
         </div>
         <div className={styles.Reservation}>
           {RoomType ? (
-            <SecondFloorMeetingRoomState className={styles.reservationTable} />
+            <SecondFloorMeetingRoomState
+              key="meeting"
+              className={styles.reservationTable}
+            />
           ) : (
-            <SecondFloorNaRoomState className={styles.reservationTable} />
+            <SecondFloorNaRoomState
+              key="nabox"
+              className={styles.reservationTable}
+            />
           )}
         </div>
       </div>
