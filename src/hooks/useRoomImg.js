@@ -1,9 +1,11 @@
+import nabox from '../component/bookpage/img/nabox.jpeg';
 import logo from '../component/bookpage/img/logo.png';
 import geomun from '../component/bookpage/img/geomun.jpeg';
 import darrenche from '../component/bookpage/img/darrenche.jpeg';
 import yongnuni from '../component/bookpage/img/yongnuni.jpeg';
 import darabi from '../component/bookpage/img/darabi.jpeg';
-import nabox from '../component/bookpage/img/nabox.jpeg';
+import eolimog from '../component/bookpage/img/eolimog.jpeg';
+import yeongsil from '../component/bookpage/img/yeongsil.jpeg';
 
 export default function useRoomImg() {
   const roomsImg = [
@@ -102,6 +104,14 @@ export default function useRoomImg() {
     {
       room_id: 307,
       img: nabox,
+    },
+    {
+      room_id: 401,
+      img: yeongsil,
+    },
+    {
+      room_id: 402,
+      img: eolimog,
     },
   ];
 
