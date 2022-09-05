@@ -26,9 +26,11 @@ function NavsAdmin() {
   //console.log(floor3Meeting);
   const floor3Nabox = floor3.filter((room) => room.roomType === 'nabox');
   //console.log(floor3Nabox);
+  const floor3Studio = floor3.filter((room) => room.roomType === 'studio');
+  console.log(floor3Studio);
   //4층 룸리스트 추출 -> 미팅룸리스트
   const floor4 = roomData.filter((room) => room.floor === 4);
-  console.log(floor4);
+  //console.log(floor4);
 
   const url = `http://${myUrl}/api/booking/room-data?floor=0&roomId=${roomId}`;
   useEffect(() => {
@@ -72,6 +74,12 @@ function NavsAdmin() {
           3층 예약실
         </Dropdown.Toggle>
         <Dropdown.Menu>
+          {floor3Studio.map((item, index) => (
+            <Dropdown.Item href={`/booking/${item.roomId}`} key={index}>
+              {item.roomName}
+            </Dropdown.Item>
+          ))}
+          <Dropdown.Divider />
           {floor3Meeting.map((item, index) => (
             <Dropdown.Item href={`/booking/${item.roomId}`} key={index}>
               {item.roomName}
