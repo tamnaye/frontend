@@ -61,7 +61,7 @@
 
 /*booking button */
 .bookbtn {
-  background-color: #67b4f8;
+  background-color: #3695f5;
   cursor: pointer;
   width: 200px;
   height: 30px;
@@ -73,7 +73,7 @@
   font-size: 16px;
 }
 .bookbtnOff {
-  background-color: #67b4f8;
+  background-color: #3695f5;
   width: 200px;
   height: 30px;
   color: whitesmoke;
