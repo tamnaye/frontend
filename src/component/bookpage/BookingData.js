@@ -24,7 +24,6 @@ const BookingData = () => {
   const [roomType, setRoomType] = useState(""); // meeting / nabax
 
   const times = useTimes();
-  const [disabledState, setDisabledState] = useState([]);
   const [defaultDisabledList, setDefaultDisabledList] = useState([]);
   const url = `http://${myUrl}/api/booking?roomId=${roomId}&userId=${id}&classes=${userClass}`;
 
@@ -34,11 +33,9 @@ const BookingData = () => {
     fetch(url, { method: "GET" })
       .then((res) => res.json())
       .then((data) => {
-
         setUserName(data.userData.userName);
         setRoomType(data.roomData.roomType);
         setDefaultDisabledList(bookingdDataHandler(data.bookingData));
-        setDisabledState(bookingdDataHandler(data.bookingData));
         setMemberNames(data.namesData);
       });
   }, [url]); //의존성 경고문 없애기 (콜백 방식 알아볼것)
@@ -146,7 +143,7 @@ const BookingData = () => {
   const NowHour = Now.getHours();
   const NowMins = Now.getMinutes();
   //주말 예약 버튼 비활성화
-  const day = ['일', '월', '화', '수', '목', '금', '토'];
+  const day = ["일", "월", "화", "수", "목", "금", "토"];
   const NowDay = Now.getDay();
   const weekDay = day[NowDay];
   //console.log(weekDay);
@@ -169,8 +166,8 @@ const BookingData = () => {
     if (
       startTime > nowTime ||
       endTime < nowTime ||
-      weekDay === '토' ||
-      weekDay === '일'
+      weekDay === "토" ||
+      weekDay === "일"
     ) {
       setAblebtn(false);
     } else {
@@ -232,7 +229,6 @@ const BookingData = () => {
   // 클릭한 시간 전꺼, 다음꺼 중 만약 이미 예약이 된것들은 이미 disabled : true인 상태이기 때문에
   // onChange 첫번째 if문에서 예외처리됨 (checkedStateLength === 0 )
   // 나머지 중 disabled false인 것들 disabled = true로 바꿔줌
-  
 
   //checkedState 길이 반환
   function checkedStateLength() {
@@ -259,77 +255,75 @@ const BookingData = () => {
   //체크된 체크박스 checkedState 배열로 관리해주기 위함
   //기본적으로 onChange에서 호출해줌, 하지만 체크 false로 강제해야하는 조건에서는 호출 하지 않음
 
-  const [indeterminateState, setIndeterminateState] = useState(
-    new Array(12).fill(false)
-  );
+  const [indeterminateState, setIndeterminateState] = useState(new Array(12).fill(false));
   const [checkedState, setCheckedState] = useState(new Array(12).fill(false));
-  const [timeRange, setTimeRange] = useState([])
+  const [timeRange, setTimeRange] = useState([]);
   // console.log("timeRange",timeRange)
   // console.log("checkedState",checkedState)
   // console.log("indeterminateState",indeterminateState)
 
   const maxHour = userClass === 0 ? 10 : 4;
- 
+
   const onChangeCheckBox = (index) => {
-    const lastIndex = timeRange.length-1
-     if(timeRange.includes(index)){ //timeRange 내에서 시간 선택 event
-     
-        //처음 꺼 눌렀을 때 -> 해제
-        //중간꺼 눌렀을 때 -> 누른거까지 해제
-        //마지막꺼 체크 -> 마지막꺼 + 중간껏들도 체크
-        //마지막꺼 해제 -> 마지막꺼만 해제 
-     
-      if(timeRange[0]===index){ //시작시간 -> 체크 해제 
-          setTimeRange([])
-          setIndeterminateState(new Array(12).fill(false))
-          setCheckedState(new Array(12).fill(false))
-        }else if(timeRange[lastIndex]===index){ // timeRange에서 마지막 시간 선택
-          const checkedArr = [...checkedState];
-          if(checkedArr[index]){
-            checkedArr[index] = false
-          }else{
-            for(let i=timeRange[0]; i<=timeRange[lastIndex]; i++){
-              checkedArr[i] = true
-            }
-          }
+    const lastIndex = timeRange.length - 1;
+    if (timeRange.includes(index)) {
+      //timeRange 내에서 시간 선택 event
 
-          setCheckedState(checkedArr)
-          
-        }else{ //timeRange에서 첫시간, 마지막 시간 사이 중간 시간 선택 -> 선택인 경우 : 시작~중간 체크 | 해제일 경우 : 중간~끝 해제
-          //참고 : timeRange.length >1 경우만 이 조건문으로 들어옴
-          
-          const checkedArr = [...checkedState]
-          if(!checkedArr[index]){
-            for(let i=timeRange[1]; i<=index; i++){
-              console.log("i",i)  
-              checkedArr[i] = true;
-            }
-          }else{
-            for(let i=index; i<=timeRange[lastIndex]; i++){
-              console.log("i2",i)
-              checkedArr[i] = false;
-            }
-          }
-          setCheckedState(checkedArr)
-        }
-     
+      //처음 꺼 눌렀을 때 -> 해제
+      //중간꺼 눌렀을 때 -> 누른거까지 해제
+      //마지막꺼 체크 -> 마지막꺼 + 중간껏들도 체크
+      //마지막꺼 해제 -> 마지막꺼만 해제
 
-      }else{ // 최초 시작 시간 선택 or timeRange 외부 시간 선택 [선택한 시간이 시작시간이 됨]
-        const checkIdArr = []
-        const indeterminateArr = new Array(12).fill(false);
-        for(let i = index; i<index+maxHour; i++){
-          const checkedArr = new Array(12).fill(false);
-          checkedArr[index] = true;
-          setCheckedState(checkedArr);
-          if(defaultDisabledList[i])break
-          checkIdArr.push(i)
-          if(i!==index){
-            indeterminateArr[i] = true
+      if (timeRange[0] === index) {
+        //시작시간 -> 체크 해제
+        setTimeRange([]);
+        setIndeterminateState(new Array(12).fill(false));
+        setCheckedState(new Array(12).fill(false));
+      } else if (timeRange[lastIndex] === index) {
+        // timeRange에서 마지막 시간 선택
+        const checkedArr = [...checkedState];
+        if (checkedArr[index]) {
+          checkedArr[index] = false;
+        } else {
+          for (let i = timeRange[0]; i <= timeRange[lastIndex]; i++) {
+            checkedArr[i] = true;
           }
         }
-        setTimeRange(checkIdArr)
-        setIndeterminateState(indeterminateArr)
+        setCheckedState(checkedArr);
+      } else {
+        //timeRange에서 첫시간, 마지막 시간 사이 중간 시간 선택 -> 선택인 경우 : 시작~중간 체크 | 해제일 경우 : 중간~끝 해제
+        //참고 : timeRange.length >1 경우만 이 조건문으로 들어옴
+        const checkedArr = [...checkedState];
+        if (!checkedArr[index]) {
+          for (let i = timeRange[1]; i <= index; i++) {
+            console.log("i", i);
+            checkedArr[i] = true;
+          }
+        } else {
+          for (let i = index; i <= timeRange[lastIndex]; i++) {
+            console.log("i2", i);
+            checkedArr[i] = false;
+          }
+        }
+        setCheckedState(checkedArr);
       }
+    } else {
+      // 최초 시작 시간 선택 or timeRange 외부 시간 선택 [선택한 시간이 시작시간이 됨]
+      const checkIdArr = [];
+      const indeterminateArr = new Array(12).fill(false);
+      for (let i = index; i < index + maxHour; i++) {
+        const checkedArr = new Array(12).fill(false);
+        checkedArr[index] = true;
+        setCheckedState(checkedArr);
+        if (defaultDisabledList[i]) break;
+        checkIdArr.push(i);
+        if (i !== index) {
+          indeterminateArr[i] = true;
+        }
+      }
+      setTimeRange(checkIdArr);
+      setIndeterminateState(indeterminateArr);
+    }
   };
   return (
     <div>
@@ -394,10 +388,7 @@ const BookingData = () => {
                 onChange={() => onChangeCheckBox(index)}
                 variant="success"
                 checked={checkedState[index]}
-                // indeterminate={indeterminateState[index]}
                 disabled={defaultDisabledList[index]}
-                // disabled={disabledState[index]}
-                // indeterminate={disabledState[index]}
                 style={
                   checkedState[index] || indeterminateState[index]
                     ? {
