@@ -127,7 +127,7 @@ const BookingData = () => {
   );
   const [checkedState, setCheckedState] = useState(new Array(12).fill(false));
   const [timeRange, setTimeRange] = useState([]);
-  const maxHour = userClass === 0 ? 10 : 4;
+  const maxHour = (userClass === "0") ? 12 : 4;
   const onChangeCheckBox = (index) => {
     const lastIndex = timeRange.length - 1;
     if (timeRange.includes(index)) {
@@ -157,12 +157,10 @@ const BookingData = () => {
         const checkedArr = [...checkedState];
         if (!checkedArr[index]) {
           for (let i = timeRange[1]; i <= index; i++) {
-            console.log("i", i);
             checkedArr[i] = true;
           }
         } else {
           for (let i = index; i <= timeRange[lastIndex]; i++) {
-            console.log("i2", i);
             checkedArr[i] = false;
           }
         }
@@ -246,15 +244,16 @@ const BookingData = () => {
   }, []); //useEffect써서 한번만 렌더링 해줌
 
   //----예약 데이터 보내기----//
-  const roomTypeArr = ["meeting", "nabax"];
+  const roomTypeArr = ["meeting", "nabax","official"];
   function bookingConfirm() {
     if (
+      userClass!=="0" &&
       roomType === roomTypeArr[0] &&
-      selectedNameState.length < 1 &&
+      selectedNameState.length < 1 && 
       getStartEndTime(checkedState).timeLength === 0
     ) {
       alert("회의 참여자와 회의 시간을 선택해 주세요");
-    } else if (roomType === roomTypeArr[0] && selectedNameState.length < 1) {
+    } else if (roomType === roomTypeArr[0] && userClass!=="0" && selectedNameState.length < 1 ) {
       alert("회의 참여자를 1명 이상 선택해주세요");
     } else if (getStartEndTime(checkedState).timeLength === 0) {
       alert("시간을 선택해 주세요");
@@ -287,7 +286,7 @@ const BookingData = () => {
           if (data.message.success) {
             //console.log(data.message.success);
             alert(data.message.success);
-            navigate(`/mypage/${id}`);
+            navigate(`/mypage`);
           } else {
             //console.log(data.message.fail);
             alert(data.message.fail);
@@ -295,8 +294,6 @@ const BookingData = () => {
         });
     }
   }
-
- 
   return (
     <div>
       <div className={styles.wrap}>
