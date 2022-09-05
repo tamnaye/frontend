@@ -24,8 +24,8 @@ const ThirdFloorMeetingRoom = () => {
       })
   }, [url, myUrl])
 
-  const ThirdMeetingRoominfo = roomData.filter(
-    (rooms) => rooms.roomType === 'meeting'
+  const ThirdMeetingAndStudioinfo = roomData.filter(
+    (rooms) => rooms.roomType === 'meeting' || rooms.roomType === 'studio'
   )
 
   // roomFull 함수 설정
@@ -70,7 +70,7 @@ const ThirdFloorMeetingRoom = () => {
     <div className={styles.MeetingRoomContainer}>
       <h4 className={styles.title}>회의실</h4>
       <div className={styles.roomContainer}>
-        {ThirdMeetingRoominfo.map((room) => (
+        {ThirdMeetingAndStudioinfo.map((room) => (
           <Link to={`/booking/${room.roomId}`} key={room.roomId}>
             <button
               className={
