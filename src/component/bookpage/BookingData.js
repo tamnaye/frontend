@@ -260,8 +260,14 @@ const BookingData = () => {
  
   const onChangeCheckBox = (index) => {
     const lastIndex = timeRange.length-1
-      if(timeRange.includes(index)){ //timeRange 내에서 시간 선택 event
-        if(timeRange[0]===index){ //시작시간 -> 체크 해제 
+     if(timeRange.includes(index)){ //timeRange 내에서 시간 선택 event
+     
+        //처음 꺼 눌렀을 때 -> 해제
+        //중간꺼 눌렀을 때 -> 누른거까지 해제
+        //마지막꺼 체크 -> 마지막꺼 + 중간껏들도 체크
+        //마지막꺼 해제 -> 마지막꺼만 해제 
+     
+      if(timeRange[0]===index){ //시작시간 -> 체크 해제 
           setTimeRange([])
           setIndeterminateState(new Array(12).fill(false))
           setCheckedState(new Array(12).fill(false))
@@ -279,6 +285,7 @@ const BookingData = () => {
           
         }else{ //timeRange에서 첫시간, 마지막 시간 사이 중간 시간 선택 -> 선택인 경우 : 시작~중간 체크 | 해제일 경우 : 중간~끝 해제
           //참고 : timeRange.length >1 경우만 이 조건문으로 들어옴
+          
           const checkedArr = [...checkedState]
           if(!checkedArr[index]){
             for(let i=timeRange[1]; i<=index; i++){
@@ -293,10 +300,7 @@ const BookingData = () => {
           }
           setCheckedState(checkedArr)
         }
-        //처음 꺼 눌렀을 때 -> 해제
-        //중간꺼 눌렀을 때 -> 누른거까지 해제
-        //마지막꺼 체크 -> 마지막꺼 + 중간껏들도 체크
-        //마지막꺼 해제 -> 마지막꺼만 해제 
+     
 
       }else{ // 최초 시작 시간 선택 or timeRange 외부 시간 선택 [선택한 시간이 시작시간이 됨]
         const checkIdArr = []
