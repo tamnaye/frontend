@@ -1,14 +1,14 @@
 //styles
-import styles from "./BookingData.module.css";
-import "antd/dist/antd.min.css";
-import { Checkbox } from "antd";
+import styles from './BookingData.module.css';
+import 'antd/dist/antd.min.css';
+import { Checkbox } from 'antd';
 //component
-import React from "react";
+import React from 'react';
 //hooks
-import useUrl from "../../hooks/useUrl";
-import { useNavigate, useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
-import useTimes from "../../hooks/useTimes";
+import useUrl from '../../hooks/useUrl';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import useTimes from '../../hooks/useTimes';
 
 //더큰내일센터 인원들 로컬 데이터베이스 만들기 (객체 배열) : (id, class, 이름)
 //백에서 booking id 별 start,end Time 받아와야함 (endTime -1시간 해줘야함)
@@ -17,11 +17,11 @@ import useTimes from "../../hooks/useTimes";
 const BookingData = () => {
   //starttime, endtime,
   const myUrl = useUrl();
-  const id = window.localStorage.getItem("userid");
-  const userClass = window.localStorage.getItem("class");
+  const id = window.localStorage.getItem('userid');
+  const userClass = window.localStorage.getItem('class');
   const { roomId } = useParams();
-  const [userName, setUserName] = useState("");
-  const [roomType, setRoomType] = useState(""); // meeting / nabax
+  const [userName, setUserName] = useState('');
+  const [roomType, setRoomType] = useState(''); // meeting / nabax
 
   const times = useTimes();
   const [disabledState, setDisabledState] = useState([]);
@@ -31,10 +31,9 @@ const BookingData = () => {
   const [memberNames, setMemberNames] = useState([]);
 
   useEffect(() => {
-    fetch(url, { method: "GET" })
+    fetch(url, { method: 'GET' })
       .then((res) => res.json())
       .then((data) => {
-
         setUserName(data.userData.userName);
         setRoomType(data.roomData.roomType);
         setDefaultDisabledList(bookingdDataHandler(data.bookingData));
@@ -47,12 +46,12 @@ const BookingData = () => {
     const str = endTime.substring(0, 2);
     const time = Number(str) + int;
     const timestr = String(time);
-    let changedTime = "";
+    let changedTime = '';
     if (timestr.length < 2) {
-      changedTime = "0" + timestr + ":00";
+      changedTime = '0' + timestr + ':00';
       return changedTime;
     } else {
-      changedTime = timestr + ":00";
+      changedTime = timestr + ':00';
       return changedTime;
     }
   }
@@ -83,14 +82,14 @@ const BookingData = () => {
   //--------팀원 검색 기능---------//
   const [searchedNameState, setSearchedNameState] = useState([]);
   const [selectedNameState, setSelectedNameState] = useState([]);
-  const [inputName, setInputName] = useState("");
+  const [inputName, setInputName] = useState('');
 
   function onChange(e) {
     setInputName(e.target.value);
     const str = e.target.value;
     let arr = [...memberNames];
     arr =
-      str === ""
+      str === ''
         ? (arr = [])
         : arr.filter(
             (member) =>
@@ -105,7 +104,7 @@ const BookingData = () => {
     setSearchedNameState(arr);
   }
   function onClickSearched(name) {
-    setInputName("");
+    setInputName('');
     setSearchedNameState([]);
 
     const arr = [...selectedNameState];
@@ -122,19 +121,19 @@ const BookingData = () => {
     e.preventDefault();
     if (searchedNameState.length === 1) {
       //이미 선택할 팀원이 나옴
-      setInputName("");
+      setInputName('');
       setSearchedNameState([]);
       const arr = [...selectedNameState];
       arr.push(searchedNameState[0]);
       setSelectedNameState(arr);
     } else if (searchedNameState.length > 1) {
       //검색 결과 두명 이상 나왔을 때 엔터친 경우
-      alert("팀원을 한명씩 선택해 주세요 !");
+      alert('팀원을 한명씩 선택해 주세요 !');
     } else {
       //검색 안되는 이름 치고 엔터친 경우
-      setInputName("");
+      setInputName('');
       setSearchedNameState([]);
-      alert("팀원의 이름을 확인해주세요!");
+      alert('팀원의 이름을 확인해주세요!');
     }
   }
 
@@ -154,7 +153,7 @@ const BookingData = () => {
   function pluszero(times) {
     let time = times.toString(); //시간을 숫자에서 문자로 변환
     if (time.length < 2) {
-      time = "0" + time; //숫자 앞에 0을 붙여줌
+      time = '0' + time; //숫자 앞에 0을 붙여줌
       return time;
     } else {
       return time;
@@ -163,8 +162,8 @@ const BookingData = () => {
   const nowHour = pluszero(NowHour);
   const nowMins = pluszero(NowMins);
   const nowTime = nowHour + nowMins;
-  const startTime = "0830";
-  const endTime = "2100";
+  const startTime = '0830';
+  const endTime = '2100';
   useEffect(() => {
     if (
       startTime > nowTime ||
@@ -179,24 +178,24 @@ const BookingData = () => {
   }, []); //useEffect써서 한번만 렌더링 해줌
 
   //----예약 데이터 보내기----//
-  const roomTypeArr = ["meeting", "nabax"];
+  const roomTypeArr = ['meeting', 'nabax'];
   function bookingConfirm() {
     if (
       roomType === roomTypeArr[0] &&
       selectedNameState.length < 1 &&
       getStartAndEndTime(checkedState).timeLength === 0
     ) {
-      alert("회의 참여자와 회의 시간을 선택해 주세요");
+      alert('회의 참여자와 회의 시간을 선택해 주세요');
     } else if (roomType === roomTypeArr[0] && selectedNameState.length < 1) {
-      alert("회의 참여자를 1명 이상 선택해주세요");
+      alert('회의 참여자를 1명 이상 선택해주세요');
     } else if (getStartAndEndTime(checkedState).timeLength === 0) {
-      alert("시간을 선택해 주세요");
+      alert('시간을 선택해 주세요');
     } else {
       const postUrl = `http://${myUrl}/api/booking/conference`;
       fetch(postUrl, {
-        method: "POST",
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           //값 입력
@@ -232,7 +231,6 @@ const BookingData = () => {
   // 클릭한 시간 전꺼, 다음꺼 중 만약 이미 예약이 된것들은 이미 disabled : true인 상태이기 때문에
   // onChange 첫번째 if문에서 예외처리됨 (checkedStateLength === 0 )
   // 나머지 중 disabled false인 것들 disabled = true로 바꿔줌
-  
 
   //checkedState 길이 반환
   function checkedStateLength() {
@@ -263,73 +261,75 @@ const BookingData = () => {
     new Array(12).fill(false)
   );
   const [checkedState, setCheckedState] = useState(new Array(12).fill(false));
-  const [timeRange, setTimeRange] = useState([])
+  const [timeRange, setTimeRange] = useState([]);
   // console.log("timeRange",timeRange)
   // console.log("checkedState",checkedState)
   // console.log("indeterminateState",indeterminateState)
 
   const maxHour = userClass === 0 ? 10 : 4;
- 
+
   const onChangeCheckBox = (index) => {
-    const lastIndex = timeRange.length-1
-     if(timeRange.includes(index)){ //timeRange 내에서 시간 선택 event
-     
-        //처음 꺼 눌렀을 때 -> 해제
-        //중간꺼 눌렀을 때 -> 누른거까지 해제
-        //마지막꺼 체크 -> 마지막꺼 + 중간껏들도 체크
-        //마지막꺼 해제 -> 마지막꺼만 해제 
-     
-      if(timeRange[0]===index){ //시작시간 -> 체크 해제 
-          setTimeRange([])
-          setIndeterminateState(new Array(12).fill(false))
-          setCheckedState(new Array(12).fill(false))
-        }else if(timeRange[lastIndex]===index){ // timeRange에서 마지막 시간 선택
-          const checkedArr = [...checkedState];
-          if(checkedArr[index]){
-            checkedArr[index] = false
-          }else{
-            for(let i=timeRange[0]; i<=timeRange[lastIndex]; i++){
-              checkedArr[i] = true
-            }
-          }
+    const lastIndex = timeRange.length - 1;
+    if (timeRange.includes(index)) {
+      //timeRange 내에서 시간 선택 event
 
-          setCheckedState(checkedArr)
-          
-        }else{ //timeRange에서 첫시간, 마지막 시간 사이 중간 시간 선택 -> 선택인 경우 : 시작~중간 체크 | 해제일 경우 : 중간~끝 해제
-          //참고 : timeRange.length >1 경우만 이 조건문으로 들어옴
-          
-          const checkedArr = [...checkedState]
-          if(!checkedArr[index]){
-            for(let i=timeRange[1]; i<=index; i++){
-              console.log("i",i)  
-              checkedArr[i] = true;
-            }
-          }else{
-            for(let i=index; i<=timeRange[lastIndex]; i++){
-              console.log("i2",i)
-              checkedArr[i] = false;
-            }
-          }
-          setCheckedState(checkedArr)
-        }
-     
+      //처음 꺼 눌렀을 때 -> 해제
+      //중간꺼 눌렀을 때 -> 누른거까지 해제
+      //마지막꺼 체크 -> 마지막꺼 + 중간껏들도 체크
+      //마지막꺼 해제 -> 마지막꺼만 해제
 
-      }else{ // 최초 시작 시간 선택 or timeRange 외부 시간 선택 [선택한 시간이 시작시간이 됨]
-        const checkIdArr = []
-        const indeterminateArr = new Array(12).fill(false);
-        for(let i = index; i<index+maxHour; i++){
-          const checkedArr = new Array(12).fill(false);
-          checkedArr[index] = true;
-          setCheckedState(checkedArr);
-          if(defaultDisabledList[i])break
-          checkIdArr.push(i)
-          if(i!==index){
-            indeterminateArr[i] = true
+      if (timeRange[0] === index) {
+        //시작시간 -> 체크 해제
+        setTimeRange([]);
+        setIndeterminateState(new Array(12).fill(false));
+        setCheckedState(new Array(12).fill(false));
+      } else if (timeRange[lastIndex] === index) {
+        // timeRange에서 마지막 시간 선택
+        const checkedArr = [...checkedState];
+        if (checkedArr[index]) {
+          checkedArr[index] = false;
+        } else {
+          for (let i = timeRange[0]; i <= timeRange[lastIndex]; i++) {
+            checkedArr[i] = true;
           }
         }
-        setTimeRange(checkIdArr)
-        setIndeterminateState(indeterminateArr)
+
+        setCheckedState(checkedArr);
+      } else {
+        //timeRange에서 첫시간, 마지막 시간 사이 중간 시간 선택 -> 선택인 경우 : 시작~중간 체크 | 해제일 경우 : 중간~끝 해제
+        //참고 : timeRange.length >1 경우만 이 조건문으로 들어옴
+
+        const checkedArr = [...checkedState];
+        if (!checkedArr[index]) {
+          for (let i = timeRange[1]; i <= index; i++) {
+            console.log('i', i);
+            checkedArr[i] = true;
+          }
+        } else {
+          for (let i = index; i <= timeRange[lastIndex]; i++) {
+            console.log('i2', i);
+            checkedArr[i] = false;
+          }
+        }
+        setCheckedState(checkedArr);
       }
+    } else {
+      // 최초 시작 시간 선택 or timeRange 외부 시간 선택 [선택한 시간이 시작시간이 됨]
+      const checkIdArr = [];
+      const indeterminateArr = new Array(12).fill(false);
+      for (let i = index; i < index + maxHour; i++) {
+        const checkedArr = new Array(12).fill(false);
+        checkedArr[index] = true;
+        setCheckedState(checkedArr);
+        if (defaultDisabledList[i]) break;
+        checkIdArr.push(i);
+        if (i !== index) {
+          indeterminateArr[i] = true;
+        }
+      }
+      setTimeRange(checkIdArr);
+      setIndeterminateState(indeterminateArr);
+    }
   };
   return (
     <div>
@@ -339,10 +339,10 @@ const BookingData = () => {
           <p>
             신청자명
             <input
-              style={{ fontWeight: "bold" }}
+              style={{ fontWeight: 'bold' }}
               className={styles.input}
-              type="text"
-              name="val"
+              type='text'
+              name='val'
               placeholder={userName}
               disabled
             />
@@ -355,8 +355,8 @@ const BookingData = () => {
                   className={styles.input}
                   onChange={onChange}
                   value={inputName}
-                  type="text"
-                  placeholder="검색"
+                  type='text'
+                  placeholder='검색'
                 />
               </p>
             </form>
@@ -392,7 +392,7 @@ const BookingData = () => {
             <span key={index}>
               <Checkbox
                 onChange={() => onChangeCheckBox(index)}
-                variant="success"
+                variant='success'
                 checked={checkedState[index]}
                 // indeterminate={indeterminateState[index]}
                 disabled={defaultDisabledList[index]}
@@ -401,18 +401,18 @@ const BookingData = () => {
                 style={
                   checkedState[index] || indeterminateState[index]
                     ? {
-                        margin: "10px",
-                        color: "#3695f5",
+                        margin: '10px',
+                        color: '#3695f5',
                         // color: 'green',
-                        fontSize: "16px",
-                        fontWeight: "bold",
+                        fontSize: '16px',
+                        fontWeight: 'bold',
                       }
                     : {
-                        margin: "10px",
-                        color: "green",
+                        margin: '10px',
+                        color: 'green',
                         // color: '#3695f5',
-                        fontSize: "16px",
-                        fontWeight: "bold",
+                        fontSize: '16px',
+                        fontWeight: 'bold',
                       }
                 }
               >
