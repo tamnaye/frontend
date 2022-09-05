@@ -1,10 +1,24 @@
+// import logo from '../component/bookpage/img/logo.png';
 import nabox from '../component/bookpage/img/nabox.jpeg';
-import logo from '../component/bookpage/img/logo.png';
+//2층
+import hyeopjae from '../component/bookpage/img/hyeopjae.png';
+import gwagji from '../component/bookpage/img/gwagji.png';
+import iho from '../component/bookpage/img/iho.png';
+import hamdeog from '../component/bookpage/img/hamdeog.png';
+import gimnyeong from '../component/bookpage/img/gimnyeong.png';
+import woljeong from '../component/bookpage/img/woljeong.png';
+import sinyang from '../component/bookpage/img/sinyang.png';
+import hamo from '../component/bookpage/img/hamo.png';
+import hwasun from '../component/bookpage/img/hwasun.png';
+import jungmun from '../component/bookpage/img/jungmun.png';
+import pyoseon from '../component/bookpage/img/pyoseon.png';
+//3층
 import geomun from '../component/bookpage/img/geomun.jpeg';
 import darrenche from '../component/bookpage/img/darrenche.jpeg';
 import yongnuni from '../component/bookpage/img/yongnuni.jpeg';
 import darabi from '../component/bookpage/img/darabi.jpeg';
 import studio from '../component/bookpage/img/studio.png';
+//4층
 import eolimog from '../component/bookpage/img/eolimog.jpeg';
 import yeongsil from '../component/bookpage/img/yeongsil.jpeg';
 
@@ -12,47 +26,51 @@ export default function useRoomImg() {
   const roomsImg = [
     {
       room_id: 201,
-      img: logo,
+      img: hyeopjae,
     },
     {
       room_id: 202,
-      img: logo,
+      img: gwagji,
     },
     {
       room_id: 203,
-      img: logo,
+      img: iho,
     },
     {
       room_id: 204,
-      img: logo,
+      img: hamdeog,
     },
     {
       room_id: 205,
-      img: logo,
+      img: gimnyeong,
     },
     {
       room_id: 206,
-      img: logo,
+      img: woljeong,
     },
     {
       room_id: 207,
-      img: logo,
+      img: sinyang,
     },
     {
       room_id: 208,
-      img: logo,
+      img: hamo,
     },
     {
       room_id: 209,
-      img: logo,
+      img: hwasun,
     },
     {
       room_id: 210,
-      img: logo,
+      img: jungmun,
     },
     {
       room_id: 211,
-      img: logo,
+      img: pyoseon,
+    },
+    {
+      room_id: 212,
+      img: nabox,
     },
     {
       room_id: 212,
