@@ -25,12 +25,15 @@ const ThirdFloorMap = () => {
       })
   }, [url, myUrl])
 
-  const ThirdMeetingRoominfo = roomData.filter(
-    (rooms) => rooms.roomType === 'meeting'
+  const ThirdMeetingStudioinfo = roomData.filter(
+    (rooms) => rooms.roomType === 'meeting' || rooms.roomType === 'studio'
   )
 
   const ThirdNaboxinfo = roomData.filter((rooms) => rooms.roomType === 'nabox')
 
+  // const ThirdStudioinfo = roomData.filter(
+  //   (rooms) => rooms.roomType === 'studio'
+  // )
   // roomFull 함수 설정
   // 현재 시간을 통해 남은 예약 가능 시간 확인
   const Now = new Date()
@@ -78,7 +81,7 @@ const ThirdFloorMap = () => {
             &nbsp;현재는 예약 시간이 아닙니다
           </h2>
         )}
-        {ThirdMeetingRoominfo.map((rooms) => (
+        {ThirdMeetingStudioinfo.map((rooms) => (
           <Link
             to={`/booking/${rooms.roomId}`}
             key={rooms.roomId}
@@ -97,6 +100,7 @@ const ThirdFloorMap = () => {
             </div>
           </Link>
         ))}
+
         {ThirdNaboxinfo.map((rooms) => (
           <Link
             to={`/booking/${rooms.roomId}`}
@@ -119,9 +123,7 @@ const ThirdFloorMap = () => {
         <div className={styles.Lounge} id={styles.notSelect}>
           {`더큰\nLounge`}
         </div>
-        <div className={styles.더큰내일스튜디오} id={styles.notSelect}>
-          {`더\n큰\n내\n일\n스\n튜\n디\n오`}
-        </div>
+
         <div className={styles.space수월봉} id={styles.notSelect}>
           {`space\n수월봉`}
         </div>

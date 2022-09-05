@@ -31,8 +31,8 @@ const ThirdFloorMeetingRoomState = () => {
       })
   }, [url, myUrl])
 
-  const ThirdMeetingRoominfo = roomData.filter(
-    (rooms) => rooms.roomType === 'meeting'
+  const ThirdMeetingStudioinfo = roomData.filter(
+    (rooms) => rooms.roomType === 'meeting' || rooms.roomType === 'studio'
   )
 
   // 타임 리스트 돌리기
@@ -92,7 +92,7 @@ const ThirdFloorMeetingRoomState = () => {
             <th className="table-primary" id={styles.time}></th>
 
             {/* 룸 값 불러오기 */}
-            {ThirdMeetingRoominfo.map((room) => (
+            {ThirdMeetingStudioinfo.map((room) => (
               <th key={room.roomId} className="table-primary" id={styles.text}>
                 <Link to={`/booking/${room.roomId}`}>
                   <ArrowRightCircleFill />
@@ -110,7 +110,7 @@ const ThirdFloorMeetingRoomState = () => {
               <th className={styles.time}>{time}</th>
 
               {/* 룸을 맵으로 돌려 하나의 시간에 상태값 전달 */}
-              {ThirdMeetingRoominfo.map((room) => (
+              {ThirdMeetingStudioinfo.map((room) => (
                 <th key={room.roomId} className={styles.roomstate}>
                   {IsThisTimeRoombooked(time, room.roomId) ? (
                     <OverlayTrigger
