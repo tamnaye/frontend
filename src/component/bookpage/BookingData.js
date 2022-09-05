@@ -220,9 +220,7 @@ const BookingData = () => {
   // 클릭한 시간 전꺼, 다음꺼 중 만약 이미 예약이 된것들은 이미 disabled : true인 상태이기 때문에
   // onChange 첫번째 if문에서 예외처리됨 (checkedStateLength === 0 )
   // 나머지 중 disabled false인 것들 disabled = true로 바꿔줌
-  const [checkedState, setCheckedState] = useState(new Array(12).fill(false));
-  const [checkedIndexState, setCheckedIndexState] = useState([])
-  console.log(checkedIndexState)
+  
 
   //checkedState 길이 반환
   function checkedStateLength() {
@@ -248,81 +246,74 @@ const BookingData = () => {
   }
   //체크된 체크박스 checkedState 배열로 관리해주기 위함
   //기본적으로 onChange에서 호출해줌, 하지만 체크 false로 강제해야하는 조건에서는 호출 하지 않음
-  function updatedCheckedState(index) {
-    const updatedCheckedState = [...checkedState];
-    updatedCheckedState[index] = !updatedCheckedState[index];
-    // if(updatedIndeterminateState[index]) updatedIndeterminateState[index] = false
-    // checkedState.map((item, id) =>
-    //   id === index ? !item : item
-    // );
-    setCheckedState(updatedCheckedState);
-  }
+
   const [indeterminateState, setIndeterminateState] = useState(
     new Array(12).fill(false)
   );
-  const maxHour = userClass === 0 ? 10 : 3;
-  function updateIndeterminateState(index) {
-    //최초 클릭 시 disablesState update
-    const indeterminateUpdateList = [...indeterminateState];
-    for (let i = 0; i < times.length; i++) {
-      if (checkedStateLength() === 0) {
-        if (index < i && i < index + maxHour) {
-          if (!defaultDisabledList[i]) {
-            indeterminateUpdateList[i] = true;
-          } else {
-            break;
+  const [checkedState, setCheckedState] = useState(new Array(12).fill(false));
+  const [timeRange, setTimeRange] = useState([])
+  // console.log("timeRange",timeRange)
+  // console.log("checkedState",checkedState)
+  // console.log("indeterminateState",indeterminateState)
+
+  const maxHour = userClass === 0 ? 10 : 4;
+ 
+  const onChangeCheckBox = (index) => {
+    const lastIndex = timeRange.length-1
+      if(timeRange.includes(index)){ //timeRange 내에서 시간 선택 event
+        if(timeRange[0]===index){ //시작시간 -> 체크 해제 
+          setTimeRange([])
+          setIndeterminateState(new Array(12).fill(false))
+          setCheckedState(new Array(12).fill(false))
+        }else if(timeRange[lastIndex]===index){ // timeRange에서 마지막 시간 선택
+          const checkedArr = [...checkedState];
+          if(checkedArr[index]){
+            checkedArr[index] = false
+          }else{
+            for(let i=timeRange[0]; i<=timeRange[lastIndex]; i++){
+              checkedArr[i] = true
+            }
+          }
+
+          setCheckedState(checkedArr)
+          
+        }else{ //timeRange에서 첫시간, 마지막 시간 사이 중간 시간 선택 -> 선택인 경우 : 시작~중간 체크 | 해제일 경우 : 중간~끝 해제
+          //참고 : timeRange.length >1 경우만 이 조건문으로 들어옴
+          const checkedArr = [...checkedState]
+          if(!checkedArr[index]){
+            for(let i=timeRange[1]; i<=index; i++){
+              console.log("i",i)  
+              checkedArr[i] = true;
+            }
+          }else{
+            for(let i=index; i<=timeRange[lastIndex]; i++){
+              console.log("i2",i)
+              checkedArr[i] = false;
+            }
+          }
+          setCheckedState(checkedArr)
+        }
+        //처음 꺼 눌렀을 때 -> 해제
+        //중간꺼 눌렀을 때 -> 누른거까지 해제
+        //마지막꺼 체크 -> 마지막꺼 + 중간껏들도 체크
+        //마지막꺼 해제 -> 마지막꺼만 해제 
+
+      }else{ // 최초 시작 시간 선택 or timeRange 외부 시간 선택 [선택한 시간이 시작시간이 됨]
+        const checkIdArr = []
+        const indeterminateArr = new Array(12).fill(false);
+        for(let i = index; i<index+maxHour; i++){
+          const checkedArr = new Array(12).fill(false);
+          checkedArr[index] = true;
+          setCheckedState(checkedArr);
+          if(defaultDisabledList[i])break
+          checkIdArr.push(i)
+          if(i!==index){
+            indeterminateArr[i] = true
           }
         }
-      } else {
-        if (i === index) {
-          console.log(
-            "indeterminateUpdateList[index]",
-            indeterminateUpdateList[index]
-          );
-          indeterminateUpdateList[index] = !indeterminateUpdateList[index];
-          console.log(
-            "indeterminateUpdateList[index]2",
-            indeterminateUpdateList[index]
-          );
-        }
+        setTimeRange(checkIdArr)
+        setIndeterminateState(indeterminateArr)
       }
-    }
-    setIndeterminateState(indeterminateUpdateList);
-  }
-  const onChangeInput = (index) => {
-
-    if(checkedIndexState.length===0){
-      const arr = [...checkedIndexState]
-      for(let i = index; i<index+maxHour; i++){
-        arr.push(i)
-      }
-      setCheckedIndexState(arr)
-    }
-
-
-
-
-    // updateIndeterminateState(index);
-    // updatedCheckedState(index);
-
-    // if (checkedStateLength() === 0) {
-    //   updateIndeterminateState(index)
-    //   updatedCheckedState(index);
-    // } else if (checkedStateLength() === 1) {
-    //   updatedCheckedState(index);
-    //   if (checkedState.indexOf(true) === index) {
-    //     setDisabledState(defaultDisabledList); //체크해제
-    //   } else {
-    //     //pass
-    //   }
-    // }
-    // else if (checkedStateLength() === 2) {
-    //   if (getCheckedIndexArray(checkedState).includes(index) === false) {
-    //     alert("최대 예약시간은 2시간입니다 !");
-    //   } else {
-    //     updatedCheckedState(index);
-    //   }
-    // }
   };
   return (
     <div>
@@ -384,10 +375,10 @@ const BookingData = () => {
           {times.map((time, index) => (
             <span key={index}>
               <Checkbox
-                onChange={() => onChangeInput(index)}
+                onChange={() => onChangeCheckBox(index)}
                 variant="success"
                 checked={checkedState[index]}
-                indeterminate={indeterminateState[index]}
+                // indeterminate={indeterminateState[index]}
                 disabled={defaultDisabledList[index]}
                 // disabled={disabledState[index]}
                 // indeterminate={disabledState[index]}
