@@ -44,7 +44,7 @@ const BookingData = () => {
     function checkPast(time) {
       const nowH = Now.getHours();
       const timeH = Number(time.substring(0, 2));
-      // return timeH <= nowH ? true : false;
+      // return timeH <= nowH ? true : false; //릴리즈용
       return false; //개발용
     }
 
