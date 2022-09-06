@@ -1,4 +1,3 @@
-
 export default function checkPast(time) {
     const now = new Date()
     const nowH = now.getHours();

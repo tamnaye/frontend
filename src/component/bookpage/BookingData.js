@@ -1,9 +1,9 @@
 //styles
-import styles from "./BookingData.module.css";
-import "antd/dist/antd.min.css";
-import { Checkbox, Tooltip } from "antd";
+import styles from './BookingData.module.css';
+import 'antd/dist/antd.min.css';
+import { Checkbox, Tooltip } from 'antd';
 //component
-import React from "react";
+import React from 'react';
 //hooks
 import useUrl from '../../hooks/useUrl';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -19,15 +19,15 @@ import checkPast from '../../hooks/checkPast';
 
 const BookingData = () => {
   const myUrl = useUrl();
-  const id = window.localStorage.getItem("userid");
-  const userClass = window.localStorage.getItem("class");
+  const id = window.localStorage.getItem('userid');
+  const userClass = window.localStorage.getItem('class');
 
   const { roomId } = useParams();
-  const [userName, setUserName] = useState("");
-  const [roomType, setRoomType] = useState(""); // meeting / nabax
+  const [userName, setUserName] = useState('');
+  const [roomType, setRoomType] = useState(''); // meeting / nabax
   const [memberNames, setMemberNames] = useState([]);
 
-  const [maxTime, setMaxTime] = useState("");
+  const [maxTime, setMaxTime] = useState('');
   const times = useTimes();
   console.log("times",times)
   const [bookedState, setBookedState] = useState([]);
@@ -38,7 +38,7 @@ const BookingData = () => {
 
   const url = `http://${myUrl}/api/booking?roomId=${roomId}&userId=${id}&classes=${userClass}`;
   useEffect(() => {
-    fetch(url, { method: "GET" })
+    fetch(url, { method: 'GET' })
       .then((res) => res.json())
       .then((data) => {
         setUserName(data.userData.userName);
@@ -62,7 +62,6 @@ const BookingData = () => {
         const arr3 = [];
         console.log("bookedTimes",bookedTimes)
         console.log("officialTimes",officialTimes)
-
         times.map(
           (time) =>
             arr1.push(checkPast(time)) &&
@@ -74,7 +73,6 @@ const BookingData = () => {
         setIsOfficial(arr3);
       });
   }, [url]); //의존성 경고문 없애기 (콜백 방식 알아볼것)
-
   // 09시 17시
   function getTimes(startTime, endTime){
     const arr = []
@@ -95,14 +93,13 @@ const BookingData = () => {
     console.log("get Time arr",arr)
     return arr
   } 
-  
   //-------시간 체크박스------//
   const [indeterminateState, setIndeterminateState] = useState(
     new Array(12).fill(false)
   );
   const [checkedState, setCheckedState] = useState(new Array(12).fill(false));
   const [timeRange, setTimeRange] = useState([]);
-  const maxHour = userClass === "0" ? 12 : maxTime;
+  const maxHour = userClass === '0' ? 12 : maxTime;
   const onChangeCheckBox = (index) => {
     const lastIndex = timeRange.length - 1;
     if (timeRange.includes(index)) {
@@ -151,7 +148,7 @@ const BookingData = () => {
         const checkedArr = new Array(12).fill(false);
         checkedArr[index] = true;
         setCheckedState(checkedArr);
-        if (userClass !== "0") {
+        if (userClass !== '0') {
           if (bookedState[i]) break;
         } else {
           if (isOfficial[i]) break;
@@ -186,14 +183,14 @@ const BookingData = () => {
   //--------팀원 검색 기능---------//
   const [searchedNameState, setSearchedNameState] = useState([]);
   const [selectedNameState, setSelectedNameState] = useState([]);
-  const [inputName, setInputName] = useState("");
+  const [inputName, setInputName] = useState('');
 
   function onChange(e) {
     setInputName(e.target.value);
     const str = e.target.value;
     let arr = [...memberNames];
     arr =
-      str === ""
+      str === ''
         ? (arr = [])
         : arr.filter(
             (member) =>
@@ -208,7 +205,7 @@ const BookingData = () => {
     setSearchedNameState(arr);
   }
   function onClickSearched(name) {
-    setInputName("");
+    setInputName('');
     setSearchedNameState([]);
 
     const arr = [...selectedNameState];
@@ -225,19 +222,19 @@ const BookingData = () => {
     e.preventDefault();
     if (searchedNameState.length === 1) {
       //이미 선택할 팀원이 나옴
-      setInputName("");
+      setInputName('');
       setSearchedNameState([]);
       const arr = [...selectedNameState];
       arr.push(searchedNameState[0]);
       setSelectedNameState(arr);
     } else if (searchedNameState.length > 1) {
       //검색 결과 두명 이상 나왔을 때 엔터친 경우
-      alert("팀원을 한명씩 선택해 주세요 !");
+      alert('팀원을 한명씩 선택해 주세요 !');
     } else {
       //검색 안되는 이름 치고 엔터친 경우
-      setInputName("");
+      setInputName('');
       setSearchedNameState([]);
-      alert("팀원의 이름을 확인해주세요!");
+      alert('팀원의 이름을 확인해주세요!');
     }
   }
 
@@ -249,7 +246,7 @@ const BookingData = () => {
   const NowHour = Now.getHours();
   const NowMins = Now.getMinutes();
   //주말 예약 버튼 비활성화
-  const day = ["일", "월", "화", "수", "목", "금", "토"];
+  const day = ['일', '월', '화', '수', '목', '금', '토'];
   const NowDay = Now.getDay();
   const weekDay = day[NowDay];
   //console.log(weekDay);
@@ -257,7 +254,7 @@ const BookingData = () => {
   function pluszero(times) {
     let time = times.toString(); //시간을 숫자에서 문자로 변환
     if (time.length < 2) {
-      time = "0" + time; //숫자 앞에 0을 붙여줌
+      time = '0' + time; //숫자 앞에 0을 붙여줌
       return time;
     } else {
       return time;
@@ -266,14 +263,14 @@ const BookingData = () => {
   const nowHour = pluszero(NowHour);
   const nowMins = pluszero(NowMins);
   const nowTime = nowHour + nowMins;
-  const startTime = "0830";
-  const endTime = "2100";
+  const startTime = '0830';
+  const endTime = '2100';
   useEffect(() => {
     if (
       startTime > nowTime ||
       endTime < nowTime ||
-      weekDay === "토" ||
-      weekDay === "일"
+      weekDay === '토' ||
+      weekDay === '일'
     ) {
       setAblebtn(false);
     } else {
@@ -282,29 +279,29 @@ const BookingData = () => {
   }, [nowTime, weekDay]); //useEffect써서 한번만 렌더링 해줌
 
   //----예약 데이터 보내기----//
-  const roomTypeArr = ["meeting", "nabax"];
+  const roomTypeArr = ['meeting', 'nabax'];
   function bookingConfirm() {
     if (
-      userClass !== "0" &&
+      userClass !== '0' &&
       roomType === roomTypeArr[0] &&
       selectedNameState.length < 1 &&
       getStartEndTime(checkedState).timeLength === 0
     ) {
-      alert("회의 참여자와 회의 시간을 선택해 주세요");
+      alert('회의 참여자와 회의 시간을 선택해 주세요');
     } else if (
       roomType === roomTypeArr[0] &&
-      userClass !== "0" &&
+      userClass !== '0' &&
       selectedNameState.length < 1
     ) {
-      alert("회의 참여자를 1명 이상 선택해주세요");
+      alert('회의 참여자를 1명 이상 선택해주세요');
     } else if (getStartEndTime(checkedState).timeLength === 0) {
-      alert("시간을 선택해 주세요");
+      alert('시간을 선택해 주세요');
     } else {
       const postUrl = `http://${myUrl}/api/booking/conference`;
       fetch(postUrl, {
-        method: "POST",
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           //값 입력
@@ -343,10 +340,10 @@ const BookingData = () => {
           <p>
             신청자명
             <input
-              style={{ fontWeight: "bold" }}
+              style={{ fontWeight: 'bold' }}
               className={styles.input}
-              type="text"
-              name="val"
+              type='text'
+              name='val'
               placeholder={userName}
               disabled
             />
@@ -360,8 +357,8 @@ const BookingData = () => {
                   className={styles.input}
                   onChange={onChange}
                   value={inputName}
-                  type="text"
-                  placeholder="검색"
+                  type='text'
+                  placeholder='검색'
                 />
               </p>
             </form>
@@ -399,44 +396,46 @@ const BookingData = () => {
           {times.map((time, index) => (
             <span key={index}>
               <Tooltip
-                placement="bottom"
+                placement='bottom'
                 title={
-                  userClass!=="0" || pastState[index] || !bookedState[index]
-                    ? ""
-                    : isOfficial[index] ? "공식일정예약" : "인재예약"
+                  userClass !== '0' || pastState[index] || !bookedState[index]
+                    ? ''
+                    : isOfficial[index]
+                    ? '공식일정예약'
+                    : '인재예약'
                 }
               >
                 <Checkbox
                   onChange={() => onChangeCheckBox(index)}
-                  variant="success"
+                  variant='success'
                   checked={checkedState[index]}
                   disabled={
                     pastState[index] || isOfficial[index]
                       ? true
-                      : userClass === "0"
+                      : userClass === '0'
                       ? false
                       : bookedState[index]
                   }
                   style={
-                    userClass === "0" && bookedState[index]
+                    userClass === '0' && bookedState[index]
                       ? {
-                          margin: "10px",
-                          color: "pink",
-                          fontSize: "16px",
-                          fontWeight: "bold",
+                          margin: '10px',
+                          color: 'pink',
+                          fontSize: '16px',
+                          fontWeight: 'bold',
                         }
                       : checkedState[index] || indeterminateState[index]
                       ? {
-                          margin: "10px",
-                          color: "#3695f5",
-                          fontSize: "16px",
-                          fontWeight: "bold",
+                          margin: '10px',
+                          color: '#3695f5',
+                          fontSize: '16px',
+                          fontWeight: 'bold',
                         }
                       : {
-                          margin: "10px",
-                          color: "green",
-                          fontSize: "16px",
-                          fontWeight: "bold",
+                          margin: '10px',
+                          color: 'green',
+                          fontSize: '16px',
+                          fontWeight: 'bold',
                         }
                   }
                 >
