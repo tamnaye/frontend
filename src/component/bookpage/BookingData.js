@@ -25,6 +25,7 @@ const BookingData = () => {
   const [userName, setUserName] = useState("");
   const [roomType, setRoomType] = useState(""); // meeting / nabax
   const [memberNames, setMemberNames] = useState([]);
+  const [maxTime,setMaxTime] = useState('');
   const times = useTimes();
   const [defaultDisabledList, setDefaultDisabledList] = useState([]);
 
@@ -37,6 +38,7 @@ const BookingData = () => {
         setRoomType(data.roomData.roomType);
         setDefaultDisabledList(bookingdDataHandler(data.bookingData));
         setMemberNames(data.namesData);
+        setMaxTime(data.roomData.maxTime)
       });
   }, [url]); //의존성 경고문 없애기 (콜백 방식 알아볼것)
 
@@ -45,8 +47,8 @@ const BookingData = () => {
     function checkPast(time) {
       const nowH = Now.getHours();
       const timeH = Number(time.substring(0, 2));
-      // return timeH <= nowH ? true : false; //릴리즈용
-      return false; //개발용
+      return timeH <= nowH ? true : false; //릴리즈용
+      // return false; //개발용
     }
 
     const arr = [...defaultDisabledList];
@@ -128,7 +130,7 @@ const BookingData = () => {
   );
   const [checkedState, setCheckedState] = useState(new Array(12).fill(false));
   const [timeRange, setTimeRange] = useState([]);
-  const maxHour = userClass === "0" ? 12 : 4;
+  const maxHour = userClass === "0" ? 12 : maxTime;
   const onChangeCheckBox = (index) => {
     const lastIndex = timeRange.length - 1;
     if (timeRange.includes(index)) {
