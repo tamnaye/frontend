@@ -163,13 +163,13 @@ const ThirdFloorMeetingRoomState = () => {
                       >
                         {TimeAndRoomFilter(time, room.roomId)[0].official
                           ? [
-                              <p>
+                              <p key={0}>
                                 <Calendar2CheckFill />
                                 &nbsp; 공식 일정
                               </p>,
                             ]
                           : [
-                              <p>
+                              <p key={1}>
                                 <EmojiSmileFill />
                                 {'\n'}
                                 {
