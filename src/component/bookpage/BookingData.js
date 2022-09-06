@@ -58,8 +58,6 @@ const BookingData = () => {
                booking.startTime,
               timePlusMinus(booking.endTime, -1)):null
             )
-        console.log("bookedTimes",bookedTimes)
-        console.log("officialTimes",officialTimes)
         const arr1 = [...pastState];
         const arr2 = [...bookedState];
         const arr3 = [...isOfficial];
@@ -73,7 +71,7 @@ const BookingData = () => {
         setBookedState(arr2);
         setIsOfficial(arr3);
       });
-  }, [url]); //의존성 경고문 없애기 (콜백 방식 알아볼것)
+  }, [bookedState, isOfficial, pastState, times, url]); //의존성 경고문 없애기 (콜백 방식 알아볼것)
   
   //-------시간 체크박스------//
   const [indeterminateState, setIndeterminateState] = useState(
@@ -303,7 +301,6 @@ const BookingData = () => {
       })
         .then((res) => res.json())
         .then((data) => {
-          console.log(data);
           if (data.message.success) {
             //console.log(data.message.success);
             alert(data.message.success);
