@@ -110,7 +110,7 @@ const FourthFloorMeetingRoomState = () => {
                 <th key={room.roomId} className={styles.roomstate}>
                   {IsThisTimeRoombooked(time, room.roomId) ? (
                     <OverlayTrigger
-                      trigger={('hover', 'focus')}
+                      trigger="click"
                       key={TimeAndRoomFilter(time, room.roomId)[0].bookingId}
                       placement="top"
                       overlay={
@@ -146,7 +146,7 @@ const FourthFloorMeetingRoomState = () => {
                             bookingLength(
                               TimeAndRoomFilter(time, room.roomId)[0].startTime,
                               TimeAndRoomFilter(time, room.roomId)[0].endTime
-                            ) * 35
+                            ) * 35.8
                           }px`,
                         }}
                         className={styles.bookingTime}

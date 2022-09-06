@@ -13,6 +13,11 @@ const SecondFloorMeetingRoom = () => {
   const [bookingData, setBookingData] = useState([])
   const [roomData, setRoomData] = useState([])
 
+  const [SinyangID, setSinYangID] = useState('')
+  const [SinyangName, setSinYangName] = useState('')
+
+  const userClasses = window.localStorage.getItem('class')
+
   const url = `http://${myUrl}/api/booking/main?floor=2`
   useEffect(() => {
     fetch(url, {
@@ -22,13 +27,18 @@ const SecondFloorMeetingRoom = () => {
       .then((data) => {
         setBookingData(data.BookingData)
         setRoomData(data.RoomData)
+        setSinYangID(
+          data.RoomData.filter((rooms) => rooms.roomId === 207)[0].roomId
+        )
+        setSinYangName(
+          data.RoomData.filter((rooms) => rooms.roomName === '신양')[0].roomName
+        )
       })
   }, [url, myUrl])
 
   const SecondMeetingRoominfo = roomData.filter(
-    (rooms) => rooms.roomType === 'meeting'
+    (rooms) => rooms.roomType === 'meeting' && rooms.roomName !== '신양'
   )
-
   // roomFull 함수 설정
   // 현재 시간을 통해 남은 예약 가능 시간 확인
   const Now = new Date()
@@ -85,6 +95,19 @@ const SecondFloorMeetingRoom = () => {
             </button>
           </Link>
         ))}
+
+        {userClasses === '0' ? (
+          <button
+            className={
+              notroomFull(SinyangID) && ablebtn
+                ? [styles.notfull]
+                : [styles.full]
+            }
+            onClick={BookingConfirm}
+          >
+            {SinyangName}
+          </button>
+        ) : null}
       </div>
     </div>
   )
