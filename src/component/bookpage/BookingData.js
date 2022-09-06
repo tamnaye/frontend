@@ -250,7 +250,7 @@ const BookingData = () => {
   }, []); //useEffect써서 한번만 렌더링 해줌
 
   //----예약 데이터 보내기----//
-  const roomTypeArr = ['meeting', 'nabax', 'official'];
+  const roomTypeArr = ['meeting', 'nabax'];
   function bookingConfirm() {
     if (
       userClass !== '0' &&
@@ -376,7 +376,7 @@ const BookingData = () => {
                   userClass === '0' && defaultDisabledList[index]
                     ? {
                         margin: '10px',
-                        color: 'gray',
+                        color: 'yellow',
                         fontSize: '16px',
                         fontWeight: 'bold',
                       }
