@@ -29,9 +29,12 @@ const BookingData = () => {
 
   const [maxTime, setMaxTime] = useState("");
   const times = useTimes();
+  console.log("times",times)
   const [bookedState, setBookedState] = useState([]);
+  console.log("bookedState",bookedState)
   const [pastState, setPastState] = useState([]);
   const [isOfficial, setIsOfficial] = useState([]);
+  console.log("isOfficial",isOfficial)
 
   const url = `http://${myUrl}/api/booking?roomId=${roomId}&userId=${id}&classes=${userClass}`;
   useEffect(() => {
@@ -49,18 +52,17 @@ const BookingData = () => {
         const officialTimes = [];
         data.bookingData.map(
           (booking) =>
-            bookedTimes.push(
-              booking.startTime,
-              timePlusMinus(booking.endTime, -1)
+            bookedTimes.push(...getTimes(booking.startTime,booking.endTime)
             ) &&
             booking.official ? 
-            officialTimes.push(
-               booking.startTime,
-              timePlusMinus(booking.endTime, -1)):null
+            officialTimes.push(...getTimes(booking.startTime,booking.endTime)):null
             )
-        const arr1 = [...pastState];
-        const arr2 = [...bookedState];
-        const arr3 = [...isOfficial];
+        const arr1 = [];
+        const arr2 = [];
+        const arr3 = [];
+        console.log("bookedTimes",bookedTimes)
+        console.log("officialTimes",officialTimes)
+
         times.map(
           (time) =>
             arr1.push(checkPast(time)) &&
@@ -71,7 +73,28 @@ const BookingData = () => {
         setBookedState(arr2);
         setIsOfficial(arr3);
       });
-  }, [bookedState, isOfficial, pastState, times, url]); //의존성 경고문 없애기 (콜백 방식 알아볼것)
+  }, [url]); //의존성 경고문 없애기 (콜백 방식 알아볼것)
+
+  // 09시 17시
+  function getTimes(startTime, endTime){
+    const arr = []
+    const start = startTime.substring(0, 2);
+    const end = endTime.substring(0, 2);
+    const startInt = Number(start)
+    const endInt = Number(end)
+    for(let i=startInt; i<endInt; i++){
+      const timestr = String(i);
+      let changedTime = "";
+      if (timestr.length < 2) {
+        changedTime = "0" + timestr + ":00";
+      } else {
+        changedTime = timestr + ":00";
+      }
+      arr.push(changedTime)
+    }
+    console.log("get Time arr",arr)
+    return arr
+  } 
   
   //-------시간 체크박스------//
   const [indeterminateState, setIndeterminateState] = useState(
