@@ -6,7 +6,7 @@ import { useState, useEffect } from 'react';
 import useUrl from '../../hooks/useUrl';
 
 function MyBookTable() {
-  const  id  = window.localStorage.getItem("userid")
+  const id = window.localStorage.getItem('userid');
   const myUrl = useUrl();
 
   const [myBookingList, setMyBookingList] = useState([]);
@@ -54,10 +54,10 @@ function MyBookTable() {
     return output;
   };
 
-  //PassedTime css
+  //----PassedTime css 비활성화----//
   const Now = new Date();
   const NowHour = Now.getHours();
-  console.log(NowHour);
+  //console.log(NowHour);
 
   return (
     <div>
