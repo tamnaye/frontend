@@ -14,7 +14,7 @@ function App() {
   let location = useLocation();
   return (
     <div>
-      {location.pathname !== '/login' ? <Header /> : null}
+      {location.pathname !== '/' ? <Header /> : null}
       <Routes>
         <Route path='/' element={<Login />} />
         <Route path='/logout' element={<Logout />} />
