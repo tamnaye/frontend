@@ -10,6 +10,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import useTimes from '../../hooks/useTimes';
 import timePlusMinus from '../../hooks/timePlusMinus';
+import ButtonExplain from './ButtonExplain';
 
 //매니저님 예외처리한 부분
 //1) checkBox 예약된거 disable 안하고 그레이 처리 해줌
@@ -361,6 +362,8 @@ const BookingData = () => {
       </div>
       <div>
         <h6 className={styles.time}> 시간 선택 </h6>
+        {/* 매니저인 경우만 버튼 안내 */}
+        {userClass === '0' ? <ButtonExplain /> : null}
         {/* 시간 선택 체크 박스  */}
         <div className={styles.timetable}>
           {times.map((time, index) => (
