@@ -167,10 +167,12 @@ const FourthFloorMeetingRoomState = () => {
                           : [
                               <p>
                                 <EmojiSmileFill />
+                                &nbsp;
                                 {
                                   TimeAndRoomFilter(time, room.roomId)[0]
                                     .applicant.userName
                                 }
+                                님 예약
                               </p>,
                             ]}
                       </button>
