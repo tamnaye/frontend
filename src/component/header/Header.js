@@ -17,7 +17,7 @@ const Header = () => {
           ) : (
             <Link to='/logout'>Logout</Link>
           )}
-          <Link to={`/mypage/${userid}`}>My page</Link>
+          <Link to={`/mypage`}>My page</Link>
         </div>
       </div>
       <div className={styles.menu}>

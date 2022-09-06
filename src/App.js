@@ -21,7 +21,7 @@ function App() {
         <Route path='/main' element={<MainTemplate />} />
         <Route path='/state' element={<ReservationState />} />
         <Route path='/booking/:roomId' element={<BookPage />} />
-        <Route path='/mypage/:id' element={<MyPage />} />
+        <Route path='/mypage' element={<MyPage />} />
         <Route path='*' element={<EmptyPage />} />
         <Route path='/feedback' element={<Feedback />} />
       </Routes>
