@@ -104,7 +104,9 @@ function MyBookTable() {
                 <button
                   key={index}
                   className={
-                    item.mode === 'cancel'
+                    Number(NowHour) > Number(item.endTime.substr(0, 2))
+                      ? [styles.memberCancel]
+                      : item.mode === 'cancel'
                       ? [styles.managerCancel]
                       : item.applicant.userId === id
                       ? [styles.applicantCancel]
@@ -112,14 +114,18 @@ function MyBookTable() {
                   }
                   onClick={() => Cancel(item.bookingId, index)}
                   disabled={
-                    item.mode === 'cancel'
+                    Number(NowHour) > Number(item.endTime.substr(0, 2))
+                      ? true
+                      : item.mode === 'cancel'
                       ? true
                       : item.applicant.userId === id
                       ? false
                       : true
                   }
                 >
-                  {item.mode === 'cancel'
+                  {Number(NowHour) > Number(item.endTime.substr(0, 2))
+                    ? '사용완료'
+                    : item.mode === 'cancel'
                     ? '사용불가'
                     : item.applicant.userId === id
                     ? '취소가능'
