@@ -114,7 +114,7 @@ const ThirdFloorMeetingRoomState = () => {
                 <th key={room.roomId} className={styles.roomstate}>
                   {IsThisTimeRoombooked(time, room.roomId) ? (
                     <OverlayTrigger
-                      trigger={('hover', 'focus')}
+                      trigger="click"
                       key={TimeAndRoomFilter(time, room.roomId)[0].bookingId}
                       placement="top"
                       overlay={
@@ -150,7 +150,7 @@ const ThirdFloorMeetingRoomState = () => {
                             bookingLength(
                               TimeAndRoomFilter(time, room.roomId)[0].startTime,
                               TimeAndRoomFilter(time, room.roomId)[0].endTime
-                            ) * 35
+                            ) * 35.8
                           }px`,
                         }}
                         className={styles.bookingTime}
@@ -163,19 +163,20 @@ const ThirdFloorMeetingRoomState = () => {
                       >
                         {TimeAndRoomFilter(time, room.roomId)[0].official
                           ? [
-                              <p>
+                              <p key={0}>
                                 <Calendar2CheckFill />
-                                공식일정
+                                &nbsp; 공식 일정
                               </p>,
                             ]
                           : [
-                              <p>
+                              <p key={1}>
                                 <EmojiSmileFill />
+                                {'\n'}
                                 {
                                   TimeAndRoomFilter(time, room.roomId)[0]
                                     .applicant.userName
                                 }
-                                님 예약
+                                {/* 님 예약 */}
                               </p>,
                             ]}
                       </button>

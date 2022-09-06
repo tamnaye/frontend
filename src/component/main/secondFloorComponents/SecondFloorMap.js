@@ -12,6 +12,12 @@ const SecondFloorMap = () => {
   //2층 API 정보 가져오기
   const [bookingData, setBookingData] = useState([])
   const [roomData, setRoomData] = useState([])
+
+  const [SinyangID, setSinYangID] = useState('')
+  const [SinyangName, setSinYangName] = useState('')
+
+  const userClasses = window.localStorage.getItem('class')
+
   const url = `http://${myUrl}/api/booking/main?floor=2`
   useEffect(() => {
     fetch(url, {
@@ -21,11 +27,17 @@ const SecondFloorMap = () => {
       .then((data) => {
         setBookingData(data.BookingData)
         setRoomData(data.RoomData)
+        setSinYangID(
+          data.RoomData.filter((rooms) => rooms.roomId === 207)[0].roomId
+        )
+        setSinYangName(
+          data.RoomData.filter((rooms) => rooms.roomName === '신양')[0].roomName
+        )
       })
   }, [url, myUrl])
 
   const SecondMeetingRoominfo = roomData.filter(
-    (rooms) => rooms.roomType === 'meeting'
+    (rooms) => rooms.roomType === 'meeting' && rooms.roomName !== '신양'
   )
 
   const SecondNaboxinfo = roomData.filter((rooms) => rooms.roomType === 'nabox')
@@ -116,13 +128,36 @@ const SecondFloorMap = () => {
           </Link>
         ))}
 
+        {/* 신양 */}
+        {userClasses === '0' ? (
+          <Link
+            to={`/booking/${SinyangID}`}
+            className={styles[SinyangName]}
+            id={
+              notroomFull(SinyangID) && ablebtn
+                ? [styles.MeetingRoom]
+                : [styles.full]
+            }
+            onClick={BookingConfirm}
+          >
+            <div>
+              {notroomFull(SinyangID) && ablebtn
+                ? SinyangName
+                : `${SinyangName}\n마감`}
+            </div>
+          </Link>
+        ) : (
+          <div className={styles[SinyangName]} id={styles.notSelect}>
+            {SinyangName}
+          </div>
+        )}
+
         <div className={styles.space범섬} id={styles.notSelect}>
           {`space\n범섬`}
         </div>
         <div className={styles.Lounge} id={styles.notSelect}>
           {`내일\nLounge`}
         </div>
-
         <div className={styles.화장실} id={styles.notSelect}>
           {`화\n장\n실`}
         </div>
