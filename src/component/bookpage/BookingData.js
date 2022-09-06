@@ -376,7 +376,7 @@ const BookingData = () => {
                   userClass === '0' && defaultDisabledList[index]
                     ? {
                         margin: '10px',
-                        color: 'yellow',
+                        color: 'gray',
                         fontSize: '16px',
                         fontWeight: 'bold',
                       }
