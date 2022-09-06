@@ -32,6 +32,7 @@ const Feedback = () => {
         //console.log(data);
         if (data.message) {
           alert('피드백 주셔서 감사합니다😍');
+          feedbackRef.current.value = ''; //제출하고 나면 빈값으로 변경
         }
       });
   };
