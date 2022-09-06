@@ -27,7 +27,7 @@ function NavsAdmin() {
   const floor3Nabox = floor3.filter((room) => room.roomType === 'nabox');
   //console.log(floor3Nabox);
   const floor3Studio = floor3.filter((room) => room.roomType === 'studio');
-  console.log(floor3Studio);
+  //console.log(floor3Studio);
   //4층 룸리스트 추출 -> 미팅룸리스트
   const floor4 = roomData.filter((room) => room.floor === 4);
   //console.log(floor4);
