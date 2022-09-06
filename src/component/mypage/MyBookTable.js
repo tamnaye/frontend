@@ -38,7 +38,7 @@ function MyBookTable() {
       })
         .then((res) => res.json())
         .then((data) => {
-          console.log(data);
+          //console.log(data);
           arr.splice(index, 1); //배열의 기존 요소를 삭제 또는 교체하거나 새 요소를 추가하여 배열의 내용을 변경
           setMyBookingList(arr);
         });
