@@ -1,4 +1,3 @@
-import React from 'react'
 
 export default function checkPast(time) {
     const now = new Date()

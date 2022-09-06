@@ -256,7 +256,7 @@ const BookingData = () => {
     } else {
       setAblebtn(true);
     }
-  }, []); //useEffect써서 한번만 렌더링 해줌
+  }, [nowTime, weekDay]); //useEffect써서 한번만 렌더링 해줌
 
   //----예약 데이터 보내기----//
   const roomTypeArr = ["meeting", "nabax"];
