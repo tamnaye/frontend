@@ -6,9 +6,9 @@ import Popover from 'react-bootstrap/Popover'
 import Poplay from '../Poplay'
 import { Link } from 'react-router-dom'
 import {
-  EmojiSmileFill,
+  // EmojiSmileFill,
   ArrowRightCircleFill,
-  Calendar2CheckFill,
+  // Calendar2CheckFill,
 } from 'react-bootstrap-icons'
 import useUrl from '../../../hooks/useUrl'
 
@@ -111,7 +111,7 @@ const SecondFloorMeetingRoomState = () => {
               </th>
             ))}
             {userClasses === '0' ? (
-              <th className="table-primary" id={styles.text}>
+              <th key={SinyangName} className="table-primary" id={styles.text}>
                 <Link to={`/booking/${SinyangID}`}>
                   <ArrowRightCircleFill />
                   {SinyangName}
@@ -178,9 +178,9 @@ const SecondFloorMeetingRoomState = () => {
                         variant="secondary"
                       >
                         {TimeAndRoomFilter(time, room.roomId)[0].official
-                          ? [<p>공식</p>]
+                          ? [<p key={1}>공식</p>]
                           : [
-                              <p>
+                              <p key={2}>
                                 {
                                   TimeAndRoomFilter(time, room.roomId)[0]
                                     .applicant.userName
@@ -195,7 +195,7 @@ const SecondFloorMeetingRoomState = () => {
 
               {/* 신양 */}
               {userClasses === '0' ? (
-                <th className={styles.roomstate}>
+                <th key={0} className={styles.roomstate}>
                   {IsThisTimeRoombooked(time, SinyangID) ? (
                     <OverlayTrigger
                       trigger="click"
