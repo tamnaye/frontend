@@ -11,11 +11,16 @@
   }
   #table #tbody #tbodyTr .roomstate .bookingTime {
     border-radius: 2px;
-    padding-top: 3px;
+    padding-top: 4px;
+    padding-left: 4px;
+    padding-right: 4px;
     white-space: break-spaces;
   }
   #table #tbody #tbodyTr .roomstate .bookingTime p {
     font-size: 10px;
+    margin-top: 3px;
+    word-break: break-all;
+    line-height: 120%;
   }
 }
 

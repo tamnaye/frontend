@@ -15,11 +15,8 @@ const SecondFloorMap = () => {
 
   const [SinyangID, setSinYangID] = useState('')
   const [SinyangName, setSinYangName] = useState('')
-  console.log(SinyangID)
-  console.log(SinyangName)
 
   const userClasses = window.localStorage.getItem('class')
-  console.log(userClasses)
 
   const url = `http://${myUrl}/api/booking/main?floor=2`
   useEffect(() => {
@@ -132,27 +129,6 @@ const SecondFloorMap = () => {
         ))}
 
         {/* 신양 */}
-        {/* <Link
-          to={`/booking/${SinyangID}`}
-          className={styles[SinyangName]}
-          id={
-            userClasses === '0'
-              ? notroomFull(SinyangID) && ablebtn
-                ? [styles.MeetingRoom]
-                : [styles.full]
-              : [styles.notSelect]
-          }
-          onClick={BookingConfirm}
-        >
-          <div>
-            {userClasses === '0'
-              ? notroomFull(SinyangID) && ablebtn
-                ? SinyangName
-                : `${SinyangName}\n마감`
-              : SinyangName}
-          </div>
-        </Link> */}
-
         {userClasses === '0' ? (
           <Link
             to={`/booking/${SinyangID}`}

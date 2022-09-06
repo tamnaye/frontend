@@ -17,9 +17,13 @@ const SecondFloorMeetingRoomState = () => {
   const [bookingData, setBookingData] = useState([])
   const [roomData, setRoomData] = useState([])
 
+  const [SinyangID, setSinYangID] = useState('')
+  const [SinyangName, setSinYangName] = useState('')
+
+  const userClasses = window.localStorage.getItem('class')
+
   const myUrl = useUrl()
   const url = `http://${myUrl}/api/booking/details-booking?floor=2`
-
   useEffect(() => {
     fetch(url, {
       method: 'GET',
@@ -28,11 +32,17 @@ const SecondFloorMeetingRoomState = () => {
       .then((data) => {
         setBookingData(data.BookingData)
         setRoomData(data.RoomData)
+        setSinYangID(
+          data.RoomData.filter((rooms) => rooms.roomId === 207)[0].roomId
+        )
+        setSinYangName(
+          data.RoomData.filter((rooms) => rooms.roomName === '신양')[0].roomName
+        )
       })
   }, [url, myUrl])
 
   const SecondMeetingRoominfo = roomData.filter(
-    (rooms) => rooms.roomType === 'meeting'
+    (rooms) => rooms.roomType === 'meeting' && rooms.roomName !== '신양'
   )
 
   // 타임 리스트 돌리기
@@ -100,6 +110,14 @@ const SecondFloorMeetingRoomState = () => {
                 </Link>
               </th>
             ))}
+            {userClasses === '0' ? (
+              <th className="table-primary" id={styles.text}>
+                <Link to={`/booking/${SinyangID}`}>
+                  <ArrowRightCircleFill />
+                  {SinyangName}
+                </Link>
+              </th>
+            ) : null}
           </tr>
         </thead>
         <tbody id={styles.tbody}>
@@ -107,13 +125,12 @@ const SecondFloorMeetingRoomState = () => {
           {timeList.map((time) => (
             <tr key={time} id={styles.tbodyTr}>
               <th className={styles.time}>{time}</th>
-
               {/* 룸을 맵으로 돌려 하나의 시간에 상태값 전달 */}
               {SecondMeetingRoominfo.map((room) => (
                 <th key={room.roomId} className={styles.roomstate}>
                   {IsThisTimeRoombooked(time, room.roomId) ? (
                     <OverlayTrigger
-                      trigger={('focus', 'hover')}
+                      trigger="click"
                       key={TimeAndRoomFilter(time, room.roomId)[0].bookingId}
                       placement="top"
                       overlay={
@@ -149,7 +166,7 @@ const SecondFloorMeetingRoomState = () => {
                             bookingLength(
                               TimeAndRoomFilter(time, room.roomId)[0].startTime,
                               TimeAndRoomFilter(time, room.roomId)[0].endTime
-                            ) * 35
+                            ) * 35.8
                           }px`,
                         }}
                         className={styles.bookingTime}
@@ -161,15 +178,9 @@ const SecondFloorMeetingRoomState = () => {
                         variant="secondary"
                       >
                         {TimeAndRoomFilter(time, room.roomId)[0].official
-                          ? [
-                              <p>
-                                <Calendar2CheckFill />
-                                공식일정
-                              </p>,
-                            ]
+                          ? [<p>공식</p>]
                           : [
                               <p>
-                                <EmojiSmileFill />
                                 {
                                   TimeAndRoomFilter(time, room.roomId)[0]
                                     .applicant.userName
@@ -181,6 +192,69 @@ const SecondFloorMeetingRoomState = () => {
                   ) : null}
                 </th>
               ))}
+
+              {/* 신양 */}
+              {userClasses === '0' ? (
+                <th className={styles.roomstate}>
+                  {IsThisTimeRoombooked(time, SinyangID) ? (
+                    <OverlayTrigger
+                      trigger="click"
+                      key={TimeAndRoomFilter(time, SinyangID)[0].bookingId}
+                      placement="top"
+                      overlay={
+                        <Popover id="popover-positioned-top">
+                          <Popover.Body>
+                            <Poplay
+                              userName={
+                                TimeAndRoomFilter(time, SinyangID)[0].applicant
+                                  .userName
+                              }
+                              startTime={
+                                TimeAndRoomFilter(time, SinyangID)[0].startTime
+                              }
+                              endTime={
+                                TimeAndRoomFilter(time, SinyangID)[0].endTime
+                              }
+                              roomName={
+                                TimeAndRoomFilter(time, SinyangID)[0].roomName
+                              }
+                              participants={
+                                TimeAndRoomFilter(time, SinyangID)[0]
+                                  .participants
+                              }
+                            />
+                          </Popover.Body>
+                        </Popover>
+                      }
+                    >
+                      <button
+                        style={{
+                          height: `${
+                            bookingLength(
+                              TimeAndRoomFilter(time, SinyangID)[0].startTime,
+                              TimeAndRoomFilter(time, SinyangID)[0].endTime
+                            ) * 35.8
+                          }px`,
+                        }}
+                        className={styles.bookingTime}
+                        id={
+                          TimeAndRoomFilter(time, SinyangID)[0].official
+                            ? [styles.Manager]
+                            : null
+                        }
+                        variant="secondary"
+                      >
+                        <p>
+                          {
+                            TimeAndRoomFilter(time, SinyangID)[0].applicant
+                              .userName
+                          }
+                        </p>
+                      </button>
+                    </OverlayTrigger>
+                  ) : null}
+                </th>
+              ) : null}
             </tr>
           ))}
         </tbody>
