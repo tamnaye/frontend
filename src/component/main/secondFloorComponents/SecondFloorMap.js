@@ -39,6 +39,7 @@ const SecondFloorMap = () => {
   const SecondMeetingRoominfo = roomData.filter(
     (rooms) => rooms.roomType === 'meeting' && rooms.roomName !== '신양'
   )
+  console.log(SecondMeetingRoominfo)
 
   const SecondNaboxinfo = roomData.filter((rooms) => rooms.roomType === 'nabox')
 
@@ -123,7 +124,7 @@ const SecondFloorMap = () => {
             <div>
               {notroomFull(rooms.roomId) && ablebtn
                 ? rooms.roomName.substr(6, 1)
-                : `${rooms.roomName}\n마감`}
+                : `${rooms.roomName.substr(6, 1)}\n마감`}
             </div>
           </Link>
         ))}
