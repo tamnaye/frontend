@@ -1,9 +1,9 @@
 //styles
-import styles from './BookingData.module.css';
-import 'antd/dist/antd.min.css';
-import { Checkbox } from 'antd';
+import styles from "./BookingData.module.css";
+import "antd/dist/antd.min.css";
+import { Checkbox, Tooltip } from "antd";
 //component
-import React from 'react';
+import React from "react";
 //hooks
 import useUrl from '../../hooks/useUrl';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -19,119 +19,67 @@ import ButtonExplain from './ButtonExplain';
 
 const BookingData = () => {
   const myUrl = useUrl();
-  const id = window.localStorage.getItem('userid');
-  const userClass = window.localStorage.getItem('class');
+  const id = window.localStorage.getItem("userid");
+  const userClass = window.localStorage.getItem("class");
 
   const { roomId } = useParams();
-  const [userName, setUserName] = useState('');
-  const [roomType, setRoomType] = useState(''); // meeting / nabax
+  const [userName, setUserName] = useState("");
+  const [roomType, setRoomType] = useState(""); // meeting / nabax
   const [memberNames, setMemberNames] = useState([]);
-  const [maxTime, setMaxTime] = useState('');
+
+  const [maxTime, setMaxTime] = useState("");
   const times = useTimes();
-  const [defaultDisabledList, setDefaultDisabledList] = useState([]);
+  const [bookedState, setBookedState] = useState([]);
+  const [pastState, setPastState] = useState([]);
+  const [isOfficial, setIsOfficial] = useState([]);
 
   const url = `http://${myUrl}/api/booking?roomId=${roomId}&userId=${id}&classes=${userClass}`;
   useEffect(() => {
-    fetch(url, { method: 'GET' })
+    fetch(url, { method: "GET" })
       .then((res) => res.json())
       .then((data) => {
         setUserName(data.userData.userName);
         setRoomType(data.roomData.roomType);
-        setDefaultDisabledList(bookingdDataHandler(data.bookingData));
         setMemberNames(data.namesData);
+
         setMaxTime(data.roomData.maxTime);
+
+        //set Booked, past, official
+        const bookedTimes = [];
+        const officialTimes = [];
+        data.bookingData.map(
+          (booking) =>
+            bookedTimes.push(
+              booking.startTime,
+              timePlusMinus(booking.endTime, -1)
+            ) &&
+            booking.official ? 
+            officialTimes.push(
+               booking.startTime,
+              timePlusMinus(booking.endTime, -1)):null
+            )
+        const arr1 = [...pastState];
+        const arr2 = [...bookedState];
+        const arr3 = [...isOfficial];
+        times.map(
+          (time) =>
+            arr1.push(checkPast(time)) &&
+            arr2.push(bookedTimes.includes(time) ? true : false) &&
+            arr3.push(officialTimes.includes(time) ? true : false)
+        );
+        setPastState(arr1);
+        setBookedState(arr2);
+        setIsOfficial(arr3);
       });
-  }, [url]); //의존성 경고문 없애기 (콜백 방식 알아볼것)
-
-  //defaultDisableState
-  function bookingdDataHandler(bookingData) {
-    function checkPast(time) {
-      const nowH = Now.getHours();
-      const timeH = Number(time.substring(0, 2));
-      return timeH <= nowH ? true : false; //릴리즈용
-      // return false; //개발용
-    }
-
-    const arr = [...defaultDisabledList];
-    if (userClass === 0) {
-      times.map((time) => arr.push(checkPast(time) ? true : false));
-    } else {
-      const bookedTimes = [];
-      bookingData.map((booking) =>
-        bookedTimes.push(booking.startTime, timePlusMinus(booking.endTime, -1))
-      );
-      times.map((time) =>
-        arr.push(bookedTimes.includes(time) || checkPast(time) ? true : false)
-      );
-    }
-    return arr;
-  }
-
-  //--------팀원 검색 기능---------//
-  const [searchedNameState, setSearchedNameState] = useState([]);
-  const [selectedNameState, setSelectedNameState] = useState([]);
-  const [inputName, setInputName] = useState('');
-
-  function onChange(e) {
-    setInputName(e.target.value);
-    const str = e.target.value;
-    let arr = [...memberNames];
-    arr =
-      str === ''
-        ? (arr = [])
-        : arr.filter(
-            (member) =>
-              member.includes(str) &&
-              member !== userName &&
-              !selectedNameState.includes(member)
-          );
-    //타이핑할때 깜빡거리는거 안되게 예외처리하려고 했는데 한글 특성상 어려움.. 글자 단위로 처리할 수 있어야함
-    // const check = JSON.stringify(arr) === JSON.stringify(searchedNameState);
-    // console.log("check", check);
-    // if (!check)
-    setSearchedNameState(arr);
-  }
-  function onClickSearched(name) {
-    setInputName('');
-    setSearchedNameState([]);
-
-    const arr = [...selectedNameState];
-    arr.push(name);
-    setSelectedNameState(arr);
-  }
-  function onClickSelected(index) {
-    const arr = [...selectedNameState];
-    arr.splice(index, 1);
-    setSelectedNameState(arr);
-  }
-
-  function onSubmit(e) {
-    e.preventDefault();
-    if (searchedNameState.length === 1) {
-      //이미 선택할 팀원이 나옴
-      setInputName('');
-      setSearchedNameState([]);
-      const arr = [...selectedNameState];
-      arr.push(searchedNameState[0]);
-      setSelectedNameState(arr);
-    } else if (searchedNameState.length > 1) {
-      //검색 결과 두명 이상 나왔을 때 엔터친 경우
-      alert('팀원을 한명씩 선택해 주세요 !');
-    } else {
-      //검색 안되는 이름 치고 엔터친 경우
-      setInputName('');
-      setSearchedNameState([]);
-      alert('팀원의 이름을 확인해주세요!');
-    }
-  }
-
+  }, [bookedState, isOfficial, pastState, times, url]); //의존성 경고문 없애기 (콜백 방식 알아볼것)
+  
   //-------시간 체크박스------//
   const [indeterminateState, setIndeterminateState] = useState(
     new Array(12).fill(false)
   );
   const [checkedState, setCheckedState] = useState(new Array(12).fill(false));
   const [timeRange, setTimeRange] = useState([]);
-  const maxHour = userClass === '0' ? 12 : maxTime;
+  const maxHour = userClass === "0" ? 12 : maxTime;
   const onChangeCheckBox = (index) => {
     const lastIndex = timeRange.length - 1;
     if (timeRange.includes(index)) {
@@ -180,8 +128,10 @@ const BookingData = () => {
         const checkedArr = new Array(12).fill(false);
         checkedArr[index] = true;
         setCheckedState(checkedArr);
-        if (userClass !== '0') {
-          if (defaultDisabledList[i]) break;
+        if (userClass !== "0") {
+          if (bookedState[i]) break;
+        } else {
+          if (isOfficial[i]) break;
         }
         checkIdArr.push(i);
         if (i !== index) {
@@ -210,6 +160,64 @@ const BookingData = () => {
     return object;
   }
 
+  //--------팀원 검색 기능---------//
+  const [searchedNameState, setSearchedNameState] = useState([]);
+  const [selectedNameState, setSelectedNameState] = useState([]);
+  const [inputName, setInputName] = useState("");
+
+  function onChange(e) {
+    setInputName(e.target.value);
+    const str = e.target.value;
+    let arr = [...memberNames];
+    arr =
+      str === ""
+        ? (arr = [])
+        : arr.filter(
+            (member) =>
+              member.includes(str) &&
+              member !== userName &&
+              !selectedNameState.includes(member)
+          );
+    //타이핑할때 깜빡거리는거 안되게 예외처리하려고 했는데 한글 특성상 어려움.. 글자 단위로 처리할 수 있어야함
+    // const check = JSON.stringify(arr) === JSON.stringify(searchedNameState);
+    // console.log("check", check);
+    // if (!check)
+    setSearchedNameState(arr);
+  }
+  function onClickSearched(name) {
+    setInputName("");
+    setSearchedNameState([]);
+
+    const arr = [...selectedNameState];
+    arr.push(name);
+    setSelectedNameState(arr);
+  }
+  function onClickSelected(index) {
+    const arr = [...selectedNameState];
+    arr.splice(index, 1);
+    setSelectedNameState(arr);
+  }
+  //팀원 검색 enter event
+  function onSubmit(e) {
+    e.preventDefault();
+    if (searchedNameState.length === 1) {
+      //이미 선택할 팀원이 나옴
+      setInputName("");
+      setSearchedNameState([]);
+      const arr = [...selectedNameState];
+      arr.push(searchedNameState[0]);
+      setSelectedNameState(arr);
+    } else if (searchedNameState.length > 1) {
+      //검색 결과 두명 이상 나왔을 때 엔터친 경우
+      alert("팀원을 한명씩 선택해 주세요 !");
+    } else {
+      //검색 안되는 이름 치고 엔터친 경우
+      setInputName("");
+      setSearchedNameState([]);
+      alert("팀원의 이름을 확인해주세요!");
+    }
+  }
+
   //----예약시간에 따른 버튼 비활성화----//
   const [ablebtn, setAblebtn] = useState(true); //예약시간이 아닐 때 상태변경(true일 때 버튼 활성화!)
   const navigate = useNavigate();
@@ -218,7 +226,7 @@ const BookingData = () => {
   const NowHour = Now.getHours();
   const NowMins = Now.getMinutes();
   //주말 예약 버튼 비활성화
-  const day = ['일', '월', '화', '수', '목', '금', '토'];
+  const day = ["일", "월", "화", "수", "목", "금", "토"];
   const NowDay = Now.getDay();
   const weekDay = day[NowDay];
   //console.log(weekDay);
@@ -226,7 +234,7 @@ const BookingData = () => {
   function pluszero(times) {
     let time = times.toString(); //시간을 숫자에서 문자로 변환
     if (time.length < 2) {
-      time = '0' + time; //숫자 앞에 0을 붙여줌
+      time = "0" + time; //숫자 앞에 0을 붙여줌
       return time;
     } else {
       return time;
@@ -235,45 +243,45 @@ const BookingData = () => {
   const nowHour = pluszero(NowHour);
   const nowMins = pluszero(NowMins);
   const nowTime = nowHour + nowMins;
-  const startTime = '0830';
-  const endTime = '2100';
+  const startTime = "0830";
+  const endTime = "2100";
   useEffect(() => {
     if (
       startTime > nowTime ||
       endTime < nowTime ||
-      weekDay === '토' ||
-      weekDay === '일'
+      weekDay === "토" ||
+      weekDay === "일"
     ) {
       setAblebtn(false);
     } else {
       setAblebtn(true);
     }
-  }, []); //useEffect써서 한번만 렌더링 해줌
+  }, [nowTime, weekDay]); //useEffect써서 한번만 렌더링 해줌
 
   //----예약 데이터 보내기----//
-  const roomTypeArr = ['meeting', 'nabax'];
+  const roomTypeArr = ["meeting", "nabax"];
   function bookingConfirm() {
     if (
-      userClass !== '0' &&
+      userClass !== "0" &&
       roomType === roomTypeArr[0] &&
       selectedNameState.length < 1 &&
       getStartEndTime(checkedState).timeLength === 0
     ) {
-      alert('회의 참여자와 회의 시간을 선택해 주세요');
+      alert("회의 참여자와 회의 시간을 선택해 주세요");
     } else if (
       roomType === roomTypeArr[0] &&
-      userClass !== '0' &&
+      userClass !== "0" &&
       selectedNameState.length < 1
     ) {
-      alert('회의 참여자를 1명 이상 선택해주세요');
+      alert("회의 참여자를 1명 이상 선택해주세요");
     } else if (getStartEndTime(checkedState).timeLength === 0) {
-      alert('시간을 선택해 주세요');
+      alert("시간을 선택해 주세요");
     } else {
       const postUrl = `http://${myUrl}/api/booking/conference`;
       fetch(postUrl, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           //값 입력
@@ -293,7 +301,6 @@ const BookingData = () => {
       })
         .then((res) => res.json())
         .then((data) => {
-          console.log(data);
           if (data.message.success) {
             //console.log(data.message.success);
             alert(data.message.success);
@@ -313,10 +320,10 @@ const BookingData = () => {
           <p>
             신청자명
             <input
-              style={{ fontWeight: 'bold' }}
+              style={{ fontWeight: "bold" }}
               className={styles.input}
-              type='text'
-              name='val'
+              type="text"
+              name="val"
               placeholder={userName}
               disabled
             />
@@ -330,8 +337,8 @@ const BookingData = () => {
                   className={styles.input}
                   onChange={onChange}
                   value={inputName}
-                  type='text'
-                  placeholder='검색'
+                  type="text"
+                  placeholder="검색"
                 />
               </p>
             </form>
@@ -368,38 +375,51 @@ const BookingData = () => {
         <div className={styles.timetable}>
           {times.map((time, index) => (
             <span key={index}>
-              <Checkbox
-                onChange={() => onChangeCheckBox(index)}
-                variant='success'
-                checked={checkedState[index]}
-                disabled={
-                  userClass === '0' ? false : defaultDisabledList[index]
-                }
-                style={
-                  userClass === '0' && defaultDisabledList[index]
-                    ? {
-                        margin: '10px',
-                        color: 'gray',
-                        fontSize: '16px',
-                        fontWeight: 'bold',
-                      }
-                    : checkedState[index] || indeterminateState[index]
-                    ? {
-                        margin: '10px',
-                        color: '#3695f5',
-                        fontSize: '16px',
-                        fontWeight: 'bold',
-                      }
-                    : {
-                        margin: '10px',
-                        color: 'green',
-                        fontSize: '16px',
-                        fontWeight: 'bold',
-                      }
+              <Tooltip
+                placement="bottom"
+                title={
+                  userClass!=="0" || pastState[index] || !bookedState[index]
+                    ? ""
+                    : isOfficial[index] ? "공식일정예약" : "인재예약"
                 }
               >
-                {time}
-              </Checkbox>
+                <Checkbox
+                  onChange={() => onChangeCheckBox(index)}
+                  variant="success"
+                  checked={checkedState[index]}
+                  disabled={
+                    pastState[index] || isOfficial[index]
+                      ? true
+                      : userClass === "0"
+                      ? false
+                      : bookedState[index]
+                  }
+                  style={
+                    userClass === "0" && bookedState[index]
+                      ? {
+                          margin: "10px",
+                          color: "pink",
+                          fontSize: "16px",
+                          fontWeight: "bold",
+                        }
+                      : checkedState[index] || indeterminateState[index]
+                      ? {
+                          margin: "10px",
+                          color: "#3695f5",
+                          fontSize: "16px",
+                          fontWeight: "bold",
+                        }
+                      : {
+                          margin: "10px",
+                          color: "green",
+                          fontSize: "16px",
+                          fontWeight: "bold",
+                        }
+                  }
+                >
+                  {time}
+                </Checkbox>
+              </Tooltip>
             </span>
           ))}
         </div>
