@@ -11,9 +11,10 @@ import { useEffect, useState } from "react";
 import useTimes from "../../hooks/useTimes";
 import timePlusMinus from "../../hooks/timePlusMinus";
 
-//더큰내일센터 인원들 로컬 데이터베이스 만들기 (객체 배열) : (id, class, 이름)
-//백에서 booking id 별 start,end Time 받아와야함 (endTime -1시간 해줘야함)
-//post 보낼 때 endtime + 1시간 해줘야함
+//매니저님 예외처리한 부분
+//1) checkBox 예약된거 disable 안하고 그레이 처리 해줌
+//2) defaultDisable에서 break 하는 부분 break 안하도록 해줌
+//3) bookingConfirm()에서 체크해줄 때 팀원 선택 안해도 되게 해줌
 
 const BookingData = () => {
   const myUrl = useUrl();
@@ -24,6 +25,8 @@ const BookingData = () => {
   const [userName, setUserName] = useState("");
   const [roomType, setRoomType] = useState(""); // meeting / nabax
   const [memberNames, setMemberNames] = useState([]);
+  const times = useTimes();
+  const [defaultDisabledList, setDefaultDisabledList] = useState([]);
 
   const url = `http://${myUrl}/api/booking?roomId=${roomId}&userId=${id}&classes=${userClass}`;
   useEffect(() => {
@@ -36,8 +39,6 @@ const BookingData = () => {
         setMemberNames(data.namesData);
       });
   }, [url]); //의존성 경고문 없애기 (콜백 방식 알아볼것)
-  const times = useTimes();
-  const [defaultDisabledList, setDefaultDisabledList] = useState([]);
 
   //defaultDisableState
   function bookingdDataHandler(bookingData) {
@@ -121,13 +122,13 @@ const BookingData = () => {
     }
   }
 
-   //-------시간 체크박스------//
+  //-------시간 체크박스------//
   const [indeterminateState, setIndeterminateState] = useState(
     new Array(12).fill(false)
   );
   const [checkedState, setCheckedState] = useState(new Array(12).fill(false));
   const [timeRange, setTimeRange] = useState([]);
-  const maxHour = (userClass === "0") ? 12 : 4;
+  const maxHour = userClass === "0" ? 12 : 4;
   const onChangeCheckBox = (index) => {
     const lastIndex = timeRange.length - 1;
     if (timeRange.includes(index)) {
@@ -137,11 +138,13 @@ const BookingData = () => {
       //마지막꺼 해제 -> 마지막꺼만 해제
       //timeRange에서 첫시간, 마지막 시간 사이 중간 시간 선택
       //-> 선택인 경우 : 시작~중간 체크 | 해제일 경우 : 중간~끝 해제
-      if (timeRange[0] === index) { //시작 시간 체크 해제
+      if (timeRange[0] === index) {
+        //시작 시간 체크 해제
         setTimeRange([]);
         setIndeterminateState(new Array(12).fill(false));
         setCheckedState(new Array(12).fill(false));
-      } else if (timeRange[lastIndex] === index) { // timeRange에서 마지막 시간 선택
+      } else if (timeRange[lastIndex] === index) {
+        // timeRange에서 마지막 시간 선택
         const checkedArr = [...checkedState];
         if (checkedArr[index]) {
           checkedArr[index] = false;
@@ -151,9 +154,9 @@ const BookingData = () => {
           }
         }
         setCheckedState(checkedArr);
-      } else { 
+      } else {
         //참고 : timeRange.length >1 경우만 이 조건문으로 들어옴
-        //=> 중간 시간 선택 
+        //=> 중간 시간 선택
         const checkedArr = [...checkedState];
         if (!checkedArr[index]) {
           for (let i = timeRange[1]; i <= index; i++) {
@@ -174,7 +177,9 @@ const BookingData = () => {
         const checkedArr = new Array(12).fill(false);
         checkedArr[index] = true;
         setCheckedState(checkedArr);
-        if (defaultDisabledList[i]) break;
+        if(userClass!=="0"){
+          if (defaultDisabledList[i]) break;
+        }
         checkIdArr.push(i);
         if (i !== index) {
           indeterminateArr[i] = true;
@@ -201,7 +206,6 @@ const BookingData = () => {
     };
     return object;
   }
-
 
   //----예약시간에 따른 버튼 비활성화----//
   const [ablebtn, setAblebtn] = useState(true); //예약시간이 아닐 때 상태변경(true일 때 버튼 활성화!)
@@ -244,16 +248,20 @@ const BookingData = () => {
   }, []); //useEffect써서 한번만 렌더링 해줌
 
   //----예약 데이터 보내기----//
-  const roomTypeArr = ["meeting", "nabax","official"];
+  const roomTypeArr = ["meeting", "nabax", "official"];
   function bookingConfirm() {
     if (
-      userClass!=="0" &&
+      userClass !== "0" &&
       roomType === roomTypeArr[0] &&
-      selectedNameState.length < 1 && 
+      selectedNameState.length < 1 &&
       getStartEndTime(checkedState).timeLength === 0
     ) {
       alert("회의 참여자와 회의 시간을 선택해 주세요");
-    } else if (roomType === roomTypeArr[0] && userClass!=="0" && selectedNameState.length < 1 ) {
+    } else if (
+      roomType === roomTypeArr[0] &&
+      userClass !== "0" &&
+      selectedNameState.length < 1
+    ) {
       alert("회의 참여자를 1명 이상 선택해주세요");
     } else if (getStartEndTime(checkedState).timeLength === 0) {
       alert("시간을 선택해 주세요");
@@ -312,10 +320,10 @@ const BookingData = () => {
           </p>
           {/* 팀원 검색 input */}
           {roomType === roomTypeArr[0] ? (
-            <form onSubmit={onSubmit}> 
+            <form onSubmit={onSubmit}>
               <p>
                 팀원선택
-                <input 
+                <input
                   className={styles.input}
                   onChange={onChange}
                   value={inputName}
@@ -359,20 +367,25 @@ const BookingData = () => {
                 onChange={() => onChangeCheckBox(index)}
                 variant="success"
                 checked={checkedState[index]}
-                disabled={defaultDisabledList[index]}
+                disabled={userClass === "0" ? false : defaultDisabledList[index]}
                 style={
-                  checkedState[index] || indeterminateState[index]
+                  userClass === "0" && defaultDisabledList[index]
+                    ? {
+                        margin: "10px",
+                        color: "gray",
+                        fontSize: "16px",
+                        fontWeight: "bold",
+                      }
+                    : checkedState[index] || indeterminateState[index]
                     ? {
                         margin: "10px",
                         color: "#3695f5",
-                        // color: 'green',
                         fontSize: "16px",
                         fontWeight: "bold",
                       }
                     : {
                         margin: "10px",
                         color: "green",
-                        // color: '#3695f5',
                         fontSize: "16px",
                         fontWeight: "bold",
                       }
