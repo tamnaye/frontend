@@ -11,7 +11,7 @@ import { useEffect, useState } from 'react';
 import useTimes from '../../hooks/useTimes';
 import timePlusMinus from '../../hooks/timePlusMinus';
 import ButtonExplain from './ButtonExplain';
-
+import checkPast from '../../hooks/checkPast';
 //매니저님 예외처리한 부분
 //1) checkBox 예약된거 disable 안하고 그레이 처리 해줌
 //2) defaultDisable에서 break 하는 부분 break 안하도록 해줌
