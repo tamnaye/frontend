@@ -46,8 +46,8 @@ const BookingData = () => {
       .then((data) => {
         setUserName(data.userData.userName);
         setRoomType(data.roomData.roomType);
-        setMemberNames(data.namesData);
-
+        setSearchedNameState(data.namesData.filter((member)=>member!==data.userData.userName));
+        setMemberNames(data.namesData.filter((member)=>member!==data.userData.userName))
         setMaxTime(data.roomData.maxTime);
 
         //set Booked, past, official
@@ -174,31 +174,25 @@ const BookingData = () => {
   const [inputName, setInputName] = useState("");
 
   function onChange(e) {
+    console.log("onchange")
     setInputName(e.target.value);
     const str = e.target.value;
     let arr = [...memberNames];
-    arr =
-      str === ""
-        ? (arr = [])
-        : arr.filter(
-            (member) =>
-              member.includes(str) &&
-              member !== userName &&
-              !selectedNameState.includes(member)
-          );
-    //타이핑할때 깜빡거리는거 안되게 예외처리하려고 했는데 한글 특성상 어려움.. 글자 단위로 처리할 수 있어야함
-    // const check = JSON.stringify(arr) === JSON.stringify(searchedNameState);
-    // console.log("check", check);
-    // if (!check)
+    arr= arr.filter((member)=>!selectedNameState.includes(member))
+    if(arr.filter((member)=>member.includes(str)).length>0){
+      arr = arr.filter((member)=>member.includes(str))
+    }
     setSearchedNameState(arr);
   }
   function onClickSearched(name) {
     setInputName("");
-    setSearchedNameState([]);
+    // setSearchedNameState([]);
 
     const arr = [...selectedNameState];
     arr.push(name);
     setSelectedNameState(arr);
+    setSearchedNameState(memberNames.filter((member)=>!arr.includes(member)))
+
   }
   function onClickSelected(index) {
     const arr = [...selectedNameState];
@@ -207,22 +201,23 @@ const BookingData = () => {
   }
   //팀원 검색 enter event
   function onSubmit(e) {
+    console.log("onSubmit")
     e.preventDefault();
     if (searchedNameState.length === 1) {
       //이미 선택할 팀원이 나옴
-
       setInputName("");
-      setSearchedNameState([]);
+      // setSearchedNameState([]);
       const arr = [...selectedNameState];
       arr.push(searchedNameState[0]);
       setSelectedNameState(arr);
+      setSearchedNameState(memberNames.filter((member)=>!arr.includes(member)))
     } else if (searchedNameState.length > 1) {
       //검색 결과 두명 이상 나왔을 때 엔터친 경우
       alert("팀원을 한명씩 선택해 주세요 !");
     } else {
       //검색 안되는 이름 치고 엔터친 경우
       setInputName("");
-      setSearchedNameState([]);
+      // setSearchedNameState([]);
       alert("팀원의 이름을 확인해주세요!");
     }
   }
@@ -372,6 +367,7 @@ const BookingData = () => {
                     </button>
                   ))}
                 </div>
+                </div>
                 <div className={styles.membersBox}>
                   {selectedNameState.map((item, index) => (
                     <button
@@ -383,7 +379,6 @@ const BookingData = () => {
                     </button>
                   ))}
                 </div>
-              </div>
             </div>
           ) : null}
         </div>
