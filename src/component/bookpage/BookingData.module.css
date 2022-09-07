@@ -16,7 +16,7 @@
   }
   .input {
     width: 210px;
-    height: 3vh;
+    height: 22px;
     margin-left: 20px;
     text-align: center;
   }
@@ -29,7 +29,7 @@
     border: 1px solid #B1D8FB;
     border-radius: 50px;
     width: 68px;
-    height: 3.5vh;
+    height: 25px;
     justify-content: center;
     margin: 0px 10px 15px 0px;
     font-size: 14px;
