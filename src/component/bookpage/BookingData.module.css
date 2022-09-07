@@ -1,21 +1,27 @@
 @media screen and (max-width: 700px){
     .wrap .userinfo {
       margin-top: -20px;
+      /* margin-top: -20px; */
     }
   }
   
   /* Info */
   .userinfo {
-    margin-top: 12px;
+    margin-top: 15px;
     color: #D46B42;
   }
-  
-  .list {
+  .meetingInputList {
+    padding: 10px 0px 0px 10px;
+    border: 1px solid #D9DDDC;    
+    height: 120px;
+    overflow-y: scroll;
+  }
+  .naboxInputList {
     padding: 10px 0px 0px 10px;
     border: 1px solid #D9DDDC;
   }
   .input {
-    width: 210px;
+    width: 230px;
     height: 22px;
     margin-left: 20px;
     text-align: center;
@@ -31,7 +37,7 @@
     width: 68px;
     height: 25px;
     justify-content: center;
-    margin: 0px 10px 15px 0px;
+    margin: 0px 7px 15px 0px;
     font-size: 14px;
     color: #528FC4;
   }
