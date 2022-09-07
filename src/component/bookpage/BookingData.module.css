@@ -1,6 +1,6 @@
 @media screen and (max-width: 700px){
     .wrap .meetingUserinfo {
-      margin-top: -40px;
+      margin-top: -7px;
     }
     .wrap .naboxUserinfo {
       margin-top: -125px;
@@ -27,7 +27,8 @@
   .meetingInfoBox{
     padding: 10px 0px 0px 10px;
     border: 1px solid #D9DDDC;
-    height: 245px;
+    height: 170px;
+    position: relative;
   }
   .naboxInfoBox{
     padding: 10px 0px 0px 10px;
@@ -37,9 +38,14 @@
   .meetingInputList {
     padding: 0px 0px 0px 5px;
     border: 1px solid #D9DDDC;
+    border-radius: 5px;
     width: 307px;  
-    height: 90px;
+    height: 80px;
     overflow-y: scroll;
+    background-color: rgb(255, 254, 254);
+    z-index: 1;
+    position: absolute;
+    top: 80px;
   }
   .naboxInputList {
     padding: 10px 0px 0px 10px;
@@ -58,7 +64,7 @@
     width: 68px;
     height: 25px;
     justify-content: center;
-    margin: 0px 6px 10px 0px;
+    margin: 3px 6px 7px 0px;
     font-size: 14px;
     color: #528FC4;
   }

@@ -1,19 +1,18 @@
 //styles
-
 import styles from './BookingData.module.css';
 import 'antd/dist/antd.min.css';
 import { Checkbox, Tooltip } from 'antd';
-//component
-import React from 'react';
 //hooks
 import useUrl from '../../hooks/useUrl';
-import { useNavigate, useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
 import useTimes from '../../hooks/useTimes';
 import timePlusMinus from '../../hooks/timePlusMinus';
-import ButtonExplain from './ButtonExplain';
 import checkPast from '../../hooks/checkPast';
 import getTimes from '../../hooks/getTimes';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useEffect, useState, useRef } from 'react';
+//component
+import ButtonExplain from './ButtonExplain';
+
 //매니저님 예외처리한 부분
 //1) checkBox 예약된거 disable 안하고 그레이 처리 해줌
 //2) defaultDisable에서 break 하는 부분 break 안하도록 해줌
@@ -172,10 +171,26 @@ const BookingData = () => {
   }
 
   //--------팀원 검색 기능---------//
-
   const [searchedNameState, setSearchedNameState] = useState([]);
   const [selectedNameState, setSelectedNameState] = useState([]);
   const [inputName, setInputName] = useState('');
+  //팀원 리스트 모달창 처럼 보이기
+  const [isShowModal, setIsShowModal] = useState(false);
+  //useRef사용해서 outside클릭 시 모달창 사라짐
+  const closeModal = useRef();
+  //console.log(closeModal.current);
+
+  function onClickModal() {
+    setIsShowModal(true);
+  }
+  function onClickOutside(event) {
+    if (closeModal.current && !closeModal.current.contains(event.target)) {
+      setIsShowModal(false);
+    }
+  }
+  useEffect(() => {
+    document.addEventListener('mousedown', onClickOutside);
+  });
 
   function onChange(e) {
     console.log('onchange');
@@ -190,6 +205,7 @@ const BookingData = () => {
   }
   function onClickSearched(name) {
     setInputName('');
+    setIsShowModal(false);
     // setSearchedNameState([]);
 
     const arr = [...selectedNameState];
@@ -236,12 +252,10 @@ const BookingData = () => {
   const NowHour = Now.getHours();
   const NowMins = Now.getMinutes();
   //주말 예약 버튼 비활성화
-
   const day = ['일', '월', '화', '수', '목', '금', '토'];
   const NowDay = Now.getDay();
   const weekDay = day[NowDay];
   //console.log(weekDay);
-
   function pluszero(times) {
     let time = times.toString(); //시간을 숫자에서 문자로 변환
     if (time.length < 2) {
@@ -342,6 +356,7 @@ const BookingData = () => {
           예약자 정보
         </h6>
         <div
+          ref={closeModal} //div영역을 벗어나 클릭하면 모달창 사라짐
           className={
             roomType === roomTypeArr[0]
               ? [styles.meetingInfoBox]
@@ -371,26 +386,23 @@ const BookingData = () => {
                     value={inputName}
                     type='text'
                     placeholder='팀원을 검색하세요'
+                    onClick={onClickModal}
                   />
                 </p>
               </form>
-              <div className={styles.meetingInputList}>
-                <p
-                  style={{
-                    color: 'gray',
-                    margin: '3px',
-                  }}
-                ></p>
-                {searchedNameState.map((item, index) => (
-                  <button
-                    onClick={() => onClickSearched(item)}
-                    key={index}
-                    className={styles.membersName}
-                  >
-                    {item}
-                  </button>
-                ))}
-              </div>
+              {isShowModal === true ? (
+                <div className={styles.meetingInputList}>
+                  {searchedNameState.map((item, index) => (
+                    <button
+                      onClick={() => onClickSearched(item)}
+                      key={index}
+                      className={styles.membersName}
+                    >
+                      {item}
+                    </button>
+                  ))}
+                </div>
+              ) : null}
               <div className={styles.membersBox}>
                 {selectedNameState.map((item, index) => (
                   <button
