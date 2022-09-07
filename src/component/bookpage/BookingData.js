@@ -333,7 +333,7 @@ const BookingData = () => {
     <div>
       <div className={styles.wrap}>
         <h6 className={styles.userinfo}> 예약자 정보 </h6>
-        <div className={styles.list}>
+        <div>
           <p>
             신청자명
             <input
@@ -360,27 +360,35 @@ const BookingData = () => {
               </p>
             </form>
           ) : null}
-          <div>
-            {searchedNameState.map((item, index) => (
-              <button
-                onClick={() => onClickSearched(item)}
-                key={index}
-                className={styles.membersName}
-              >
-                {item}
-              </button>
-            ))}
-          </div>
-          <div className={styles.membersBox}>
-            {selectedNameState.map((item, index) => (
-              <button
-                className={styles.selectMembers}
-                onClick={() => onClickSelected(index)}
-                key={index}
-              >
-                {`${item} X`}
-              </button>
-            ))}
+          <div
+            className={
+              roomType === roomTypeArr[0]
+                ? [styles.meetingInputList]
+                : [styles.naboxInputList]
+            }
+          >
+            <div>
+              {searchedNameState.map((item, index) => (
+                <button
+                  onClick={() => onClickSearched(item)}
+                  key={index}
+                  className={styles.membersName}
+                >
+                  {item}
+                </button>
+              ))}
+            </div>
+            <div className={styles.membersBox}>
+              {selectedNameState.map((item, index) => (
+                <button
+                  className={styles.selectMembers}
+                  onClick={() => onClickSelected(index)}
+                  key={index}
+                >
+                  {`${item} X`}
+                </button>
+              ))}
+            </div>
           </div>
         </div>
       </div>
