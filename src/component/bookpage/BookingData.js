@@ -334,18 +334,13 @@ const BookingData = () => {
           className={
             roomType === roomTypeArr[0]
               ? [styles.meetingUserinfo]
-              : [styles.raboxUserinfo]
+              : [styles.naboxUserinfo]
           }
         >
           {' '}
           예약자 정보{' '}
         </h6>
         <div
-          className={
-            roomType === roomTypeArr[0]
-              ? [styles.meetingInputList]
-              : [styles.naboxInputList]
-          }
         >
           <p>
             신청자명
@@ -373,8 +368,7 @@ const BookingData = () => {
                   />
                 </p>
               </form>
-              <div>
-                <div>
+                <div className={styles.meetingInputList}>
                   {searchedNameState.map((item, index) => (
                     <button
                       onClick={() => onClickSearched(item)}
@@ -384,7 +378,6 @@ const BookingData = () => {
                       {item}
                     </button>
                   ))}
-                </div>
                 </div>
                 <div className={styles.membersBox}>
                   {selectedNameState.map((item, index) => (
