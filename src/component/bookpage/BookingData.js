@@ -1,4 +1,5 @@
 //styles
+
 import styles from './BookingData.module.css';
 import 'antd/dist/antd.min.css';
 import { Checkbox, Tooltip } from 'antd';
@@ -49,6 +50,7 @@ const BookingData = () => {
         setMaxTime(data.roomData.maxTime);
 
         //set Booked, past, official
+
         const bookedTimes = [];
         const officialTimes = [];
         data.bookingData.map((booking) =>
@@ -102,6 +104,7 @@ const BookingData = () => {
   const [checkedState, setCheckedState] = useState(new Array(12).fill(false));
   const [timeRange, setTimeRange] = useState([]);
   const maxHour = userClass === '0' ? 12 : maxTime;
+
   const onChangeCheckBox = (index) => {
     const lastIndex = timeRange.length - 1;
     if (timeRange.includes(index)) {
@@ -183,6 +186,7 @@ const BookingData = () => {
   }
 
   //--------팀원 검색 기능---------//
+
   const [searchedNameState, setSearchedNameState] = useState([]);
   const [selectedNameState, setSelectedNameState] = useState([]);
   const [inputName, setInputName] = useState('');
@@ -224,6 +228,7 @@ const BookingData = () => {
     e.preventDefault();
     if (searchedNameState.length === 1) {
       //이미 선택할 팀원이 나옴
+
       setInputName('');
       setSearchedNameState([]);
       const arr = [...selectedNameState];
@@ -248,6 +253,7 @@ const BookingData = () => {
   const NowHour = Now.getHours();
   const NowMins = Now.getMinutes();
   //주말 예약 버튼 비활성화
+
   const day = ['일', '월', '화', '수', '목', '금', '토'];
   const NowDay = Now.getDay();
   const weekDay = day[NowDay];
@@ -262,6 +268,7 @@ const BookingData = () => {
       return time;
     }
   }
+
   const nowHour = pluszero(NowHour);
   const nowMins = pluszero(NowMins);
   const nowTime = nowHour + nowMins;
@@ -281,6 +288,7 @@ const BookingData = () => {
   }, [nowTime, weekDay]); //useEffect써서 한번만 렌더링 해줌
 
   //----예약 데이터 보내기----//
+
   const roomTypeArr = ['meeting', 'nabax'];
   function bookingConfirm() {
     if (
@@ -349,8 +357,8 @@ const BookingData = () => {
             <input
               style={{ fontWeight: 'bold' }}
               className={styles.input}
-              type='text'
-              name='val'
+              type="text"
+              name="val"
               placeholder={userName}
               disabled
             />
@@ -364,8 +372,8 @@ const BookingData = () => {
                   className={styles.input}
                   onChange={onChange}
                   value={inputName}
-                  type='text'
-                  placeholder='검색'
+                  type="text"
+                  placeholder="검색"
                 />
               </p>
             </form>
@@ -403,7 +411,7 @@ const BookingData = () => {
           {times.map((time, index) => (
             <span key={index}>
               <Tooltip
-                placement='bottom'
+                placement="bottom"
                 title={
                   userClass !== '0' || pastState[index] || !bookedState[index]
                     ? ''
@@ -414,7 +422,7 @@ const BookingData = () => {
               >
                 <Checkbox
                   onChange={() => onChangeCheckBox(index)}
-                  variant='success'
+                  variant="success"
                   checked={checkedState[index]}
                   disabled={
                     pastState[index] || isOfficial[index]
