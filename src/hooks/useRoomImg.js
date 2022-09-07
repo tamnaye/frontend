@@ -98,19 +98,19 @@ export default function useRoomImg() {
     },
     {
       room_id: 301,
-      img: darrenche,
+      img: geomun,
     },
     {
       room_id: 302,
-      img: yongnuni,
+      img: darrenche,
     },
     {
       room_id: 303,
-      img: darabi,
+      img: yongnuni,
     },
     {
       room_id: 304,
-      img: geomun,
+      img: darabi,
     },
     {
       room_id: 305,
