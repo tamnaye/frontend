@@ -97,9 +97,9 @@ const ThirdFloorMeetingRoomState = () => {
             {/* 룸 값 불러오기 */}
             {ThirdMeetingStudioinfo.map((room) => (
               <th key={room.roomId} className="table-primary" id={styles.text}>
-                <Link to={`/booking/${room.roomId}`}>
+                <Link to={`/booking/${room.roomId}`} id={styles.roomTitle}>
                   <ArrowRightCircleFill />
-                  &nbsp;
+                  {'\n'}
                   {room.roomName}
                 </Link>
               </th>

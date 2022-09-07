@@ -90,6 +90,7 @@ const SecondFloorNaRoomState = () => {
               <th key={room.roomId} className="table-primary" id={styles.text}>
                 <Link to={`/booking/${room.roomId}`}>
                   <ArrowRightCircleFill />
+                  {/* {'\n'} */}
                   {room.roomName}
                 </Link>
               </th>
