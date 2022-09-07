@@ -13,6 +13,7 @@ import useTimes from '../../hooks/useTimes';
 import timePlusMinus from '../../hooks/timePlusMinus';
 import ButtonExplain from './ButtonExplain';
 import checkPast from '../../hooks/checkPast';
+import getTimes from '../../hooks/getTimes';
 //매니저님 예외처리한 부분
 //1) checkBox 예약된거 disable 안하고 그레이 처리 해줌
 //2) defaultDisable에서 break 하는 부분 break 안하도록 해줌
@@ -37,6 +38,7 @@ const BookingData = () => {
   const [isOfficial, setIsOfficial] = useState([]);
   //console.log("isOfficial",isOfficial)
   const [isLoadding, setIsLoading] = useState(false);
+
 
   const url = `http://${myUrl}/api/booking?roomId=${roomId}&userId=${id}&classes=${userClass}`;
   useEffect(() => {
@@ -77,26 +79,7 @@ const BookingData = () => {
         setIsOfficial(arr3);
       });
   }, [url]); //의존성 경고문 없애기 (콜백 방식 알아볼것)
-  // 09시 17시
-  function getTimes(startTime, endTime) {
-    const arr = [];
-    const start = startTime.substring(0, 2);
-    const end = endTime.substring(0, 2);
-    const startInt = Number(start);
-    const endInt = Number(end);
-    for (let i = startInt; i < endInt; i++) {
-      const timestr = String(i);
-      let changedTime = '';
-      if (timestr.length < 2) {
-        changedTime = '0' + timestr + ':00';
-      } else {
-        changedTime = timestr + ':00';
-      }
-      arr.push(changedTime);
-    }
-    console.log('get Time arr', arr);
-    return arr;
-  }
+  
   //-------시간 체크박스------//
   const [indeterminateState, setIndeterminateState] = useState(
     new Array(12).fill(false)
