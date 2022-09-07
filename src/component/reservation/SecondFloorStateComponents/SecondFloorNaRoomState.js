@@ -90,6 +90,7 @@ const SecondFloorNaRoomState = () => {
               <th key={room.roomId} className="table-primary" id={styles.text}>
                 <Link to={`/booking/${room.roomId}`}>
                   <ArrowRightCircleFill />
+                  {/* {'\n'} */}
                   {room.roomName}
                 </Link>
               </th>
@@ -107,7 +108,7 @@ const SecondFloorNaRoomState = () => {
                 <th key={room.roomId} className={styles.roomstate}>
                   {IsThisTimeRoombooked(time, room.roomId) ? (
                     <OverlayTrigger
-                      trigger="click"
+                      trigger={['hover', 'focus']}
                       key={TimeAndRoomFilter(time, room.roomId)[0].bookingId}
                       placement="top"
                       overlay={

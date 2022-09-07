@@ -16,8 +16,7 @@ const SecondFloorMeetingRoom = ({
   // 현재 시간을 통해 남은 예약 가능 시간 확인
   const Now = new Date()
   const NowHour = Now.getHours()
-  const OverHour = NowHour + 1
-  const RemainTime = 21 - OverHour
+  const RemainTime = 21 - NowHour
 
   // 09:00 과 같은 형태 9로 수정해주는 함수
   const TimeToString = (time) => {
@@ -35,15 +34,15 @@ const SecondFloorMeetingRoom = ({
     const roomState = bookingData.filter(
       (room) =>
         room.roomId === roomid &&
-        Number(TimeToString(room.startTime)) >= Number(OverHour)
+        Number(TimeToString(room.startTime)) >= Number(NowHour)
     )
 
     //중간에 껴있는 시간 추출
     const middleRoomState = bookingData.filter(
       (room) =>
         room.roomId === roomid &&
-        Number(TimeToString(room.startTime)) < Number(OverHour) &&
-        Number(TimeToString(room.endTime)) > Number(OverHour)
+        Number(TimeToString(room.startTime)) < Number(NowHour) &&
+        Number(TimeToString(room.endTime)) > Number(NowHour)
     )
 
     // 거른 예약 현황을 대상으로 시간 추출 리스트
@@ -54,7 +53,7 @@ const SecondFloorMeetingRoom = ({
 
     //중간에 껴있는 시간의 현재 시간 이후 시간 추출 리스트
     const middleBookingState = middleRoomState.map(
-      (room) => Number(TimeToString(room.endTime)) - Number(OverHour)
+      (room) => Number(TimeToString(room.endTime)) - Number(NowHour)
     )
 
     // 추출한 시간 합
