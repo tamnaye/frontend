@@ -30,12 +30,13 @@ const BookingData = () => {
 
   const [maxTime, setMaxTime] = useState('');
   const times = useTimes();
-  console.log('times', times);
+  //console.log("times",times)
   const [bookedState, setBookedState] = useState([]);
-  console.log('bookedState', bookedState);
+  //console.log("bookedState",bookedState)
   const [pastState, setPastState] = useState([]);
   const [isOfficial, setIsOfficial] = useState([]);
-  console.log('isOfficial', isOfficial);
+  //console.log("isOfficial",isOfficial)
+  const [isLoadding, setIsLoading] = useState(false);
 
   const url = `http://${myUrl}/api/booking?roomId=${roomId}&userId=${id}&classes=${userClass}`;
   useEffect(() => {
@@ -306,39 +307,44 @@ const BookingData = () => {
     } else if (getStartEndTime(checkedState).timeLength === 0) {
       alert('시간을 선택해 주세요');
     } else {
-      const postUrl = `http://${myUrl}/api/booking/conference`;
-      fetch(postUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          //값 입력
-          classes: userClass,
-          roomId: roomId,
-          roomType: roomType,
-          // 시간 한시간일때랑 두시간일 때 예외처리 해줘야할듯
-          startTime: getStartEndTime(checkedState).startTime, //checked state에서 index 찾아서 times 배열에서 뽑아냄
-          endTime: timePlusMinus(
-            getStartEndTime(checkedState).startTime,
-            getStartEndTime(checkedState).timeLength
-          ), // checked state에서  index 찾아서 times 배열에서 뽑아내서 +1
-          teamMate: selectedNameState,
-          userId: id,
-          userName: userName,
-        }),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          if (data.message.success) {
-            //console.log(data.message.success);
-            alert(data.message.success);
-            navigate(`/mypage`);
-          } else {
-            //console.log(data.message.fail);
-            alert(data.message.fail);
-          }
-        });
+      if (!isLoadding) {
+        setIsLoading(true);
+        const postUrl = `http://${myUrl}/api/booking/conference`;
+        fetch(postUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            //값 입력
+            classes: userClass,
+            roomId: roomId,
+            roomType: roomType,
+            // 시간 한시간일때랑 두시간일 때 예외처리 해줘야할듯
+            startTime: getStartEndTime(checkedState).startTime, //checked state에서 index 찾아서 times 배열에서 뽑아냄
+            endTime: timePlusMinus(
+              getStartEndTime(checkedState).startTime,
+              getStartEndTime(checkedState).timeLength
+            ), // checked state에서  index 찾아서 times 배열에서 뽑아내서 +1
+            teamMate: selectedNameState,
+            userId: id,
+            userName: userName,
+          }),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            if (data.message.success) {
+              //console.log(data.message.success);
+              alert(data.message.success);
+              setIsLoading(false);
+              navigate(`/mypage`);
+            } else {
+              //console.log(data.message.fail);
+              alert(data.message.fail);
+              setIsLoading(false);
+            }
+          });
+      }
     }
   }
   return (
