@@ -1,15 +1,27 @@
 @media screen and (max-width: 700px){
-    .wrap .userinfo {
-      margin-top: -20px;
+    .wrap .meetingUserinfo {
+      margin-top: -80px;
+      /* margin-top: -20px; */
+    }
+    .wrap .raboxUserinfo {
+      margin-top: -160px;
       /* margin-top: -20px; */
     }
   }
   
   /* Info */
-  .userinfo {
+  .meetingUserinfo {
     margin-top: 15px;
     color: #D46B42;
   }
+  .raboxUserinfo {
+    margin-top: 15px;
+    color: #D46B42;
+  }
+  /* .list{
+    padding: 10px 0px 0px 10px;
+    border: 1px solid #D9DDDC;
+  } */
   .meetingInputList {
     padding: 10px 0px 0px 10px;
     border: 1px solid #D9DDDC;    
@@ -27,6 +39,7 @@
     text-align: center;
   }
   .membersBox {
+    width: 310px;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
   }
@@ -37,7 +50,7 @@
     width: 68px;
     height: 25px;
     justify-content: center;
-    margin: 0px 7px 15px 0px;
+    margin: 0px 7px 10px 0px;
     font-size: 14px;
     color: #528FC4;
   }
@@ -48,8 +61,8 @@
     width: 68px;
     height: 25px;
     justify-content: center;
-    margin: 0px 10px 18px 0px;
-    font-size: 14px;
+    margin: 0px 5px 15px 0px;
+    font-size: 13px;
     color: #1a5d99;
     font-weight: bold;
 
