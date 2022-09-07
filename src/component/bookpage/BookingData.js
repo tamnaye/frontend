@@ -29,12 +29,13 @@ const BookingData = () => {
 
   const [maxTime, setMaxTime] = useState('');
   const times = useTimes();
-  console.log("times",times)
+  //console.log("times",times)
   const [bookedState, setBookedState] = useState([]);
-  console.log("bookedState",bookedState)
+  //console.log("bookedState",bookedState)
   const [pastState, setPastState] = useState([]);
   const [isOfficial, setIsOfficial] = useState([]);
-  console.log("isOfficial",isOfficial)
+  //console.log("isOfficial",isOfficial)
+  const [isLoadding, setIsLoading] = useState(false);
 
   const url = `http://${myUrl}/api/booking?roomId=${roomId}&userId=${id}&classes=${userClass}`;
   useEffect(() => {
@@ -50,18 +51,19 @@ const BookingData = () => {
         //set Booked, past, official
         const bookedTimes = [];
         const officialTimes = [];
-        data.bookingData.map(
-          (booking) =>
-            bookedTimes.push(...getTimes(booking.startTime,booking.endTime)
-            ) &&
-            booking.official ? 
-            officialTimes.push(...getTimes(booking.startTime,booking.endTime)):null
-            )
+        data.bookingData.map((booking) =>
+          bookedTimes.push(...getTimes(booking.startTime, booking.endTime)) &&
+          booking.official
+            ? officialTimes.push(
+                ...getTimes(booking.startTime, booking.endTime)
+              )
+            : null
+        );
         const arr1 = [];
         const arr2 = [];
         const arr3 = [];
-        console.log("bookedTimes",bookedTimes)
-        console.log("officialTimes",officialTimes)
+        console.log('bookedTimes', bookedTimes);
+        console.log('officialTimes', officialTimes);
         times.map(
           (time) =>
             arr1.push(checkPast(time)) &&
@@ -74,25 +76,25 @@ const BookingData = () => {
       });
   }, [url]); //의존성 경고문 없애기 (콜백 방식 알아볼것)
   // 09시 17시
-  function getTimes(startTime, endTime){
-    const arr = []
+  function getTimes(startTime, endTime) {
+    const arr = [];
     const start = startTime.substring(0, 2);
     const end = endTime.substring(0, 2);
-    const startInt = Number(start)
-    const endInt = Number(end)
-    for(let i=startInt; i<endInt; i++){
+    const startInt = Number(start);
+    const endInt = Number(end);
+    for (let i = startInt; i < endInt; i++) {
       const timestr = String(i);
-      let changedTime = "";
+      let changedTime = '';
       if (timestr.length < 2) {
-        changedTime = "0" + timestr + ":00";
+        changedTime = '0' + timestr + ':00';
       } else {
-        changedTime = timestr + ":00";
+        changedTime = timestr + ':00';
       }
-      arr.push(changedTime)
+      arr.push(changedTime);
     }
-    console.log("get Time arr",arr)
-    return arr
-  } 
+    console.log('get Time arr', arr);
+    return arr;
+  }
   //-------시간 체크박스------//
   const [indeterminateState, setIndeterminateState] = useState(
     new Array(12).fill(false)
@@ -297,39 +299,44 @@ const BookingData = () => {
     } else if (getStartEndTime(checkedState).timeLength === 0) {
       alert('시간을 선택해 주세요');
     } else {
-      const postUrl = `http://${myUrl}/api/booking/conference`;
-      fetch(postUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          //값 입력
-          classes: userClass,
-          roomId: roomId,
-          roomType: roomType,
-          // 시간 한시간일때랑 두시간일 때 예외처리 해줘야할듯
-          startTime: getStartEndTime(checkedState).startTime, //checked state에서 index 찾아서 times 배열에서 뽑아냄
-          endTime: timePlusMinus(
-            getStartEndTime(checkedState).startTime,
-            getStartEndTime(checkedState).timeLength
-          ), // checked state에서  index 찾아서 times 배열에서 뽑아내서 +1
-          teamMate: selectedNameState,
-          userId: id,
-          userName: userName,
-        }),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          if (data.message.success) {
-            //console.log(data.message.success);
-            alert(data.message.success);
-            navigate(`/mypage`);
-          } else {
-            //console.log(data.message.fail);
-            alert(data.message.fail);
-          }
-        });
+      if (!isLoadding) {
+        setIsLoading(true);
+        const postUrl = `http://${myUrl}/api/booking/conference`;
+        fetch(postUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            //값 입력
+            classes: userClass,
+            roomId: roomId,
+            roomType: roomType,
+            // 시간 한시간일때랑 두시간일 때 예외처리 해줘야할듯
+            startTime: getStartEndTime(checkedState).startTime, //checked state에서 index 찾아서 times 배열에서 뽑아냄
+            endTime: timePlusMinus(
+              getStartEndTime(checkedState).startTime,
+              getStartEndTime(checkedState).timeLength
+            ), // checked state에서  index 찾아서 times 배열에서 뽑아내서 +1
+            teamMate: selectedNameState,
+            userId: id,
+            userName: userName,
+          }),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            if (data.message.success) {
+              //console.log(data.message.success);
+              alert(data.message.success);
+              setIsLoading(false);
+              navigate(`/mypage`);
+            } else {
+              //console.log(data.message.fail);
+              alert(data.message.fail);
+              setIsLoading(false);
+            }
+          });
+      }
     }
   }
   return (
