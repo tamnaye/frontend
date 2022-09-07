@@ -46,8 +46,12 @@ const BookingData = () => {
       .then((data) => {
         setUserName(data.userData.userName);
         setRoomType(data.roomData.roomType);
-        setSearchedNameState(data.namesData.filter((member)=>member!==data.userData.userName));
-        setMemberNames(data.namesData.filter((member)=>member!==data.userData.userName))
+        setSearchedNameState(
+          data.namesData.filter((member) => member !== data.userData.userName)
+        );
+        setMemberNames(
+          data.namesData.filter((member) => member !== data.userData.userName)
+        );
         setMaxTime(data.roomData.maxTime);
 
         //set Booked, past, official
@@ -174,26 +178,24 @@ const BookingData = () => {
   const [inputName, setInputName] = useState('');
 
   function onChange(e) {
-    console.log("onchange")
+    console.log('onchange');
     setInputName(e.target.value);
     const str = e.target.value;
     let arr = [...memberNames];
-    arr= arr.filter((member)=>!selectedNameState.includes(member))
-    if(arr.filter((member)=>member.includes(str)).length>0){
-      arr = arr.filter((member)=>member.includes(str))
+    arr = arr.filter((member) => !selectedNameState.includes(member));
+    if (arr.filter((member) => member.includes(str)).length > 0) {
+      arr = arr.filter((member) => member.includes(str));
     }
     setSearchedNameState(arr);
   }
   function onClickSearched(name) {
-    setInputName("");
+    setInputName('');
     // setSearchedNameState([]);
-
 
     const arr = [...selectedNameState];
     arr.push(name);
     setSelectedNameState(arr);
-    setSearchedNameState(memberNames.filter((member)=>!arr.includes(member)))
-
+    setSearchedNameState(memberNames.filter((member) => !arr.includes(member)));
   }
   function onClickSelected(index) {
     const arr = [...selectedNameState];
@@ -202,26 +204,27 @@ const BookingData = () => {
   }
   //팀원 검색 enter event
   function onSubmit(e) {
-    console.log("onSubmit")
+    console.log('onSubmit');
     e.preventDefault();
     if (searchedNameState.length === 1) {
       //이미 선택할 팀원이 나옴
-      setInputName("");
+      setInputName('');
       // setSearchedNameState([]);
 
       const arr = [...selectedNameState];
       arr.push(searchedNameState[0]);
       setSelectedNameState(arr);
-      setSearchedNameState(memberNames.filter((member)=>!arr.includes(member)))
+      setSearchedNameState(
+        memberNames.filter((member) => !arr.includes(member))
+      );
     } else if (searchedNameState.length > 1) {
       //검색 결과 두명 이상 나왔을 때 엔터친 경우
       alert('팀원을 한명씩 선택해 주세요 !');
     } else {
       //검색 안되는 이름 치고 엔터친 경우
-      setInputName("");
+      setInputName('');
       // setSearchedNameState([]);
-      alert("팀원의 이름을 확인해주세요!");
-
+      alert('팀원의 이름을 확인해주세요!');
     }
   }
 
@@ -268,7 +271,6 @@ const BookingData = () => {
   }, [nowTime, weekDay]); //useEffect써서 한번만 렌더링 해줌
 
   //----예약 데이터 보내기----//
-
   const roomTypeArr = ['meeting', 'nabax'];
   function bookingConfirm() {
     if (
@@ -337,10 +339,14 @@ const BookingData = () => {
               : [styles.naboxUserinfo]
           }
         >
-          {' '}
-          예약자 정보{' '}
+          예약자 정보
         </h6>
         <div
+          className={
+            roomType === roomTypeArr[0]
+              ? [styles.meetingInfoBox]
+              : [styles.naboxInfoBox]
+          }
         >
           <p>
             신청자명
@@ -364,32 +370,38 @@ const BookingData = () => {
                     onChange={onChange}
                     value={inputName}
                     type='text'
-                    placeholder='검색'
+                    placeholder='팀원을 검색하세요'
                   />
                 </p>
               </form>
-                <div className={styles.meetingInputList}>
-                  {searchedNameState.map((item, index) => (
-                    <button
-                      onClick={() => onClickSearched(item)}
-                      key={index}
-                      className={styles.membersName}
-                    >
-                      {item}
-                    </button>
-                  ))}
-                </div>
-                <div className={styles.membersBox}>
-                  {selectedNameState.map((item, index) => (
-                    <button
-                      className={styles.selectMembers}
-                      onClick={() => onClickSelected(index)}
-                      key={index}
-                    >
-                      {`${item} X`}
-                    </button>
-                  ))}
-                </div>
+              <div className={styles.meetingInputList}>
+                <p
+                  style={{
+                    color: 'gray',
+                    margin: '3px',
+                  }}
+                ></p>
+                {searchedNameState.map((item, index) => (
+                  <button
+                    onClick={() => onClickSearched(item)}
+                    key={index}
+                    className={styles.membersName}
+                  >
+                    {item}
+                  </button>
+                ))}
+              </div>
+              <div className={styles.membersBox}>
+                {selectedNameState.map((item, index) => (
+                  <button
+                    className={styles.selectMembers}
+                    onClick={() => onClickSelected(index)}
+                    key={index}
+                  >
+                    {`${item} X`}
+                  </button>
+                ))}
+              </div>
             </div>
           ) : null}
         </div>
