@@ -11,11 +11,13 @@ import {
   Calendar2CheckFill,
 } from 'react-bootstrap-icons'
 import useUrl from '../../../hooks/useUrl'
+import { useNavigate } from 'react-router-dom'
 
 const ThirdFloorMeetingRoomState = () => {
   // API 3층 회의실 가져오기
   const [bookingData, setBookingData] = useState([])
   const [roomData, setRoomData] = useState([])
+  const navigate = useNavigate()
 
   const myUrl = useUrl()
 
@@ -83,6 +85,7 @@ const ThirdFloorMeetingRoomState = () => {
     let length = Number(TimeToString(endTime)) - Number(TimeToString(startTime))
     return length
   }
+  // console.log(navigate(`/booking/${301}`))
 
   return (
     <div className={styles.tableBox}>
@@ -111,10 +114,14 @@ const ThirdFloorMeetingRoomState = () => {
 
               {/* 룸을 맵으로 돌려 하나의 시간에 상태값 전달 */}
               {ThirdMeetingStudioinfo.map((room) => (
-                <th key={room.roomId} className={styles.roomstate}>
+                <th
+                  key={room.roomId}
+                  className={styles.roomstate}
+                  // onClick={() => navigate(`/booking/${room.roomId}`)}
+                >
                   {IsThisTimeRoombooked(time, room.roomId) ? (
                     <OverlayTrigger
-                      trigger="click"
+                      trigger={['hover', 'focus']}
                       key={TimeAndRoomFilter(time, room.roomId)[0].bookingId}
                       placement="top"
                       overlay={
