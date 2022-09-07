@@ -336,7 +336,7 @@ const BookingData = () => {
           className={
             roomType === roomTypeArr[0]
               ? [styles.meetingUserinfo]
-              : [styles.raboxUserinfo]
+              : [styles.naboxUserinfo]
           }
         >
           {' '}
