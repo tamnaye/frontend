@@ -39,7 +39,6 @@ const BookingData = () => {
   //console.log("isOfficial",isOfficial)
   const [isLoadding, setIsLoading] = useState(false);
 
-
   const url = `http://${myUrl}/api/booking?roomId=${roomId}&userId=${id}&classes=${userClass}`;
   useEffect(() => {
     fetch(url, { method: 'GET' })
@@ -79,7 +78,7 @@ const BookingData = () => {
         setIsOfficial(arr3);
       });
   }, [url]); //의존성 경고문 없애기 (콜백 방식 알아볼것)
-  
+
   //-------시간 체크박스------//
   const [indeterminateState, setIndeterminateState] = useState(
     new Array(12).fill(false)
@@ -340,8 +339,8 @@ const BookingData = () => {
             <input
               style={{ fontWeight: 'bold' }}
               className={styles.input}
-              type="text"
-              name="val"
+              type='text'
+              name='val'
               placeholder={userName}
               disabled
             />
@@ -355,8 +354,8 @@ const BookingData = () => {
                   className={styles.input}
                   onChange={onChange}
                   value={inputName}
-                  type="text"
-                  placeholder="검색"
+                  type='text'
+                  placeholder='검색'
                 />
               </p>
             </form>
@@ -379,7 +378,7 @@ const BookingData = () => {
                 onClick={() => onClickSelected(index)}
                 key={index}
               >
-                {`${item} ✗`}
+                {`${item} X`}
               </button>
             ))}
           </div>
@@ -394,7 +393,7 @@ const BookingData = () => {
           {times.map((time, index) => (
             <span key={index}>
               <Tooltip
-                placement="bottom"
+                placement='bottom'
                 title={
                   userClass !== '0' || pastState[index] || !bookedState[index]
                     ? ''
@@ -405,7 +404,7 @@ const BookingData = () => {
               >
                 <Checkbox
                   onChange={() => onChangeCheckBox(index)}
-                  variant="success"
+                  variant='success'
                   checked={checkedState[index]}
                   disabled={
                     pastState[index] || isOfficial[index]
