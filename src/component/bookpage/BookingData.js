@@ -332,8 +332,23 @@ const BookingData = () => {
   return (
     <div>
       <div className={styles.wrap}>
-        <h6 className={styles.userinfo}> 예약자 정보 </h6>
-        <div>
+        <h6
+          className={
+            roomType === roomTypeArr[0]
+              ? [styles.meetingUserinfo]
+              : [styles.raboxUserinfo]
+          }
+        >
+          {' '}
+          예약자 정보{' '}
+        </h6>
+        <div
+          className={
+            roomType === roomTypeArr[0]
+              ? [styles.meetingInputList]
+              : [styles.naboxInputList]
+          }
+        >
           <p>
             신청자명
             <input
@@ -360,7 +375,7 @@ const BookingData = () => {
                   />
                 </p>
               </form>
-              <div className={styles.meetingInputList}>
+              <div>
                 <div>
                   {searchedNameState.map((item, index) => (
                     <button
