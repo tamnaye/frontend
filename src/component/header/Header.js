@@ -1,10 +1,10 @@
 import styles from './Header.module.css';
 import logo from './img/ci_png.png';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 const Header = () => {
   const userid = window.localStorage.getItem('userid');
-
+  let location = useLocation();
   return (
     <div className={styles.HeaderContainer}>
       <div className={styles.Header}>
@@ -21,7 +21,8 @@ const Header = () => {
         </div>
       </div>
       <div className={styles.menu}>
-        <Link to={`/state`}>실시간예약현황</Link>
+      {location.pathname === '/main' ? <Link to={`/state`}>실시간예약현황</Link> : <Link to={`/`}>HOME</Link> }
+        {/* <Link to={`/state`}>실시간예약현황</Link> */}
         {/* <Link to={`/booking/301/${userid}`}>예약하기</Link> */}
         <Link to={`/feedback`}>피드백</Link>
       </div>

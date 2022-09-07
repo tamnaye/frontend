@@ -86,7 +86,7 @@ function MyBookTable() {
             <tr
               key={index}
               className={
-                Number(NowHour) > Number(item.endTime.substr(0, 2)) ||
+                Number(NowHour) >= Number(item.endTime.substr(0, 2)) ||
                 item.mode === 'cancel'
                   ? [styles.tableTrContentPast]
                   : [styles.tableTrContent]
@@ -104,29 +104,28 @@ function MyBookTable() {
                 <button
                   key={index}
                   className={
-                    Number(NowHour) > Number(item.endTime.substr(0, 2))
-                      ? [styles.memberCancel]
-                      : item.mode === 'cancel'
+                    item.mode === 'cancel'
                       ? [styles.managerCancel]
+                      : Number(NowHour) >= Number(item.endTime.substr(0, 2))
+                      ? [styles.memberCancel]
                       : item.applicant.userId === id
                       ? [styles.applicantCancel]
                       : [styles.memberCancel]
                   }
                   onClick={() => Cancel(item.bookingId, index)}
                   disabled={
-                    Number(NowHour) > Number(item.endTime.substr(0, 2))
-                      ? true
-                      : item.mode === 'cancel'
+                    Number(NowHour) >= Number(item.endTime.substr(0, 2)) ||
+                    item.mode === 'cancel'
                       ? true
                       : item.applicant.userId === id
                       ? false
                       : true
                   }
                 >
-                  {Number(NowHour) > Number(item.endTime.substr(0, 2))
-                    ? '사용완료'
-                    : item.mode === 'cancel'
+                  {item.mode === 'cancel'
                     ? '사용불가'
+                    : Number(NowHour) >= Number(item.endTime.substr(0, 2))
+                    ? '사용완료'
                     : item.applicant.userId === id
                     ? '취소가능'
                     : '취소불가'}
