@@ -86,7 +86,7 @@ function MyBookTable() {
             <tr
               key={index}
               className={
-                Number(NowHour) > Number(item.endTime.substr(0, 2)) ||
+                Number(NowHour) >= Number(item.endTime.substr(0, 2)) ||
                 item.mode === 'cancel'
                   ? [styles.tableTrContentPast]
                   : [styles.tableTrContent]
@@ -106,7 +106,7 @@ function MyBookTable() {
                   className={
                     item.mode === 'cancel'
                       ? [styles.managerCancel]
-                      : Number(NowHour) > Number(item.endTime.substr(0, 2))
+                      : Number(NowHour) >= Number(item.endTime.substr(0, 2))
                       ? [styles.memberCancel]
                       : item.applicant.userId === id
                       ? [styles.applicantCancel]
@@ -114,7 +114,7 @@ function MyBookTable() {
                   }
                   onClick={() => Cancel(item.bookingId, index)}
                   disabled={
-                    Number(NowHour) > Number(item.endTime.substr(0, 2)) ||
+                    Number(NowHour) >= Number(item.endTime.substr(0, 2)) ||
                     item.mode === 'cancel'
                       ? true
                       : item.applicant.userId === id
@@ -124,7 +124,7 @@ function MyBookTable() {
                 >
                   {item.mode === 'cancel'
                     ? '사용불가'
-                    : Number(NowHour) > Number(item.endTime.substr(0, 2))
+                    : Number(NowHour) >= Number(item.endTime.substr(0, 2))
                     ? '사용완료'
                     : item.applicant.userId === id
                     ? '취소가능'
