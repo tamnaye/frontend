@@ -1,145 +1,161 @@
 //styles
 import styles from "./BookingData.module.css";
 import "antd/dist/antd.min.css";
-import { Checkbox } from "antd";
+import { Checkbox, Tooltip } from "antd";
 //component
 import React from "react";
-import dummy from "../../db/booking_data.json";
-import dummy_names from "../../db/tamnaMembers.json";
 //hooks
-import useUrl from "../../hooks/useUrl";
-import { useNavigate, useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
-import useTimes from "../../hooks/useTimes";
-
-//더큰내일센터 인원들 로컬 데이터베이스 만들기 (객체 배열) : (id, class, 이름)
-//백에서 booking id 별 start,end Time 받아와야함 (endTime -1시간 해줘야함)
-//post 보낼 때 endtime + 1시간 해줘야함
+import useUrl from '../../hooks/useUrl';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import useTimes from '../../hooks/useTimes';
+import timePlusMinus from '../../hooks/timePlusMinus';
+import ButtonExplain from './ButtonExplain';
+import checkPast from '../../hooks/checkPast';
+import getTimes from "../../hooks/getTimes";
+//매니저님 예외처리한 부분
+//1) checkBox 예약된거 disable 안하고 그레이 처리 해줌
+//2) defaultDisable에서 break 하는 부분 break 안하도록 해줌
+//3) bookingConfirm()에서 체크해줄 때 팀원 선택 안해도 되게 해줌
 
 const BookingData = () => {
-  //starttime, endtime,
-  const id  = window.localStorage.getItem("userid")
-  const { roomId } = useParams();
   const myUrl = useUrl();
+  const id = window.localStorage.getItem("userid");
+  const userClass = window.localStorage.getItem("class");
+
+  const { roomId } = useParams();
   const [userName, setUserName] = useState("");
   const [roomType, setRoomType] = useState(""); // meeting / nabax
-  const userClass = window.localStorage.getItem("class")
-  
-
-  const times = useTimes();
-  const [disabledState, setDisabledState] = useState([]);
-  const [defaultDisabledList, setDefaultDisabledList] = useState([]);
-  const url = `http://${myUrl}/api/booking?roomId=${roomId}&userId=${id}&classes=${userClass}`;
-  console.log("url", url)
   const [memberNames, setMemberNames] = useState([]);
 
+  const [maxTime, setMaxTime] = useState("");
+  const times = useTimes();
+  const [bookedState, setBookedState] = useState([]);
+  const [pastState, setPastState] = useState([]);
+  const [isOfficial, setIsOfficial] = useState([]);
 
+  const url = `http://${myUrl}/api/booking?roomId=${roomId}&userId=${id}&classes=${userClass}`;
   useEffect(() => {
     fetch(url, { method: "GET" })
       .then((res) => res.json())
       .then((data) => {
-        console.log(" useEffect data : ", data);
         setUserName(data.userData.userName);
         setRoomType(data.roomData.roomType);
-        setDefaultDisabledList(bookingdDataHandler(data.bookingData));
-        setDisabledState(bookingdDataHandler(data.bookingData));
         setMemberNames(data.namesData);
+
+        setMaxTime(data.roomData.maxTime);
+
+        //set Booked, past, official
+        const bookedTimes = [];
+        const officialTimes = [];
+        data.bookingData.map(
+          (booking) =>
+            bookedTimes.push(...getTimes(booking.startTime,booking.endTime)
+            ) &&
+            booking.official ? 
+            officialTimes.push(...getTimes(booking.startTime,booking.endTime)):null
+            )
+        const arr1 = [];
+        const arr2 = [];
+        const arr3 = [];
+        times.map(
+          (time) =>
+            arr1.push(checkPast(time)) &&
+            arr2.push(bookedTimes.includes(time) ? true : false) &&
+            arr3.push(officialTimes.includes(time) ? true : false)
+        );
+        setPastState(arr1);
+        setBookedState(arr2);
+        setIsOfficial(arr3);
       });
-  }, [url]);
-
-  function timeHandler (endTime, int){  
-    const str = endTime.substring(0,2)
-    const time = Number(str)+int
-    const timestr = String(time)
-    let changedTime = '';
-    if(timestr.length<2){
-      changedTime = "0"+timestr+":00"
-      return changedTime
-    }else{
-      changedTime = timestr+":00"
-      return changedTime
-    }
-
-  }
-
-  function bookingdDataHandler(bookingData) {
-    const bookedTimes = [];
-    bookingData.map((booking) =>
-      bookedTimes.push(booking.startTime, timeHandler(booking.endTime,-1) )
-    );
-    const arr = [...defaultDisabledList];
-    times.map((time) => arr.push(bookedTimes.includes(time) ? true : false));
-    return arr;
-  }
-
-  //----무결님 버튼 클릭 작업----//
-
+  }, [url]); //의존성 경고문 없애기 (콜백 방식 알아볼것)
+  
+  //-------시간 체크박스------//
+  const [indeterminateState, setIndeterminateState] = useState(
+    new Array(12).fill(false)
+  );
   const [checkedState, setCheckedState] = useState(new Array(12).fill(false));
-  // i의 최소값이 0, 최대값은 11이기 때문에 처음 시간과 마지막 시간일때의 예외처리는 반복문에서 자연스럽게 처리됨
-  // 클릭한 시간 전꺼, 다음꺼 중 만약 이미 예약이 된것들은 이미 disabled : true인 상태이기 때문에
-  // onChange 첫번째 if문에서 예외처리됨 (checkedStateLength === 0 )
-  // 나머지 중 disabled false인 것들 disabled = true로 바꿔줌
-  function updateDisabledList(index) {
-    //최초 클릭 시 disablesState update
-    const disableUpdateList = [...disabledState];
-    for (let i = 0; i < times.length; i++) {
-      if (i !== index && i !== index + 1 && i !== index - 1) {
-        if (disableUpdateList[i] !== true) {
-          disableUpdateList[i] = true;
+  const [timeRange, setTimeRange] = useState([]);
+  const maxHour = userClass === "0" ? 12 : maxTime;
+  const onChangeCheckBox = (index) => {
+    const lastIndex = timeRange.length - 1;
+    if (timeRange.includes(index)) {
+      //timeRange 내에서 시간 선택 event
+      //처음 꺼 눌렀을 때 -> 해제
+      //마지막꺼 체크 -> 마지막꺼 + 중간껏들도 체크
+      //마지막꺼 해제 -> 마지막꺼만 해제
+      //timeRange에서 첫시간, 마지막 시간 사이 중간 시간 선택
+      //-> 선택인 경우 : 시작~중간 체크 | 해제일 경우 : 중간~끝 해제
+      if (timeRange[0] === index) {
+        //시작 시간 체크 해제
+        setTimeRange([]);
+        setIndeterminateState(new Array(12).fill(false));
+        setCheckedState(new Array(12).fill(false));
+      } else if (timeRange[lastIndex] === index) {
+        // timeRange에서 마지막 시간 선택
+        const checkedArr = [...checkedState];
+        if (checkedArr[index]) {
+          checkedArr[index] = false;
+        } else {
+          for (let i = timeRange[0]; i <= timeRange[lastIndex]; i++) {
+            checkedArr[i] = true;
+          }
+        }
+        setCheckedState(checkedArr);
+      } else {
+        //참고 : timeRange.length >1 경우만 이 조건문으로 들어옴
+        //=> 중간 시간 선택
+        const checkedArr = [...checkedState];
+        if (!checkedArr[index]) {
+          for (let i = timeRange[1]; i <= index; i++) {
+            checkedArr[i] = true;
+          }
+        } else {
+          for (let i = index; i <= timeRange[lastIndex]; i++) {
+            checkedArr[i] = false;
+          }
+        }
+        setCheckedState(checkedArr);
+      }
+    } else {
+      // 최초 시작 시간 선택 or timeRange 외부 시간 선택 [선택한 시간이 시작시간이 됨]
+      const checkIdArr = [];
+      const indeterminateArr = new Array(12).fill(false);
+      for (let i = index; i < index + maxHour; i++) {
+        const checkedArr = new Array(12).fill(false);
+        checkedArr[index] = true;
+        setCheckedState(checkedArr);
+        if (userClass !== "0") {
+          if (bookedState[i]) break;
+        } else {
+          if (isOfficial[i]) break;
+        }
+        checkIdArr.push(i);
+        if (i !== index) {
+          indeterminateArr[i] = true;
         }
       }
+      setTimeRange(checkIdArr);
+      setIndeterminateState(indeterminateArr);
     }
-    setDisabledState(disableUpdateList);
-  }
-  //checkedState 길이 반환
-  function checkedStateLength() {
-    return checkedState.filter((bool) => bool === true).length;
-  }
-  //indexOf 메소드는 체크된 인덱스 반환해줌,
-  //하지만 버튼 두개 눌린 생태에서 다음 버튼 클릭의 인덱스랑 비교하려면 클릭 된 체크박스 인덱스들을 배열로 가지고 있어야함
-  function getCheckedIndexArray(checkedState) {
-    var arr = [];
-    var index = checkedState.indexOf(true);
-    while (index !== -1) {
-      arr.push(index);
-      index = checkedState.indexOf(true, index + 1);
+  };
+  //서버로 보내는 start & endTime get
+  function getStartEndTime(checkedState) {
+    function getCheckedIndex(checkedState) {
+      var arr = [];
+      var index = checkedState.indexOf(true);
+      while (index !== -1) {
+        arr.push(index);
+        index = checkedState.indexOf(true, index + 1);
+      }
+      return arr;
     }
-    return arr;
-  }
-  function getStartAndEndTime(checkedState) {
     const object = {
-      startTime: times[getCheckedIndexArray(checkedState)[0]],
-      timeLength: getCheckedIndexArray(checkedState).length,
+      startTime: times[getCheckedIndex(checkedState)[0]],
+      timeLength: getCheckedIndex(checkedState).length,
     };
     return object;
   }
-  //체크된 체크박스 checkedState 배열로 관리해주기 위함
-  //기본적으로 onChange에서 호출해줌, 하지만 체크 false로 강제해야하는 조건에서는 호출 하지 않음
-  function updatedCheckedState(index) {
-    const updatedCheckedState = checkedState.map((item, id) =>
-      id === index ? !item : item
-    );
-    setCheckedState(updatedCheckedState);
-  }
-  const onChangeInput = (index) => {
-    if (checkedStateLength() === 0) {
-      updateDisabledList(index);
-      updatedCheckedState(index);
-    } else if (checkedStateLength() === 1) {
-      updatedCheckedState(index);
-      if (checkedState.indexOf(true) === index) {
-        setDisabledState(defaultDisabledList); //체크해제
-      } else {
-        //pass
-      }
-    } else if (checkedStateLength() === 2) {
-      if (getCheckedIndexArray(checkedState).includes(index) === false) {
-        alert("최대 예약시간은 2시간입니다 !");
-      } else {
-        updatedCheckedState(index);
-      }
-    }
-  };
 
   //--------팀원 검색 기능---------//
   const [searchedNameState, setSearchedNameState] = useState([]);
@@ -153,7 +169,12 @@ const BookingData = () => {
     arr =
       str === ""
         ? (arr = [])
-        : arr.filter((member) => member.includes(str) && member !== userName && !selectedNameState.includes(member));
+        : arr.filter(
+            (member) =>
+              member.includes(str) &&
+              member !== userName &&
+              !selectedNameState.includes(member)
+          );
     //타이핑할때 깜빡거리는거 안되게 예외처리하려고 했는데 한글 특성상 어려움.. 글자 단위로 처리할 수 있어야함
     // const check = JSON.stringify(arr) === JSON.stringify(searchedNameState);
     // console.log("check", check);
@@ -173,7 +194,7 @@ const BookingData = () => {
     arr.splice(index, 1);
     setSelectedNameState(arr);
   }
-
+  //팀원 검색 enter event
   function onSubmit(e) {
     e.preventDefault();
     if (searchedNameState.length === 1) {
@@ -194,13 +215,19 @@ const BookingData = () => {
     }
   }
 
-  //----예약시간에 따른 버튼 비활성화를 함수----//
+  //----예약시간에 따른 버튼 비활성화----//
   const [ablebtn, setAblebtn] = useState(true); //예약시간이 아닐 때 상태변경(true일 때 버튼 활성화!)
   const navigate = useNavigate();
   //21:00-08:30까지 예약 버튼 비활성화 함수
   const Now = new Date();
   const NowHour = Now.getHours();
   const NowMins = Now.getMinutes();
+  //주말 예약 버튼 비활성화
+  const day = ["일", "월", "화", "수", "목", "금", "토"];
+  const NowDay = Now.getDay();
+  const weekDay = day[NowDay];
+  //console.log(weekDay);
+
   function pluszero(times) {
     let time = times.toString(); //시간을 숫자에서 문자로 변환
     if (time.length < 2) {
@@ -216,22 +243,35 @@ const BookingData = () => {
   const startTime = "0830";
   const endTime = "2100";
   useEffect(() => {
-    if (startTime > nowTime || endTime < nowTime) {
+    if (
+      startTime > nowTime ||
+      endTime < nowTime ||
+      weekDay === "토" ||
+      weekDay === "일"
+    ) {
       setAblebtn(false);
     } else {
       setAblebtn(true);
     }
-  }, []); //useEffect써서 한번만 렌더링 해줌
+  }, [nowTime, weekDay]); //useEffect써서 한번만 렌더링 해줌
 
   //----예약 데이터 보내기----//
   const roomTypeArr = ["meeting", "nabax"];
   function bookingConfirm() {
-    if(roomType === roomTypeArr[0] && selectedNameState.length < 1 && getStartAndEndTime(checkedState).timeLength === 0){
-      alert("회의 참여자와 회의 시간을 선택해 주세요")
-    }
-    else if (roomType === roomTypeArr[0] && selectedNameState.length < 1) {
+    if (
+      userClass !== "0" &&
+      roomType === roomTypeArr[0] &&
+      selectedNameState.length < 1 &&
+      getStartEndTime(checkedState).timeLength === 0
+    ) {
+      alert("회의 참여자와 회의 시간을 선택해 주세요");
+    } else if (
+      roomType === roomTypeArr[0] &&
+      userClass !== "0" &&
+      selectedNameState.length < 1
+    ) {
       alert("회의 참여자를 1명 이상 선택해주세요");
-    } else if (getStartAndEndTime(checkedState).timeLength === 0) {
+    } else if (getStartEndTime(checkedState).timeLength === 0) {
       alert("시간을 선택해 주세요");
     } else {
       const postUrl = `http://${myUrl}/api/booking/conference`;
@@ -245,30 +285,29 @@ const BookingData = () => {
           classes: userClass,
           roomId: roomId,
           roomType: roomType,
-
           // 시간 한시간일때랑 두시간일 때 예외처리 해줘야할듯
-          startTime: getStartAndEndTime(checkedState).startTime, //checked state에서 index 찾아서 times 배열에서 뽑아냄
-          endTime: timeHandler(getStartAndEndTime(checkedState).startTime,getStartAndEndTime(checkedState).timeLength), // checked state에서  index 찾아서 times 배열에서 뽑아내서 +1
+          startTime: getStartEndTime(checkedState).startTime, //checked state에서 index 찾아서 times 배열에서 뽑아냄
+          endTime: timePlusMinus(
+            getStartEndTime(checkedState).startTime,
+            getStartEndTime(checkedState).timeLength
+          ), // checked state에서  index 찾아서 times 배열에서 뽑아내서 +1
           teamMate: selectedNameState,
-
           userId: id,
           userName: userName,
         }),
       })
         .then((res) => res.json())
         .then((data) => {
-          console.log(data);
           if (data.message.success) {
             //console.log(data.message.success);
             alert(data.message.success);
-            navigate(`/mypage/${id}`);
+            navigate(`/mypage`);
           } else {
             //console.log(data.message.fail);
             alert(data.message.fail);
           }
         });
     }
-
   }
   return (
     <div>
@@ -286,6 +325,7 @@ const BookingData = () => {
               disabled
             />
           </p>
+          {/* 팀원 검색 input */}
           {roomType === roomTypeArr[0] ? (
             <form onSubmit={onSubmit}>
               <p>
@@ -313,8 +353,12 @@ const BookingData = () => {
           </div>
           <div className={styles.membersBox}>
             {selectedNameState.map((item, index) => (
-              <button onClick={() => onClickSelected(index)} key={index}>
-                {`${item} (x)`}
+              <button
+                className={styles.selectMembers}
+                onClick={() => onClickSelected(index)}
+                key={index}
+              >
+                {`${item} ✗`}
               </button>
             ))}
           </div>
@@ -322,27 +366,60 @@ const BookingData = () => {
       </div>
       <div>
         <h6 className={styles.time}> 시간 선택 </h6>
+        {/* 매니저인 경우만 버튼 안내 */}
+        {userClass === '0' ? <ButtonExplain /> : null}
+        {/* 시간 선택 체크 박스  */}
         <div className={styles.timetable}>
           {times.map((time, index) => (
             <span key={index}>
-              <Checkbox
-                onChange={() => onChangeInput(index)}
-                checked={checkedState[index]}
-                variant="success"
-                disabled={disabledState[index]}
-                style={{
-                  margin: "10px",
-                  color: "green",
-                  fontSize: "16px",
-                  fontWeight: "bold",
-                }}
+              <Tooltip
+                placement="bottom"
+                title={
+                  userClass!=="0" || pastState[index] || !bookedState[index]
+                    ? ""
+                    : isOfficial[index] ? "공식일정예약" : "인재예약"
+                }
               >
-                {time}
-              </Checkbox>
+                <Checkbox
+                  onChange={() => onChangeCheckBox(index)}
+                  variant="success"
+                  checked={checkedState[index]}
+                  disabled={
+                    pastState[index] || isOfficial[index]
+                      ? true
+                      : userClass === "0"
+                      ? false
+                      : bookedState[index]
+                  }
+                  style={
+                    userClass === "0" && bookedState[index] 
+                      ? {
+                          margin: "10px",
+                          color: "pink",
+                          fontSize: "16px",
+                          fontWeight: "bold",
+                        }
+                      : checkedState[index] || indeterminateState[index]
+                      ? {
+                          margin: "10px",
+                          color: "#3695f5",
+                          fontSize: "16px",
+                          fontWeight: "bold",
+                        }
+                      : {
+                          margin: "10px",
+                          color: "green",
+                          fontSize: "16px",
+                          fontWeight: "bold",
+                        }
+                  }
+                >
+                  {time}
+                </Checkbox>
+              </Tooltip>
             </span>
           ))}
         </div>
-
         <button
           className={ablebtn === true ? styles.bookbtn : styles.bookbtnOff}
           onClick={bookingConfirm}

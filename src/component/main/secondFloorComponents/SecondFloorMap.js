@@ -1,70 +1,93 @@
-import styles from './SecondFloorMap.module.css';
-import { useState, useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
-import useUrl from '../../../hooks/useUrl';
-import useTimeAlert from '../../../hooks/useTimeAlert';
+import styles from './SecondFloorMap.module.css'
+import { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
+import useUrl from '../../../hooks/useUrl'
+import useTimeAlert from '../../../hooks/useTimeAlert'
+import { EmojiFrownFill } from 'react-bootstrap-icons'
 
 const SecondFloorMap = () => {
-  const { id } = useParams();
-  const myUrl = useUrl();
-  const [ablebtn, BookingConfirm] = useTimeAlert();
+  const myUrl = useUrl()
+  const [ablebtn, BookingConfirm] = useTimeAlert()
 
   //2층 API 정보 가져오기
-  const [bookingData, setBookingData] = useState([]);
-  const [roomData, setRoomData] = useState([]);
+  const [bookingData, setBookingData] = useState([])
+  const [roomData, setRoomData] = useState([])
 
+  const [SinyangID, setSinYangID] = useState('')
+  const [SinyangName, setSinYangName] = useState('')
+
+  const userClasses = window.localStorage.getItem('class')
+
+  const url = `http://${myUrl}/api/booking/main?floor=2`
   useEffect(() => {
-    fetch(`http://${myUrl}/api/booking/main?floor=2`, {
+    fetch(url, {
       method: 'GET',
     })
       .then((res) => res.json())
       .then((data) => {
-        setBookingData(data.BookingData);
-        setRoomData(data.RoomData);
-      });
-  }, [`htttp://${myUrl}/api/booking/main?floor=2`]);
+        setBookingData(data.BookingData)
+        setRoomData(data.RoomData)
+        setSinYangID(
+          data.RoomData.filter((rooms) => rooms.roomId === 207)[0].roomId
+        )
+        setSinYangName(
+          data.RoomData.filter((rooms) => rooms.roomName === '신양')[0].roomName
+        )
+      })
+  }, [url, myUrl])
 
   const SecondMeetingRoominfo = roomData.filter(
-    (rooms) => rooms.roomType === 'meeting'
-  );
+    (rooms) => rooms.roomType === 'meeting' && rooms.roomName !== '신양'
+  )
 
-  const SecondNaboxinfo = roomData.filter(
-    (rooms) => rooms.roomType === 'nabox'
-  );
+  const SecondNaboxinfo = roomData.filter((rooms) => rooms.roomType === 'nabox')
 
   // roomFull 함수 설정
+  // 현재 시간을 통해 남은 예약 가능 시간 확인
+  const Now = new Date()
+  const NowHour = Now.getHours()
+  const OverHour = NowHour + 1
+  const RemainTime = 21 - OverHour
+  // console.log(RemainTime)
 
   const notroomFull = (roomid) => {
-    const roomState = bookingData.filter((room) => room.roomId === roomid);
-
+    // 09:00 과 같은 형태 9로 수정해주는 함수
     const TimeToString = (time) => {
-      let newTime;
+      let newTime
       if (time === '09:00') {
-        newTime = time.substr(1, 1);
+        newTime = time.substr(1, 1)
       } else {
-        newTime = time.substr(0, 2);
+        newTime = time.substr(0, 2)
       }
-      return newTime;
-    };
-
+      return newTime
+    }
+    // room아이디와 현재 시간으로 거른 예약 현황
+    const roomState = bookingData.filter(
+      (room) =>
+        room.roomId === roomid &&
+        Number(TimeToString(room.startTime)) >= Number(OverHour)
+    )
+    // 거른 예약 현황을 대상으로 시간 추출 리스트
     const roomBookingState = roomState.map(
       (room) =>
         TimeToString(room.endTime) - Number(TimeToString(room.startTime))
-    );
+    )
+    // 추출한 시간 합치기
     const sum = roomBookingState.reduce(function add(sum, currValue) {
-      return sum + currValue;
-    }, 0);
-
-    return sum !== 12;
-  };
+      return sum + currValue
+    }, 0)
+    // 합과 남은 시간 불린으로 결과값 제출
+    return sum < RemainTime
+  }
 
   return (
     <div className={styles.Container}>
       <div className={styles.mapContainer}>
         {ablebtn ? null : (
-          <div className={styles.TimeNotAllow}>
-            지금은 예약 가능 시간이 아닙니다
-          </div>
+          <h2 className={styles.alert}>
+            <EmojiFrownFill />
+            &nbsp;현재는 예약 시간이 아닙니다
+          </h2>
         )}
         {SecondMeetingRoominfo.map((rooms) => (
           <Link
@@ -79,7 +102,9 @@ const SecondFloorMap = () => {
             onClick={BookingConfirm}
           >
             <div>
-              {notroomFull(rooms.roomId) && ablebtn ? rooms.roomName : '마감'}
+              {notroomFull(rooms.roomId) && ablebtn
+                ? rooms.roomName
+                : `${rooms.roomName}\n마감`}
             </div>
           </Link>
         ))}
@@ -98,10 +123,34 @@ const SecondFloorMap = () => {
             <div>
               {notroomFull(rooms.roomId) && ablebtn
                 ? rooms.roomName.substr(6, 1)
-                : '마감'}
+                : `${rooms.roomName}\n마감`}
             </div>
           </Link>
         ))}
+
+        {/* 신양 */}
+        {userClasses === '0' ? (
+          <Link
+            to={`/booking/${SinyangID}`}
+            className={styles[SinyangName]}
+            id={
+              notroomFull(SinyangID) && ablebtn
+                ? [styles.MeetingRoom]
+                : [styles.full]
+            }
+            onClick={BookingConfirm}
+          >
+            <div>
+              {notroomFull(SinyangID) && ablebtn
+                ? SinyangName
+                : `${SinyangName}\n마감`}
+            </div>
+          </Link>
+        ) : (
+          <div className={styles[SinyangName]} id={styles.notSelect}>
+            {SinyangName}
+          </div>
+        )}
 
         <div className={styles.space범섬} id={styles.notSelect}>
           {`space\n범섬`}
@@ -109,7 +158,6 @@ const SecondFloorMap = () => {
         <div className={styles.Lounge} id={styles.notSelect}>
           {`내일\nLounge`}
         </div>
-
         <div className={styles.화장실} id={styles.notSelect}>
           {`화\n장\n실`}
         </div>
@@ -130,7 +178,7 @@ const SecondFloorMap = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default SecondFloorMap;
+export default SecondFloorMap

@@ -7,11 +7,11 @@ import useUrl from '../../../hooks/useUrl';
 
 function NavsFloor3() {
   const { roomId } = useParams();
-  const { id } = useParams();
   const myUrl = useUrl();
   //----/api/booking----//
   const [roomData, setRoomData] = useState([]);
   //3층 룸리스트 추출 -> 미팅룸리스트 개인자습룸리스트 추출
+  const floor3Studio = roomData.filter((room) => room.roomType === 'studio');
   const floor3Meeting = roomData.filter((room) => room.roomType === 'meeting');
   const floor3Nabox = roomData.filter((room) => room.roomType === 'nabox');
 
@@ -35,14 +35,20 @@ function NavsFloor3() {
           회의실
         </Dropdown.Toggle>
         <Dropdown.Menu>
+          {floor3Studio.map((item, index) => (
+            <Dropdown.Item href={`/booking/${item.roomId}`} key={index}>
+              {item.roomName}
+            </Dropdown.Item>
+          ))}
+          <Dropdown.Divider />
           {floor3Meeting.map((item, index) => (
-            <Dropdown.Item href={`/booking/${item.roomId}/${id}`} key={index}>
+            <Dropdown.Item href={`/booking/${item.roomId}`} key={index}>
               {item.roomName}
             </Dropdown.Item>
           ))}
         </Dropdown.Menu>
       </Dropdown>
-      <Dropdown className={styles.box}>
+      <Dropdown className={styles.boxNabox}>
         <Dropdown.Toggle
           className={styles.toggle}
           variant=''
@@ -52,7 +58,7 @@ function NavsFloor3() {
         </Dropdown.Toggle>
         <Dropdown.Menu>
           {floor3Nabox.map((item, index) => (
-            <Dropdown.Item href={`/booking/${item.roomId}/${id}`} key={index}>
+            <Dropdown.Item href={`/booking/${item.roomId}`} key={index}>
               {item.roomName}
             </Dropdown.Item>
           ))}

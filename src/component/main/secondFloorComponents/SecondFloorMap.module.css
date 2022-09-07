@@ -1,6 +1,6 @@
 @media screen and (max-width: 600px) {
   .Container .mapContainer {
-    font-size: 5px;
+    font-size: 10px;
     font-weight: 500;
     gap: 5px;
     padding: 5px;
@@ -10,22 +10,22 @@
 
 .mapContainer {
   display: grid;
-  grid-template-columns: 3fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 3fr;
-  grid-template-rows: 1fr 1fr 1fr 0.5fr 0.5fr;
+  grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1.5fr;
+  grid-template-rows: 1.5fr 1fr 1fr 1fr;
   grid-template-areas:
     '내일Lounge 내일Lounge 협재 곽지 이호 함덕 김녕 월정 신양 space비양도'
     '내일Lounge 내일Lounge 하모 화순 중문 표선 NaBox1 NaBox2 NaBox3 space비양도'
-    'space범섬 . 하모 화순 중문 표선 NaBox1 NaBox2 NaBox3 space우도'
-    'space범섬 NaBox4 NaBox5 NaBox6 화장실 stair EV . Stair2 space우도'
-    'space범섬 . . . 화장실 stair EV . Stair2 space우도';
+    'space범섬 . 하모 화순 중문 표선 . . . space우도'
+    'space범섬 NaBox4 NaBox5 NaBox6 화장실 stair EV . Stair2 space우도';
   height: 100%;
-  font-size: 6px;
+  font-size: 11px;
   column-gap: 8px;
   row-gap: 8px;
   font-weight: 600;
   padding: 10px;
   border: 1px solid rgb(193, 193, 193);
   border-radius: 5px;
+  position: relative;
 }
 
 .mapContainer a {
@@ -50,13 +50,27 @@
   white-space: break-spaces;
   position: relative;
 }
-.TimeNotAllow {
+
+.mapContainer .alert {
   position: absolute;
   color: #46a1fd;
+  font-weight: 700;
+  white-space: nowrap;
+  background-color: rgba(255, 255, 255, 0.8);
+  width: 100%;
+  height: 100%;
+  font-size: 23px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
 }
 
 #notSelect {
-  background-color: rgb(192, 192, 192);
+  /* 구버전 */
+  /* background-color: rgb(192, 192, 192); */
+  border: 1px solid rgb(138, 138, 138);
+  color: rgb(138, 138, 138);
   cursor: default;
 }
 

@@ -9,7 +9,7 @@ function Logout() {
     const navigate = useNavigate()
     useEffect(()=>{
         alert("로그아웃 되셨습니다.")
-        navigate("/login")
+        navigate("/")
     },[navigate])
   return <></>
 }

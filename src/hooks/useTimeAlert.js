@@ -22,7 +22,7 @@ const useTimeAlert = () => {
   const nowTime = nowHour + nowMins
 
   const startTime = '0830'
-  const endTime = '1900'
+  const endTime = '2100'
   useEffect(() => {
     if (startTime > nowTime || endTime < nowTime) {
       setAblebtn(false)
@@ -36,7 +36,7 @@ const useTimeAlert = () => {
       alert(
         '예약할 수 없는 시간입니다!\n오전08:30부터 오후21:00까지 예약이 가능합니다.'
       )
-    } 
+    }
   }
   return [ablebtn, BookingConfirm]
 }

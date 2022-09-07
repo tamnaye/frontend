@@ -7,22 +7,23 @@ import MainTemplate from './component/main/MainTemplate';
 import ReservationState from './component/reservation/ReservationState';
 import BookPage from './component/bookpage/BookPage';
 import MyPage from './component/mypage/MyPage';
-import TimeTableTest from './test/TimeTableTest';
 import Logout from './component/logout/Logout';
+import Feedback from './component/Feedback';
 
 function App() {
   let location = useLocation();
   return (
     <div>
-      {location.pathname !== '/login' ? <Header /> : null}
+      {location.pathname !== '/' ? <Header /> : null}
       <Routes>
-        <Route path='/login' element={<Login />} />
+        <Route path='/' element={<Login />} />
         <Route path='/logout' element={<Logout />} />
-        <Route path='/' element={<MainTemplate />} />
+        <Route path='/main' element={<MainTemplate />} />
         <Route path='/state' element={<ReservationState />} />
         <Route path='/booking/:roomId' element={<BookPage />} />
-        <Route path='/mypage/:id' element={<MyPage />} />
+        <Route path='/mypage' element={<MyPage />} />
         <Route path='*' element={<EmptyPage />} />
+        <Route path='/feedback' element={<Feedback />} />
       </Routes>
     </div>
   );

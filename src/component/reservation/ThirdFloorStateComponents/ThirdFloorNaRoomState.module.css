@@ -1,21 +1,23 @@
 @media screen and (max-width: 600px) {
   #table #thead #theadTr #text {
-    font-size: 7px;
+    font-size: 10px;
     padding: 8px 2px;
     word-break: break-all;
     white-space: break-spaces;
   }
   #table #tbody #tbodyTr .time {
     height: 36px;
-    font-size: 7px;
+    font-size: 10px;
     padding: 8px 5px;
   }
   #table #tbody #tbodyTr .roomstate .bookingTime {
     border-radius: 2px;
-    font-size: 5px;
-    padding: 6px 8px 2px 8px;
+    padding: 15px 8px 2px 15px;
+    white-space: break-spaces;
   }
-
+  #table #tbody #tbodyTr .roomstate .bookingTime p {
+    font-size: 10px;
+  }
   #table {
     width: 80vw;
   }
@@ -33,20 +35,14 @@ tbody .time {
   width: 15%;
 }
 
-#tbodyTr {
-  position: relative;
-}
-#tbodyTr .time {
-  position: relative;
-}
-#tbodyTr .time .roomstate {
+#tbodyTr .roomstate {
   position: relative;
 }
 .bookingTime {
   position: absolute;
   top: 0%;
   transform: translateX(-0.5rem);
-  width: 28.2%;
+  width: 99%;
   background-color: #74b8fc;
   color: whitesmoke;
   display: flex;
