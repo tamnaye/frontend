@@ -1,9 +1,9 @@
 @media screen and (max-width: 700px){
     .wrap .meetingUserinfo {
-      margin-top: -7px;
+      margin-top: -29px;
     }
     .wrap .naboxUserinfo {
-      margin-top: -125px;
+      margin-top: -70px;
     }
   }
   
@@ -103,6 +103,7 @@
   display: block;
   margin: auto;
   margin-top: 30px;
+  margin-bottom: 50px;
   font-size: 16px;
 }
 .bookbtnOff {
@@ -114,6 +115,7 @@
   display: block;
   margin: auto;
   margin-top: 30px;
+  margin-bottom: 50px;
   font-size: 16px;
   opacity: 40%;
   cursor: not-allowed;
