@@ -217,7 +217,11 @@ const BookingData = () => {
   }
   function onClickSelected(index) {
     const arr = [...selectedNameState];
+    const arr2 = [...searchedNameState]
+    arr2.push(arr[index])
+    arr2.sort()
     arr.splice(index, 1);
+    setSearchedNameState(arr2)
     setSelectedNameState(arr);
   }
   //팀원 검색 enter event
