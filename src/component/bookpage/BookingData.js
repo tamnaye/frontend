@@ -175,7 +175,7 @@ const BookingData = () => {
   const [selectedNameState, setSelectedNameState] = useState([]);
   const [inputName, setInputName] = useState('');
   //팀원 리스트 모달창 처럼 보이기
-  const [isShowModal, setIsShowModal] = useState(false);
+  const [isShowModal, setIsShowModal] = useState(true);
   //useRef사용해서 outside클릭 시 모달창 사라짐
   const closeModal = useRef();
   //console.log(closeModal.current);
@@ -194,6 +194,8 @@ const BookingData = () => {
 
   function onChange(e) {
     console.log('onchange');
+    setIsShowModal(true);
+
     setInputName(e.target.value);
     const str = e.target.value;
     let arr = [...memberNames];
@@ -222,6 +224,7 @@ const BookingData = () => {
   function onSubmit(e) {
     console.log('onSubmit');
     e.preventDefault();
+    setIsShowModal(false);
     if (searchedNameState.length === 1) {
       //이미 선택할 팀원이 나옴
       setInputName('');
@@ -233,6 +236,7 @@ const BookingData = () => {
       setSearchedNameState(
         memberNames.filter((member) => !arr.includes(member))
       );
+
     } else if (searchedNameState.length > 1) {
       //검색 결과 두명 이상 나왔을 때 엔터친 경우
       alert('팀원을 한명씩 선택해 주세요 !');
