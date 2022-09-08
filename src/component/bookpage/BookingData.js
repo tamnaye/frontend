@@ -175,7 +175,7 @@ const BookingData = () => {
   const [selectedNameState, setSelectedNameState] = useState([]);
   const [inputName, setInputName] = useState('');
   //팀원 리스트 모달창 처럼 보이기
-  const [isShowModal, setIsShowModal] = useState(false);
+  const [isShowModal, setIsShowModal] = useState(true);
   //useRef사용해서 outside클릭 시 모달창 사라짐
   const closeModal = useRef();
   //console.log(closeModal.current);
