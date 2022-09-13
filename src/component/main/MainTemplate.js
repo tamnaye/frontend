@@ -26,9 +26,9 @@ const MainTemplate = () => {
     } else {
       fetch(url, {
         method: 'GET',
-        headers: {
-          Authorization: authorization,
-        },
+        // headers: {
+        //   Authorization: authorization,
+        // },
       })
         .then((res) => res.json())
         .then((data) => {

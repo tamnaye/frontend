@@ -64,9 +64,9 @@ export default function Login() {
       .then((res) => res.json())
       .then((data) => {
         if (data.code === 405) {
-          sendToken(userid);
-          // window.localStorage.setItem("userid", userid);
-          // navigate(`/main`);
+          // sendToken(userid);
+          window.localStorage.setItem("userid", userid);
+          navigate(`/main`);
         } else {
           alert(data.message);
         }

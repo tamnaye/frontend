@@ -94,7 +94,7 @@ function TimeTableTest() {
         }
       }
     }
-    console.log('clickedIds  : ', clickedIds)
+    // console.log('clickedIds  : ', clickedIds)
 
     //기본 : 해당 id, id+1 active
     //1. filter -> false인 객체를 찾는다.
