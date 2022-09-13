@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 import styles from './ThirdFloorMeetingRoomState.module.css'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import Popover from 'react-bootstrap/Popover'
-import Poplay from '../Poplay'
+import PoplayNabox from '../PoplayNabox'
 import { Link } from 'react-router-dom'
 import {
   EmojiSmileFill,
