@@ -68,8 +68,8 @@ const BookingData = () => {
         const arr1 = [];
         const arr2 = [];
         const arr3 = [];
-        console.log('bookedTimes', bookedTimes);
-        console.log('officialTimes', officialTimes);
+        //console.log('bookedTimes', bookedTimes);
+        //console.log('officialTimes', officialTimes);
         times.map(
           (time) =>
             arr1.push(checkPast(time)) &&
@@ -217,11 +217,11 @@ const BookingData = () => {
   }
   function onClickSelected(index) {
     const arr = [...selectedNameState];
-    const arr2 = [...searchedNameState]
-    arr2.push(arr[index])
-    arr2.sort()
+    const arr2 = [...searchedNameState];
+    arr2.push(arr[index]);
+    arr2.sort();
     arr.splice(index, 1);
-    setSearchedNameState(arr2)
+    setSearchedNameState(arr2);
     setSelectedNameState(arr);
   }
   //팀원 검색 enter event
@@ -240,7 +240,6 @@ const BookingData = () => {
       setSearchedNameState(
         memberNames.filter((member) => !arr.includes(member))
       );
-
     } else if (searchedNameState.length > 1) {
       //검색 결과 두명 이상 나왔을 때 엔터친 경우
       alert('팀원을 한명씩 선택해 주세요 !');
