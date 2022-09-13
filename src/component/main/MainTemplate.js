@@ -8,6 +8,8 @@ import useUrl from '../../hooks/useUrl'
 
 const MainTemplate = () => {
   const id = window.localStorage.getItem('userid')
+  const authorization = window.localStorage.getItem('Authorization')
+  console.log(authorization)
   // console.log('mainTemplete : ', id)
   const navigate = useNavigate()
 
@@ -24,6 +26,9 @@ const MainTemplate = () => {
     } else {
       fetch(url, {
         method: 'GET',
+        headers:{
+          "Authorization": authorization,
+        }
       })
         .then((res) => res.json())
         .then((data) => {
