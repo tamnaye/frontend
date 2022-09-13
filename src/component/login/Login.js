@@ -16,8 +16,7 @@ export default function Login() {
   }, [id, navigate]);
 
   function sendToken(userid) {
-    const url = `http://192.168.5.46:8080/auth/login`;
-    console.log("sendToken", userid);
+    const url = `http://192.168.4.146:8080/auth/login`;
 
     fetch(url, {
       method: "POST",
@@ -27,17 +26,24 @@ export default function Login() {
       body: JSON.stringify({
         userId: userid,
       }),
-    }).then((res) => {
-      // console.log("res",res.json());
-      res.json().then((data) => {
+    })
+      .then((res) => {
+        console.log("res - contentType ",res.headers.get('content-type'))
+        console.log("res - Authorization ",res.headers.get('Authorization'))
+        console.log("res - reAuthorization ",res.headers.get('reAuthorization'))
+        window.localStorage.setItem("Authorization", res.headers.get('Authorization'));
+
+        return res.json();
+      })
+
+      .then((data) => {
+        console.log("data : ", data);
         if (data.message === "success") {
-          console.log("data 405 : ", data);
-          // window.localStorage.setItem("userid", userid);
-          // navigate(`/main`);
+          window.localStorage.setItem("userid", userid);
+          navigate(`/main`);
         } else {
         }
       });
-    });
   }
 
   const onFinish = (values) => {
@@ -46,7 +52,6 @@ export default function Login() {
     const encrypted_pwd = encrypt(userpwd); //pwd 암호화
 
     fetch("/api/user/login", {
-      // 'https://lms.jdnc.or.kr/api/user/login', {
       method: "POST",
       headers: {
         "content-type": "application/json",

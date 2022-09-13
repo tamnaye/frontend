@@ -14,6 +14,6 @@ export default function getTimes(startTime, endTime) {
     }
     arr.push(changedTime);
   }
-  console.log('get Time arr', arr);
+  // console.log('get Time arr', arr);
   return arr;
 }
