@@ -21,9 +21,11 @@ const Header = () => {
         </div>
       </div>
       <div className={styles.menu}>
-      {location.pathname === '/main' ? <Link to={`/state`}>실시간예약현황</Link> : <Link to={`/`}>HOME</Link> }
+      {/* {location.pathname === '/main' ? <Link to={`/state`}>실시간예약현황</Link> : <Link to={`/`}>HOME</Link> } */}
         {/* <Link to={`/state`}>실시간예약현황</Link> */}
         {/* <Link to={`/booking/301/${userid}`}>예약하기</Link> */}
+        <Link to={`/`}>HOME</Link>
+        <Link to={`/state`}>실시간예약현황</Link>
         <Link to={`/feedback`}>피드백</Link>
       </div>
     </div>
