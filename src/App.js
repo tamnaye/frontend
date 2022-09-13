@@ -25,8 +25,8 @@ function App() {
   },[location.pathname,navigate])
 
   
-  console.log('node env', process.env.NODE_ENV);
-  if (process.env.NODE_ENV === 'production') {
+  console.log("node env",process.env.NODE_ENV)
+  if (process.env.NODE_ENV === "production") {
     console.log = function no_console() {};
     console.warn = function no_console() {};
   }
