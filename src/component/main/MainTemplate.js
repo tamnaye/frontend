@@ -20,6 +20,7 @@ const MainTemplate = () => {
   useEffect(() => {
     
     fetchGet(url,location)
+        .then((res) => res.json())
         .then((data) => {
           setUserClasses(data.userData.classes);
           setMaxClasses(data.maxClasses);

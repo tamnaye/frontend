@@ -60,6 +60,7 @@ export default function Login() {
       .then((data) => {
         if (data.code === 405) {
           getToken(userid);
+          navigate(`/main`);
         } else {
           alert(data.message); // 아이디 혹은 비밀번호가 일치하지 않습니다.
         }
