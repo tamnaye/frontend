@@ -23,6 +23,7 @@ const MainTemplate = () => {
         .then((data) => {
           setUserClasses(data.userData.classes);
           setMaxClasses(data.maxClasses);
+
         });
     
   }, [ url, location]);
