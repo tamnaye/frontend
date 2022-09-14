@@ -36,7 +36,11 @@ function MyPage() {
     <>
       <Container className={styles.container}>
         <h6 className={styles.userInfo}>
+<<<<<<< refs/remotes/origin/dev
           더큰내일센터 <span className={styles.user_name}>{userName}</span>
+=======
+          탐나는인재 <span className={styles.user_name}>{userName}</span>
+>>>>>>> footer 적용
           님의 예약 현황
         </h6>
         {Array.isArray(bookingCount) && bookingCount.length === 0 ? (
