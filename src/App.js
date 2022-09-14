@@ -8,6 +8,7 @@ import ReservationState from './component/reservation/ReservationState';
 import BookPage from './component/bookpage/BookPage';
 import MyPage from './component/mypage/MyPage';
 import Logout from './component/logout/Logout';
+import Admin from './component/adminpage/Admin';
 import Feedback from './component/Feedback';
 import { useEffect, useState } from 'react';
 import {getAuth} from './hooks/authModule'
