@@ -34,7 +34,7 @@ const MainTemplate = () => {
         .then((data) => {
           setUserClasses(data.userData.classes);
           setMaxClasses(data.maxClasses);
-          // window.localStorage.setItem('class', data.userData.classes);
+          window.localStorage.setItem('class', data.userData.classes);
         });
     }
   }, [id, url, navigate]);
