@@ -20,6 +20,7 @@ const Header = () => {
         </div>
       </div>
       <div className={styles.menu}>
+
         <Link to={`/`}>HOME</Link>
         <Link to={`/state`}>실시간예약현황</Link>
         {/* <Link to={`/feedback`}>피드백</Link> */}

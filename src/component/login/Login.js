@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import "antd/dist/antd.min.css";
 import styles from "./Login.module.css";
 import encrypt from "../../hooks/encrypt";
-import { useEffect } from "react";
 import useUrl from "../../hooks/useUrl";
 import { setAuth } from "../../hooks/authModule";
 
@@ -34,7 +33,6 @@ export default function Login() {
 
       .then((data) => {
         if (data.message === "success") {
-          
           navigate(`/main`);
         } else {
         }
