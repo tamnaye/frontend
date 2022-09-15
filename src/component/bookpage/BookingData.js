@@ -8,10 +8,12 @@ import useTimes from '../../hooks/useTimes';
 import timePlusMinus from '../../hooks/timePlusMinus';
 import checkPast from '../../hooks/checkPast';
 import getTimes from '../../hooks/getTimes';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState, useRef } from 'react';
 //component
 import ButtonExplain from './ButtonExplain';
+import { fetchGet } from '../../hooks/fetchUrl';
+import { getAuth } from '../../hooks/authModule';
 
 //매니저님 예외처리한 부분
 //1) checkBox 예약된거 disable 안하고 그레이 처리 해줌
@@ -20,29 +22,29 @@ import ButtonExplain from './ButtonExplain';
 
 const BookingData = () => {
   const myUrl = useUrl();
-  const id = window.localStorage.getItem('userid');
-  const userClass = window.localStorage.getItem('class');
 
   const { roomId } = useParams();
   const [userName, setUserName] = useState('');
+  const [userClass, setUserClass] = useState('');
+  console.log("userClass", userClass)
+  
   const [roomType, setRoomType] = useState(''); // meeting / nabax
   const [memberNames, setMemberNames] = useState([]);
 
   const [maxTime, setMaxTime] = useState('');
   const times = useTimes();
-  //console.log("times",times)
   const [bookedState, setBookedState] = useState([]);
-  //console.log("bookedState",bookedState)
   const [pastState, setPastState] = useState([]);
   const [isOfficial, setIsOfficial] = useState([]);
-  //console.log("isOfficial",isOfficial)
   const [isLoadding, setIsLoading] = useState(false);
 
-  const url = `http://${myUrl}/api/booking?roomId=${roomId}&userId=${id}&classes=${userClass}`;
+  const url = `http://${myUrl}/api/booking?roomId=${roomId}`;
+  const location = useLocation()
   useEffect(() => {
-    fetch(url, { method: 'GET' })
-      .then((res) => res.json())
+  fetchGet(url,location)
       .then((data) => {
+        console.log(data)
+        setUserClass(data.userData.classes)
         setUserName(data.userData.userName);
         setRoomType(data.roomData.roomType);
         setSearchedNameState(
@@ -88,7 +90,7 @@ const BookingData = () => {
   );
   const [checkedState, setCheckedState] = useState(new Array(12).fill(false));
   const [timeRange, setTimeRange] = useState([]);
-  const maxHour = userClass === '0' ? 12 : maxTime;
+  const maxHour = userClass === 0 ? 12 : maxTime;
 
   const onChangeCheckBox = (index) => {
     const lastIndex = timeRange.length - 1;
@@ -138,7 +140,7 @@ const BookingData = () => {
         const checkedArr = new Array(12).fill(false);
         checkedArr[index] = true;
         setCheckedState(checkedArr);
-        if (userClass !== '0') {
+        if (userClass !== 0) {
           if (bookedState[i]) break;
         } else {
           if (isOfficial[i]) break;
@@ -266,7 +268,7 @@ const BookingData = () => {
   function pluszero(times) {
     let time = times.toString(); //시간을 숫자에서 문자로 변환
     if (time.length < 2) {
-      time = '0' + time; //숫자 앞에 0을 붙여줌
+      time = 0 + time; //숫자 앞에 0을 붙여줌
       return time;
     } else {
       return time;
@@ -295,7 +297,7 @@ const BookingData = () => {
   const roomTypeArr = ['meeting', 'nabax'];
   function bookingConfirm() {
     if (
-      userClass !== '0' &&
+      userClass !== 0 &&
       roomType === roomTypeArr[0] &&
       selectedNameState.length < 1 &&
       getStartEndTime(checkedState).timeLength === 0
@@ -303,7 +305,7 @@ const BookingData = () => {
       alert('회의 참여자와 회의 시간을 선택해 주세요');
     } else if (
       roomType === roomTypeArr[0] &&
-      userClass !== '0' &&
+      userClass !== 0 &&
       selectedNameState.length < 1
     ) {
       alert('회의 참여자를 1명 이상 선택해주세요');
@@ -317,6 +319,8 @@ const BookingData = () => {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
+            'Authorization' : getAuth().auth,
+            'reAuthorization' : getAuth().reAuth
           },
           body: JSON.stringify({
             //값 입력
@@ -330,7 +334,6 @@ const BookingData = () => {
               getStartEndTime(checkedState).timeLength
             ), // checked state에서  index 찾아서 times 배열에서 뽑아내서 +1
             teamMate: selectedNameState,
-            userId: id,
             userName: userName,
           }),
         })
@@ -428,7 +431,7 @@ const BookingData = () => {
       <div>
         <h6 className={styles.time}> 시간 선택 </h6>
         {/* 매니저인 경우만 버튼 안내 */}
-        {userClass === '0' ? <ButtonExplain /> : null}
+        {userClass === 0 ? <ButtonExplain /> : null}
         {/* 시간 선택 체크 박스  */}
         <div className={styles.timetable}>
           {times.map((time, index) => (
@@ -436,7 +439,7 @@ const BookingData = () => {
               <Tooltip
                 placement='bottom'
                 title={
-                  userClass !== '0' || pastState[index] || !bookedState[index]
+                  userClass !== 0 || pastState[index] || !bookedState[index]
                     ? ''
                     : isOfficial[index]
                     ? '공식일정예약'
@@ -450,12 +453,12 @@ const BookingData = () => {
                   disabled={
                     pastState[index] || isOfficial[index]
                       ? true
-                      : userClass === '0'
+                      : userClass === 0
                       ? false
                       : bookedState[index]
                   }
                   style={
-                    userClass === '0' && bookedState[index]
+                    userClass === 0 && bookedState[index]
                       ? {
                           margin: '10px',
                           color: 'pink',
@@ -486,7 +489,7 @@ const BookingData = () => {
         <button
           className={ablebtn === true ? styles.bookbtn : styles.bookbtnOff}
           onClick={bookingConfirm}
-          disabled={ablebtn ? false : true}
+          // disabled={ablebtn ? false : true}
         >
           예약하기
         </button>

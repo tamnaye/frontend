@@ -2,34 +2,26 @@ import styles from './ReservationState.module.css';
 import ThirdFloorReservationState from './ThirdFloorStateComponents/ThirdFloorReservationState';
 import SecondFloorReservationState from './SecondFloorStateComponents/SecondFloorReservationState';
 import SecondAndThirdReservationState from './SecondAndThirdReservationState';
-import { useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import useUrl from '../../hooks/useUrl';
+import { fetchGet } from '../../hooks/fetchUrl';
 
 const ReservationState = () => {
-  const  id  = window.localStorage.getItem("userid")
-  const navigate = useNavigate()
+  const location = useLocation()
   const myUrl = useUrl();
-  const url = `http://${myUrl}/api/user/data?userId=${id}`
+  const url = `http://${myUrl}/api/user/data`
 
   const [userClasses, setUserClasses] = useState('');
   const [maxClasses, setMaxClasses] = useState('');
 
   useEffect(() => {
-    if(id===null){
-      alert("로그인 후 사용 가능합니다.")
-      navigate(`/`)
-    }else{
-      fetch(url, {
-        method: 'GET',
-      })
-        .then((res) => res.json())
+   fetchGet(url,location)
         .then((data) => {
           setUserClasses(data.userData.classes);
           setMaxClasses(data.maxClasses);
         });
-    }
-  }, [url,id,navigate]);
+  }, [url,location]);
 
   return (
     <div className={styles.ReservationStateContainer}>

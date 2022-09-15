@@ -4,17 +4,19 @@ import Table from 'react-bootstrap/Table';
 //hooks
 import { useState, useEffect } from 'react';
 import useUrl from '../../hooks/useUrl';
+import { fetchGet } from '../../hooks/fetchUrl';
+import { getAuth } from '../../hooks/authModule';
 
 function MyBookTable() {
-  const id = window.localStorage.getItem('userid');
+  // const userId = window.localStorage.getItem('userId');
   const myUrl = useUrl();
-
+  const [userId, setUserId] = useState('');
   const [myBookingList, setMyBookingList] = useState([]);
-  const url = `http://${myUrl}/api/user/mypage?userId=${id}`;
+  const url = `http://${myUrl}/api/user/mypage`;
   useEffect(() => {
-    fetch(url, { method: 'GET' })
-      .then((res) => res.json())
+fetchGet(url)
       .then((data) => {
+        setUserId(data.userData.userId)
         setMyBookingList(data.myBookingDetailDataList);
       });
   }, [url]);
@@ -31,6 +33,8 @@ function MyBookTable() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization' : getAuth().auth,
+          'reAuthorization' : getAuth().reAuth
         },
         body: JSON.stringify({
           bookingId: bid,
@@ -108,7 +112,7 @@ function MyBookTable() {
                       ? [styles.managerCancel]
                       : Number(NowHour) >= Number(item.endTime.substr(0, 2))
                       ? [styles.memberCancel]
-                      : item.applicant.userId === id
+                      : item.applicant.userId === userId
                       ? [styles.applicantCancel]
                       : [styles.memberCancel]
                   }
@@ -117,7 +121,7 @@ function MyBookTable() {
                     Number(NowHour) >= Number(item.endTime.substr(0, 2)) ||
                     item.mode === 'cancel'
                       ? true
-                      : item.applicant.userId === id
+                      : item.applicant.userId === userId
                       ? false
                       : true
                   }
@@ -126,7 +130,7 @@ function MyBookTable() {
                     ? '사용불가'
                     : Number(NowHour) >= Number(item.endTime.substr(0, 2))
                     ? '사용완료'
-                    : item.applicant.userId === id
+                    : item.applicant.userId === userId
                     ? '취소가능'
                     : '취소불가'}
                 </button>
