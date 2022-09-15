@@ -28,6 +28,7 @@ const MainTemplate = () => {
         method: 'GET',
         // headers: {
         // Authorization: authorization,
+
         // },
       })
         .then((res) => res.json())

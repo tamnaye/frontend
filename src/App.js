@@ -13,6 +13,12 @@ import Feedback from './component/Feedback';
 
 function App() {
   let location = useLocation();
+  console.log("node env",process.env.NODE_ENV)
+  if (process.env.NODE_ENV === "production") {
+    console.log = function no_console() {};
+    console.warn = function no_console() {};
+  }
+
   return (
     <div>
       {location.pathname !== '/' ? <Header /> : null}
