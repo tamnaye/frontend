@@ -9,33 +9,26 @@ import RoomInfo from './RoomInfo';
 import BookingData from './BookingData';
 //hooks
 import useUrl from '../../hooks/useUrl';
-import { useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import { fetchGet } from '../../hooks/fetchUrl';
 
 function BookPage() {
-  const id = window.localStorage.getItem('userid');
   const myUrl = useUrl();
-  const navigate = useNavigate();
 
   const [userClass, setUserClass] = useState('');
   const [maxClass, setMaxClass] = useState('');
 
-  const url = `http://${myUrl}/api/user/data?userId=${id}`;
+  const url = `http://${myUrl}/api/user/data`;
+  const location = useLocation();
 
   useEffect(() => {
-    if (id === null) {
-      alert('로그인 후 사용 가능합니다.');
-      navigate(`/`);
-    } else {
-      fetch(url)
-        .then((res) => res.json())
+    fetchGet(url,location)
         .then((data) => {
           setUserClass(data.userData.classes);
           setMaxClass(data.maxClasses);
         });
-    }
-  }, [url, id, navigate]);
-
+  }, [url, location]);
   return (
     <div>
       {userClass === 0 ? (
