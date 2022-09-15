@@ -3,9 +3,10 @@ import ThirdFloor from './thirdFloorComponents/ThirdFloor';
 import FourthFloor from './fourthFloorComponents/FourthFloor';
 import styles from './MainTemplate.module.css';
 import { useLocation } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import useUrl from '../../hooks/useUrl';
 import { fetchGet } from '../../hooks/fetchUrl';
+import { reAuthExpired, refreshToken, sendAuth } from '../../hooks/authModule';
 
 
 const MainTemplate = () => {
@@ -19,14 +20,24 @@ const MainTemplate = () => {
   const location = useLocation()
   useEffect(() => {
     
-    fetchGet(url,location)
+    // fetchGet(url,location)
+    fetch(url, {
+      method: 'GET',
+      headers: sendAuth(),
+    })
+      .then((res) =>{
+          refreshToken(res.headers.get('Authorization'))
+          return res.json()
+      } )  
         .then((res) => res.json())
         .then((data) => {
-          setUserClasses(data.userData.classes);
-          setMaxClasses(data.maxClasses);
-
+          if(data.message==="success"){
+            setUserClasses(data.userData.classes);
+            setMaxClasses(data.maxClasses);
+          }else{
+            reAuthExpired()
+          }
         });
-    
   }, [ url, location]);
   return (
     <div>

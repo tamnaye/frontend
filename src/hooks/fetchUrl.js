@@ -8,10 +8,12 @@ export function fetchGet (url,location){
     headers: sendAuth(),
   })
     .then((res) =>{
+      console.log("res status : ", res.status)
       if(res.status===403){
         reAuthExpired()
         location.reload()
       }else{
+        
         refreshToken(res.headers.get('Authorization'))
         return res.json()
       }
