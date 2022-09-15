@@ -9,12 +9,12 @@ import BookPage from './component/bookpage/BookPage';
 import MyPage from './component/mypage/MyPage';
 import Logout from './component/logout/Logout';
 import Admin from './component/adminpage/Admin';
-import Feedback from './component/Feedback';
+// import Feedback from './component/Feedback';
 
 function App() {
   let location = useLocation();
-  console.log("node env",process.env.NODE_ENV)
-  if (process.env.NODE_ENV === "production") {
+  console.log('node env', process.env.NODE_ENV);
+  if (process.env.NODE_ENV === 'production') {
     console.log = function no_console() {};
     console.warn = function no_console() {};
   }
@@ -31,7 +31,7 @@ function App() {
         <Route path='/mypage' element={<MyPage />} />
         <Route path='/admin' element={<Admin />} />
         <Route path='*' element={<EmptyPage />} />
-        <Route path='/feedback' element={<Feedback />} />
+        {/* <Route path='/feedback' element={<Feedback />} /> */}
       </Routes>
     </div>
   );
