@@ -4,6 +4,7 @@ import { Container } from 'react-bootstrap';
 //MyPage - component
 import MyBookTable from './MyBookTable';
 import MyBookTableEmpty from './MyBookTableEmpty';
+import Footer from '../footer/Footer';
 //hooks
 import useUrl from '../../hooks/useUrl';
 import { useEffect, useState } from 'react';
@@ -34,17 +35,20 @@ function MyPage() {
   //onsole.log(bookingCount);
 
   return (
-    <Container style={{ padding: '0px 5px' }} className={styles.container}>
-      <h6 className={styles.userInfo}>
-        탐나는인재 <span className={styles.user_name}>{userName}</span>
-        님의 예약 현황
-      </h6>
-      {Array.isArray(bookingCount) && bookingCount.length === 0 ? (
-        <MyBookTableEmpty />
-      ) : (
-        <MyBookTable />
-      )}
-    </Container>
+    <>
+      <Container className={styles.container}>
+        <h6 className={styles.userInfo}>
+          탐나는인재 <span className={styles.user_name}>{userName}</span>
+          님의 예약 현황
+        </h6>
+        {Array.isArray(bookingCount) && bookingCount.length === 0 ? (
+          <MyBookTableEmpty />
+        ) : (
+          <MyBookTable />
+        )}
+      </Container>
+      <Footer />
+    </>
   );
 }
 

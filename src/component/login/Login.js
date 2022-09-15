@@ -42,6 +42,7 @@ export default function Login() {
           window.localStorage.setItem("userid", userid);
           navigate(`/main`);
         } else {
+          alert(alert.data.message)
         }
       });
   }

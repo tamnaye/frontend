@@ -8,6 +8,7 @@ import ReservationState from './component/reservation/ReservationState';
 import BookPage from './component/bookpage/BookPage';
 import MyPage from './component/mypage/MyPage';
 import Logout from './component/logout/Logout';
+import Admin from './component/adminpage/Admin';
 import Feedback from './component/Feedback';
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
         <Route path='/state' element={<ReservationState />} />
         <Route path='/booking/:roomId' element={<BookPage />} />
         <Route path='/mypage' element={<MyPage />} />
+        <Route path='/admin' element={<Admin />} />
         <Route path='*' element={<EmptyPage />} />
         <Route path='/feedback' element={<Feedback />} />
       </Routes>

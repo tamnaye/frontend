@@ -1,0 +1,10 @@
+@media screen and (max-width: 700px) {
+    body .footer {
+        font-size: 11px;
+    }
+  }
+
+.footer {
+    text-align: center;
+    color: #888;
+  }

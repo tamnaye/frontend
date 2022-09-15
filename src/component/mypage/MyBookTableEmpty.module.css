@@ -1,11 +1,19 @@
 @media screen and (max-width: 700px) {
+    body .container {
+        margin-top: 100px;
+    }
+
     div .text {
-       font-size: 12px;
+       font-size: 13px;
     }
    }
 
+.container {
+    margin-top: 120px;
+}
+
 .text {
-    font-size: 18px;
+    font-size: 19px;
     color: #888;
     text-align: center;
     
