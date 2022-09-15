@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 import styles from './ThirdFloorMeetingRoomState.module.css'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import Popover from 'react-bootstrap/Popover'
-import Poplay from '../Poplay'
+import PoplayNabox from '../PoplayNabox'
 import { Link } from 'react-router-dom'
 import {
   EmojiSmileFill,
@@ -127,7 +127,7 @@ const ThirdFloorMeetingRoomState = () => {
                       overlay={
                         <Popover id="popover-positioned-top">
                           <Popover.Body>
-                            <Poplay
+                            <PoplayNabox
                               userName={
                                 TimeAndRoomFilter(time, room.roomId)[0]
                                   .applicant.userName
@@ -141,10 +141,6 @@ const ThirdFloorMeetingRoomState = () => {
                               }
                               roomName={
                                 TimeAndRoomFilter(time, room.roomId)[0].roomName
-                              }
-                              participants={
-                                TimeAndRoomFilter(time, room.roomId)[0]
-                                  .participants
                               }
                             />
                           </Popover.Body>
