@@ -5,7 +5,7 @@ import "antd/dist/antd.min.css";
 import styles from "./Login.module.css";
 import encrypt from "../../hooks/encrypt";
 import useUrl from "../../hooks/useUrl";
-import { setAuth } from "../../hooks/authModule";
+import { getAuth, setAuth } from "../../hooks/authModule";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -33,8 +33,10 @@ export default function Login() {
 
       .then((data) => {
         if (data.message === "success") {
+          console.log("login auth check : ",getAuth().auth)
           navigate(`/main`);
-        } else {
+        } else{
+          alert("알수없는 에러입니다.")
         }
       });
   }

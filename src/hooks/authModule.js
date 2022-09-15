@@ -29,6 +29,8 @@ export function setAuth(auth, reAuth){
 }
 // accessToken refresh 
 export function refreshToken (auth){
+    console.log("new auth : ",auth)
+    console.log("old auth : ",getAuth().auth)
     if(getAuth().auth!==auth){
         window.localStorage.setItem(process.env.REACT_APP_AUTH_KEY,auth)
     }
