@@ -489,7 +489,7 @@ const BookingData = () => {
         <button
           className={ablebtn === true ? styles.bookbtn : styles.bookbtnOff}
           onClick={bookingConfirm}
-          // disabled={ablebtn ? false : true}
+          disabled={ablebtn ? false : true}
         >
           예약하기
         </button>
