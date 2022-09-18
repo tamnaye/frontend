@@ -26,10 +26,6 @@ const MainTemplate = () => {
     fetch(url, {
       method: 'GET',
       headers: sendAuth(),
-      // headers:{
-      //   Authorization : sendAuth().Authorization,
-      //   reAuthorization : sendAuth().reAuthorization
-      // }
     })
       .then((res) =>{
           console.log("4) MainTemplate !! res.auth : ",res.headers.get('Authorization'))
@@ -38,17 +34,9 @@ const MainTemplate = () => {
           return res.json()
       } )  
         .then((data) => {
-          if(data.message==="success"){
             console.log("5) MainTemplate !! success : ",data)
             setUserClasses(data.userData.classes);
             setMaxClasses(data.maxClasses);
-          }else if(data.message==="tokenFail"){
-            console.log("5) MainTemplate !! tokenFail : ",data)
-            reAuthExpired()
-          }else{
-            console.log("5) MainTemplate !! else data (status 500) : ",data) 
-            console.log()
-          }
         }).catch(e=>console.log("5) MainTemplate !! catch error : ",e))
   }, [ url, location]);
   return (
