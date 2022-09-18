@@ -6,15 +6,16 @@ import styles from "./Login.module.css";
 import encrypt from "../../hooks/encrypt";
 import useUrl from "../../hooks/useUrl";
 import { getAuth, setAuth } from "../../hooks/authModule";
+import { useEffect, useMemo } from "react";
 
 export default function Login() {
   const navigate = useNavigate();
   const ip = useUrl();
 
-  function getToken(userid) {
+ function getToken(userid) {
     const url = `http://${ip}/auth/login`;
 
-    fetch(url, {
+  fetch(url, {
       method: 'POST',
       headers: {
         'content-type': 'application/json',
@@ -24,6 +25,7 @@ export default function Login() {
       }),
     })
       .then((res) => {
+        console.log("1) Login !! res.auth : ",res.headers.get("Authorization"))
         setAuth(
           res.headers.get("Authorization"),
           res.headers.get("reAuthorization")
@@ -32,8 +34,8 @@ export default function Login() {
       })
 
       .then((data) => {
+        console.log("2) Login get token !! data : ",data)
         if (data.message === "success") {
-          console.log("login auth check : ",getAuth().auth)
           navigate(`/main`);
         } else{
           alert("알수없는 에러입니다.")
@@ -45,8 +47,7 @@ export default function Login() {
     const userid = values.userid;
     const userpwd = values.userpwd; //get pwd
     const encrypted_pwd = encrypt(userpwd); //pwd 암호화
-
-    fetch('/api/user/login', {
+ fetch('/api/user/login', {
       method: 'POST',
       headers: {
         'content-type': 'application/json',
@@ -60,7 +61,6 @@ export default function Login() {
       .then((data) => {
         if (data.code === 405) {
           getToken(userid);
-          navigate(`/main`);
         } else {
           alert(data.message); // 아이디 혹은 비밀번호가 일치하지 않습니다.
         }
