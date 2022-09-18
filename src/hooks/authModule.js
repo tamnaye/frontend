@@ -5,15 +5,17 @@ export function saveUserid (userid){
 export function getAuth() {
     const object = {
       auth : window.localStorage.getItem(process.env.REACT_APP_AUTH_KEY),
-      reAuth : window.localStorage.getItem(process.env.REACT_APP_reAUTH_KEY)
+    reAuth : window.localStorage.getItem(process.env.REACT_APP_reAUTH_KEY)
     }
     return object
 }
 export function sendAuth (){
+
     const object = {
         Authorization : window.localStorage.getItem(process.env.REACT_APP_AUTH_KEY),
         reAuthorization : window.localStorage.getItem(process.env.REACT_APP_reAUTH_KEY)
       }
+      console.log("3) sendAuth !! object : ",object)
       return object
 }
 export function sendAuthPost (){
@@ -24,13 +26,14 @@ export function sendAuthPost (){
       return object
 }
 export function setAuth(auth, reAuth){
+    console.log("1-1 ) set Auth !! auth : ",auth)
     window.localStorage.setItem(process.env.REACT_APP_AUTH_KEY,auth);
     window.localStorage.setItem(process.env.REACT_APP_reAUTH_KEY,reAuth)
 }
 // accessToken refresh 
 export function refreshToken (auth){
-    console.log("new auth : ",auth)
-    console.log("old auth : ",getAuth().auth)
+    console.log("4-1) refresh !! new auth : ",auth)
+    console.log("4-2) refresh !! old auth : ",getAuth().auth)
     if(getAuth().auth!==auth){
         window.localStorage.setItem(process.env.REACT_APP_AUTH_KEY,auth)
     }
@@ -42,6 +45,7 @@ export function removeToken (){
     window.localStorage.removeItem(process.env.REACT_APP_MAX_CLASS_KEY);
 }
 export function reAuthExpired (){
+    console.log("5-1) reAuthExpired")
     window.localStorage.removeItem(process.env.REACT_APP_AUTH_KEY);
     window.localStorage.removeItem(process.env.REACT_APP_reAUTH_KEY)
     window.localStorage.removeItem(process.env.REACT_APP_CLASS_KEY);
