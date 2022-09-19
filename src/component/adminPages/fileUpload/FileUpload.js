@@ -1,41 +1,57 @@
-import styles from './Admin.module.css';
-import React, { useState } from 'react';
-import useUrl from '../../hooks/useUrl';
-import Footer from '../footer/Footer';
+import styles from './FileUpload.module.css';
+import useUrl from '../../../hooks/useUrl';
+import { useState } from 'react';
 
-const Admin = () => {
+const FileUpload = () => {
   const myUrl = useUrl();
-  const [file, setFile] = useState(null);
+  const formData = new FormData(); //FormData(): Creates a new FormData object 폼을 쉽게 보내주는 객체, HTML 폼 데이터를 나타냄
+  console.log(formData);
+  for (let value of formData.values()) {
+    console.log('empty file value:', value);
+  }
 
   //input file 값 확인
   const onChange = (e) => {
-    setFile(e.target.files[0]);
+    console.log(formData);
+    formData.append('file', e.target.files[0]);
+    console.log('target file:', formData);
+    for (let value of formData.values()) {
+      console.log('formData onchange value:', value);
+    }
   };
-  //console.log(file);
 
   //Upload 버튼 클릭 시 새로고침 막아주고나서
   //파일이 없는 경우 alert -> 파일이 있는 경우 POST
   const onUploadSubmit = (event) => {
     event.preventDefault();
 
-    if (file === null) {
-      alert('csv파일을 선택 해주세요!');
-    }
+    // if (file === null) {
+    //   console.log('empty file null ? ', file);
+    //   alert('csv파일을 선택 해주세요!');
+    // }
 
     //csv파일 POST
-    fetch(`http://${myUrl}/api/csv/user`, {
+    fetch(`http://${myUrl}/admin/update/user`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-      body: JSON.stringify({
-        // 보낼 값
-      }),
+      //--폼을 전송할 때 HTTP 메시지의 Content-Type 속성은 항상 multipart/form-data이고 메시지는 인코딩되어 전송됩니다.
+      //--파일이 있는 폼도 당연히 이 규칙을 따르기 때문에 <input type="file">로 지정한 필드 역시 일반 폼을 전송할 때와 유사하게 전송됩니다.
+      //
+      // headers: {
+      //   'Content-Type': 'multipart/form-data',
+      // },
+      //
+      body: formData,
     })
       .then((res) => res.json())
       .then((data) => {
-        //console.log(data);
+        console.log('data:', data);
+        alert('파일이 업로드 되었습니다.');
+        // console.log(data.message);
         //제출하고 나면 빈값으로 변경
+      })
+      .catch((err) => {
+        alert('파일이 업로드 되었습니다.');
+        console.log(err);
       });
   };
 
@@ -70,9 +86,8 @@ const Admin = () => {
           </form>
         </div>
       </div>
-      <Footer />
     </>
   );
 };
 
-export default Admin;
+export default FileUpload;
