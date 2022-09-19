@@ -31,9 +31,11 @@ export function setAuth(auth, reAuth){
     window.localStorage.setItem(process.env.REACT_APP_reAUTH_KEY,reAuth)
 }
 // accessToken refresh 
-export function refreshToken (auth){
+export function refreshToken (auth,reauth){
     console.log("4-1) refresh !! new auth : ",auth)
     console.log("4-2) refresh !! old auth : ",getAuth().auth)
+    console.log("4-1) refresh !! new reAuth : ",reauth)
+    console.log("4-2) refresh !! old reAuth : ",getAuth().reAuth)
     if(getAuth().auth!==auth){
         window.localStorage.setItem(process.env.REACT_APP_AUTH_KEY,auth)
     }
@@ -41,26 +43,10 @@ export function refreshToken (auth){
 export function removeToken (){
     window.localStorage.removeItem(process.env.REACT_APP_AUTH_KEY);
     window.localStorage.removeItem(process.env.REACT_APP_reAUTH_KEY)
-    window.localStorage.removeItem(process.env.REACT_APP_CLASS_KEY);
-    window.localStorage.removeItem(process.env.REACT_APP_MAX_CLASS_KEY);
 }
-export function reAuthExpired (){
+export function tokenExpired (){
     console.log("5-1) reAuthExpired")
     window.localStorage.removeItem(process.env.REACT_APP_AUTH_KEY);
     window.localStorage.removeItem(process.env.REACT_APP_reAUTH_KEY)
-    window.localStorage.removeItem(process.env.REACT_APP_CLASS_KEY);
     alert("로그인 세션이 만료되었습니다.")
-    // callback()
 }
-// export function saveClass (userClass,maxClass){
-//     window.localStorage.setItem(process.env.REACT_APP_CLASS_KEY, userClass);
-//     window.localStorage.setItem(process.env.REACT_APP_MAX_CLASS_KEY, maxClass);
-// }
-// export function getClass (){
-//     const object = {
-//        userClass : window.localStorage.getItem(process.env.REACT_APP_CLASS_KEY),
-//         maxClass : window.localStorage.getItem(process.env.REACT_APP_MAX_CLASS_KEY)
-//     }
-//     return object
- 
-// }
