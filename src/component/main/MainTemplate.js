@@ -23,11 +23,9 @@ const MainTemplate = () => {
   useEffect(() => {
     
     fetchGet(url,location)
-  
         .then((data) => {
-            console.log("5) MainTemplate !! data : ",data)
-            setUserClasses(data.userData.classes);
-            setMaxClasses(data.maxClasses);
+            setUserClasses(data?.userData.classes);
+            setMaxClasses(data?.maxClasses);
         }).catch(e=>console.log("5) MainTemplate !! catch error : ",e))
   }, [ url, location]);
   return (
