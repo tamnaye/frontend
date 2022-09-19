@@ -6,7 +6,7 @@ import { useLocation } from 'react-router-dom';
 import { useEffect, useMemo, useState } from 'react';
 import useUrl from '../../hooks/useUrl';
 import { fetchGet } from '../../hooks/fetchUrl';
-import { reAuthExpired, refreshToken, sendAuth } from '../../hooks/authModule';
+import { tokenExpired, refreshToken, removeToken, sendAuth } from '../../hooks/authModule';
 
 
 const MainTemplate = () => {
@@ -22,19 +22,10 @@ const MainTemplate = () => {
   const location = useLocation()
   useEffect(() => {
     
-    // fetchGet(url,location)
-    fetch(url, {
-      method: 'GET',
-      headers: sendAuth(),
-    })
-      .then((res) =>{
-          console.log("4) MainTemplate !! res.auth : ",res.headers.get('Authorization'))
-          console.log("4) MainTemplate !! res.status : ",res.status)
-          refreshToken(res.headers.get('Authorization'))
-          return res.json()
-      } )  
+    fetchGet(url,location)
+  
         .then((data) => {
-            console.log("5) MainTemplate !! success : ",data)
+            console.log("5) MainTemplate !! data : ",data)
             setUserClasses(data.userData.classes);
             setMaxClasses(data.maxClasses);
         }).catch(e=>console.log("5) MainTemplate !! catch error : ",e))
