@@ -15,18 +15,11 @@ export function fetchGet(url, location) {
     if (res.status === 403) {
       tokenExpired();
     } else if (res.status === 200) {
-      console.log("fetchGet !! status 200 ? ",res.status)
       refreshToken(res.headers.get("Authorization"),res.headers.get("reAuthorization"));
       return res.json();
     } 
     else if(res.status===500) {
-      console.log("fetchGet !! status 200 ? ",res.status)
-      refreshToken(res.headers.get("Authorization"),res.headers.get("reAuthorization"));
-      fetchGet(url,location)
-      
-      // return res.json();
-      // console.log("is server status 500 ? ", res.status);
-      // alert("서버 에러  : 관리자에게 문의해주세요");
+      alert("서버 에러  : 관리자에게 문의해주세요");
     }
   });
 }
