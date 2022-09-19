@@ -1,7 +1,7 @@
 import styles from './Admin.module.css';
 import React, { useState } from 'react';
-import useUrl from '../../hooks/useUrl';
-import Footer from '../footer/Footer';
+import useUrl from '../../../hooks/useUrl';
+import Footer from '../../footer/Footer';
 
 const Admin = () => {
   const myUrl = useUrl();
@@ -56,7 +56,7 @@ const Admin = () => {
             <input
               onChange={onChange}
               accept={'.csv'}
-              type='file'
+              type="file"
               className={styles.input}
             />
             <div>
