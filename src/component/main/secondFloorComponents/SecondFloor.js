@@ -5,6 +5,8 @@ import styles from './SecondFloor.module.css'
 import useUrl from '../../../hooks/useUrl'
 import useTimeAlert from '../../../hooks/useTimeAlert'
 import { useState, useEffect } from 'react'
+import { fetchGet } from '../../../hooks/fetchUrl'
+import { useLocation } from 'react-router-dom'
 
 const SecondFloor = () => {
   const myUrl = useUrl()
@@ -20,11 +22,9 @@ const SecondFloor = () => {
   const userClasses = window.localStorage.getItem('class')
 
   const url = `http://${myUrl}/api/booking/main?floor=2`
+  const location = useLocation()
   useEffect(() => {
-    fetch(url, {
-      method: 'GET',
-    })
-      .then((res) => res.json())
+fetchGet(url,location)
       .then((data) => {
         setBookingData(data.BookingData)
         setRoomData(data.RoomData)

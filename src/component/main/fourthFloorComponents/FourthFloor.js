@@ -4,6 +4,8 @@ import styles from './FourthFloor.module.css'
 import { useState, useEffect } from 'react'
 import useUrl from '../../../hooks/useUrl'
 import useTimeAlert from '../../../hooks/useTimeAlert'
+import { useLocation } from 'react-router-dom'
+import { fetchGet } from '../../../hooks/fetchUrl'
 
 const FourthFloor = () => {
   const myUrl = useUrl()
@@ -14,11 +16,9 @@ const FourthFloor = () => {
   const [roomData, setRoomData] = useState([])
 
   const url = `http://${myUrl}/api/booking/main?floor=4`
+  const location = useLocation()
   useEffect(() => {
-    fetch(url, {
-      method: 'GET',
-    })
-      .then((res) => res.json())
+ fetchGet(url,location)
       .then((data) => {
         setBookingData(data.BookingData)
         setRoomData(data.RoomData)
