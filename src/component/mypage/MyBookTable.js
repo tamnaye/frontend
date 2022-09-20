@@ -4,8 +4,9 @@ import Table from 'react-bootstrap/Table';
 //hooks
 import { useState, useEffect } from 'react';
 import useUrl from '../../hooks/useUrl';
-import { fetchGet } from '../../hooks/fetchUrl';
+import { fetchGet, fetchPostJson } from '../../hooks/fetchUrl';
 import { getAuth } from '../../hooks/authModule';
+import {  useNavigate } from 'react-router-dom';
 
 function MyBookTable() {
   // const userId = window.localStorage.getItem('userId');
@@ -13,6 +14,7 @@ function MyBookTable() {
   const [userId, setUserId] = useState('');
   const [myBookingList, setMyBookingList] = useState([]);
   const url = `http://${myUrl}/api/user/mypage`;
+  const navigate = useNavigate
   useEffect(() => {
 fetchGet(url)
       .then((data) => {
@@ -29,18 +31,10 @@ fetchGet(url)
     if (window.confirm('예약을 취소하시겠습니까?')) {
       //console.log(bid);
       const postUrl = `http://${myUrl}/api/booking/cancellation`;
-      fetch(postUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization' : getAuth().auth,
-          'reAuthorization' : getAuth().reAuth
-        },
-        body: JSON.stringify({
-          bookingId: bid,
-        }),
-      })
-        .then((res) => res.json())
+      const object = {
+        bookingId : bid
+      }
+      fetchPostJson(postUrl,{bookingId:bid},navigate)
         .then((data) => {
           //console.log(data);
           arr.splice(index, 1); //배열의 기존 요소를 삭제 또는 교체하거나 새 요소를 추가하여 배열의 내용을 변경

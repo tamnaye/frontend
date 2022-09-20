@@ -23,7 +23,7 @@ export function fetchGet(url, navigate) {
     }
   });
 }
-export function fetchPostJson(url,object) {
+export function fetchPostJson(url,object,navigate) {
   return fetch(url, {
     method: "POST",
     headers: sendAuth(),
@@ -32,6 +32,7 @@ export function fetchPostJson(url,object) {
     if (getAuth().reAuth !== null) {
       if (res.status === 403) {
         tokenExpired();
+        navigate('/')
       } else if (res.status === 200) {
         refreshToken(res.headers.get("Authorization"));
         return res.json();
