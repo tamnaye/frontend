@@ -5,27 +5,25 @@ import "antd/dist/antd.min.css";
 import styles from "./Login.module.css";
 import encrypt from "../../hooks/encrypt";
 import useUrl from "../../hooks/useUrl";
-import { getAuth, setAuth } from "../../hooks/authModule";
-import { useEffect, useMemo } from "react";
+import {  setAuth } from "../../hooks/authModule";
 
 export default function Login() {
   const navigate = useNavigate();
   const ip = useUrl();
 
- function getToken(userid) {
+  function getToken(userid) {
     const url = `http://${ip}/auth/login`;
 
-  fetch(url, {
-      method: 'POST',
+    fetch(url, {
+      method: "POST",
       headers: {
-        'content-type': 'application/json',
+        "content-type": "application/json",
       },
       body: JSON.stringify({
         userId: userid,
       }),
     })
       .then((res) => {
-        console.log("1) Login !! res.auth : ",res.headers.get("Authorization"))
         setAuth(
           res.headers.get("Authorization"),
           res.headers.get("reAuthorization")
@@ -34,11 +32,10 @@ export default function Login() {
       })
 
       .then((data) => {
-        console.log("2) Login get token !! data : ",data)
         if (data.message === "success") {
           navigate(`/main`);
-        } else{
-          alert("알수없는 에러입니다.")
+        } else {
+          alert("알수없는 에러입니다.");
         }
       });
   }
@@ -47,10 +44,10 @@ export default function Login() {
     const userid = values.userid;
     const userpwd = values.userpwd; //get pwd
     const encrypted_pwd = encrypt(userpwd); //pwd 암호화
- fetch('/api/user/login', {
-      method: 'POST',
+    fetch("/api/user/login", {
+      method: "POST",
       headers: {
-        'content-type': 'application/json',
+        "content-type": "application/json",
       },
       body: JSON.stringify({
         id: userid,
@@ -73,44 +70,44 @@ export default function Login() {
         <h1 className={styles.centerName}>더큰내일 회의실 예약 시스템</h1>
         <Form onFinish={onFinish}>
           <Form.Item
-            name='userid'
+            name="userid"
             rules={[
               {
                 required: true,
-                message: 'Please input your username!',
+                message: "Please input your username!",
               },
             ]}
           >
             <Input
-              autoComplete='off'
-              size='large'
-              placeholder='Account ID'
+              autoComplete="off"
+              size="large"
+              placeholder="Account ID"
               prefix={<UserOutlined />}
             />
           </Form.Item>
           <Form.Item
-            name='userpwd'
+            name="userpwd"
             rules={[
               {
                 required: true,
-                message: 'Please input your password!',
+                message: "Please input your password!",
               },
             ]}
           >
             <Input
-              autoComplete='off'
-              type='password'
-              size='large'
-              placeholder='Password'
+              autoComplete="off"
+              type="password"
+              size="large"
+              placeholder="Password"
               prefix={<LockOutlined />}
             />
           </Form.Item>
           <Form.Item>
             <Button
-              size='large'
-              style={{ width: '100%' }}
-              type='primary'
-              htmlType='submit'
+              size="large"
+              style={{ width: "100%" }}
+              type="primary"
+              htmlType="submit"
             >
               Login
             </Button>
