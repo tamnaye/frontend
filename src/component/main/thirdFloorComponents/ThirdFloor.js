@@ -1,38 +1,16 @@
-import ThirdFloorMap from './ThirdFloorMap'
-import ThirdFloorMeetingRoom from './ThirdFloorMeetingRoom.js'
-import ThirdFloorNaRoom from './ThirdFloorNaRoom.js'
-import styles from './ThirdFloor.module.css'
+import ThirdFloorMap from './ThirdFloorMap';
+import ThirdFloorMeetingRoom from './ThirdFloorMeetingRoom.js';
+import ThirdFloorNaRoom from './ThirdFloorNaRoom.js';
+import styles from './ThirdFloor.module.css';
 
-import { useState, useEffect } from 'react'
-import useUrl from '../../../hooks/useUrl'
-import useTimeAlert from '../../../hooks/useTimeAlert'
-import { fetchGet } from '../../../hooks/fetchUrl'
-import { useLocation } from 'react-router-dom'
-
-const ThirdFloor = () => {
-  const [ablebtn, BookingConfirm] = useTimeAlert()
-
-  //3층 API 정보 가져오기
-  const [bookingData, setBookingData] = useState([])
-  const [roomData, setRoomData] = useState([])
-
-  const myUrl = useUrl()
-  const url = `http://${myUrl}/api/booking/main?floor=3`
-  const location = useLocation()
-  useEffect(() => {
-fetchGet(url,location)
-      .then((data) => {
-        setBookingData(data.BookingData)
-        setRoomData(data.RoomData)
-      })
-  }, [url, myUrl])
-
-  const ThirdMeetingStudioinfo = roomData.filter(
-    (rooms) => rooms.roomType === 'meeting' || rooms.roomType === 'studio'
-  )
-
-  const ThirdNaboxinfo = roomData.filter((rooms) => rooms.roomType === 'nabox')
-
+const ThirdFloor = ({
+  ablebtn,
+  BookingConfirm,
+  ThirdMeetingStudioinfo,
+  ThirdNaboxinfo,
+  bookingData,
+  roomData,
+}) => {
   return (
     <div className={styles.MainThirdFloor}>
       <div className={styles.ThirdFloor}>
@@ -68,7 +46,7 @@ fetchGet(url,location)
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ThirdFloor
+export default ThirdFloor;
