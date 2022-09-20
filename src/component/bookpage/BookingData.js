@@ -20,7 +20,8 @@ import { getAuth } from '../../hooks/authModule';
 //2) defaultDisable에서 break 하는 부분 break 안하도록 해줌
 //3) bookingConfirm()에서 체크해줄 때 팀원 선택 안해도 되게 해줌
 
-const BookingData = () => {
+const BookingData = ({string}) => {
+  console.log("string 1 : ",string)
   const myUrl = useUrl();
 
   const { roomId } = useParams();
@@ -43,6 +44,8 @@ const BookingData = () => {
   useEffect(() => {
   fetchGet(url,location)
       .then((data) => {
+  console.log("string useEffect : ",string)
+
         setUserClass(data?.userData.classes)
         setUserName(data?.userData.userName);
         setSearchedNameState(
@@ -351,6 +354,7 @@ const BookingData = () => {
   }
   return (
     <div>
+{console.log("string return : ",string)}  
       <div className={styles.wrap}>
         <h6
           className={
