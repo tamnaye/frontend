@@ -8,33 +8,33 @@ import { useState, useEffect } from 'react';
 import useUrl from '../../hooks/useUrl';
 import useRoomImg from '../../hooks/useRoomImg';
 
-function RoomInfo() {
-  const { roomId } = useParams();
-  const myUrl = useUrl();
-
+function RoomInfo({ roomData }) {
   const [roomInfo, setRoomInfo] = useState('');
-  const url = `http://${myUrl}/api/booking/room-data?floor=0&roomId=${roomId}`;
   useEffect(() => {
-    fetch(url, {
-      method: 'GET',
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setRoomInfo(
-          data.roomData.filter((info) => info.roomId === Number(roomId))[0]
-            .roomName
-        );
-      });
-  }, [roomId, url]);
+    // fetch(url, {
+    // method: 'GET',
+    // })
+    // .then((res) => res.json())
+    // .then((data) => {
+    setRoomInfo(
+      roomData
+      // roomData?.filter((info) => info.roomId === Number(roomId))[0].roomName
+    );
+    console.log('roominfo roomInfo : ', roomInfo);
+    console.log('roominfo roomdata : ', roomData);
+
+    // });
+  }, [roomData]);
 
   //로컬 자체에 room 이미지 저장해서 서버에서 받아온 roomId와 동일할 떄 원하는 이미지 불러오기
   const roomsImg = useRoomImg(); //useRoomImg 훅에서 가져옴
-  const [roomImg] = roomsImg.filter((img) => img.room_id === Number(roomId));
+  const [roomImg] = roomsImg.filter((img) => img.room_id === roomInfo?.roomId);
+  // const [roomImg] = roomsImg.filter((img) => img.room_id === roomData.roomId);
 
   return (
     <div className={styles.wrap}>
-      <h3 className={styles.roomName}> {roomInfo} 공간</h3>
-      <img className={styles.room_img} alt='room_img' src={roomImg.img}></img>
+      <h3 className={styles.roomName}> {roomInfo.roomName} 공간</h3>
+      <img className={styles.room_img} alt='room_img' src={roomImg?.img}></img>
       <div>
         <h6 className={styles.note}> 공간 사용 안내 </h6>
         <div className={styles.contents}>
