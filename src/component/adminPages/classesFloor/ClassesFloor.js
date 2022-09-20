@@ -8,8 +8,8 @@ import { fetchGet } from '../../../hooks/fetchUrl';
 const ClassesFloor = () => {
   const myUrl = useUrl();
   const [floorChangeData, setFloorChangeData] = useState('');
-
   const [classOfFloorData, setClassOfFloorData] = useState([]);
+
   const url = `http://${myUrl}/admin/view/class&floor`;
   useEffect(() => {
     fetchGet(url).then((data) => {
@@ -47,7 +47,10 @@ const ClassesFloor = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+        console.log(data.message);
+        alert(data.message);
+        window.location.reload(); //alert 버튼 클릭 시, 새로고침해서 데이터 다시 받아옴
+        // setClassOfFloorData(newArr);
       });
   };
 

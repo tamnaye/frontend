@@ -36,7 +36,7 @@ const AdminMain = () => {
           </Container>
         </Navbar>
       ))}
-      <ClassesFloor />
+      <FileUpload />
     </>
   );
 };
