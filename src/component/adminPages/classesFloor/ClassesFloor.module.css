@@ -1,12 +1,23 @@
 @media screen and (max-width: 700px) {
-    body .wrap {
-        height: 72vh;
-    }
-
     body .wrap .box {
-        margin-top: 40px;
+        margin-top: 50px;
         width: 100%;
         padding: 10px;
+    }
+    .wrap .box .title{
+        font-size: 18px;
+    }
+    .wrap .box .file{
+        margin-top: 30px;
+        font-size: 13px;
+        padding: 10px;
+    }
+    .wrap .box .table_box{
+        font-size: 15px;
+    }
+    .wrap .box .btn{
+        width: 70px;
+        height: 27px;
     }
 }
 
@@ -16,7 +27,7 @@
 }
 
 .wrap .box {
-    margin: 30px auto;
+    margin: 100px auto;
     padding: 50px;
     /* border: 1px solid black; */
     width: 700px;
@@ -44,7 +55,7 @@
 .table_box {
     margin-top: 30px;
     text-align: center;
-    font-size: 18px;
+    font-size: 20px;
 }
 
 .classe {
@@ -59,9 +70,13 @@
     text-align: center;
 }
 
+select > .option_difault{
+    background-color: #2090ff;
+}
+
 .btn {
     width: 70px;
-    height: 30px;
+    height: 40px;
     background-color: white;
     color: #2090ff;
     border: 2px solid #2090ff;

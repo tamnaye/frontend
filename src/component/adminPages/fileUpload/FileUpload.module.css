@@ -1,10 +1,6 @@
 @media screen and (max-width: 700px) {
-    body .wrap {
-        height: 72vh;
-    }
-
     body .wrap .box {
-        margin-top: 40px;
+        margin-top: 50px;
         width: 100%;
         padding: 10px;
     }
@@ -28,11 +24,10 @@
 
 .wrap {
     width: 100vw;
-    height: 75vh;
 }
 
 .wrap .box {
-    margin: 30px auto;
+    margin: 100px auto;
     padding: 50px;
     /* border: 1px solid black; */
     width: 700px;

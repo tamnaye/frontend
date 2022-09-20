@@ -1,16 +1,16 @@
+import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { getAuth } from './hooks/authModule';
 import './App.module.css';
 import Login from './component/login/Login';
-import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
-import EmptyPage from './component/EmptyPage';
+import Logout from './component/logout/Logout';
 import Header from './component/header/Header';
+import EmptyPage from './component/EmptyPage';
 import MainTemplate from './component/main/MainTemplate';
 import ReservationState from './component/reservation/ReservationState';
 import BookPage from './component/bookpage/BookPage';
 import MyPage from './component/mypage/MyPage';
-import Logout from './component/logout/Logout';
 import AdminMain from './component/adminPages/AdminMain';
-import { useEffect, useState } from 'react';
-import { getAuth } from './hooks/authModule';
 
 function App() {
   let location = useLocation();
@@ -36,7 +36,6 @@ function App() {
   return (
     <div>
       {location.pathname !== '/' ? <Header /> : null}
-
       <Routes>
         <Route path='/' element={<Login />} />
         <Route path='/logout' element={<Logout />} />

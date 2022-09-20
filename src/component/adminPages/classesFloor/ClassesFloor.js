@@ -54,7 +54,7 @@ const ClassesFloor = () => {
   return (
     <div className={styles.wrap}>
       <div className={styles.box}>
-        <h3 className={styles.title}>기수별 층수변경</h3>
+        <h3 className={styles.title}>기수별 층수관리</h3>
         <hr className={styles.line} />
         <div className={styles.file}>
           기수로 구분하여 각각 층수를 수정할 수 있습니다.
@@ -86,7 +86,9 @@ const ClassesFloor = () => {
                       className={styles.select_floor}
                       onChange={onChange}
                     >
-                      <option value='default'>{item.floor}</option>
+                      <option className={styles.option_difault} value='default'>
+                        {item.floor}
+                      </option>
                       {/* <hr /> */}
                       <option value='2'>2</option>
                       <option value='3'>3</option>
