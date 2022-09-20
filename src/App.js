@@ -21,9 +21,13 @@ function App() {
       getAuth().auth === null &&
       location.pathname !== '/logout'
     ) {
+      console.log('App.js 예외처리 1');
       navigate('/');
     } else if (location.pathname === '/' && getAuth().auth !== null) {
+      console.log('App.js 예외처리 2');
       navigate('/main');
+    } else {
+      console.log('App.js 예외처리 else');
     }
   }, [location.pathname, navigate]);
 

@@ -5,21 +5,25 @@ import {
   refreshToken,
   removeToken,
   sendAuth,
+  getAuth,
 } from "./authModule";
 
-export function fetchGet(url, location) {
+export function fetchGet(url, navigate) {
   return fetch(url, {
     method: "GET",
     headers: sendAuth(),
   }).then((res) => {
-    if (res.status === 403) {
-      tokenExpired();
-    } else if (res.status === 200) {
-      refreshToken(res.headers.get("Authorization"),res.headers.get("reAuthorization"));
-      return res.json();
-    } 
-    else if(res.status===500) {
-      alert("서버 에러  : 관리자에게 문의해주세요");
+    console.log("getAuth() : ",getAuth())
+    if(getAuth().reAuth!==null){
+      if (res.status === 403) {
+        tokenExpired();
+        navigate('/')
+      } else if (res.status === 200) {
+        refreshToken(res.headers.get("Authorization"),res.headers.get("reAuthorization"));
+        return res.json();
+      } else if(res.status===500) {
+        alert("서버 에러  : 관리자에게 문의해주세요");
+      }
     }
   });
 }

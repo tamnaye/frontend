@@ -14,6 +14,7 @@ import { fetchGet } from '../../hooks/fetchUrl';
 function MyPage() {
   const myUrl = useUrl();
   const location = useLocation()
+  const navigate = useNavigate()
 
   //----로그인 시 userName 데이터 가져오기----//
   const [bookingCount, setBookingCount] = useState([]);
@@ -21,13 +22,11 @@ function MyPage() {
   const [userId, setUserId] = useState('');
   const url = `http://${myUrl}/api/user/mypage`;
   useEffect(() => {
-      // fetch(url, { method: 'GET' })
-      //   .then((res) => res.json())
-      fetchGet(url,location)
+      fetchGet(url,navigate)
         .then((data) => {
-          setUserId(data.userData.userId)
-          setUserName(data.userData.userName);
-          setBookingCount(data.myBookingDetailDataList);
+            setUserId(data?.userData.userId)
+            setUserName(data?.userData.userName);
+            setBookingCount(data?.myBookingDetailDataList);
         });
   }, [url]);
   //onsole.log(bookingCount);
