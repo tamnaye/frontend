@@ -11,6 +11,7 @@ import ReservationState from "./component/reservation/ReservationState";
 import BookPage from "./component/bookpage/BookPage";
 import MyPage from "./component/mypage/MyPage";
 import AdminMain from "./component/adminPages/AdminMain";
+import ClassesFloor from "./component/adminPages/classesFloor/ClassesFloor";
 import Room from "./component/adminPages/room/Room";
 
 function App() {
@@ -49,6 +50,7 @@ function App() {
         <Route path="/booking/:roomId" element={<BookPage />} />
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/admin" element={<AdminMain />} />
+        <Route path="/admin/floor" element={<ClassesFloor />} />
         <Route path="/admin/room" element={<Room />} />
         <Route path="*" element={<EmptyPage />} />
         {/* <Route path='/feedback' element={<Feedback />} /> */}
