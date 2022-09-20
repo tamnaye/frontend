@@ -29,7 +29,7 @@ const AdminMain = () => {
                   <Nav.Link href='/admin'>최신기수 업로드</Nav.Link>
                   <Nav.Link href='#action2'>개별 인재관리</Nav.Link>
                   <Nav.Link href='/admin/floor'>기수별 층수관리</Nav.Link>
-                  <Nav.Link href='#action2'>회의실 데이터</Nav.Link>
+                  <Nav.Link href='/admin/room'>회의실 데이터</Nav.Link>
                 </Nav>
               </Offcanvas.Body>
             </Navbar.Offcanvas>

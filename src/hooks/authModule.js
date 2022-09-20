@@ -10,8 +10,8 @@ export function getAuth() {
     return object
 }
 export function sendAuth (){
-
     const object = {
+        "Content-Type": "application/json",
         Authorization : window.localStorage.getItem(process.env.REACT_APP_AUTH_KEY),
         reAuthorization : window.localStorage.getItem(process.env.REACT_APP_reAUTH_KEY)
       }
@@ -30,7 +30,7 @@ export function setAuth(auth, reAuth){
 }
 // accessToken refresh 
 export function refreshToken (auth){
-    if(getAuth().auth!==auth){
+    if(getAuth().auth!==auth && auth!==null){
         window.localStorage.setItem(process.env.REACT_APP_AUTH_KEY,auth)
     }
 }
