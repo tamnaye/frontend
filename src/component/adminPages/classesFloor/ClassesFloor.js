@@ -3,9 +3,11 @@ import Table from 'react-bootstrap/Table';
 //hooks
 import { useState, useEffect } from 'react';
 import useUrl from '../../../hooks/useUrl';
-import { fetchGet } from '../../../hooks/fetchUrl';
+import { fetchGet, fetchPostJson } from '../../../hooks/fetchUrl';
+import { useNavigate } from 'react-router-dom';
 
 const ClassesFloor = () => {
+  const navigate = useNavigate();
   const myUrl = useUrl();
   const [floorChangeData, setFloorChangeData] = useState('');
   const [classOfFloorData, setClassOfFloorData] = useState([]);
@@ -16,42 +18,29 @@ const ClassesFloor = () => {
       setClassOfFloorData(data.ClassOfFloorData);
     });
   }, [url]);
-  console.log(classOfFloorData);
+  //console.log(classOfFloorData);
 
   //----select box 값 가져오기
   const onChange = (event) => {
-    console.log(event.target.value);
+    //console.log(event.target.value);
     setFloorChangeData(event.target.value);
-    console.log(floorChangeData);
   };
 
   //----수정 버튼 클릭 시 수정한 데이터 post
   const btnClickChange = (changeFloor, index) => {
-    console.log(changeFloor, index);
-    console.log(changeFloor.classes);
-    console.log(changeFloor.floor);
-
-    const newArr = [...classOfFloorData];
-    console.log(newArr);
+    //console.log(changeFloor.classes);
+    //console.log(changeFloor.floor);
 
     const postUrl = `http://${myUrl}/admin/change/floor`;
-    fetch(postUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        classes: changeFloor.classes,
-        floor: floorChangeData,
-      }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data.message);
-        alert(data.message);
-        window.location.reload(); //alert 버튼 클릭 시, 새로고침해서 데이터 다시 받아옴
-        // setClassOfFloorData(newArr);
-      });
+    const object = {
+      classes: changeFloor.classes,
+      floor: floorChangeData,
+    };
+    fetchPostJson(postUrl, object, navigate).then((data) => {
+      //console.log(data.message);
+      alert(data.message);
+      window.location.reload(); //alert 버튼 클릭 시, 새로고침해서 데이터 다시 받아옴
+    });
   };
 
   return (

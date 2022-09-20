@@ -4,7 +4,8 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import { useState, useEffect } from 'react';
 
 function NavsFloor3({ navData }) {
-  //----/api/booking----//
+  //console.log('NavsAdmin !! navData :', navData);
+
   const [roomData, setRoomData] = useState([]);
   //3층 룸리스트 추출 -> 미팅룸리스트 개인자습룸리스트 추출
   const floor3Studio = roomData.filter((room) => room.roomType === 'studio');

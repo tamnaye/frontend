@@ -5,7 +5,7 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import { useState, useEffect } from 'react';
 
 function NavsFloor2({ navData }) {
-  console.log('NavsAdmin !! navData : ', navData);
+  //console.log('NavsAdmin !! navData :', navData);
 
   const [roomData, setRoomData] = useState([]);
   //2층 룸리스트 추출 -> 미팅룸리스트 개인자습룸리스트 추출
