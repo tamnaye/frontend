@@ -131,6 +131,7 @@ const MainTemplate = () => {
             roomData={roomData}
             SinyangID={SinyangID}
             SinyangName={SinyangName}
+            floor={floor}
           />,
           <ThirdFloor
             key="3"
@@ -164,6 +165,7 @@ const MainTemplate = () => {
             roomData={roomData}
             SinyangID={SinyangID}
             SinyangName={SinyangName}
+            floor={floor}
           />
         )}
         {floor === 3 && (

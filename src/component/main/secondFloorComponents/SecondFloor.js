@@ -18,6 +18,7 @@ const SecondFloor = ({
   SinyangID,
   SinyangName,
   userClasses,
+  floor,
 }) => {
   return (
     <div className={styles.MainSecondFloor}>
@@ -35,6 +36,7 @@ const SecondFloor = ({
             SinyangID={SinyangID}
             SinyangName={SinyangName}
             userClasses={userClasses}
+            floor={floor}
           />
           <div className={styles.RoomContainer}>
             <SecondFloorMeetingRoom
@@ -47,6 +49,7 @@ const SecondFloor = ({
               SinyangID={SinyangID}
               SinyangName={SinyangName}
               userClasses={userClasses}
+              floor={floor}
             />
             <SecondFloorNaRoom
               className={styles.naRoom}
