@@ -2,11 +2,9 @@
 import styles from './Navs.module.css';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
 import useUrl from '../../../hooks/useUrl';
 
 function NavsFloor3() {
-  const { roomId } = useParams();
   const myUrl = useUrl();
   //----/api/booking----//
   const [roomData, setRoomData] = useState([]);
@@ -15,7 +13,7 @@ function NavsFloor3() {
   const floor3Meeting = roomData.filter((room) => room.roomType === 'meeting');
   const floor3Nabox = roomData.filter((room) => room.roomType === 'nabox');
 
-  const url = `http://${myUrl}/api/booking/room-data?floor=3&roomId=${roomId}`;
+  const url = `http://${myUrl}/api/booking/room-data?floor=3`;
   useEffect(() => {
     fetch(url, { method: 'GET' })
       .then((res) => res.json())

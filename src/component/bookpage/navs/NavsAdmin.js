@@ -3,14 +3,11 @@ import styles from './Navs.module.css';
 import Dropdown from 'react-bootstrap/Dropdown';
 //hooks
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
 import useUrl from '../../../hooks/useUrl';
 
-function NavsAdmin({navData, userFloor}) {
-  // console.log("NavsAdmin !! navData : ", navData)
-  // console.log("NavsAdmin !! userFloor : ", userFloor)
-
-  const { roomId } = useParams();
+function NavsAdmin({ navData, userFloor }) {
+  console.log('NavsAdmin !! navData : ', navData);
+  console.log('NavsAdmin !! userFloor : ', userFloor);
   const myUrl = useUrl();
   //미팅룸 데이터 추출
   const [roomData, setRoomData] = useState([]);
@@ -35,7 +32,7 @@ function NavsAdmin({navData, userFloor}) {
   const floor4 = roomData.filter((room) => room.floor === 4);
   //console.log(floor4);
 
-  const url = `http://${myUrl}/api/booking/room-data?floor=0&roomId=${roomId}`;
+  const url = `http://${myUrl}/api/booking/room-data?floor=0`;
   useEffect(() => {
     fetch(url, { method: 'GET' })
       .then((res) => res.json())
@@ -46,7 +43,6 @@ function NavsAdmin({navData, userFloor}) {
 
   return (
     <div className={styles.wrap}>
-      
       <Dropdown className={styles.box}>
         <Dropdown.Toggle
           className={styles.toggle}
