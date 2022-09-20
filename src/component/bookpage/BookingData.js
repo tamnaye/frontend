@@ -26,7 +26,6 @@ const BookingData = () => {
   const { roomId } = useParams();
   const [userName, setUserName] = useState('');
   const [userClass, setUserClass] = useState('');
-  console.log("userClass", userClass)
   
   const [roomType, setRoomType] = useState(''); // meeting / nabax
   const [memberNames, setMemberNames] = useState([]);
@@ -37,29 +36,28 @@ const BookingData = () => {
   const [pastState, setPastState] = useState([]);
   const [isOfficial, setIsOfficial] = useState([]);
   const [isLoadding, setIsLoading] = useState(false);
+  const [floor, setFloor] = useState('')
 
   const url = `http://${myUrl}/api/booking?roomId=${roomId}`;
   const location = useLocation()
   useEffect(() => {
   fetchGet(url,location)
       .then((data) => {
-        console.log(data)
-        setUserClass(data.userData.classes)
-        setUserName(data.userData.userName);
-        setRoomType(data.roomData.roomType);
+        setUserClass(data?.userData.classes)
+        setUserName(data?.userData.userName);
         setSearchedNameState(
-          data.namesData.filter((member) => member !== data.userData.userName)
+          data.namesData.filter((member) => member !== data?.userData.userName)
         );
         setMemberNames(
-          data.namesData.filter((member) => member !== data.userData.userName)
+          data.namesData.filter((member) => member !== data?.userData.userName)
         );
-        setMaxTime(data.roomData.maxTime);
 
-        //set Booked, past, official
-
+        setMaxTime(data?.roomData.maxTime);
+        setRoomType(data?.roomData.roomType);
+        setFloor(data?.roomData.floor)
         const bookedTimes = [];
         const officialTimes = [];
-        data.bookingData.map((booking) =>
+        data?.bookingData.map((booking) =>
           bookedTimes.push(...getTimes(booking.startTime, booking.endTime)) &&
           booking.official
             ? officialTimes.push(
@@ -70,8 +68,6 @@ const BookingData = () => {
         const arr1 = [];
         const arr2 = [];
         const arr3 = [];
-        //console.log('bookedTimes', bookedTimes);
-        //console.log('officialTimes', officialTimes);
         times.map(
           (time) =>
             arr1.push(checkPast(time)) &&
@@ -439,7 +435,7 @@ const BookingData = () => {
               <Tooltip
                 placement='bottom'
                 title={
-                  userClass !== 0 || pastState[index] || !bookedState[index]
+                  userClass !== 0 || floor===4|| pastState[index] || !bookedState[index] 
                     ? ''
                     : isOfficial[index]
                     ? '공식일정예약'
@@ -453,12 +449,12 @@ const BookingData = () => {
                   disabled={
                     pastState[index] || isOfficial[index]
                       ? true
-                      : userClass === 0
+                      : userClass === 0 && floor !==4
                       ? false
                       : bookedState[index]
                   }
                   style={
-                    userClass === 0 && bookedState[index]
+                    userClass === 0 && bookedState[index] && floor !==4
                       ? {
                           margin: '10px',
                           color: 'pink',
