@@ -89,6 +89,7 @@ const ClassesFloor = () => {
                       <option className={styles.option_difault} value='default'>
                         {item.floor}
                       </option>
+                      <optgroup label='--'></optgroup>
                       {/* <hr /> */}
                       <option value='2'>2</option>
                       <option value='3'>3</option>
