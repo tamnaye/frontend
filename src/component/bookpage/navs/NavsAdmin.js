@@ -6,7 +6,10 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import useUrl from '../../../hooks/useUrl';
 
-function NavsAdmin() {
+function NavsAdmin({navData, userFloor}) {
+  // console.log("NavsAdmin !! navData : ", navData)
+  // console.log("NavsAdmin !! userFloor : ", userFloor)
+
   const { roomId } = useParams();
   const myUrl = useUrl();
   //미팅룸 데이터 추출

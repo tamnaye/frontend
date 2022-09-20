@@ -10,8 +10,8 @@ export function getAuth() {
     return object
 }
 export function sendAuth (){
-
     const object = {
+        "Content-Type": "application/json",
         Authorization : window.localStorage.getItem(process.env.REACT_APP_AUTH_KEY),
         reAuthorization : window.localStorage.getItem(process.env.REACT_APP_reAUTH_KEY)
       }
