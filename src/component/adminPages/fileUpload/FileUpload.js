@@ -1,12 +1,14 @@
 import styles from './FileUpload.module.css';
 import useUrl from '../../../hooks/useUrl';
+// import { useState } from 'react';
 
 const FileUpload = () => {
+  // const [fileState, setFileState] = useState('');
   const myUrl = useUrl();
-  const formData = new FormData(); //FormData(): Creates a new FormData object 폼을 쉽게 보내주는 객체, HTML 폼 데이터를 나타냄
+  let formData = new FormData(); //FormData(): Creates a new FormData object
   console.log('empty file:', formData);
 
-  //input file 값 확인
+  //----input file 값 확인
   const onChange = (e) => {
     formData.append('file', e.target.files[0]);
     console.log('target file:', formData);
@@ -15,8 +17,7 @@ const FileUpload = () => {
     }
   };
 
-  //Upload 버튼 클릭 시 새로고침 막아주고나서
-  //파일이 없는 경우 alert -> 파일이 있는 경우 POST
+  //----Upload 버튼 클릭 시 새로고침 막아주고나서 파일이 없는 경우 alert -> 파일이 있는 경우 POST
   const onUploadSubmit = (event) => {
     event.preventDefault();
 
@@ -25,12 +26,9 @@ const FileUpload = () => {
     //   alert('csv파일을 선택 해주세요!');
     // }
 
-    //csv파일 POST
+    //----csv파일 POST
     fetch(`http://${myUrl}/admin/update/user`, {
       method: 'POST',
-      //--폼을 전송할 때 HTTP 메시지의 Content-Type 속성은 항상 multipart/form-data이고 메시지는 인코딩되어 전송됩니다.
-      //--파일이 있는 폼도 당연히 이 규칙을 따르기 때문에 <input type="file">로 지정한 필드 역시 일반 폼을 전송할 때와 유사하게 전송됩니다.
-      //
       // headers: {
       //   'Content-Type': 'multipart/form-data',
       // },
@@ -40,10 +38,12 @@ const FileUpload = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log('data:', data);
-        alert('파일이 업로드 되었습니다.');
-        // console.log(data.message);
+        console.log('data:', data, data.message);
+        alert(data.message);
         //제출하고 나면 빈값으로 변경
+        // setFileState(null);
+        // console.log(fileState);
+        window.location.reload();
       })
       .catch((err) => {
         console.log(err);
