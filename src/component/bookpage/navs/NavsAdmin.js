@@ -4,9 +4,8 @@ import Dropdown from 'react-bootstrap/Dropdown';
 //hooks
 import { useState, useEffect } from 'react';
 
-function NavsAdmin({ navData, userFloor }) {
-  console.log('NavsAdmin !! navData : ', navData);
-  console.log('NavsAdmin !! userFloor : ', userFloor);
+function NavsAdmin({ navData }) {
+  //console.log('NavsAdmin !! navData : ', navData);
 
   //미팅룸 데이터 추출
   const [roomData, setRoomData] = useState([]);

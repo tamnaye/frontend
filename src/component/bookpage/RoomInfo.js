@@ -1,5 +1,3 @@
-//component
-import React from 'react';
 //styles
 import styles from './RoomInfo.module.css';
 //hooks
@@ -18,7 +16,6 @@ function RoomInfo({ roomData }) {
     //비동기 이해하기 -> 의존성 배열과 연결!
     //console.log('roominfo roomInfo :', roomInfo);
     //console.log('roominfo roomdata :', roomData);
-
     // });
   }, [roomData]);
 

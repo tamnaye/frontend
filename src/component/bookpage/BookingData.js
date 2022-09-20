@@ -155,7 +155,6 @@ const BookingData = ({ bookingData, userData, namesData, roomData }) => {
   }
 
   //--------팀원 검색 기능---------//
-
   const [selectedNameState, setSelectedNameState] = useState([]);
   const [inputName, setInputName] = useState('');
   //팀원 리스트 모달창 처럼 보이기
@@ -177,7 +176,6 @@ const BookingData = ({ bookingData, userData, namesData, roomData }) => {
 
   function onChange(e) {
     setIsShowModal(true);
-
     setInputName(e.target.value);
     const str = e.target.value;
     let arr = [...memberNames];
