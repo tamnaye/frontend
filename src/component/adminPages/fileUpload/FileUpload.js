@@ -1,18 +1,13 @@
 import styles from './FileUpload.module.css';
 import useUrl from '../../../hooks/useUrl';
-import { useState } from 'react';
 
 const FileUpload = () => {
   const myUrl = useUrl();
   const formData = new FormData(); //FormData(): Creates a new FormData object 폼을 쉽게 보내주는 객체, HTML 폼 데이터를 나타냄
-  console.log(formData);
-  for (let value of formData.values()) {
-    console.log('empty file value:', value);
-  }
+  console.log('empty file:', formData);
 
   //input file 값 확인
   const onChange = (e) => {
-    console.log(formData);
     formData.append('file', e.target.files[0]);
     console.log('target file:', formData);
     for (let value of formData.values()) {
@@ -40,6 +35,7 @@ const FileUpload = () => {
       //   'Content-Type': 'multipart/form-data',
       // },
       //
+      cache: 'no-cache',
       body: formData,
     })
       .then((res) => res.json())
@@ -50,7 +46,6 @@ const FileUpload = () => {
         //제출하고 나면 빈값으로 변경
       })
       .catch((err) => {
-        alert('파일이 업로드 되었습니다.');
         console.log(err);
       });
   };
@@ -60,9 +55,6 @@ const FileUpload = () => {
       <div className={styles.wrap}>
         <div className={styles.box}>
           <h3 className={styles.title}>관리자 페이지</h3>
-          <p className={styles.explain}>
-            향후 관리자 페이지에 더 많은 기능을 추가할 예정입니다.
-          </p>
           <hr className={styles.line} />
           <div className={styles.file}>
             기수 인재 번호와 이름 데이터 최신 버전 파일을 업로드 해주세요!
