@@ -1,81 +1,71 @@
-import React from 'react'
-import { useState, useEffect } from 'react'
-import styles from './ThirdFloorNaRoomState.module.css'
-import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
-import Popover from 'react-bootstrap/Popover'
-import PoplayNabox from '../PoplayNabox'
-import { Link } from 'react-router-dom'
-import { EmojiSmileFill, ArrowRightCircleFill } from 'react-bootstrap-icons'
-import useUrl from '../../../hooks/useUrl'
+// 컴포넌트
+import Popover from 'react-bootstrap/Popover';
+import PoplayNabox from '../PoplayNabox';
+// 스타일
+import styles from './ThirdFloorNaRoomState.module.css';
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import { EmojiSmileFill, ArrowRightCircleFill } from 'react-bootstrap-icons';
+// hook
+import React from 'react';
+// import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
-const ThirdFloorNaRoomState = () => {
-  // API 3층 나박스 가져오기
-  const [bookingData, setBookingData] = useState([])
-  const [roomData, setRoomData] = useState([])
-
-  const myUrl = useUrl()
-
-  useEffect(() => {
-    fetch(`http://${myUrl}/api/booking/details-booking?floor=3`, {
-      method: 'GET',
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setBookingData(data.BookingData)
-        setRoomData(data.RoomData)
-      })
-  }, [`http://${myUrl}/api/booking/details-booking?floor=3`])
-
-  const ThirdNaboxinfo = roomData.filter((rooms) => rooms.roomType === 'nabox')
-
+const ThirdFloorNaRoomState = ({
+  // 3층
+  ThirdNaboxinfo,
+  // 전체
+  bookingData,
+  roomData,
+}) => {
   // 타임 리스트 돌리기
-  let timeList = []
+  let timeList = [];
   for (let i = 9; i <= 20; i++) {
-    timeList.push(i + '시')
+    timeList.push(i + '시');
   }
 
   // 09:00 형태 9로 숫자만 뽑아주는 함수
   const TimeToString = (time) => {
-    let newTime
+    let newTime;
     if (time === '09:00') {
-      newTime = time.substr(1, 1)
+      newTime = time.substr(1, 1);
     } else {
-      newTime = time.substr(0, 2)
+      newTime = time.substr(0, 2);
     }
-    return newTime
-  }
+    return newTime;
+  };
 
   // 9시 형태 9로 숫자만 뽑아주는 함수
   const onlyTime = (time) => {
-    let newTime
+    let newTime;
     if (time === '9시') {
-      newTime = time.substr(0, 1)
+      newTime = time.substr(0, 1);
     } else {
-      newTime = time.substr(0, 2)
+      newTime = time.substr(0, 2);
     }
-    return newTime
-  }
+    return newTime;
+  };
 
   // 시간당 룸의 예약 데이터 불러오는 함수
   const TimeAndRoomFilter = (Time, Room) => {
     let timedata = bookingData.filter(
       (room) =>
         room.roomId === Room && TimeToString(room.startTime) === onlyTime(Time)
-    )
-    return timedata
-  }
+    );
+    return timedata;
+  };
 
   // 시간당 룸의 예약이 있는지 없는지 함수
   const IsThisTimeRoombooked = (Time, Room) => {
-    const IsTrue = TimeAndRoomFilter(Time, Room).length !== 0
-    return IsTrue
-  }
+    const IsTrue = TimeAndRoomFilter(Time, Room).length !== 0;
+    return IsTrue;
+  };
 
   // 예약 시간 함수
   const bookingLength = (startTime, endTime) => {
-    let length = Number(TimeToString(endTime)) - Number(TimeToString(startTime))
-    return length
-  }
+    let length =
+      Number(TimeToString(endTime)) - Number(TimeToString(startTime));
+    return length;
+  };
 
   return (
     <div>
@@ -168,7 +158,7 @@ const ThirdFloorNaRoomState = () => {
         </tbody>
       </table>
     </div>
-  )
-}
+  );
+};
 
-export default ThirdFloorNaRoomState
+export default ThirdFloorNaRoomState;
