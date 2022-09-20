@@ -3,33 +3,30 @@ import React from 'react';
 //styles
 import styles from './RoomInfo.module.css';
 //hooks
-import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import useUrl from '../../hooks/useUrl';
 import useRoomImg from '../../hooks/useRoomImg';
 
 function RoomInfo({ roomData }) {
   const [roomInfo, setRoomInfo] = useState('');
+
   useEffect(() => {
-    // fetch(url, {
-    // method: 'GET',
-    // })
-    // .then((res) => res.json())
-    // .then((data) => {
     setRoomInfo(
       roomData
       // roomData?.filter((info) => info.roomId === Number(roomId))[0].roomName
+      //왼쪽부터 오른쪽 순으로 -> 원래 데이터에서 필터를 돌리고 로컬 라우트에서 roomId와 일치하면 [0]배열의 roomName을 가져옴
     );
-    console.log('roominfo roomInfo : ', roomInfo);
-    console.log('roominfo roomdata : ', roomData);
+    //비동기 이해하기 -> 의존성 배열과 연결!
+    //console.log('roominfo roomInfo :', roomInfo);
+    //console.log('roominfo roomdata :', roomData);
 
     // });
   }, [roomData]);
 
   //로컬 자체에 room 이미지 저장해서 서버에서 받아온 roomId와 동일할 떄 원하는 이미지 불러오기
   const roomsImg = useRoomImg(); //useRoomImg 훅에서 가져옴
+  //roomImg에서 필터를 돌면서 room_id와 roomData의 roomId가 같은 딕셔너리 추출
+  //?의미 : roomInfo값이 없으면 null처리 해주고, 있으면 roomInfo.roomId를 읽어옴
   const [roomImg] = roomsImg.filter((img) => img.room_id === roomInfo?.roomId);
-  // const [roomImg] = roomsImg.filter((img) => img.room_id === roomData.roomId);
 
   return (
     <div className={styles.wrap}>

@@ -27,7 +27,7 @@ const FileUpload = () => {
     // }
 
     //----csv파일 POST
-    fetch(`http://${myUrl}/admin/update/user`, {
+    fetch(`http://${myUrl}/admin/insert/user`, {
       method: 'POST',
       // headers: {
       //   'Content-Type': 'multipart/form-data',
