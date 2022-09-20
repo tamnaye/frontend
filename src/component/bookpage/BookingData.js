@@ -1,19 +1,19 @@
 //styles
-import styles from "./BookingData.module.css";
-import "antd/dist/antd.min.css";
-import { Checkbox, Tooltip } from "antd";
+import styles from './BookingData.module.css';
+import 'antd/dist/antd.min.css';
+import { Checkbox, Tooltip } from 'antd';
 //hooks
-import useUrl from "../../hooks/useUrl";
-import useTimes from "../../hooks/useTimes";
-import timePlusMinus from "../../hooks/timePlusMinus";
-import checkPast from "../../hooks/checkPast";
-import getTimes from "../../hooks/getTimes";
-import { useNavigate, useParams } from "react-router-dom";
-import { useEffect, useState, useRef } from "react";
+import useUrl from '../../hooks/useUrl';
+import useTimes from '../../hooks/useTimes';
+import timePlusMinus from '../../hooks/timePlusMinus';
+import checkPast from '../../hooks/checkPast';
+import getTimes from '../../hooks/getTimes';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useEffect, useState, useRef } from 'react';
 //component
-import ButtonExplain from "./ButtonExplain";
-import { getAuth } from "../../hooks/authModule";
-import { fetchPostJson } from "../../hooks/fetchUrl";
+import ButtonExplain from './ButtonExplain';
+import { getAuth } from '../../hooks/authModule';
+import { fetchPostJson } from '../../hooks/fetchUrl';
 
 //매니저님 예외처리한 부분
 //1) checkBox 예약된거 disable 안하고 그레이 처리 해줌
@@ -38,7 +38,7 @@ const BookingData = ({ bookingData, userData, namesData, roomData }) => {
   const [isLoadding, setIsLoading] = useState(false);
 
   useEffect(() => {
-    console.log("bookingdata useeffect namesData : ", namesData);
+    //console.log("bookingdata useeffect namesData : ", namesData);
     setSearchedNameState(
       namesData.filter((member) => member !== userData.userName)
     );
@@ -157,7 +157,7 @@ const BookingData = ({ bookingData, userData, namesData, roomData }) => {
   //--------팀원 검색 기능---------//
 
   const [selectedNameState, setSelectedNameState] = useState([]);
-  const [inputName, setInputName] = useState("");
+  const [inputName, setInputName] = useState('');
   //팀원 리스트 모달창 처럼 보이기
   const [isShowModal, setIsShowModal] = useState(true);
   //useRef사용해서 outside클릭 시 모달창 사라짐
@@ -172,7 +172,7 @@ const BookingData = ({ bookingData, userData, namesData, roomData }) => {
     }
   }
   useEffect(() => {
-    document.addEventListener("mousedown", onClickOutside);
+    document.addEventListener('mousedown', onClickOutside);
   });
 
   function onChange(e) {
@@ -188,7 +188,7 @@ const BookingData = ({ bookingData, userData, namesData, roomData }) => {
     setSearchedNameState(arr);
   }
   function onClickSearched(name) {
-    setInputName("");
+    setInputName('');
     setIsShowModal(false);
     // setSearchedNameState([]);
 
@@ -212,7 +212,7 @@ const BookingData = ({ bookingData, userData, namesData, roomData }) => {
     setIsShowModal(false);
     if (searchedNameState.length === 1) {
       //이미 선택할 팀원이 나옴
-      setInputName("");
+      setInputName('');
       // setSearchedNameState([]);
 
       const arr = [...selectedNameState];
@@ -223,12 +223,12 @@ const BookingData = ({ bookingData, userData, namesData, roomData }) => {
       );
     } else if (searchedNameState.length > 1) {
       //검색 결과 두명 이상 나왔을 때 엔터친 경우
-      alert("팀원을 한명씩 선택해 주세요 !");
+      alert('팀원을 한명씩 선택해 주세요 !');
     } else {
       //검색 안되는 이름 치고 엔터친 경우
-      setInputName("");
+      setInputName('');
       // setSearchedNameState([]);
-      alert("팀원의 이름을 확인해주세요!");
+      alert('팀원의 이름을 확인해주세요!');
     }
   }
 
@@ -240,7 +240,7 @@ const BookingData = ({ bookingData, userData, namesData, roomData }) => {
   const NowHour = Now.getHours();
   const NowMins = Now.getMinutes();
   //주말 예약 버튼 비활성화
-  const day = ["일", "월", "화", "수", "목", "금", "토"];
+  const day = ['일', '월', '화', '수', '목', '금', '토'];
   const NowDay = Now.getDay();
   const weekDay = day[NowDay];
   function pluszero(times) {
@@ -256,14 +256,14 @@ const BookingData = ({ bookingData, userData, namesData, roomData }) => {
   const nowHour = pluszero(NowHour);
   const nowMins = pluszero(NowMins);
   const nowTime = nowHour + nowMins;
-  const startTime = "0830";
-  const endTime = "2100";
+  const startTime = '0830';
+  const endTime = '2100';
   useEffect(() => {
     if (
       startTime > nowTime ||
       endTime < nowTime ||
-      weekDay === "토" ||
-      weekDay === "일"
+      weekDay === '토' ||
+      weekDay === '일'
     ) {
       setAblebtn(false);
     } else {
@@ -272,7 +272,7 @@ const BookingData = ({ bookingData, userData, namesData, roomData }) => {
   }, [nowTime, weekDay]); //useEffect써서 한번만 렌더링 해줌
 
   //----예약 데이터 보내기----//
-  const roomTypeArr = ["meeting", "nabax"];
+  const roomTypeArr = ['meeting', 'nabax'];
   const myUrl = useUrl();
   const { roomId } = useParams();
   function bookingConfirm() {
@@ -282,15 +282,15 @@ const BookingData = ({ bookingData, userData, namesData, roomData }) => {
       selectedNameState.length < 1 &&
       getStartEndTime(checkedState).timeLength === 0
     ) {
-      alert("회의 참여자와 회의 시간을 선택해 주세요");
+      alert('회의 참여자와 회의 시간을 선택해 주세요');
     } else if (
       roomType === roomTypeArr[0] &&
       userClass !== 0 &&
       selectedNameState.length < 1
     ) {
-      alert("회의 참여자를 1명 이상 선택해주세요");
+      alert('회의 참여자를 1명 이상 선택해주세요');
     } else if (getStartEndTime(checkedState).timeLength === 0) {
-      alert("시간을 선택해 주세요");
+      alert('시간을 선택해 주세요');
     } else {
       if (!isLoadding) {
         setIsLoading(true);
@@ -307,17 +307,16 @@ const BookingData = ({ bookingData, userData, namesData, roomData }) => {
           teamMate: selectedNameState,
           userName: userName,
         };
-           fetchPostJson(postUrl,object,navigate)
-          .then((data) => {
-            if (data?.message.success) {
-              alert(data.message.success);
-              setIsLoading(false);
-              navigate(`/mypage`);
-            } else {
-              alert(data?.message.fail);
-              setIsLoading(false);
-            }
-          });
+        fetchPostJson(postUrl, object, navigate).then((data) => {
+          if (data?.message.success) {
+            alert(data.message.success);
+            setIsLoading(false);
+            navigate(`/mypage`);
+          } else {
+            alert(data?.message.fail);
+            setIsLoading(false);
+          }
+        });
       }
     }
   }
@@ -344,10 +343,10 @@ const BookingData = ({ bookingData, userData, namesData, roomData }) => {
           <p>
             신청자명
             <input
-              style={{ fontWeight: "bold" }}
+              style={{ fontWeight: 'bold' }}
               className={styles.input}
-              type="text"
-              name="val"
+              type='text'
+              name='val'
               placeholder={userName}
               disabled
             />
@@ -362,8 +361,8 @@ const BookingData = ({ bookingData, userData, namesData, roomData }) => {
                     className={styles.input}
                     onChange={onChange}
                     value={inputName}
-                    type="text"
-                    placeholder="팀원을 검색하세요"
+                    type='text'
+                    placeholder='팀원을 검색하세요'
                     onClick={onClickModal}
                   />
                 </p>
@@ -405,21 +404,21 @@ const BookingData = ({ bookingData, userData, namesData, roomData }) => {
           {times.map((time, index) => (
             <span key={index}>
               <Tooltip
-                placement="bottom"
+                placement='bottom'
                 title={
                   userClass !== 0 ||
                   floor === 4 ||
                   pastState[index] ||
                   !bookedState[index]
-                    ? ""
+                    ? ''
                     : isOfficial[index]
-                    ? "공식일정예약"
-                    : "인재예약"
+                    ? '공식일정예약'
+                    : '인재예약'
                 }
               >
                 <Checkbox
                   onChange={() => onChangeCheckBox(index)}
-                  variant="success"
+                  variant='success'
                   checked={checkedState[index]}
                   disabled={
                     pastState[index] || isOfficial[index]
@@ -431,23 +430,23 @@ const BookingData = ({ bookingData, userData, namesData, roomData }) => {
                   style={
                     userClass === 0 && bookedState[index] && floor !== 4
                       ? {
-                          margin: "10px",
-                          color: "pink",
-                          fontSize: "16px",
-                          fontWeight: "bold",
+                          margin: '10px',
+                          color: 'pink',
+                          fontSize: '16px',
+                          fontWeight: 'bold',
                         }
                       : checkedState[index] || indeterminateState[index]
                       ? {
-                          margin: "10px",
-                          color: "#3695f5",
-                          fontSize: "16px",
-                          fontWeight: "bold",
+                          margin: '10px',
+                          color: '#3695f5',
+                          fontSize: '16px',
+                          fontWeight: 'bold',
                         }
                       : {
-                          margin: "10px",
-                          color: "green",
-                          fontSize: "16px",
-                          fontWeight: "bold",
+                          margin: '10px',
+                          color: 'green',
+                          fontSize: '16px',
+                          fontWeight: 'bold',
                         }
                   }
                 >
