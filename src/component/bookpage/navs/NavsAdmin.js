@@ -34,12 +34,12 @@ function NavsAdmin({ navData, userFloor }) {
 
   const url = `http://${myUrl}/api/booking/room-data?floor=0`;
   useEffect(() => {
-    fetch(url, { method: 'GET' })
-      .then((res) => res.json())
-      .then((data) => {
-        setRoomData(data.roomData);
-      });
-  }, [url]);
+    // fetch(url, { method: 'GET' })
+    // .then((res) => res.json())
+    // .then((data) => {
+    setRoomData(navData);
+    // });
+  }, [navData]);
 
   return (
     <div className={styles.wrap}>

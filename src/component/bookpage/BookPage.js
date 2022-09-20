@@ -1,17 +1,17 @@
 //styles
-import styles from "./BookPage.module.css";
+import styles from './BookPage.module.css';
 //BookingPage - component
 
-import NavsAdmin from "./navs/NavsAdmin";
-import NavsFloor2 from "./navs/NavsFloor2";
-import NavsFloor3 from "./navs/NavsFloor3";
-import RoomInfo from "./RoomInfo";
-import BookingData from "./BookingData";
+import NavsAdmin from './navs/NavsAdmin';
+import NavsFloor2 from './navs/NavsFloor2';
+import NavsFloor3 from './navs/NavsFloor3';
+import RoomInfo from './RoomInfo';
+import BookingData from './BookingData';
 //hooks
-import useUrl from "../../hooks/useUrl";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { useState, useEffect } from "react";
-import { fetchGet } from "../../hooks/fetchUrl";
+import useUrl from '../../hooks/useUrl';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { fetchGet } from '../../hooks/fetchUrl';
 
 function BookPage() {
   const [bookingData, setBookingData] = useState([]);
@@ -20,7 +20,7 @@ function BookPage() {
   const [roomData, setRoomData] = useState([]);
 
   const [navData, setNavData] = useState([]);
-  const [userFloor, setUserFloor] = useState("");
+  const [userFloor, setUserFloor] = useState('');
 
   const { roomId } = useParams();
   const myUrl = useUrl();
@@ -29,7 +29,7 @@ function BookPage() {
 
   useEffect(() => {
     fetchGet(url, navigate).then((data) => {
-      console.log("bookpage !! data : ",data)
+      console.log('bookpage !! data : ', data);
       setBookingData(data.bookingData);
       setUserData(data.userData);
       setNamesData(data.namesData);
@@ -43,7 +43,7 @@ function BookPage() {
     <div>
       <NavsAdmin navData={navData} userFloor={userFloor} />
       <div className={styles.roomInfo}>
-        <RoomInfo />
+        <RoomInfo roomData={roomData} />
         <div className={styles.bookingInfo}>
           <BookingData
             bookingData={bookingData}

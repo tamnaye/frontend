@@ -23,7 +23,7 @@ function NavsFloor2() {
       .then((data) => {
         setRoomData(data.roomData);
       });
-  }, [url]);
+  }, [url, roomData]);
 
   return (
     <div className={styles.wrap}>
