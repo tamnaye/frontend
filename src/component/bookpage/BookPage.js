@@ -41,7 +41,7 @@ function BookPage() {
       <div className={styles.roomInfo}>
         <RoomInfo />
         <div className={styles.bookingInfo}>
-          <BookingData />
+          <BookingData string={"string"}/>
         </div>
       </div>
     </div>
