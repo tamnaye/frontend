@@ -10,7 +10,6 @@ export function fetchGet(url, navigate) {
     method: "GET",
     headers: sendAuth(),
   }).then((res) => {
-    console.log("getAuth() : ", getAuth());
     if (getAuth().reAuth !== null) {
       if (res.status === 403) {
         tokenExpired();
