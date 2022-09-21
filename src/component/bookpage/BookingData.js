@@ -20,12 +20,12 @@ import { fetchPostJson } from '../../hooks/fetchUrl';
 //2) defaultDisable에서 break 하는 부분 break 안하도록 해줌
 //3) bookingConfirm()에서 체크해줄 때 팀원 선택 안해도 되게 해줌
 
-const BookingData = ({ bookingData, userData, namesData, roomData }) => {
+const BookingData = ({ bookingData, userData, namesData, currentRoomData }) => {
   const userName = userData.userName;
   const userClass = userData.classes;
-  const roomType = roomData.roomType;
-  const floor = roomData.floor;
-  const maxTime = roomData.maxTime;
+  const roomType = currentRoomData.roomType;
+  const floor = currentRoomData.floor;
+  const maxTime = currentRoomData.maxTime;
   const times = useTimes();
   const memberNames = namesData.filter(
     (member) => member !== userData.userName

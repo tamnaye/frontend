@@ -4,20 +4,20 @@ import styles from './RoomInfo.module.css';
 import { useState, useEffect } from 'react';
 import useRoomImg from '../../hooks/useRoomImg';
 
-function RoomInfo({ roomData }) {
+function RoomInfo({ currentRoomData }) {
   const [roomInfo, setRoomInfo] = useState('');
 
   useEffect(() => {
     setRoomInfo(
-      roomData
+      currentRoomData
       // roomData?.filter((info) => info.roomId === Number(roomId))[0].roomName
       //왼쪽부터 오른쪽 순으로 -> 원래 데이터에서 필터를 돌리고 로컬 라우트에서 roomId와 일치하면 [0]배열의 roomName을 가져옴
     );
     //비동기 이해하기 -> 의존성 배열과 연결!
     //console.log('roominfo roomInfo :', roomInfo);
-    //console.log('roominfo roomdata :', roomData);
+    //console.log('roominfo currentRoomData :', currentRoomData);
     // });
-  }, [roomData]);
+  }, [currentRoomData]);
 
   //로컬 자체에 room 이미지 저장해서 서버에서 받아온 roomId와 동일할 떄 원하는 이미지 불러오기
   const roomsImg = useRoomImg(); //useRoomImg 훅에서 가져옴
