@@ -54,10 +54,12 @@ const MainTemplate = () => {
           data.RoomData.filter((rooms) => rooms.roomType === 'nabox')
         );
         setSinYangID(
-          data.RoomData.filter((rooms) => rooms.roomId === 207)[0].roomId
+          data.RoomData.filter((rooms) => rooms.roomType === 'official')[0]
+            .roomId
         );
         setSinYangName(
-          data.RoomData.filter((rooms) => rooms.roomName === '신양')[0].roomName
+          data.RoomData.filter((rooms) => rooms.roomType === 'official')[0]
+            .roomName
         );
       }
 
@@ -82,7 +84,7 @@ const MainTemplate = () => {
             (rooms) =>
               rooms.floor === 2 &&
               rooms.roomType === 'meeting' &&
-              rooms.roomName !== '신양'
+              rooms.roomType !== 'official'
           )
         );
         setSecondNaboxinfo(
@@ -91,10 +93,12 @@ const MainTemplate = () => {
           )
         );
         setSinYangID(
-          data.RoomData.filter((rooms) => rooms.roomId === 207)[0].roomId
+          data.RoomData.filter((rooms) => rooms.roomType === 'official')[0]
+            .roomId
         );
         setSinYangName(
-          data.RoomData.filter((rooms) => rooms.roomName === '신양')[0].roomName
+          data.RoomData.filter((rooms) => rooms.roomType === 'official')[0]
+            .roomName
         );
         // 3층 정보
         setThirdMeetingStudioinfo(
