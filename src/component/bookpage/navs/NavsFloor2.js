@@ -9,9 +9,9 @@ function NavsFloor2({ navData }) {
 
   const [roomData, setRoomData] = useState([]);
   //2층 룸리스트 추출 -> 미팅룸리스트 개인자습룸리스트 추출
-  //매니저가 아닌경우에는 2층에서 신양 회의실 제거하기
+  //매니저가 아닌경우에는 2층에서 신양 회의실 제거하기 -> 룸타입은 official인 경우 필터에서 제거
   const floor2Meeting = roomData.filter(
-    (room) => room.roomType === 'meeting' && room.roomName !== '신양'
+    (room) => room.roomType === 'meeting' && room.roomType !== 'official'
   );
   const floor2Nabox = roomData.filter((room) => room.roomType === 'nabox');
 
