@@ -36,7 +36,7 @@ const ReservationState = () => {
   const [FourthFloorinfo, setFourthFloorinfo] = useState([]);
 
   const myUrl = useUrl();
-  const url = `http://${myUrl}/api/booking/details-booking2`;
+  const url = `http://${myUrl}/api/booking/details-booking`;
   const navigate = useNavigate();
   useEffect(() => {
     fetchGet(url, navigate).then((data) => {
