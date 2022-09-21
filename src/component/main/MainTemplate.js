@@ -5,7 +5,7 @@ import FourthFloor from './fourthFloorComponents/FourthFloor';
 // 스타일
 import styles from './MainTemplate.module.css';
 // hook
-import { useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 // 커스텀 훅
 import useUrl from '../../hooks/useUrl';
@@ -36,9 +36,9 @@ const MainTemplate = () => {
 
   const myUrl = useUrl();
   const url = `http://${myUrl}/api/booking/main`;
-  const location = useLocation();
+  const navigate = useNavigate();
   useEffect(() => {
-    fetchGet(url, location).then((data) => {
+    fetchGet(url, navigate).then((data) => {
       setfloor(data.floor);
       setBookingData(data.BookingData);
       setRoomData(data.RoomData);
