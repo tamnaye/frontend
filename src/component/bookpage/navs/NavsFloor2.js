@@ -4,8 +4,8 @@ import Dropdown from 'react-bootstrap/Dropdown';
 //hooks
 import { useState, useEffect } from 'react';
 
-function NavsFloor2({ navData }) {
-  //console.log('NavsAdmin !! navData :', navData);
+function NavsFloor2({ navRoomData }) {
+  //console.log('NavsAdmin !! navRoomData :', navRoomData);
 
   const [roomData, setRoomData] = useState([]);
   //2층 룸리스트 추출 -> 미팅룸리스트 개인자습룸리스트 추출
@@ -16,8 +16,8 @@ function NavsFloor2({ navData }) {
   const floor2Nabox = roomData.filter((room) => room.roomType === 'nabox');
 
   useEffect(() => {
-    setRoomData(navData);
-  }, [navData]);
+    setRoomData(navRoomData);
+  }, [navRoomData]);
 
   return (
     <div className={styles.wrap}>

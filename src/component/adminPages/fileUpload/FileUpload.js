@@ -54,7 +54,7 @@ const FileUpload = () => {
     <>
       <div className={styles.wrap}>
         <div className={styles.box}>
-          <h3 className={styles.title}>관리자 페이지</h3>
+          <h3 className={styles.title}>최신기수 업로드</h3>
           <hr className={styles.line} />
           <div className={styles.file}>
             기수 인재 번호와 이름 데이터 최신 버전 파일을 업로드 해주세요!

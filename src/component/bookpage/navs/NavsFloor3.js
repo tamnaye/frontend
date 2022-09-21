@@ -3,8 +3,8 @@ import styles from './Navs.module.css';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { useState, useEffect } from 'react';
 
-function NavsFloor3({ navData }) {
-  //console.log('NavsAdmin !! navData :', navData);
+function NavsFloor3({ navRoomData }) {
+  //console.log('NavsAdmin !! navRoomData :', navRoomData);
 
   const [roomData, setRoomData] = useState([]);
   //3층 룸리스트 추출 -> 미팅룸리스트 개인자습룸리스트 추출
@@ -17,8 +17,8 @@ function NavsFloor3({ navData }) {
   const floor3Nabox = roomData.filter((room) => room.roomType === 'nabox');
 
   useEffect(() => {
-    setRoomData(navData);
-  }, [navData]);
+    setRoomData(navRoomData);
+  }, [navRoomData]);
 
   return (
     <div className={styles.wrap}>
