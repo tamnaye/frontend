@@ -122,7 +122,7 @@ const BookingData = ({ bookingData, userData, namesData, roomData }) => {
         const checkedArr = new Array(12).fill(false);
         checkedArr[index] = true;
         setCheckedState(checkedArr);
-        if (userClass !== 0) {
+        if (userClass !== 0 || floor ===4) {
           if (bookedState[i]) break;
         } else {
           if (isOfficial[i]) break;
