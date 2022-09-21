@@ -11,7 +11,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 //custom hooks
 import useUrl from '../../../hooks/useUrl';
-import { fetchGet } from '../../../hooks/fetchUrl';
+import { fetchGet, fetchPostJson } from '../../../hooks/fetchUrl';
 
 const IndividualMain = () => {
   const myUrl = useUrl();
@@ -21,12 +21,34 @@ const IndividualMain = () => {
   const [classList, setClassList] = useState([]);
   // 선택된 기수 state //
   const [classPickState, setClassPickState] = useState('기수 선택');
+  const [classPickNumber, setClassPickNumber] = useState('');
   // 관련 기수 users 전체 list //
   const [EachClassUsers, setEachClassUsers] = useState([]);
   // 모달창 show state
   const [show, setShow] = useState(false);
+
+  //--삭제 관련 state--//
+  const [deletecheckedList, setDeletecheckedList] = useState([]);
+  // const [isChecked, setIsChecked] = useState(false);
+
+  //--추가 관련 state--//
+  const [addUserClass, setAddUserClass] = useState('6기');
+  const [addUserClassNumber, setAddUserClassNumber] = useState('6');
+  const [addUserId, setAddUserId] = useState(null);
+  const [addUserName, setAddUserName] = useState(null);
+  const [addUserRole, setAddUserRole] = useState('USER');
+  const [addUserFloor, setAddUserFloor] = useState('2');
+  const [addUserFloorNumber, setAddUserFloorNumber] = useState('2');
+
+  //-- 수정 관련 state--//
   // 수정에서 선택된 사람 데이터
-  const [pickedUser, setPickedUser] = useState([]);
+  const [pickedUserId, setPickedUserId] = useState({});
+
+  // 수정에서 변경될 내용 데이터
+  const [changedUserName, setChangedUserName] = useState();
+  const [changedUserRole, setChangedUserRole] = useState('USER');
+  const [changedUserFloor, setChangedUserFloor] = useState('2');
+  const [changedUserFloorNumber, setChangedUserFloorNumber] = useState('2');
 
   // 드롭다운에 사용될 class들 가져오기//
   const url = `http://${myUrl}/admin/view/class-list`;
@@ -36,11 +58,12 @@ const IndividualMain = () => {
     });
   }, [url, myUrl, navigate]);
 
-  console.log(classList);
+  // console.log(classList);
 
   // 드롭 다운 선택 시 클릭 이름으로 변경 및 관련 데이터 가져오기
   const onClickClass = (event) => {
     setClassPickState(event.target.innerText);
+    setClassPickNumber(event.target.value);
     selectedClassData(event.target.value);
   };
 
@@ -54,7 +77,7 @@ const IndividualMain = () => {
     });
   };
 
-  console.log(EachClassUsers);
+  // console.log(EachClassUsers);
 
   // userData title 리스트
   const userDataTitles = [
@@ -65,74 +88,153 @@ const IndividualMain = () => {
     { id: 'floor', title: '사용 가능 층수' },
   ];
 
-  // 수정을 원하는 선택 user 정보 가져오기
+  //-- 삭제를 원하는 User 정보 가져오기 --//
+  const onDeleteChecked = (data) => {
+    console.log('deletecheckedList.length : ', deletecheckedList.length);
+    // setIsChecked(!isChecked);
+    // console.log(checkedArr);
+    if (deletecheckedList.length === 0) {
+      setDeletecheckedList((deletecheckedList) => [
+        ...deletecheckedList,
+        data.data.userId,
+      ]);
+    } else {
+      // for (let i = 0; i < deletecheckedList.length; i++) {
+      if (!deletecheckedList.includes(data.data.userId)) {
+        setDeletecheckedList((deletecheckedList) => [
+          ...deletecheckedList,
+          data.data.userId,
+        ]);
+      } else {
+        setDeletecheckedList(
+          deletecheckedList.filter((checked) => checked !== data.data.userId)
+        );
+      }
+      // }
+    }
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => {
-    setShow(true);
-    // setPickedUser(data);
+    console.log('deletecheckedList 1 ', deletecheckedList);
+  };
+  console.log('deletecheckedList 1 ', deletecheckedList);
+
+  const onDeleteButton = () => {
+    const postUrl = `http://${myUrl}/admin/deletion/user
+    `;
+    const object = {
+      userId: deletecheckedList,
+    };
+    fetchPostJson(postUrl, object, navigate).then((data) => {
+      //console.log(data.message);
+      alert(data.message);
+      // window.location.reload(); //alert 버튼 클릭 시, 새로고침해서 데이터 다시 받아옴
+    });
   };
 
-  //----예약 데이터 보내기 참고하기----//
-  function AddListConfirm() {
-    // if (
-    //   userClass !== 0 &&
-    //   roomType === roomTypeArr[0] &&
-    //   selectedNameState.length < 1 &&
-    //   getStartEndTime(checkedState).timeLength === 0
-    // ) {
-    //   alert('회의 참여자와 회의 시간을 선택해 주세요');
-    // } else if (
-    //   roomType === roomTypeArr[0] &&
-    //   userClass !== 0 &&
-    //   selectedNameState.length < 1
-    // ) {
-    //   alert('회의 참여자를 1명 이상 선택해주세요');
-    // } else if (getStartEndTime(checkedState).timeLength === 0) {
-    //   alert('시간을 선택해 주세요');
-    // } else {
-    //   if (!isLoadding) {
-    //     setIsLoading(true);
-    //     const postUrl = `http://${myUrl}/api/booking/conference`;
-    //     fetch(postUrl, {
-    //       method: 'POST',
-    //       headers: {
-    //         'Content-Type': 'application/json',
-    //         Authorization: getAuth().auth,
-    //         reAuthorization: getAuth().reAuth,
-    //       },
-    //       body: JSON.stringify({
-    //         //값 입력
-    //         classes: userClass,
-    //         roomId: roomId,
-    //         roomType: roomType,
-    //         // 시간 한시간일때랑 두시간일 때 예외처리 해줘야할듯
-    //         startTime: getStartEndTime(checkedState).startTime, //checked state에서 index 찾아서 times 배열에서 뽑아냄
-    //         endTime: timePlusMinus(
-    //           getStartEndTime(checkedState).startTime,
-    //           getStartEndTime(checkedState).timeLength
-    //         ), // checked state에서  index 찾아서 times 배열에서 뽑아내서 +1
-    //         teamMate: selectedNameState,
-    //         userName: userName,
-    //       }),
-    //     })
-    //       .then((res) => res.json())
-    //       .then((data) => {
-    //         if (data.message.success) {
-    //           //console.log(data.message.success);
-    //           alert(data.message.success);
-    //           setIsLoading(false);
-    //           navigate(`/mypage`);
-    //         } else {
-    //           //console.log(data.message.fail);
-    //           alert(data.message.fail);
-    //           setIsLoading(false);
-    //         }
-    //       });
-    //   }
-    // }
-  }
-  //----예약 데이터 보내기 참고하기----//
+  //-- 추가를 원하는 user 정보 가져오기 --//
+  const onAddUserClass = (e) => {
+    setAddUserClass(e.target.value);
+    setAddUserClassNumber([
+      e.target.value === '매니저' ? 0 : Number(e.target.value.slice(0, 1)),
+    ]);
+  };
+
+  const onAddUserId = (e) => {
+    setAddUserId(e.target.value);
+  };
+  const onAddUserName = (e) => {
+    setAddUserName(e.target.value);
+  };
+  const onAddUserRole = (e) => {
+    setAddUserRole(e.target.value);
+  };
+  const onAddUserFloor = (e) => {
+    setAddUserFloor(e.target.value);
+    setAddUserFloorNumber([e.target.value === 'ALL' ? 0 : e.target.value]);
+  };
+
+  const onAddListConfirm = () => {
+    console.log(addUserClassNumber[0]);
+    console.log(addUserId);
+    console.log(addUserName);
+    console.log(addUserRole);
+    console.log(addUserFloorNumber[0]);
+
+    const postUrl = `http://${myUrl}/admin/insertion/user`;
+    const object = {
+      classes: addUserClassNumber[0],
+      floor: addUserFloorNumber[0],
+      roles: addUserRole,
+      userId: addUserId,
+      userName: addUserName,
+    };
+    fetchPostJson(postUrl, object, navigate).then((data) => {
+      //console.log(data.message);
+      alert(data.message);
+      // window.location.reload(); //alert 버튼 클릭 시, 새로고침해서 데이터 다시 받아옴
+    });
+
+    AddAfter();
+  };
+
+  const AddAfter = () => {
+    setAddUserClass('6기');
+    setAddUserClassNumber(6);
+    setAddUserId(null);
+    setAddUserName(null);
+    setAddUserRole('USER');
+    setAddUserFloor('2');
+    setAddUserFloorNumber(2);
+  };
+
+  // 수정을 원하는 선택 user 정보 가져오기
+  const handleClose = () => {
+    setShow(false);
+    setChangedUserName('');
+  };
+
+  const handleShow = (data) => {
+    setShow(true);
+    setPickedUserId(data.data.userId);
+    // console.log(data.data);
+    // console.log(data.data.userId);
+    // console.log(pickedUserId);
+  };
+
+  const onChangeName = (e) => {
+    setChangedUserName(e.target.value);
+  };
+
+  const onChangeRole = (e) => {
+    setChangedUserRole(e.target.value);
+  };
+
+  const onChangeFloor = (e) => {
+    setChangedUserFloor(e.target.value);
+    setChangedUserFloorNumber([e.target.value === 'ALL' ? 0 : e.target.value]);
+  };
+
+  const onClickToChange = () => {
+    // console.log(classPickNumber);
+    // console.log(changedUserFloorNumber[0]);
+    // console.log(changedUserRole);
+    // console.log(pickedUserId);
+    // console.log(changedUserName);
+
+    const postUrl = `http://${myUrl}/admin/update/user`;
+    const object = {
+      classes: classPickNumber,
+      floor: changedUserFloorNumber[0],
+      roles: changedUserRole,
+      userId: pickedUserId,
+      userName: changedUserName,
+    };
+    fetchPostJson(postUrl, object, navigate).then((data) => {
+      //console.log(data.message);
+      alert(data.message);
+      // window.location.reload(); //alert 버튼 클릭 시, 새로고침해서 데이터 다시 받아옴
+    });
+    handleClose();
+  };
 
   return (
     <>
@@ -141,6 +243,7 @@ const IndividualMain = () => {
           <h3 className={styles.title}>개별 인재 관리</h3>
           <hr className={styles.line} />
           <div className={styles.buttons}>
+            {/* 기수 데이터 정하는 버튼 */}
             <DropdownButton
               style={{
                 marginTop: '10px',
@@ -170,7 +273,9 @@ const IndividualMain = () => {
               ))}
             </DropdownButton>
             {/* 삭제 버튼 */}
-            <button className={styles.upload_btn}>삭제</button>
+            <button className={styles.upload_btn} onClick={onDeleteButton}>
+              삭제
+            </button>
           </div>
           <div>
             <Table bordered>
@@ -178,8 +283,12 @@ const IndividualMain = () => {
                 <tr className={styles.tableTrTitle}>
                   <th className={styles.tableTh} style={{ width: '3rem' }}></th>
                   {/* 룸 타이틀 불러오기 */}
-                  {userDataTitles.map((titles) => (
-                    <th className={styles.tableTh} style={{ width: '12rem' }}>
+                  {userDataTitles.map((titles, idx) => (
+                    <th
+                      className={styles.tableTh}
+                      key={idx}
+                      style={{ width: '12rem' }}
+                    >
                       {titles.title}
                     </th>
                   ))}
@@ -192,15 +301,21 @@ const IndividualMain = () => {
                 {/* 1. 추가하기 */}
                 <tr>
                   <th></th>
+
                   {/* 1-1. 기수선택 */}
                   <th style={{ backgrondColor: 'rgb(93, 168, 226)' }}>
-                    <Form.Select>
-                      {classList.map((classes) => (
-                        <option value={classes} style={{ textAlign: 'center' }}>
-                          {classes === 0 ? '매니저' : `${classes}기`}
-                        </option>
-                      ))}
-                    </Form.Select>
+                    <Form.Group className="mb-1">
+                      <Form.Select
+                        value={addUserClass}
+                        onChange={(e) => onAddUserClass(e)}
+                      >
+                        {classList.map((classes, idx) => (
+                          <option key={idx} style={{ textAlign: 'center' }}>
+                            {classes === 0 ? '매니저' : `${classes}기`}
+                          </option>
+                        ))}
+                      </Form.Select>
+                    </Form.Group>
                   </th>
                   {/* 1-2. 인재번호 작성 */}
                   <th>
@@ -208,6 +323,9 @@ const IndividualMain = () => {
                       <Form.Control
                         style={{ textAlign: 'center' }}
                         placeholder="인재 번호"
+                        value={addUserId}
+                        onChange={(e) => onAddUserId(e)}
+                        required
                       />
                     </Form.Group>
                   </th>
@@ -217,24 +335,41 @@ const IndividualMain = () => {
                       <Form.Control
                         style={{ textAlign: 'center' }}
                         placeholder="이름"
+                        value={addUserName}
+                        onChange={(e) => onAddUserName(e)}
+                        required
                       />
                     </Form.Group>
                   </th>
                   {/* 1-4. 권한 선택 */}
                   <th>
-                    <Form.Select style={{ textAlign: 'center' }}>
-                      <option>USER</option>
-                      <option>MANAGER</option>
-                      <option>ADMIN</option>
-                    </Form.Select>
+                    <Form.Group className="mb-1">
+                      <Form.Select
+                        style={{ textAlign: 'center' }}
+                        value={addUserRole}
+                        onChange={(e) => onAddUserRole(e)}
+                        required
+                      >
+                        <option>USER</option>
+                        <option>MANAGER</option>
+                        <option>ADMIN</option>
+                      </Form.Select>
+                    </Form.Group>
                   </th>
                   {/* 1-5. 사용 층수 선택 */}
                   <th>
-                    <Form.Select style={{ textAlign: 'center' }}>
-                      <option>2</option>
-                      <option>3</option>
-                      <option>ALL</option>
-                    </Form.Select>
+                    <Form.Group className="mb-1">
+                      <Form.Select
+                        style={{ textAlign: 'center' }}
+                        value={addUserFloor}
+                        onChange={(e) => onAddUserFloor(e)}
+                        required
+                      >
+                        <option>2</option>
+                        <option>3</option>
+                        <option>ALL</option>
+                      </Form.Select>
+                    </Form.Group>
                   </th>
                   {/* 1-6. 추가 하기 버튼 */}
                   <th>
@@ -246,17 +381,24 @@ const IndividualMain = () => {
                         fontSize: '13px',
                       }}
                       variant="primary"
-                      onClick={AddListConfirm}
+                      onClick={onAddListConfirm}
                     >
                       추가하기
                     </Button>
                   </th>
                 </tr>
+                {/* 기수 정보 리스트 */}
                 {EachClassUsers.map((data) => (
                   <tr key={data.userId}>
+                    {/* 삭제 버튼 */}
                     <th>
-                      <input type="checkbox" value={data.classes} />
+                      <input
+                        type="checkbox"
+                        onChange={() => onDeleteChecked({ data })}
+                        // checked={isChecked}
+                      />
                     </th>
+                    {/* 유저 정보 */}
                     <th>
                       {data.classes === 0 ? '매니저' : `${data.classes}기`}
                     </th>
@@ -277,10 +419,11 @@ const IndividualMain = () => {
                             fontSize: '13px',
                           }}
                           variant="primary"
-                          onClick={handleShow}
+                          onClick={() => handleShow({ data })}
                         >
                           수정하기
                         </Button>
+
                         {/* 모달창 */}
                         <Modal
                           show={show}
@@ -290,43 +433,55 @@ const IndividualMain = () => {
                         >
                           {/* 모달 창 헤더 */}
                           <Modal.Header closeButton>
-                            <Modal.Title>{pickedUser.userId}</Modal.Title>
+                            <Modal.Title>{pickedUserId}</Modal.Title>
                           </Modal.Header>
                           {/* 모달창 내 수정사항 */}
-                          <Modal.Body>
-                            <Form.Group className="mb-1">
+                          <Form.Group className="mb-1">
+                            <Modal.Body>
                               <Form.Label>이름</Form.Label>
-                              <Form.Control placeholder="수정을 원하는 이름을 기입해주세요" />
-                            </Form.Group>
-                            <Form.Group className="mb-1">
+                              <Form.Control
+                                id="inputName"
+                                placeholder="변경된 이름을 기입해주세요"
+                                onChange={(e) => onChangeName(e)}
+                                value={changedUserName}
+                                required
+                              />
                               <Form.Label>권한</Form.Label>
-                              <Form.Select>
+                              <Form.Select
+                                id="role"
+                                onChange={(e) => onChangeRole(e)}
+                                value={changedUserRole}
+                                required
+                              >
                                 <option>USER</option>
                                 <option>MANAGER</option>
                                 <option>ADMIN</option>
                               </Form.Select>
-                            </Form.Group>
-                            <Form.Group className="mb-3">
                               <Form.Label>사용가능 층수</Form.Label>
-                              <Form.Select>
+                              <Form.Select
+                                id="floor"
+                                onChange={(e) => onChangeFloor(e)}
+                                value={changedUserFloor}
+                                required
+                              >
                                 <option>2</option>
                                 <option>3</option>
                                 <option>ALL</option>
                               </Form.Select>
-                            </Form.Group>
-                          </Modal.Body>
-                          {/* 모달 창 아래 닫기 및 수정하기 버튼 */}
-                          <Modal.Footer>
-                            <Button variant="secondary" onClick={handleClose}>
-                              닫기
-                            </Button>
-                            <Button
-                              variant="primary"
-                              // onClick={onClickToChange}
-                            >
-                              수정하기
-                            </Button>
-                          </Modal.Footer>
+                            </Modal.Body>
+                            {/* 모달 창 아래 닫기 및 수정하기 버튼 */}
+                            <Modal.Footer>
+                              <Button variant="secondary" onClick={handleClose}>
+                                닫기
+                              </Button>
+                              <Button
+                                variant="primary"
+                                onClick={() => onClickToChange()}
+                              >
+                                수정하기
+                              </Button>
+                            </Modal.Footer>
+                          </Form.Group>
                         </Modal>
                       </>
                     </th>
