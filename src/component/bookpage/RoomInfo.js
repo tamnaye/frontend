@@ -19,8 +19,8 @@ function RoomInfo({ currentRoomData }) {
     // });
   }, [currentRoomData]);
 
-  //로컬 자체에 room 이미지 저장해서 서버에서 받아온 roomId와 동일할 떄 원하는 이미지 불러오기
-  const roomsImg = useRoomImg(); //useRoomImg 훅에서 가져옴
+  //useRoomImg 훅에서 가져옴 -> 로컬 자체에 room 이미지 저장해서 서버에서 받아온 roomId와 동일할 떄 원하는 이미지 불러오기
+  const roomsImg = useRoomImg();
   //roomImg에서 필터를 돌면서 room_id와 roomData의 roomId가 같은 딕셔너리 추출
   //?의미 : roomInfo값이 없으면 null처리 해주고, 있으면 roomInfo.roomId를 읽어옴
   const [roomImg] = roomsImg.filter((img) => img.room_id === roomInfo?.roomId);
