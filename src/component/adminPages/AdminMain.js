@@ -13,12 +13,12 @@ import { Route, Routes } from 'react-router-dom';
 
 const AdminMain = () => {
   
-  const navigate = useNavigate()
-  const url = `http://${useUrl()}/api/user/data`;
-  useEffect(()=>{
-    fetchGet(url,navigate).then((data)=>console.log("adminMain : ",data.userData))
+  // const navigate = useNavigate()
+  // const url = `http://${useUrl()}/api/user/data`;
+  // useEffect(()=>{
+  //   fetchGet(url,navigate).then((data)=>console.log("adminMain : ",data.userData))
 
-  })  
+  // })  
   return (
     <>
       {['lg'].map((expand) => (
