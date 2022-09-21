@@ -11,11 +11,15 @@ function NavsAdmin({ navData }) {
   const [roomData, setRoomData] = useState([]);
   //2층 룸리스트 추출 -> 미팅룸리스트 개인자습룸리스트 추출
   const floor2 = roomData.filter((room) => room.floor === 2);
-  const floor2Meeting = floor2.filter((room) => room.roomType === 'meeting');
+  const floor2Meeting = floor2.filter(
+    (room) => room.roomType === 'meeting' || room.roomType === 'official'
+  );
   const floor2Nabox = floor2.filter((room) => room.roomType === 'nabox');
   //3층 룸리스트 추출 -> 미팅룸리스트, 개인자습룸리스트 추출
   const floor3 = roomData.filter((room) => room.floor === 3);
-  const floor3Meeting = floor3.filter((room) => room.roomType === 'meeting');
+  const floor3Meeting = floor3.filter(
+    (room) => room.roomType === 'meeting' || room.roomType === 'official'
+  );
   const floor3Nabox = floor3.filter((room) => room.roomType === 'nabox');
   const floor3Studio = floor3.filter((room) => room.roomType === 'studio');
   //4층 룸리스트 추출 -> 미팅룸리스트

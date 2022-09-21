@@ -18,7 +18,6 @@ const Room = () => {
   useEffect(() => {
     fetchGet(url, navigate).then((data) => {
       console.log("room useeffect data : ", data);
-
       setRoomData(data?.RoomData);
     });
   }, [url]);

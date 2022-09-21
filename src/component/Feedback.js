@@ -6,6 +6,8 @@ import Card from 'react-bootstrap/Card';
 //hooks
 import { useEffect, useRef, useState } from 'react';
 import useUrl from '../hooks/useUrl';
+import { fetchGet } from '../hooks/fetchUrl';
+import { useNavigate } from 'react-router-dom';
 
 const Feedback = () => {
   const myUrl = useUrl();
@@ -39,9 +41,10 @@ const Feedback = () => {
 
   //feadback GET
   const [feedbackDatas, setFeedbackDatas] = useState([]);
+  const navigate = useNavigate()
   const url = `http://${myUrl}/api/feedback`;
   useEffect(() => {
-    fetch(url, { method: 'GET' })
+    fetchGet(url, navigate)
       .then((res) => res.json())
       .then((data) => {
         setFeedbackDatas(data.FeedbackData);

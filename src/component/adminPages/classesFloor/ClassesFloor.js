@@ -30,7 +30,6 @@ const ClassesFloor = () => {
   const btnClickChange = (changeFloor, index) => {
     //console.log(changeFloor.classes);
     //console.log(changeFloor.floor);
-
     const postUrl = `http://${myUrl}/admin/change/floor`;
     const object = {
       classes: changeFloor.classes,
