@@ -3,13 +3,13 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 //component
-import FileUpload from './fileUpload/FileUpload';
-import ClassesFloor from './classesFloor/ClassesFloor';
-import { useEffect } from 'react';
-import { fetchGet } from '../../hooks/fetchUrl';
-import useUrl from '../../hooks/useUrl';
-import { useNavigate } from 'react-router-dom';
-import { Route, Routes } from 'react-router-dom';
+// import FileUpload from './fileUpload/FileUpload';
+// import ClassesFloor from './classesFloor/ClassesFloor';
+// import { useEffect } from 'react';
+// import { fetchGet } from '../../hooks/fetchUrl';
+// import useUrl from '../../hooks/useUrl';
+// import { useNavigate } from 'react-router-dom';
+// import { Route, Routes } from 'react-router-dom';
 
 const AdminMain = () => {
   
