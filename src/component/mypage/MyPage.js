@@ -8,37 +8,34 @@ import Footer from '../footer/Footer';
 //hooks
 import useUrl from '../../hooks/useUrl';
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { fetchGet } from '../../hooks/fetchUrl';
 
 function MyPage() {
-  const id = window.localStorage.getItem('userid');
-  const navigate = useNavigate();
   const myUrl = useUrl();
+  const location = useLocation()
+  const navigate = useNavigate()
 
   //----로그인 시 userName 데이터 가져오기----//
   const [bookingCount, setBookingCount] = useState([]);
   const [userName, setUserName] = useState('');
-  const url = `http://${myUrl}/api/user/mypage?userId=${id}`;
+  const [userId, setUserId] = useState('');
+  const url = `http://${myUrl}/api/user/mypage`;
   useEffect(() => {
-    if (id === null) {
-      alert('로그인 후 사용 가능합니다.');
-      navigate(`/`);
-    } else {
-      fetch(url, { method: 'GET' })
-        .then((res) => res.json())
+      fetchGet(url,navigate)
         .then((data) => {
-          setUserName(data.userData.userName);
-          setBookingCount(data.myBookingDetailDataList);
+            setUserId(data?.userData.userId)
+            setUserName(data?.userData.userName);
+            setBookingCount(data?.myBookingDetailDataList);
         });
-    }
-  }, [url, navigate, id]);
+  }, [url]);
   //onsole.log(bookingCount);
 
   return (
     <>
       <Container className={styles.container}>
         <h6 className={styles.userInfo}>
-          탐나는인재 <span className={styles.user_name}>{userName}</span>
+          더큰내일센터 <span className={styles.user_name}>{userName}</span>
           님의 예약 현황
         </h6>
         {Array.isArray(bookingCount) && bookingCount.length === 0 ? (

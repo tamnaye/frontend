@@ -1,14 +1,13 @@
 import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { removeToken } from '../../hooks/authModule'
 
 function Logout() {
-    window.localStorage.removeItem("userid")
-    window.localStorage.removeItem("class")
-    console.log ("logout remove userid",window.localStorage.removeItem("userid"))
-    console.log ("logout remove class",window.localStorage.removeItem("class"))
+    
+    removeToken()
+
     const navigate = useNavigate()
     useEffect(()=>{
-        alert("로그아웃 되셨습니다.")
         navigate("/")
     },[navigate])
   return <></>

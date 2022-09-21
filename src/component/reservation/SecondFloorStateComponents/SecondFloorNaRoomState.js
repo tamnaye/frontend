@@ -1,83 +1,70 @@
-import React from 'react'
-import { useState, useEffect } from 'react'
-import styles from './SecondFloorNaRoomState.module.css'
-import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
-import Popover from 'react-bootstrap/Popover'
-import PoplayNabox from '../PoplayNabox'
-import { Link } from 'react-router-dom'
-import { EmojiSmileFill, ArrowRightCircleFill } from 'react-bootstrap-icons'
-import useUrl from '../../../hooks/useUrl'
+//컴포넌트
+import Popover from 'react-bootstrap/Popover';
+import PoplayNabox from '../PoplayNabox';
+//스타일
+import styles from './SecondFloorNaRoomState.module.css';
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import { EmojiSmileFill, ArrowRightCircleFill } from 'react-bootstrap-icons';
+// hook
+import React from 'react';
+import { Link } from 'react-router-dom';
 
-const SecondFloorNaRoomState = () => {
-  // API 2층 나박스 가져오기
-  const [bookingData, setBookingData] = useState([])
-  const [roomData, setRoomData] = useState([])
-
-  const myUrl = useUrl()
-
-  useEffect(() => {
-    fetch(`http://${myUrl}/api/booking/details-booking?floor=2`, {
-      method: 'GET',
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setBookingData(data.BookingData)
-        setRoomData(data.RoomData)
-      })
-  }, [`http://${myUrl}/api/booking/details-booking?floor=2`])
-
-  const secondFloorNaboxinfo = roomData.filter(
-    (rooms) => rooms.roomType === 'nabox'
-  )
-
+const SecondFloorNaRoomState = ({
+  // 2층
+  SecondNaboxinfo,
+  //전체
+  bookingData,
+  roomData,
+}) => {
   // 타임 리스트 돌리기
-  let timeList = []
+  let timeList = [];
   for (let i = 9; i <= 20; i++) {
-    timeList.push(i + '시')
+    timeList.push(i + '시');
   }
 
   // 09:00 형태 9로 숫자만 뽑아주는 함수
   const TimeToString = (time) => {
-    let newTime
+    let newTime;
     if (time === '09:00') {
-      newTime = time.substr(1, 1)
+      newTime = time.substr(1, 1);
     } else {
-      newTime = time.substr(0, 2)
+      newTime = time.substr(0, 2);
     }
-    return newTime
-  }
+    return newTime;
+  };
 
   // 9시 형태 9로 숫자만 뽑아주는 함수
   const onlyTime = (time) => {
-    let newTime
+    let newTime;
     if (time === '9시') {
-      newTime = time.substr(0, 1)
+      newTime = time.substr(0, 1);
     } else {
-      newTime = time.substr(0, 2)
+      newTime = time.substr(0, 2);
     }
-    return newTime
-  }
+    return newTime;
+  };
 
   // 시간당 룸의 예약 데이터 불러오는 함수
   const TimeAndRoomFilter = (Time, Room) => {
     let timedata = bookingData.filter(
       (room) =>
         room.roomId === Room && TimeToString(room.startTime) === onlyTime(Time)
-    )
-    return timedata
-  }
+    );
+    return timedata;
+  };
 
   // 시간당 룸의 예약이 있는지 없는지 함수
   const IsThisTimeRoombooked = (Time, Room) => {
-    const IsTrue = TimeAndRoomFilter(Time, Room).length !== 0
-    return IsTrue
-  }
+    const IsTrue = TimeAndRoomFilter(Time, Room).length !== 0;
+    return IsTrue;
+  };
 
   // 예약 시간 함수
   const bookingLength = (startTime, endTime) => {
-    let length = Number(TimeToString(endTime)) - Number(TimeToString(startTime))
-    return length
-  }
+    let length =
+      Number(TimeToString(endTime)) - Number(TimeToString(startTime));
+    return length;
+  };
 
   return (
     <div className="table-responsive">
@@ -86,7 +73,7 @@ const SecondFloorNaRoomState = () => {
           <tr id={styles.theadTr}>
             <th className="table-primary" id={styles.time}></th>
             {/* 룸 값 불러오기 */}
-            {secondFloorNaboxinfo.map((room) => (
+            {SecondNaboxinfo.map((room) => (
               <th key={room.roomId} className="table-primary" id={styles.text}>
                 <Link to={`/booking/${room.roomId}`}>
                   <ArrowRightCircleFill />
@@ -104,7 +91,7 @@ const SecondFloorNaRoomState = () => {
               <th className={styles.time}>{time}</th>
 
               {/* 룸을 맵으로 돌려 하나의 시간에 상태값 전달 */}
-              {secondFloorNaboxinfo.map((room) => (
+              {SecondNaboxinfo.map((room) => (
                 <th key={room.roomId} className={styles.roomstate}>
                   {IsThisTimeRoombooked(time, room.roomId) ? (
                     <OverlayTrigger
@@ -168,7 +155,7 @@ const SecondFloorNaRoomState = () => {
         </tbody>
       </table>
     </div>
-  )
-}
+  );
+};
 
-export default SecondFloorNaRoomState
+export default SecondFloorNaRoomState;

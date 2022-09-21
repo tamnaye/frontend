@@ -4,19 +4,15 @@ import { useNavigate } from "react-router-dom";
 import "antd/dist/antd.min.css";
 import styles from "./Login.module.css";
 import encrypt from "../../hooks/encrypt";
-import { useEffect } from "react";
+import useUrl from "../../hooks/useUrl";
+import {  setAuth } from "../../hooks/authModule";
 
 export default function Login() {
   const navigate = useNavigate();
-  const id = window.localStorage.getItem("userid");
-  useEffect(() => {
-    if (id !== null) {
-      navigate("/main");
-    }
-  }, [id, navigate]);
+  const ip = useUrl();
 
-  function sendToken(userid) {
-    const url = `http://192.168.4.146:8080/auth/login`;
+  function getToken(userid) {
+    const url = `http://${ip}/auth/login`;
 
     fetch(url, {
       method: "POST",
@@ -28,21 +24,18 @@ export default function Login() {
       }),
     })
       .then((res) => {
-        console.log("res - contentType ",res.headers.get('content-type'))
-        console.log("res - Authorization ",res.headers.get('Authorization'))
-        console.log("res - reAuthorization ",res.headers.get('reAuthorization'))
-        window.localStorage.setItem("Authorization", res.headers.get('Authorization'));
-
+        setAuth(
+          res.headers.get("Authorization"),
+          res.headers.get("reAuthorization")
+        );
         return res.json();
       })
 
       .then((data) => {
-        console.log("data : ", data);
         if (data.message === "success") {
-          window.localStorage.setItem("userid", userid);
           navigate(`/main`);
         } else {
-          alert(alert.data.message)
+          alert("알수없는 에러입니다.");
         }
       });
   }
@@ -51,7 +44,6 @@ export default function Login() {
     const userid = values.userid;
     const userpwd = values.userpwd; //get pwd
     const encrypted_pwd = encrypt(userpwd); //pwd 암호화
-
     fetch("/api/user/login", {
       method: "POST",
       headers: {
@@ -65,11 +57,9 @@ export default function Login() {
       .then((res) => res.json())
       .then((data) => {
         if (data.code === 405) {
-          // sendToken(userid);
-          window.localStorage.setItem("userid", userid);
-          navigate(`/main`);
+          getToken(userid);
         } else {
-          alert(data.message);
+          alert(data.message); // 아이디 혹은 비밀번호가 일치하지 않습니다.
         }
       });
   };

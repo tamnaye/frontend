@@ -1,41 +1,52 @@
-import styles from './Admin.module.css';
-import React, { useState } from 'react';
-import useUrl from '../../hooks/useUrl';
-import Footer from '../footer/Footer';
+import styles from './FileUpload.module.css';
+import useUrl from '../../../hooks/useUrl';
+// import { useState } from 'react';
 
-const Admin = () => {
+const FileUpload = () => {
+  // const [fileState, setFileState] = useState('');
   const myUrl = useUrl();
-  const [file, setFile] = useState(null);
+  let formData = new FormData(); //FormData(): Creates a new FormData object
+  console.log('empty file:', formData);
 
-  //input file 값 확인
+  //----input file 값 확인
   const onChange = (e) => {
-    setFile(e.target.files[0]);
+    formData.append('file', e.target.files[0]);
+    console.log('target file:', formData);
+    for (let value of formData.values()) {
+      console.log('formData onchange value:', value);
+    }
   };
-  //console.log(file);
 
-  //Upload 버튼 클릭 시 새로고침 막아주고나서
-  //파일이 없는 경우 alert -> 파일이 있는 경우 POST
+  //----Upload 버튼 클릭 시 새로고침 막아주고나서 파일이 없는 경우 alert -> 파일이 있는 경우 POST
   const onUploadSubmit = (event) => {
     event.preventDefault();
 
-    if (file === null) {
-      alert('csv파일을 선택 해주세요!');
-    }
+    // if (file === null) {
+    //   console.log('empty file null ? ', file);
+    //   alert('csv파일을 선택 해주세요!');
+    // }
 
-    //csv파일 POST
-    fetch(`http://${myUrl}/api/csv/user`, {
+    //----csv파일 POST
+    fetch(`http://${myUrl}/admin/insert/user`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-      body: JSON.stringify({
-        // 보낼 값
-      }),
+      // headers: {
+      //   'Content-Type': 'multipart/form-data',
+      // },
+      //
+      cache: 'no-cache',
+      body: formData,
     })
       .then((res) => res.json())
       .then((data) => {
-        //console.log(data);
+        console.log('data:', data, data.message);
+        alert(data.message);
         //제출하고 나면 빈값으로 변경
+        // setFileState(null);
+        // console.log(fileState);
+        window.location.reload();
+      })
+      .catch((err) => {
+        console.log(err);
       });
   };
 
@@ -44,9 +55,6 @@ const Admin = () => {
       <div className={styles.wrap}>
         <div className={styles.box}>
           <h3 className={styles.title}>관리자 페이지</h3>
-          <p className={styles.explain}>
-            향후 관리자 페이지에 더 많은 기능을 추가할 예정입니다.
-          </p>
           <hr className={styles.line} />
           <div className={styles.file}>
             기수 인재 번호와 이름 데이터 최신 버전 파일을 업로드 해주세요!
@@ -70,9 +78,8 @@ const Admin = () => {
           </form>
         </div>
       </div>
-      <Footer />
     </>
   );
 };
 
-export default Admin;
+export default FileUpload;

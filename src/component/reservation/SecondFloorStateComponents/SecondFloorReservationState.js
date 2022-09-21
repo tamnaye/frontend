@@ -1,18 +1,31 @@
-import { useState } from 'react'
-import SecondFloorMeetingRoomState from './SecondFloorMeetingRoomState'
-import SecondFloorNaRoomState from './SecondFloorNaRoomState'
-import styles from './SecondFloorReservationState.module.css'
+// 컴포넌트
+import SecondFloorMeetingRoomState from './SecondFloorMeetingRoomState';
+import SecondFloorNaRoomState from './SecondFloorNaRoomState';
+//스타일
+import styles from './SecondFloorReservationState.module.css';
+//hook
+import { useState } from 'react';
 
-const SecondFloorReservationState = () => {
-  const [RoomType, setRoomType] = useState(true)
-  const MeetingRoom = true
-  const NaBox = false
+const SecondFloorReservationState = ({
+  //2층
+  SecondMeetingRoominfo,
+  SecondNaboxinfo,
+  SinyangID,
+  SinyangName,
+  //전체
+  bookingData,
+  roomData,
+  floor,
+}) => {
+  const [RoomType, setRoomType] = useState(true);
+  const MeetingRoom = true;
+  const NaBox = false;
   const MeetingRoomOnClick = () => {
-    setRoomType(MeetingRoom)
-  }
+    setRoomType(MeetingRoom);
+  };
   const NaboxOnClick = () => {
-    setRoomType(NaBox)
-  }
+    setRoomType(NaBox);
+  };
 
   return (
     <div>
@@ -32,17 +45,26 @@ const SecondFloorReservationState = () => {
             <SecondFloorMeetingRoomState
               key="meeting"
               className={styles.reservationTable}
+              bookingData={bookingData}
+              roomData={roomData}
+              SecondMeetingRoominfo={SecondMeetingRoominfo}
+              SinyangID={SinyangID}
+              SinyangName={SinyangName}
+              floor={floor}
             />
           ) : (
             <SecondFloorNaRoomState
               key="nabox"
               className={styles.reservationTable}
+              SecondNaboxinfo={SecondNaboxinfo}
+              bookingData={bookingData}
+              roomData={roomData}
             />
           )}
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default SecondFloorReservationState
+export default SecondFloorReservationState;
