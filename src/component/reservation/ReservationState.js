@@ -5,7 +5,7 @@ import AllFloorReservationState from './AllFloorReservationState';
 // 스타일
 import styles from './ReservationState.module.css';
 // Hook
-import { useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 // 커스텀 훅
 import useUrl from '../../hooks/useUrl';
@@ -36,9 +36,9 @@ const ReservationState = () => {
 
   const myUrl = useUrl();
   const url = `http://${myUrl}/api/booking/details-booking2`;
-  const location = useLocation();
+  const navigate = useNavigate();
   useEffect(() => {
-    fetchGet(url, location).then((data) => {
+    fetchGet(url, navigate).then((data) => {
       setfloor(data.floor);
       setBookingData(data.BookingData);
       setRoomData(data.RoomData);
@@ -47,17 +47,20 @@ const ReservationState = () => {
       if (data.floor === 2) {
         setSecondMeetingRoominfo(
           data.RoomData.filter(
-            (rooms) => rooms.roomType === 'meeting' && rooms.roomName !== '신양'
+            (rooms) =>
+              rooms.roomType === 'meeting' && rooms.roomType !== 'official'
           )
         );
         setSecondNaboxinfo(
           data.RoomData.filter((rooms) => rooms.roomType === 'nabox')
         );
         setSinYangID(
-          data.RoomData.filter((rooms) => rooms.roomId === 207)[0].roomId
+          data.RoomData.filter((rooms) => rooms.roomType === 'official')[0]
+            .roomId
         );
         setSinYangName(
-          data.RoomData.filter((rooms) => rooms.roomName === '신양')[0].roomName
+          data.RoomData.filter((rooms) => rooms.roomType === 'official')[0]
+            .roomName
         );
       }
 
@@ -82,7 +85,7 @@ const ReservationState = () => {
             (rooms) =>
               rooms.floor === 2 &&
               rooms.roomType === 'meeting' &&
-              rooms.roomName !== '신양'
+              rooms.roomType !== 'official'
           )
         );
         setSecondNaboxinfo(
@@ -91,10 +94,12 @@ const ReservationState = () => {
           )
         );
         setSinYangID(
-          data.RoomData.filter((rooms) => rooms.roomId === 207)[0].roomId
+          data.RoomData.filter((rooms) => rooms.roomType === 'official')[0]
+            .roomId
         );
         setSinYangName(
-          data.RoomData.filter((rooms) => rooms.roomName === '신양')[0].roomName
+          data.RoomData.filter((rooms) => rooms.roomType === 'official')[0]
+            .roomName
         );
         // 3층 정보
         setThirdMeetingStudioinfo(
