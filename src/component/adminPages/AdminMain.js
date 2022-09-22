@@ -12,24 +12,29 @@ import Offcanvas from 'react-bootstrap/Offcanvas';
 // import { Route, Routes } from 'react-router-dom';
 
 const AdminMain = () => {
-  
   // const navigate = useNavigate()
   // const url = `http://${useUrl()}/api/user/data`;
   // useEffect(()=>{
   //   fetchGet(url,navigate).then((data)=>console.log("adminMain : ",data.userData))
 
-  // })  
+  // })
   return (
     <>
       {['lg'].map((expand) => (
-        <Navbar key={expand} bg='light' expand={expand} className='mb-3'>
+        <Navbar
+          key={expand}
+          bg="light"
+          expand={expand}
+          className="mb-3"
+          style={{ zIndex: '1' }}
+        >
           <Container fluid>
-            <Navbar.Brand href='#'>관리자 페이지</Navbar.Brand>
+            <Navbar.Brand href="#">관리자 페이지</Navbar.Brand>
             <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-${expand}`} />
             <Navbar.Offcanvas
               id={`offcanvasNavbar-expand-${expand}`}
               aria-labelledby={`offcanvasNavbarLabel-expand-${expand}`}
-              placement='end'
+              placement="end"
             >
               <Offcanvas.Header closeButton>
                 <Offcanvas.Title id={`offcanvasNavbarLabel-expand-${expand}`}>
@@ -37,11 +42,11 @@ const AdminMain = () => {
                 </Offcanvas.Title>
               </Offcanvas.Header>
               <Offcanvas.Body>
-                <Nav className='justify-content-end flex-grow-1 pe-3'>
-                  <Nav.Link href='/admin'>최신기수 업로드</Nav.Link>
-                  <Nav.Link href='/admin/individual'>개별 인재관리</Nav.Link>
-                  <Nav.Link href='/admin/floor'>기수별 층수관리</Nav.Link>
-                  <Nav.Link href='/admin/room'>회의실 데이터</Nav.Link>
+                <Nav className="justify-content-end flex-grow-1 pe-3">
+                  <Nav.Link href="/admin">최신기수 업로드</Nav.Link>
+                  <Nav.Link href="/admin/individual">개별 인재관리</Nav.Link>
+                  <Nav.Link href="/admin/floor">기수별 층수관리</Nav.Link>
+                  <Nav.Link href="/admin/room">회의실 데이터</Nav.Link>
                 </Nav>
               </Offcanvas.Body>
             </Navbar.Offcanvas>
