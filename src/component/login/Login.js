@@ -12,11 +12,10 @@ export default function Login() {
   const navigate = useNavigate();
   const location = useLocation();
   const ip = useUrl();
-  const [isAdmin, setIsAdmin] = useState(false);
-  if (location.pathname === "/admin" && !isAdmin) {
-    removeToken()
-    setIsAdmin(true);
-  }
+  // const [isAdmin, setIsAdmin] = useState(false);
+  const isAdmin = location.pathname==="/admin"
+  if(isAdmin) removeToken()
+
 
   function getToken(userid) {
     const url = `http://${ip}/auth/login`;
@@ -40,7 +39,7 @@ export default function Login() {
 
       .then((data) => {
         if (data.message === "success") {
-          isAdmin? navigate(`/admin/fileupload`) : navigate('/main')
+          isAdmin ? navigate(`/admin/fileupload`) : navigate("/main");
         } else {
           alert("알수없는 에러입니다.");
         }
@@ -114,14 +113,26 @@ export default function Login() {
             />
           </Form.Item>
           <Form.Item>
-            <Button
-              size="large"
-              style={{ width: "100%" }}
-              type="default"
-              htmlType="submit"
-            >
-              Login
-            </Button>
+            {console.log("form isadmin : ",isAdmin)}
+            {isAdmin ? (
+              <Button
+                size="large"
+                style={{ width: "100%" }}
+                type="default"
+                htmlType="submit"
+              >
+                Login
+              </Button>
+            ) : (
+              <Button
+                size="large"
+                style={{ width: "100%" }}
+                type="primary"
+                htmlType="submit"
+              >
+                Login
+              </Button>
+            )}
           </Form.Item>
         </Form>
       </div>

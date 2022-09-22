@@ -1,10 +1,23 @@
 import styles from './FileUpload.module.css';
 import useUrl from '../../../hooks/useUrl';
-// import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
+import { fetchGet } from '../../../hooks/fetchUrl';
+import { useNavigate } from 'react-router-dom';
+// import { useState } from 'react';
 
 const FileUpload = () => {
-  // const [postFileState, setPostFileState] = useState();
+
+
+
+  // const [fileState, setFileState] = useState('');
   const myUrl = useUrl();
+  const url = `http://${useUrl()}/admin/insert/user`
+  const navigate = useNavigate()
+
+  useEffect(()=>{
+    fetchGet(url,navigate).then((data)=> console.log(data))
+  })
+
   let formData = new FormData(); //FormData(): Creates a new FormData object
   //console.log('empty file:', formData);
 
