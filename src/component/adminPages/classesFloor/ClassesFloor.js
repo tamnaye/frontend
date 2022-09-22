@@ -22,14 +22,18 @@ const ClassesFloor = () => {
 
   //----select box 값 가져오기
   const onChange = (event) => {
-    //console.log(event.target.value);
+    console.log(event.target.value);
     setFloorChangeData(event.target.value);
   };
+  console.log(floorChangeData, typeof floorChangeData);
 
   //----수정 버튼 클릭 시 수정한 데이터 post
   const btnClickChange = (changeFloor, index) => {
     //console.log(changeFloor.classes);
     //console.log(changeFloor.floor);
+
+    //const arr = [...classOfFloorData]; //데이터 POST하고 나서 새로고침하기 위해 새배열 만들어줌
+    console.log('btnclickchange ', floorChangeData);
     const postUrl = `http://${myUrl}/admin/change/floor`;
     const object = {
       classes: changeFloor.classes,
@@ -39,6 +43,8 @@ const ClassesFloor = () => {
       //console.log(data.message);
       alert(data.message);
       window.location.reload(); //alert 버튼 클릭 시, 새로고침해서 데이터 다시 받아옴
+      //arr.splice();
+      //setClassOfFloorData(arr);
     });
   };
 
@@ -78,13 +84,24 @@ const ClassesFloor = () => {
                       onChange={onChange}
                     >
                       <option className={styles.option_difault} value='default'>
-                        {item.floor}
+                        {item.floor === 0 ? 'ALL' : item.floor}
                       </option>
                       <optgroup label='--'></optgroup>
-                      {/* <hr /> */}
+                      <option value='0'>ALL</option>
                       <option value='2'>2</option>
                       <option value='3'>3</option>
-                      {/* <option value='4'>4</option> */}
+
+                      {/* {item.floor === 2
+                        ? [
+                            <option key='3' value='3'>
+                              3
+                            </option>,
+                          ]
+                        : [
+                            <option key='2' value='2'>
+                              2
+                            </option>,
+                          ]} */}
                     </select>
                   </td>
                   <td>

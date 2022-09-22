@@ -12,19 +12,18 @@ import Offcanvas from 'react-bootstrap/Offcanvas';
 // import { Route, Routes } from 'react-router-dom';
 
 const AdminMain = () => {
-  
   // const navigate = useNavigate()
   // const url = `http://${useUrl()}/api/user/data`;
   // useEffect(()=>{
   //   fetchGet(url,navigate).then((data)=>console.log("adminMain : ",data.userData))
 
-  // })  
+  // })
   return (
     <>
       {['lg'].map((expand) => (
         <Navbar key={expand} bg='light' expand={expand} className='mb-3'>
           <Container fluid>
-            <Navbar.Brand href='#'>관리자 페이지</Navbar.Brand>
+            <Navbar.Brand>관리자 페이지</Navbar.Brand>
             <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-${expand}`} />
             <Navbar.Offcanvas
               id={`offcanvasNavbar-expand-${expand}`}
