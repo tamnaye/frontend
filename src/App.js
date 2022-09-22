@@ -3,7 +3,6 @@ import { useEffect } from 'react';
 import { getAuth } from './hooks/authModule';
 import './App.module.css';
 import Login from './component/login/Login';
-import Logout from './component/logout/Logout';
 import Header from './component/header/Header';
 import EmptyPage from './component/EmptyPage';
 import MainTemplate from './component/main/MainTemplate';
@@ -23,7 +22,6 @@ function App() {
     if (
       location.pathname !== "/" &&
       location.pathname !== "/admin" &&
-      location.pathname !== "/logout" &&
       getAuth().auth === null 
     ) {
       console.log("App.js 예외처리 1");
@@ -61,7 +59,6 @@ function App() {
 
       <Routes>
         <Route path="/" element={<Login />} />
-        <Route path="/logout" element={<Logout />} />
         <Route path="/main" element={<MainTemplate />} />
         <Route path="/state" element={<ReservationState />} />
         <Route path="/booking/:roomId" element={<BookPage />} />
