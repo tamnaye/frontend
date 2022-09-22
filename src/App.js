@@ -32,7 +32,6 @@ function App() {
     } else if (location.pathname === "/admin" && getAuth().auth !== null) {
       console.log("App.js 예외처리 3");
       navigate("/admin/fileupload");
-
     } else {
       console.log('App.js 예외처리 else');
     }
