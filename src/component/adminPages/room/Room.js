@@ -56,15 +56,12 @@ const Room = () => {
   const onChangeRoomType = (event, index) => {
     const arr = [...roomType];
     arr[index] = event.target.value;
-    setRoomType(arr);
+    setNewRoomType(arr);
   };
 
   function updateRoomData(roomid, index) {
     const url = `http://${myUrl}/admin/update/room-data`;
-    console.log("udataRoomData ~ newMaxHour", newMaxHour[index]);
-    console.log("udataRoomData ~ maxHour", maxHour[index]);
-    console.log("udataRoomData ~ newRoomType", newRoomType[index]);
-    console.log("udataRoomData ~ roomType", roomType[index]);
+
     if (
       newMaxHour[index] === maxHour[index] &&
       newRoomType[index] === roomType[index]
@@ -77,14 +74,7 @@ const Room = () => {
         roomType: newRoomType[index],
       };
       fetchPostJson(url, object, navigate).then((data) => {
-        alert(
-          // `${
-          //   roomData[index].roomType === "meeting"
-          //     ? roomData[index].roomName + "(회의실)"
-          //     : roomData[index].roomName
-          // }의 최대 이용시간이 수정되었습니다.`
-          "수정되었습니다."
-        );
+          alert(data?.message)
       });
     }
   }
