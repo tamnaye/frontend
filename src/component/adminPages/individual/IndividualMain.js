@@ -45,7 +45,7 @@ const IndividualMain = () => {
   const [pickedUserId, setPickedUserId] = useState({});
 
   // 수정에서 변경될 내용 데이터
-  const [changedUserName, setChangedUserName] = useState();
+  const [changedUserName, setChangedUserName] = useState(null);
   const [changedUserRole, setChangedUserRole] = useState('USER');
   const [changedUserFloor, setChangedUserFloor] = useState('2');
   const [changedUserFloorNumber, setChangedUserFloorNumber] = useState('2');
@@ -88,7 +88,7 @@ const IndividualMain = () => {
     { id: 'floor', title: '사용 가능 층수' },
   ];
 
-  //-- 삭제를 원하는 User 정보 가져오기 --//
+  //-- 1. 삭제를 원하는 User 정보 가져오기 --//
   const onDeleteChecked = (data) => {
     console.log('deletecheckedList.length : ', deletecheckedList.length);
     // setIsChecked(!isChecked);
@@ -99,7 +99,6 @@ const IndividualMain = () => {
         data.data.userId,
       ]);
     } else {
-      // for (let i = 0; i < deletecheckedList.length; i++) {
       if (!deletecheckedList.includes(data.data.userId)) {
         setDeletecheckedList((deletecheckedList) => [
           ...deletecheckedList,
@@ -110,9 +109,9 @@ const IndividualMain = () => {
           deletecheckedList.filter((checked) => checked !== data.data.userId)
         );
       }
-      // }
     }
-
+    // 변경된 state로 불러오는지 확인
+    // selectedClassData(data.data.classes);
     console.log('deletecheckedList 1 ', deletecheckedList);
   };
   console.log('deletecheckedList 1 ', deletecheckedList);
@@ -126,11 +125,12 @@ const IndividualMain = () => {
     fetchPostJson(postUrl, object, navigate).then((data) => {
       //console.log(data.message);
       alert(data.message);
+      selectedClassData(classPickNumber);
       // window.location.reload(); //alert 버튼 클릭 시, 새로고침해서 데이터 다시 받아옴
     });
   };
 
-  //-- 추가를 원하는 user 정보 가져오기 --//
+  //-- 2.추가를 원하는 user 정보 가져오기 --//
   const onAddUserClass = (e) => {
     setAddUserClass(e.target.value);
     setAddUserClassNumber([
@@ -153,11 +153,11 @@ const IndividualMain = () => {
   };
 
   const onAddListConfirm = () => {
-    console.log(addUserClassNumber[0]);
-    console.log(addUserId);
-    console.log(addUserName);
-    console.log(addUserRole);
-    console.log(addUserFloorNumber[0]);
+    // console.log(addUserClassNumber[0]);
+    // console.log(addUserId);
+    // console.log(addUserName);
+    // console.log(addUserRole);
+    // console.log(addUserFloorNumber[0]);
 
     const postUrl = `http://${myUrl}/admin/insertion/user`;
     const object = {
@@ -170,23 +170,14 @@ const IndividualMain = () => {
     fetchPostJson(postUrl, object, navigate).then((data) => {
       //console.log(data.message);
       alert(data.message);
-      // window.location.reload(); //alert 버튼 클릭 시, 새로고침해서 데이터 다시 받아옴
+      window.location.reload(); //alert 버튼 클릭 시, 새로고침해서 데이터 다시 받아옴
+      selectedClassData(addUserClassNumber[0]);
+      setAddUserId(' ');
+      setAddUserName(' ');
     });
-
-    AddAfter();
   };
 
-  const AddAfter = () => {
-    setAddUserClass('6기');
-    setAddUserClassNumber(6);
-    setAddUserId(null);
-    setAddUserName(null);
-    setAddUserRole('USER');
-    setAddUserFloor('2');
-    setAddUserFloorNumber(2);
-  };
-
-  // 수정을 원하는 선택 user 정보 가져오기
+  //-- 3.수정을 원하는 선택 user 정보 가져오기 --//
   const handleClose = () => {
     setShow(false);
     setChangedUserName('');
@@ -231,53 +222,59 @@ const IndividualMain = () => {
     fetchPostJson(postUrl, object, navigate).then((data) => {
       //console.log(data.message);
       alert(data.message);
+
+      selectedClassData(classPickNumber);
+      handleClose();
       // window.location.reload(); //alert 버튼 클릭 시, 새로고침해서 데이터 다시 받아옴
     });
-    handleClose();
+    // handleClose();
+    // selectedClassData(classPickNumber);
   };
 
   return (
     <>
       <div className={styles.wrap}>
         <div className={styles.box}>
-          <h3 className={styles.title}>개별 인재 관리</h3>
-          <hr className={styles.line} />
-          <div className={styles.buttons}>
-            {/* 기수 데이터 정하는 버튼 */}
-            <DropdownButton
-              style={{
-                marginTop: '10px',
-                fontSize: '12px',
-                textAalign: 'center',
-              }}
-              id="dropdown-item-button"
-              title={classPickState}
-            >
-              {classList.map((classes) => (
-                <Dropdown.Item
-                  style={{
-                    marginLeft: '3px',
-                    marginRight: '3px',
-                    fontSize: '13px',
-                    textAalign: 'center',
-                  }}
-                  as="button"
-                  key={classes}
-                  value={classes}
-                  onClick={(event) => {
-                    onClickClass(event);
-                  }}
-                >
-                  {classes === 0 ? '매니저' : `${classes}기`}
-                </Dropdown.Item>
-              ))}
-            </DropdownButton>
-            {/* 삭제 버튼 */}
-            <button className={styles.upload_btn} onClick={onDeleteButton}>
-              삭제
-            </button>
+          <div className={styles.header}>
+            <h3 className={styles.title}>개별 인재 관리</h3>
+            <hr className={styles.line} />
+            <div className={styles.buttons}>
+              {/* 기수 데이터 정하는 버튼 */}
+              <DropdownButton
+                style={{
+                  marginTop: '10px',
+                  fontSize: '12px',
+                  textAalign: 'center',
+                }}
+                id="dropdown-item-button"
+                title={classPickState}
+              >
+                {classList.map((classes) => (
+                  <Dropdown.Item
+                    style={{
+                      marginLeft: '3px',
+                      marginRight: '3px',
+                      fontSize: '13px',
+                      textAalign: 'center',
+                    }}
+                    as="button"
+                    key={classes}
+                    value={classes}
+                    onClick={(event) => {
+                      onClickClass(event);
+                    }}
+                  >
+                    {classes === 0 ? '매니저' : `${classes}기`}
+                  </Dropdown.Item>
+                ))}
+              </DropdownButton>
+              {/* 삭제 버튼 */}
+              <button className={styles.upload_btn} onClick={onDeleteButton}>
+                삭제
+              </button>
+            </div>
           </div>
-          <div>
+          <div className={styles.tableContainer}>
             <Table bordered>
               <thead>
                 <tr className={styles.tableTrTitle}>
@@ -405,7 +402,7 @@ const IndividualMain = () => {
                     <th>{data.userId}</th>
                     <th>{data.userName}</th>
                     <th>{data.roles}</th>
-                    <th>{data.floor}</th>
+                    <th>{data.floor === 0 ? 'ALL' : data.floor}</th>
                     <th>
                       {/* 모달창 관련 */}
                       <>

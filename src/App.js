@@ -42,7 +42,10 @@ function App() {
 
   return (
     <div>
-      {location.pathname !== '/' ? <Header /> : null}
+      {location.pathname !== '/' &&
+      location.pathname !== '/admin/individual' ? (
+        <Header />
+      ) : null}
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/logout" element={<Logout />} />
