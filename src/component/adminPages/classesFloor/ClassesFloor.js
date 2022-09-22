@@ -9,27 +9,29 @@ import { useNavigate } from 'react-router-dom';
 const ClassesFloor = () => {
   const navigate = useNavigate();
   const myUrl = useUrl();
-  const floorSelection = [0, 2, 3]; //배열로 만들어 준 후 map으로 돌림
+  //const floorSelection = [0, 2, 3]; //select-option 층수 배열로 만들어 준 후 map으로 돌림 <- back에서 데이터 받아오기로!
+  const [floorData, setFloorData] = useState([]);
   const [floorChangeData, setFloorChangeData] = useState('');
   const [classOfFloorData, setClassOfFloorData] = useState([]);
 
   const url = `http://${myUrl}/admin/view/class&floor`;
   useEffect(() => {
     fetchGet(url).then((data) => {
+      setFloorData(data.floorData);
       setClassOfFloorData(data.ClassOfFloorData);
     });
   }, [url]);
+  //console.log(floorData);
   //console.log(classOfFloorData);
 
   //----select box 값 가져오기
   const onChange = (event) => {
-    console.log(event.target.value);
     setFloorChangeData(event.target.value);
   };
-  console.log(floorChangeData, typeof floorChangeData);
+  //console.log(floorChangeData, typeof floorChangeData);
 
   //----수정 버튼 클릭 시 수정한 데이터 post
-  const btnClickChange = (changeFloor, index) => {
+  const btnClickChange = (changeFloor) => {
     //console.log(changeFloor.classes);
     //console.log(changeFloor.floor);
 
@@ -45,9 +47,8 @@ const ClassesFloor = () => {
       alert('수정사항이 없습니다.');
     } else {
       fetchPostJson(postUrl, object, navigate).then((data) => {
-        //console.log(data.message);
         alert(data.message);
-        //window.location.reload(); //alert 버튼 클릭 시, 새로고침해서 데이터 다시 받아옴
+        window.location.reload(); //alert 버튼 클릭 시, 새로고침해서 데이터 다시 받아옴
         //arr.splice();
         //setClassOfFloorData(arr);
       });
@@ -66,13 +67,13 @@ const ClassesFloor = () => {
           <Table responsive>
             <thead>
               <tr className={styles.tableTrTitle}>
-                <th className={styles.tableTh} scope="col">
+                <th className={styles.tableTh} scope='col'>
                   기수
                 </th>
-                <th className={styles.tableTh} scope="col">
+                <th className={styles.tableTh} scope='col'>
                   층수
                 </th>
-                <th className={styles.tableTh} scope="col">
+                <th className={styles.tableTh} scope='col'>
                   수정버튼
                 </th>
               </tr>
@@ -85,7 +86,7 @@ const ClassesFloor = () => {
                   </td>
                   <td>
                     <select
-                      name="floor"
+                      name='floor'
                       className={styles.select_floor}
                       onChange={onChange}
                     >
@@ -93,7 +94,7 @@ const ClassesFloor = () => {
                         {item.floor === 0 ? 'ALL' : item.floor}
                       </option>
                       <optgroup label='--'></optgroup>
-                      {floorSelection.map((floor, index) =>
+                      {floorData.map((floor, index) =>
                         floor === item.floor ? null : (
                           <option key={index} value={floor}>
                             {floor === 0 ? 'ALL' : floor}
@@ -103,18 +104,6 @@ const ClassesFloor = () => {
                       {/* <option value='0'>ALL</option>
                       <option value='2'>2</option>
                       <option value='3'>3</option> */}
-
-                      {/* {item.floor === 2
-                        ? [
-                            <option key='3' value='3'>
-                              3
-                            </option>,
-                          ]
-                        : [
-                            <option key='2' value='2'>
-                              2
-                            </option>,
-                          ]} */}
                     </select>
                   </td>
                   <td>

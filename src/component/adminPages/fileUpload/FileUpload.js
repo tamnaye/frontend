@@ -48,6 +48,10 @@ const FileUpload = () => {
           <hr className={styles.line} />
           <div className={styles.file}>
             기수 인재 번호와 이름 데이터 최신 버전 파일을 업로드 해주세요!
+            <br />
+            <span className={styles.file_span}>
+              📌 기수 | 인재번호 | 이름 순의 양식을 지켜주세요.
+            </span>
           </div>
           {/* <input> 태그의 accept 속성은 서버로 업로드할 수 있는 파일의 타입을 명시 -> 이 속성은 type 속성값이 “file”인 경우에만 사용할 수 있다. */}
           <form className={styles.form}>
