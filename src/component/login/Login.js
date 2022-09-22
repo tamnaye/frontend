@@ -5,7 +5,7 @@ import "antd/dist/antd.min.css";
 import styles from "./Login.module.css";
 import encrypt from "../../hooks/encrypt";
 import useUrl from "../../hooks/useUrl";
-import { setAuth } from "../../hooks/authModule";
+import { getAuth, removeToken, setAuth } from "../../hooks/authModule";
 import { useState } from "react";
 
 export default function Login() {
@@ -14,6 +14,7 @@ export default function Login() {
   const ip = useUrl();
   const [isAdmin, setIsAdmin] = useState(false);
   if (location.pathname === "/admin" && !isAdmin) {
+    removeToken()
     setIsAdmin(true);
   }
 
