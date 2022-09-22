@@ -7,7 +7,7 @@ export default function EmptyPage() {
   const location = useLocation();
  
   useEffect(() => {
-    if(location.pathname.includes("/admin")){
+    if(location.pathname.includes("admin/")){
       if (getAuth().auth === null) {
         console.log("empty 1")
         alert("잘못된 접근입니다.");
