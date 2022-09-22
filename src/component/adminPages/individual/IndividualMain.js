@@ -236,7 +236,9 @@ const IndividualMain = () => {
       <div className={styles.wrap}>
         <div className={styles.box}>
           <div className={styles.header}>
-            <h3 className={styles.title}>개별 인재 관리</h3>
+            <div className={styles.titleContainer}>
+              <h3 className={styles.title}>개별 인재 관리</h3>
+            </div>
             <hr className={styles.line} />
             <div className={styles.buttons}>
               {/* 기수 데이터 정하는 버튼 */}
@@ -275,8 +277,11 @@ const IndividualMain = () => {
             </div>
           </div>
           <div className={styles.tableContainer}>
-            <Table bordered>
-              <thead>
+            <Table
+              bordered
+              style={{ display: 'block', height: '65vh', overflowY: 'auto' }}
+            >
+              <thead style={{ tableLayout: 'fixed' }}>
                 <tr className={styles.tableTrTitle}>
                   <th className={styles.tableTh} style={{ width: '3rem' }}></th>
                   {/* 룸 타이틀 불러오기 */}
@@ -289,9 +294,7 @@ const IndividualMain = () => {
                       {titles.title}
                     </th>
                   ))}
-                  <th className={styles.tableTh} style={{}}>
-                    수정하기
-                  </th>
+                  <th className={styles.tableTh}>수정하기</th>
                 </tr>
               </thead>
               <tbody>
