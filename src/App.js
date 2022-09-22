@@ -21,15 +21,20 @@ function App() {
   const navigate = useNavigate();
   useEffect(() => {
     if (
-      location.pathname !== '/' &&
-      getAuth().auth === null &&
-      location.pathname !== '/logout'
+      location.pathname !== "/" &&
+      location.pathname !== "/admin" &&
+      location.pathname !== "/logout" &&
+      getAuth().auth === null 
     ) {
-      console.log('App.js 예외처리 1');
-      navigate('/');
-    } else if (location.pathname === '/' && getAuth().auth !== null) {
-      console.log('App.js 예외처리 2');
-      navigate('/main');
+      console.log("App.js 예외처리 1");
+      navigate("/");
+    } else if (location.pathname === "/" && getAuth().auth !== null) {
+      console.log("App.js 예외처리 2");
+      navigate("/main");
+    } else if (location.pathname === "/admin" && getAuth().auth !== null) {
+      console.log("App.js 예외처리 3");
+      navigate("/admin/fileupload");
+
     } else {
       console.log('App.js 예외처리 else');
     }
@@ -40,14 +45,19 @@ function App() {
     console.log = function no_console() {};
     console.warn = function no_console() {};
   }
-  const pathArr = ["/","/admin/floor","/admin","/admin/room","/admin/individual"]
+  const pathArr = [
+    "/",
+    "/admin",
+    "/admin/floor",
+    "/admin/fileupload",
+    "/admin/room",
+    "/admin/individual",
+  ];
 
   return (
     <div>
-
       {!pathArr.includes(location.pathname) ? <Header /> : null}
-      {pathArr.filter((item)=>item.includes("admin")) ? <AdminMain/> : null}
-      {console.log("pathArr : ",pathArr.filter((item)=>item.includes("admin")))}
+      {location.pathname.includes("admin/") ? <AdminMain /> : null}
 
       <Routes>
         <Route path="/" element={<Login />} />
@@ -56,7 +66,9 @@ function App() {
         <Route path="/state" element={<ReservationState />} />
         <Route path="/booking/:roomId" element={<BookPage />} />
         <Route path="/mypage" element={<MyPage />} />
-        <Route path="/admin" element={<FileUpload />} />
+
+        <Route path="/admin" element={<Login />} />
+        <Route path="/admin/fileupload" element={<FileUpload />} />
         <Route path="/admin/floor" element={<ClassesFloor />} />
         <Route path="/admin/room" element={<Room />} />
         <Route path="/admin/individual" element={<IndividualMain />} />

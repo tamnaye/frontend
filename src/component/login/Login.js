@@ -1,15 +1,21 @@
 import { Input, Button, Form } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import "antd/dist/antd.min.css";
 import styles from "./Login.module.css";
 import encrypt from "../../hooks/encrypt";
 import useUrl from "../../hooks/useUrl";
-import {  setAuth } from "../../hooks/authModule";
+import { setAuth } from "../../hooks/authModule";
+import { useState } from "react";
 
 export default function Login() {
   const navigate = useNavigate();
+  const location = useLocation();
   const ip = useUrl();
+  const [isAdmin, setIsAdmin] = useState(false);
+  if (location.pathname === "/admin" && !isAdmin) {
+    setIsAdmin(true);
+  }
 
   function getToken(userid) {
     const url = `http://${ip}/auth/login`;
@@ -33,7 +39,7 @@ export default function Login() {
 
       .then((data) => {
         if (data.message === "success") {
-          navigate(`/main`);
+          isAdmin? navigate(`/admin/fileupload`) : navigate('/main')
         } else {
           alert("알수없는 에러입니다.");
         }
@@ -67,7 +73,11 @@ export default function Login() {
   return (
     <div className={styles.container}>
       <div className={styles.box}>
-        <h1 className={styles.centerName}>더큰내일 회의실 예약 시스템</h1>
+        {isAdmin ? (
+          <h1 className={styles.centerNameAdmin}>탐나예 관리자 로그인</h1>
+        ) : (
+          <h1 className={styles.centerName}>더큰내일 회의실 예약 시스템</h1>
+        )}
         <Form onFinish={onFinish}>
           <Form.Item
             name="userid"
@@ -106,7 +116,7 @@ export default function Login() {
             <Button
               size="large"
               style={{ width: "100%" }}
-              type="primary"
+              type="default"
               htmlType="submit"
             >
               Login
