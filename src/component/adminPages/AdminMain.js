@@ -23,7 +23,7 @@ const AdminMain = () => {
       {['lg'].map((expand) => (
         <Navbar key={expand} bg='light' expand={expand} className='mb-3'>
           <Container fluid>
-            <Navbar.Brand>관리자 페이지</Navbar.Brand>
+            <Navbar.Brand href='/admin/fileupload'>관리자 페이지</Navbar.Brand>
             <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-${expand}`} />
             <Navbar.Offcanvas
               id={`offcanvasNavbar-expand-${expand}`}
@@ -37,7 +37,7 @@ const AdminMain = () => {
               </Offcanvas.Header>
               <Offcanvas.Body>
                 <Nav className='justify-content-end flex-grow-1 pe-3'>
-                  <Nav.Link href='/admin'>최신기수 업로드</Nav.Link>
+                  <Nav.Link href='/admin/fileupload'>최신기수 업로드</Nav.Link>
                   <Nav.Link href='/admin/individual'>개별 인재관리</Nav.Link>
                   <Nav.Link href='/admin/floor'>기수별 층수관리</Nav.Link>
                   <Nav.Link href='/admin/room'>회의실 데이터</Nav.Link>

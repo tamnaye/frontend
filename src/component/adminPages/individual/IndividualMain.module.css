@@ -1,16 +1,24 @@
-.wrap {
-  width: 100vw;
-  height: 75vh;
-}
-
 .wrap .box {
-  margin: 30px auto;
-  padding: 50px;
+  margin: 0 auto;
+  padding: 0 3rem;
   /* border: 1px solid black; */
-  width: 90vwvw;
+  width: 90vw;
+}
+.header {
+  position: fixed;
+  padding: 2.5rem 8vw 1rem 8vw;
+  margin: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+
+  /* left: 8vw;
+  right: 8vw; */
+  background-color: rgb(239, 242, 246);
 }
 
 .title {
+  margin-top: 10px;
   font-size: 24px;
   color: #2090ff;
 }
@@ -22,7 +30,7 @@
 .buttons {
   display: flex;
   justify-content: end;
-  margin-bottom: 20px;
+  margin-top: 15px;
 }
 
 .upload_btn {
@@ -44,6 +52,10 @@
 }
 
 /* table title */
+.tableContainer {
+  padding-top: 12rem;
+}
+
 .tableTrtableTrTitle {
   table-layout: fixed;
   text-align: center;

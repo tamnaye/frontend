@@ -9,21 +9,22 @@ import { Navigate, useNavigate } from "react-router-dom";
 const Room = () => {
   const hourSelection = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
   const roomTypeSelection = ["meeting", "nabox", "studio", "official"];
-  const [maxHour, setMaxHour] = useState("");
-  const [roomType, setRoomType] = useState("");
-  console.log("roomtype : ", roomType);
+  const [maxHour, setMaxHour] = useState([]);
+  const [roomType, setRoomType] = useState([]);
   const [newMaxHour, setNewMaxHour] = useState([]);
   const [newRoomType, setNewRoomType] = useState([]);
   const [roomData, setRoomData] = useState([]);
-  console.log("roomData : ", roomData);
   const navigate = useNavigate();
   const defaultFloor = 2;
-
+  console.log("maxHour : ",maxHour)
+  console.log("newMaxHour : ",newMaxHour)
+  console.log("roomType : ",roomType)
+  console.log("newRoomType : ",newRoomType)
   const myUrl = useUrl();
   const url = `http://${myUrl}/admin/view/room?floor=${defaultFloor}`;
   useEffect(() => {
     fetchGet(url, navigate).then((data) => {
-      console.log("room useeffect data : ", data);
+      console.log("room useeffect data : ", data.RoomData);
       setRoomData(data?.RoomData);
       const arr1 = [];
       const arr2 = [];
@@ -41,7 +42,18 @@ const Room = () => {
   function getRooms(floor) {
     const url = `http://${myUrl}/admin/view/room?floor=${floor}`;
     fetchGet(url, navigate).then((data) => {
-      setRoomData(data.RoomData);
+      console.log("room getRooms data : ", data?.RoomData);
+      setRoomData(data?.RoomData);
+      const arr1 = [];
+      const arr2 = [];
+      data?.RoomData.map((item) => {
+        arr1.push(item.maxTime);
+        arr2.push(item.roomType);
+      });
+      setMaxHour(arr1);
+      setNewMaxHour(arr1);
+      setRoomType(arr2);
+      setNewRoomType(arr2);
     });
   }
 
@@ -49,22 +61,19 @@ const Room = () => {
     getRooms(event.target.value);
   };
   const onChangeMaxHour = (event, index) => {
-    const arr = [...maxHour];
-    arr[index] = event.target.value;
+    const arr = [...newMaxHour];
+    arr[index] = Number(event.target.value);
     setNewMaxHour(arr);
   };
   const onChangeRoomType = (event, index) => {
-    const arr = [...roomType];
+    const arr = [...newRoomType];
     arr[index] = event.target.value;
-    setRoomType(arr);
+    setNewRoomType(arr);
   };
 
   function updateRoomData(roomid, index) {
     const url = `http://${myUrl}/admin/update/room-data`;
-    console.log("udataRoomData ~ newMaxHour", newMaxHour[index]);
-    console.log("udataRoomData ~ maxHour", maxHour[index]);
-    console.log("udataRoomData ~ newRoomType", newRoomType[index]);
-    console.log("udataRoomData ~ roomType", roomType[index]);
+
     if (
       newMaxHour[index] === maxHour[index] &&
       newRoomType[index] === roomType[index]
@@ -77,14 +86,13 @@ const Room = () => {
         roomType: newRoomType[index],
       };
       fetchPostJson(url, object, navigate).then((data) => {
-        alert(
-          // `${
-          //   roomData[index].roomType === "meeting"
-          //     ? roomData[index].roomName + "(회의실)"
-          //     : roomData[index].roomName
-          // }의 최대 이용시간이 수정되었습니다.`
-          "수정되었습니다."
-        );
+          const arr = [...maxHour]
+          const arr2 = [...roomType]
+          arr[index] = Number(newMaxHour[index])
+          arr2[index] = newRoomType[index]
+          setMaxHour(arr)
+          setRoomType(arr2)
+          alert(data?.message)
       });
     }
   }
@@ -130,7 +138,7 @@ const Room = () => {
               </tr>
             </thead>
             <tbody>
-              {roomData.map((item, index) => (
+              {roomData?.map((item, index) => (
                 <tr key={index}>
                   <td>
                     <div>{item.roomName}</div>

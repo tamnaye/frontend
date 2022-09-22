@@ -66,13 +66,13 @@ const ClassesFloor = () => {
           <Table responsive>
             <thead>
               <tr className={styles.tableTrTitle}>
-                <th className={styles.tableTh} scope='col'>
+                <th className={styles.tableTh} scope="col">
                   기수
                 </th>
-                <th className={styles.tableTh} scope='col'>
+                <th className={styles.tableTh} scope="col">
                   층수
                 </th>
-                <th className={styles.tableTh} scope='col'>
+                <th className={styles.tableTh} scope="col">
                   수정버튼
                 </th>
               </tr>
@@ -85,7 +85,7 @@ const ClassesFloor = () => {
                   </td>
                   <td>
                     <select
-                      name='floor'
+                      name="floor"
                       className={styles.select_floor}
                       onChange={onChange}
                     >
