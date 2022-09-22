@@ -40,16 +40,14 @@ function App() {
     console.log = function no_console() {};
     console.warn = function no_console() {};
   }
+  const pathArr = ["/","/admin/floor","/admin","/admin/room","/admin/individual"]
 
   return (
     <div>
-      {location.pathname !== "/" ? <Header /> : null}
-      {location.pathname === "/admin" ||
-      location.pathname === "/admin/floor" ||
-      location.pathname === "/admin/room" ||
-      location.pathname === "/admin/individual" ? (
-        <AdminMain />
-      ) : null}
+
+      {!pathArr.includes(location.pathname) ? <Header /> : null}
+      {pathArr.filter((item)=>item.includes("admin")) ? <AdminMain/> : null}
+      {console.log("pathArr : ",pathArr.filter((item)=>item.includes("admin")))}
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/logout" element={<Logout />} />
