@@ -14,6 +14,7 @@ import AdminMain from './component/adminPages/AdminMain';
 import ClassesFloor from './component/adminPages/classesFloor/ClassesFloor';
 import Room from './component/adminPages/room/Room';
 import IndividualMain from './component/adminPages/individual/IndividualMain';
+import FileUpload from './component/adminPages/fileUpload/FileUpload';
 
 function App() {
   let location = useLocation();
@@ -42,9 +43,12 @@ function App() {
 
   return (
     <div>
-      {location.pathname !== '/' &&
-      location.pathname !== '/admin/individual' ? (
-        <Header />
+      {location.pathname !== '/' ? <Header /> : null}
+      {location.pathname === '/admin' ||
+      location.pathname === '/admin/floor' ||
+      location.pathname === '/admin/room' ||
+      location.pathname === '/admin/individual' ? (
+        <AdminMain />
       ) : null}
       <Routes>
         <Route path="/" element={<Login />} />
@@ -53,7 +57,7 @@ function App() {
         <Route path="/state" element={<ReservationState />} />
         <Route path="/booking/:roomId" element={<BookPage />} />
         <Route path="/mypage" element={<MyPage />} />
-        <Route path="/admin" element={<AdminMain />} />
+        <Route path="/admin" element={<FileUpload />} />
         <Route path="/admin/floor" element={<ClassesFloor />} />
         <Route path="/admin/room" element={<Room />} />
         <Route path="/admin/individual" element={<IndividualMain />} />

@@ -17,10 +17,10 @@ function BookPage() {
   const [userData, setUserData] = useState([]);
   const [namesData, setNamesData] = useState([]);
 
-  const [roomData, setRoomData] = useState([]);
+  const [currentRoomData, setCurrentRoomData] = useState([]);
 
-  const [navData, setNavData] = useState([]);
-  const [userFloor, setUserFloor] = useState('');
+  const [navRoomData, setNavRoomData] = useState([]);
+  const [floorUserData, setFloorUserData] = useState('');
 
   const { roomId } = useParams();
   const myUrl = useUrl();
@@ -35,27 +35,27 @@ function BookPage() {
       setUserData(data.userData);
       setNamesData(data.namesData);
 
-      setRoomData(data.nowRoomData);
+      setCurrentRoomData(data.currentRoomData);
 
-      setNavData(data.roomData);
-      setUserFloor(data.userData.floor);
+      setNavRoomData(data.roomData);
+      setFloorUserData(data.userData.floor);
     });
   }, [url, navigate]);
   return (
     <div>
-      {userFloor === 0
-        ? [<NavsAdmin key={0} navData={navData} />]
-        : userFloor === 2
-        ? [<NavsFloor2 key={2} navData={navData} />]
-        : [<NavsFloor3 key={3} navData={navData} />]}
+      {floorUserData === 0
+        ? [<NavsAdmin key={0} navRoomData={navRoomData} />]
+        : floorUserData === 2
+        ? [<NavsFloor2 key={2} navRoomData={navRoomData} />]
+        : [<NavsFloor3 key={3} navRoomData={navRoomData} />]}
       <div className={styles.roomInfo}>
-        <RoomInfo roomData={roomData} />
+        <RoomInfo currentRoomData={currentRoomData} />
         <div className={styles.bookingInfo}>
           <BookingData
             bookingData={bookingData}
             userData={userData}
             namesData={namesData}
-            roomData={roomData}
+            currentRoomData={currentRoomData}
           />
         </div>
       </div>
