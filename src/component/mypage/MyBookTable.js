@@ -4,24 +4,26 @@ import Table from 'react-bootstrap/Table';
 //hooks
 import { useState, useEffect } from 'react';
 import useUrl from '../../hooks/useUrl';
-import { fetchGet, fetchPostJson } from '../../hooks/fetchUrl';
-import { getAuth } from '../../hooks/authModule';
-import {  useNavigate } from 'react-router-dom';
+import { fetchPostJson } from '../../hooks/fetchUrl';
+import { useNavigate } from 'react-router-dom';
 
-function MyBookTable() {
-  // const userId = window.localStorage.getItem('userId');
+//MyPage에서 Props로 데이터 전달받음
+function MyBookTable({ userData, myBookingDetailDataList }) {
+  //console.log(userData);
+  //console.log(myBookingDetailDataList);
+
   const myUrl = useUrl();
   const [userId, setUserId] = useState('');
   const [myBookingList, setMyBookingList] = useState([]);
-  const url = `http://${myUrl}/api/user/mypage`;
-  const navigate = useNavigate
+  // const url = `http://${myUrl}/api/user/mypage`;
+  const navigate = useNavigate;
+
   useEffect(() => {
-fetchGet(url)
-      .then((data) => {
-        setUserId(data.userData.userId)
-        setMyBookingList(data.myBookingDetailDataList);
-      });
-  }, [url]);
+    // fetchGet(url).then((data) => {
+    setUserId(userData);
+    setMyBookingList(myBookingDetailDataList);
+    // });
+  }, [userData, myBookingDetailDataList]);
   //console.log(myBookingList);
 
   //useId랑 applicantUserId랑 같을 때 값 출력하기
@@ -32,14 +34,13 @@ fetchGet(url)
       //console.log(bid);
       const postUrl = `http://${myUrl}/api/booking/cancellation`;
       const object = {
-        bookingId : bid
-      }
-      fetchPostJson(postUrl,{bookingId:bid},navigate)
-        .then((data) => {
-          //console.log(data);
-          arr.splice(index, 1); //배열의 기존 요소를 삭제 또는 교체하거나 새 요소를 추가하여 배열의 내용을 변경
-          setMyBookingList(arr);
-        });
+        bookingId: bid,
+      };
+      fetchPostJson(postUrl, { bookingId: bid }, navigate).then((data) => {
+        //console.log(data);
+        arr.splice(index, 1); //배열의 기존 요소를 삭제 또는 교체하거나 새 요소를 추가하여 배열의 내용을 변경
+        setMyBookingList(arr);
+      });
     }
   };
   //팀원 띄어쓰기로 보여주기

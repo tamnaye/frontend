@@ -1,17 +1,30 @@
 import styles from './FileUpload.module.css';
 import useUrl from '../../../hooks/useUrl';
+import { useEffect } from 'react';
+import { fetchGet } from '../../../hooks/fetchUrl';
+import { useNavigate } from 'react-router-dom';
 // import { useState } from 'react';
 
 const FileUpload = () => {
+
+
+
   // const [fileState, setFileState] = useState('');
   const myUrl = useUrl();
+  const url = `http://${useUrl()}/admin/insert/user`
+  const navigate = useNavigate()
+
+  useEffect(()=>{
+    fetchGet(url,navigate).then((data)=> console.log(data))
+  })
+
   let formData = new FormData(); //FormData(): Creates a new FormData object
-  console.log('empty file:', formData);
+  //console.log('empty file:', formData);
 
   //----input file 값 확인
   const onChange = (e) => {
     formData.append('file', e.target.files[0]);
-    console.log('target file:', formData);
+    //console.log('target file:', formData);
     for (let value of formData.values()) {
       console.log('formData onchange value:', value);
     }
@@ -21,29 +34,19 @@ const FileUpload = () => {
   const onUploadSubmit = (event) => {
     event.preventDefault();
 
-    // if (file === null) {
-    //   console.log('empty file null ? ', file);
-    //   alert('csv파일을 선택 해주세요!');
-    // }
-
     //----csv파일 POST
     fetch(`http://${myUrl}/admin/insert/user`, {
       method: 'POST',
-      // headers: {
-      //   'Content-Type': 'multipart/form-data',
-      // },
-      //
       cache: 'no-cache',
       body: formData,
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log('data:', data, data.message);
+        //console.log('data:', data, data.message);
         alert(data.message);
         //제출하고 나면 빈값으로 변경
-        // setFileState(null);
-        // console.log(fileState);
-        window.location.reload();
+        // setPostFileState(null);
+        window.location.reload(); //리액트 새로고침
       })
       .catch((err) => {
         console.log(err);
@@ -71,9 +74,6 @@ const FileUpload = () => {
               <button onClick={onUploadSubmit} className={styles.upload_btn}>
                 Upload
               </button>
-              {/* <button onClick={onContentSubmit} className={styles.content_btn}>
-              Content
-            </button> */}
             </div>
           </form>
         </div>

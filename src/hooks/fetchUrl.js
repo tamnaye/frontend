@@ -19,6 +19,8 @@ export function fetchGet(url, navigate) {
         return res.json();
       } else if (res.status === 500) {
         alert("서버 에러  : 관리자에게 문의해주세요");
+      } else if (res.status===404){
+        window.history.back()
       }
     }
   });
