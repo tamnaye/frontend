@@ -113,7 +113,7 @@ const ClassesFloor = () => {
                       className={styles.select_floor}
                       onChange={(event) => onChange(event, index)}
                     >
-                      <option className={styles.option_difault} value='default'>
+                      <option className={styles.option_difault} value={item.floor}>
                         {item.floor === 0 ? 'ALL' : item.floor}
                       </option>
                       <optgroup label='--'></optgroup>
