@@ -3,34 +3,30 @@ import useUrl from '../../../hooks/useUrl';
 import { useEffect } from 'react';
 import { fetchGet } from '../../../hooks/fetchUrl';
 import { useNavigate } from 'react-router-dom';
-// import { useState } from 'react';
 
 const FileUpload = () => {
-
-
-
-  // const [fileState, setFileState] = useState('');
   const myUrl = useUrl();
-  const url = `http://${useUrl()}/admin/insert/user`
-  const navigate = useNavigate()
+  const url = `http://${myUrl}/admin/insert/user`;
+  const navigate = useNavigate();
 
-  useEffect(()=>{
-    fetchGet(url,navigate).then((data)=> console.log(data))
-  })
+  useEffect(() => {
+    fetchGet(url, navigate);
+    // .then((data) => console.log(data));
+  });
 
   let formData = new FormData(); //FormData(): Creates a new FormData object
-  //console.log('empty file:', formData);
+  //console.log('FormData():', formData); // -> FormData {}
 
   //----input file 값 확인
   const onChange = (e) => {
     formData.append('file', e.target.files[0]);
     //console.log('target file:', formData);
     for (let value of formData.values()) {
-      console.log('formData onchange value:', value);
+      //console.log('formData onchange value:', value);
     }
   };
 
-  //----Upload 버튼 클릭 시 새로고침 막아주고나서 파일이 없는 경우 alert -> 파일이 있는 경우 POST
+  //----Upload 버튼 클릭 시 새로고침 막아주고나서 POST
   const onUploadSubmit = (event) => {
     event.preventDefault();
 
@@ -44,9 +40,7 @@ const FileUpload = () => {
       .then((data) => {
         //console.log('data:', data, data.message);
         alert(data.message);
-        //제출하고 나면 빈값으로 변경
-        // setPostFileState(null);
-        window.location.reload(); //리액트 새로고침
+        window.location.reload(); //리액트 새로고침 -> 파일 Input 빈값처리
       })
       .catch((err) => {
         console.log(err);
