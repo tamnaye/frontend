@@ -5,8 +5,7 @@ import "antd/dist/antd.min.css";
 import styles from "./Login.module.css";
 import encrypt from "../../hooks/encrypt";
 import useUrl from "../../hooks/useUrl";
-import { getAuth, removeToken, setAuth } from "../../hooks/authModule";
-import { useState } from "react";
+import { removeToken, saveUserid } from "../../hooks/authModule";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -30,10 +29,13 @@ export default function Login() {
       }),
     })
       .then((res) => {
-        setAuth(
-          res.headers.get("Authorization"),
-          res.headers.get("reAuthorization")
-        );
+        // setAuth(
+        //   res.headers.get("Authorization"),
+        //   res.headers.get("reAuthorization")
+        // );
+
+        saveUserid(userid)
+
         return res.json();
       })
 
