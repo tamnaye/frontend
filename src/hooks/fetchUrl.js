@@ -3,17 +3,19 @@ import {
   refreshToken,
   sendAuth,
   getAuth,
+  getAdmin,
 } from "./authModule";
 
 export function fetchGet(url, navigate) {
+  console.log("fetchGet")
   return fetch(url, {
     method: "GET",
     headers: sendAuth(),
   }).then((res) => {
-    if (getAuth().reAuth !== null) {
+    if (getAuth().auth !== null) {
       if (res.status === 403) {
         tokenExpired();
-        navigate("/");
+      //  !getAdmin() ?  navigate("/") : navigate("/admin/fileupload")
       } else if (res.status === 200) {
         refreshToken(res.headers.get("Authorization"));
         return res.json();
@@ -31,7 +33,7 @@ export function fetchPostJson(url,object,navigate) {
     headers: sendAuth(),
     body: JSON.stringify(object),
   }).then((res) => {
-    if (getAuth().reAuth !== null) {
+    if (getAuth().auth !== null) {
       if (res.status === 403) {
         tokenExpired();
         navigate('/')

@@ -1,13 +1,16 @@
 import { Input, Button, Form } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "antd/dist/antd.min.css";
 import styles from "./Login.module.css";
 import encrypt from "../../hooks/encrypt";
 import useUrl from "../../hooks/useUrl";
-import { removeToken, saveUserid } from "../../hooks/authModule";
+import { setAuth } from "../../hooks/authModule";
 
-export default function Login() {
+export default function Login({ path }) {
+  const admin = path === "/admin";
+  const navigatePath = admin ? "/admin/fileupload" : "/main";
+  console.log(navigatePath)
   const navigate = useNavigate();
   const location = useLocation();
   const ip = useUrl();
@@ -16,6 +19,7 @@ export default function Login() {
   if(isAdmin) removeToken()
 
 
+  const url = `http://${useUrl()}/auth/login`;
   function getToken(userid) {
     const url = `http://${ip}/auth/login`;
 
@@ -29,19 +33,17 @@ export default function Login() {
       }),
     })
       .then((res) => {
-        // setAuth(
-        //   res.headers.get("Authorization"),
-        //   res.headers.get("reAuthorization")
-        // );
-
-        saveUserid(userid)
-
+        setAuth(
+          res.headers.get("Authorization"),
+          res.headers.get("reAuthorization"),
+          admin
+        );
         return res.json();
       })
 
       .then((data) => {
         if (data.message === "success") {
-          isAdmin ? navigate(`/admin/fileupload`) : navigate("/main");
+          navigate(navigatePath);
         } else {
           alert("알수없는 에러입니다.");
         }
@@ -75,7 +77,7 @@ export default function Login() {
   return (
     <div className={styles.container}>
       <div className={styles.box}>
-        {isAdmin ? (
+        {admin ? (
           <h1 className={styles.centerNameAdmin}>탐나예 관리자 로그인</h1>
         ) : (
           <h1 className={styles.centerName}>더큰내일 회의실 예약 시스템</h1>
@@ -115,8 +117,7 @@ export default function Login() {
             />
           </Form.Item>
           <Form.Item>
-            {console.log("form isadmin : ",isAdmin)}
-            {isAdmin ? (
+            {admin ? (
               <Button
                 size="large"
                 style={{ width: "100%" }}
