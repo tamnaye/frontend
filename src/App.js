@@ -14,6 +14,7 @@ import IndividualMain from "./component/adminPages/individual/IndividualMain";
 import FileUpload from "./component/adminPages/fileUpload/FileUpload";
 import LoginContainer from "./component/login/LoginContainer";
 import Invalid from "./component/Invalid";
+import Feedback from './component/Feedback';
 import { useEffect } from "react";
 
 function App() {
@@ -54,15 +55,12 @@ function App() {
         console.log("redirecting 6 ", pathname);
         isAdminPath ? navigate("/admin") : !isAdminLoginPage && navigate("/");
       }
-    
   }, [navigate]);
-
 
   if (process.env.NODE_ENV === "production") {
     console.log = function no_console() {};
     console.warn = function no_console() {};
   }
-
 
   return (
     <div>
@@ -84,7 +82,7 @@ function App() {
 
         <Route path="*" element={<EmptyPage />} />
         <Route path="/invalid" element={<Invalid />} />
-        {/* <Route path='/feedback' element={<Feedback />} /> */}
+        <Route path='/feedback' element={<Feedback />} />
       </Routes>
     </div>
   );
