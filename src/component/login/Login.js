@@ -1,27 +1,22 @@
 import { Input, Button, Form } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import "antd/dist/antd.min.css";
 import styles from "./Login.module.css";
 import encrypt from "../../hooks/encrypt";
 import useUrl from "../../hooks/useUrl";
-import { setAuth } from "../../hooks/authModule";
+import { removeToken, setAuth } from "../../hooks/authModule";
 
 export default function Login({ path }) {
   const admin = path === "/admin";
   const navigatePath = admin ? "/admin/fileupload" : "/main";
-  console.log(navigatePath)
   const navigate = useNavigate();
   const location = useLocation();
-  const ip = useUrl();
   // const [isAdmin, setIsAdmin] = useState(false);
-  const isAdmin = location.pathname==="/admin"
-  if(isAdmin) removeToken()
 
 
   const url = `http://${useUrl()}/auth/login`;
   function getToken(userid) {
-    const url = `http://${ip}/auth/login`;
 
     fetch(url, {
       method: "POST",

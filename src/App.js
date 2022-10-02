@@ -17,99 +17,57 @@ import Invalid from "./component/Invalid";
 import { useEffect } from "react";
 
 function App() {
-  let location = useLocation();
+  const pathname = window.location.pathname;
+  console.log("app.js pathname:",pathname)
   const navigate = useNavigate();
   const isAdmin = getAdmin() ? true : false;
   const isUserAlive = getAuth().auth !== null ? true : false;
-  const isValidPath = window.location.pathname !== "/invalid";
+  const isAdminLoginPage = window.location.pathname === ("/admin" || "/admin/") ? true : false
   const isAdminPath =
-    window.location.pathname.startsWith("/admin/") &&
-    window.location.pathname.length > 7;
-  const isAdminLoginPage = window.location.pathname === "/admin" || "/admin/";
+    window.location.pathname.startsWith("/admin/") && !isAdminLoginPage;
+    // console.log(window.location.pathname.startsWith("/admin"))
   const isLoginPage = window.location.pathname === "/";
   useEffect(() => {
-    if (isValidPath) {
       if (isUserAlive) {
         if (isAdmin) {
           if (isAdminLoginPage) {
+            console.log("redirecting 1 ", pathname);
             navigate("/admin/fileupload");
           } else if (isLoginPage || !isAdminPath) {
+            console.log("redirecting 2 ", pathname);
             removeToken();
           }
         } else {
           if (isAdminLoginPage) {
+            console.log("redirecting 3 ", pathname);
             removeToken();
           } //user expire
           else if (isLoginPage) {
+            console.log("redirecting 4 ", pathname);
             navigate("/main");
           } else if (isAdminPath) {
+            console.log("redirecting 5 ", pathname); 
             navigate("/admin");
           }
         }
       } else {
-        isAdminPath ? navigate("/admin") : navigate("/");
+        console.log("redirecting 6 ", pathname);
+        isAdminPath ? navigate("/admin") : !isAdminLoginPage && navigate("/");
       }
-    } else {
-      if (isUserAlive) {
-        isAdmin ? navigate("/admin/fileupload") : navigate("/main");
-      } else {
-        isAdminPath ? navigate("/admin") : navigate("/");
-      }
-    }
+    
   }, [navigate]);
 
-  // ? isAdmin
-  // ? (isLoginPage && navigate("/admin/fileupload"),
-  //  isAdminPath && removeToken())
-  // : (isLoginPage && navigate("/"),isAdminPath && navigate("/"))
-  // : navigate("/")
 
-  // isUserAlive
-  //   ? isLoginPage ? navigate(isAdmin ? "/admin/fileupload" : "/main") : isAdminPath ? navigate(!isAdmin && "/") : isAdmin && removeToken()
-  //   : navigate(isAdminPath ? "/admin" : "/");
-
-  // if(isAdmin){
-
-  // }else{
-
-  // }
-
-  // useEffect(() => {
-  // if (
-  //   location.pathname !== "/" &&
-  //   location.pathname !== "/admin" &&
-  //   getAuth().auth === null
-  // ) {
-  //   console.log("App.js 예외처리 1");
-  //   navigate("/");
-  // } else if (location.pathname === "/" && getAuth().auth !== null) {
-  //   console.log("App.js 예외처리 2");
-  //   navigate("/main");
-  // } else if (location.pathname === "/admin" && getAuth().auth !== null) {
-  //   console.log("App.js 예외처리 3");
-  //   navigate("/admin/fileupload");
-  // } else {
-  //   console.log('App.js 예외처리 else');
-  // }
-  // }, [location.pathname, navigate]);
-  console.log("node env", process.env.NODE_ENV);
   if (process.env.NODE_ENV === "production") {
     console.log = function no_console() {};
     console.warn = function no_console() {};
   }
-  const pathArr = [
-    "/",
-    "/admin",
-    "/admin/floor",
-    "/admin/fileupload",
-    "/admin/room",
-    "/admin/individual",
-  ];
+
 
   return (
     <div>
-      {!pathArr.includes(location.pathname) ? <Header /> : null}
-      {location.pathname.includes("admin/") ? <AdminMain /> : null}
+      {isAdminLoginPage || isLoginPage || isAdminPath ? null : <Header />}
+      {isAdminPath ? <AdminMain /> : null}
 
       <Routes>
         <Route path="/" element={<LoginContainer />} />
