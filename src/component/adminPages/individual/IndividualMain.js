@@ -29,7 +29,6 @@ const IndividualMain = () => {
 
   //--삭제 관련 state--//
   const [deletecheckedList, setDeletecheckedList] = useState([]);
-  // const [isChecked, setIsChecked] = useState(false);
 
   //--추가 관련 state--//
   const [addUserClass, setAddUserClass] = useState('6기');
@@ -45,10 +44,12 @@ const IndividualMain = () => {
   const [pickedUserId, setPickedUserId] = useState({});
 
   // 수정에서 변경될 내용 데이터
-  const [changedUserName, setChangedUserName] = useState(null);
+  const [changedUserName, setChangedUserName] = useState('');
   const [changedUserRole, setChangedUserRole] = useState('USER');
   const [changedUserFloor, setChangedUserFloor] = useState('2');
   const [changedUserFloorNumber, setChangedUserFloorNumber] = useState('2');
+
+  // const changedUserName = useRef(null);
 
   // 드롭다운에 사용될 class들 가져오기//
   const url = `http://${myUrl}/admin/view/class-list`;
@@ -117,10 +118,11 @@ const IndividualMain = () => {
   console.log('deletecheckedList 1 ', deletecheckedList);
 
   const onDeleteButton = () => {
+    console.log('onDeleteButton : ', deletecheckedList);
     const postUrl = `http://${myUrl}/admin/deletion/user
     `;
     const object = {
-      userId: deletecheckedList,
+      userIdList: deletecheckedList,
     };
     fetchPostJson(postUrl, object, navigate).then((data) => {
       //console.log(data.message);
@@ -181,6 +183,7 @@ const IndividualMain = () => {
   const handleClose = () => {
     setShow(false);
     setChangedUserName('');
+    // changedUserName.current = '';
   };
 
   const handleShow = (data) => {
@@ -192,7 +195,10 @@ const IndividualMain = () => {
   };
 
   const onChangeName = (e) => {
+    e.preventDefault();
+    // changedUserName.current = e.target.value;
     setChangedUserName(e.target.value);
+    console.log(e.target.value);
   };
 
   const onChangeRole = (e) => {
@@ -219,6 +225,7 @@ const IndividualMain = () => {
       userId: pickedUserId,
       userName: changedUserName,
     };
+
     fetchPostJson(postUrl, object, navigate).then((data) => {
       //console.log(data.message);
       alert(data.message);
@@ -248,7 +255,7 @@ const IndividualMain = () => {
                   fontSize: '12px',
                   textAalign: 'center',
                 }}
-                id='dropdown-item-button'
+                id="dropdown-item-button"
                 title={classPickState}
               >
                 {classList.map((classes) => (
@@ -259,7 +266,7 @@ const IndividualMain = () => {
                       fontSize: '13px',
                       textAalign: 'center',
                     }}
-                    as='button'
+                    as="button"
                     key={classes}
                     value={classes}
                     onClick={(event) => {
@@ -304,7 +311,7 @@ const IndividualMain = () => {
 
                   {/* 1-1. 기수선택 */}
                   <th style={{ backgrondColor: 'rgb(93, 168, 226)' }}>
-                    <Form.Group className='mb-1'>
+                    <Form.Group className="mb-1">
                       <Form.Select
                         value={addUserClass}
                         onChange={(e) => onAddUserClass(e)}
@@ -319,10 +326,10 @@ const IndividualMain = () => {
                   </th>
                   {/* 1-2. 인재번호 작성 */}
                   <th>
-                    <Form.Group className='mb-1'>
+                    <Form.Group className="mb-1">
                       <Form.Control
                         style={{ textAlign: 'center' }}
-                        placeholder='인재 번호'
+                        placeholder="인재 번호"
                         value={addUserId}
                         onChange={(e) => onAddUserId(e)}
                         required
@@ -331,10 +338,10 @@ const IndividualMain = () => {
                   </th>
                   {/* 1-3. 이름 작성 */}
                   <th>
-                    <Form.Group className='mb-1'>
+                    <Form.Group className="mb-1">
                       <Form.Control
                         style={{ textAlign: 'center' }}
-                        placeholder='이름'
+                        placeholder="이름"
                         value={addUserName}
                         onChange={(e) => onAddUserName(e)}
                         required
@@ -343,7 +350,7 @@ const IndividualMain = () => {
                   </th>
                   {/* 1-4. 권한 선택 */}
                   <th>
-                    <Form.Group className='mb-1'>
+                    <Form.Group className="mb-1">
                       <Form.Select
                         style={{ textAlign: 'center' }}
                         value={addUserRole}
@@ -358,7 +365,7 @@ const IndividualMain = () => {
                   </th>
                   {/* 1-5. 사용 층수 선택 */}
                   <th>
-                    <Form.Group className='mb-1'>
+                    <Form.Group className="mb-1">
                       <Form.Select
                         style={{ textAlign: 'center' }}
                         value={addUserFloor}
@@ -380,7 +387,7 @@ const IndividualMain = () => {
                         marginRight: '3px',
                         fontSize: '13px',
                       }}
-                      variant='primary'
+                      variant="primary"
                       onClick={onAddListConfirm}
                     >
                       추가하기
@@ -393,7 +400,7 @@ const IndividualMain = () => {
                     {/* 삭제 버튼 */}
                     <th>
                       <input
-                        type='checkbox'
+                        type="checkbox"
                         onChange={() => onDeleteChecked({ data })}
                         // checked={isChecked}
                       />
@@ -418,7 +425,7 @@ const IndividualMain = () => {
                             backgroundColor: '#2090ff',
                             fontSize: '13px',
                           }}
-                          variant='primary'
+                          variant="primary"
                           onClick={() => handleShow({ data })}
                         >
                           수정하기
@@ -428,7 +435,7 @@ const IndividualMain = () => {
                         <Modal
                           show={show}
                           onHide={handleClose}
-                          backdrop='static'
+                          backdrop="static"
                           keyboard={false}
                         >
                           {/* 모달 창 헤더 */}
@@ -436,19 +443,21 @@ const IndividualMain = () => {
                             <Modal.Title>{pickedUserId}</Modal.Title>
                           </Modal.Header>
                           {/* 모달창 내 수정사항 */}
-                          <Form.Group className='mb-1'>
+                          <Form.Group className="mb-1">
                             <Modal.Body>
                               <Form.Label>이름</Form.Label>
                               <Form.Control
-                                id='inputName'
-                                placeholder='변경된 이름을 기입해주세요'
-                                onChange={(e) => onChangeName(e)}
+                                id="inputName"
+                                // placeholder="변경할 이름을 기입해주세요"
+                                // onChange={(e) => onChangeName(e)}
+                                onChange={onChangeName}
                                 value={changedUserName}
                                 required
+                                // ref={c}
                               />
                               <Form.Label>권한</Form.Label>
                               <Form.Select
-                                id='role'
+                                id="role"
                                 onChange={(e) => onChangeRole(e)}
                                 value={changedUserRole}
                                 required
@@ -459,7 +468,7 @@ const IndividualMain = () => {
                               </Form.Select>
                               <Form.Label>사용가능 층수</Form.Label>
                               <Form.Select
-                                id='floor'
+                                id="floor"
                                 onChange={(e) => onChangeFloor(e)}
                                 value={changedUserFloor}
                                 required
@@ -471,11 +480,11 @@ const IndividualMain = () => {
                             </Modal.Body>
                             {/* 모달 창 아래 닫기 및 수정하기 버튼 */}
                             <Modal.Footer>
-                              <Button variant='secondary' onClick={handleClose}>
+                              <Button variant="secondary" onClick={handleClose}>
                                 닫기
                               </Button>
                               <Button
-                                variant='primary'
+                                variant="primary"
                                 onClick={() => onClickToChange()}
                               >
                                 수정하기
