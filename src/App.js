@@ -17,52 +17,24 @@ import Invalid from "./component/Invalid";
 import { useEffect } from "react";
 
 function App() {
-  const pathname = window.location.pathname;
-  console.log("app.js pathname:",pathname)
   const navigate = useNavigate();
   const isAdmin = getAdmin() ? true : false;
-  const isUserAlive = getAuth().auth !== null ? true : false;
-  const isAdminLoginPage = window.location.pathname === ("/admin" || "/admin/") ? true : false
+  const isTamUser = getAuth().auth !== null ? true : false;
+  const isAdminLoginPage = window.location.pathname === "/admin" ? true : false;
   const isAdminPath =
-    window.location.pathname.startsWith("/admin/") && !isAdminLoginPage;
-    // console.log(window.location.pathname.startsWith("/admin"))
+    window.location.pathname.startsWith("/admin") && isAdminLoginPage===false;
   const isLoginPage = window.location.pathname === "/";
   useEffect(() => {
-      if (isUserAlive) {
-        if (isAdmin) {
-          if (isAdminLoginPage) {
-            console.log("redirecting 1 ", pathname);
-            navigate("/admin/fileupload");
-          } else if (isLoginPage || !isAdminPath) {
-            console.log("redirecting 2 ", pathname);
-            removeToken();
-          }
-        } else {
-          if (isAdminLoginPage) {
-            console.log("redirecting 3 ", pathname);
-            removeToken();
-          } //user expire
-          else if (isLoginPage) {
-            console.log("redirecting 4 ", pathname);
-            navigate("/main");
-          } else if (isAdminPath) {
-            console.log("redirecting 5 ", pathname); 
-            navigate("/admin");
-          }
-        }
-      } else {
-        console.log("redirecting 6 ", pathname);
-        isAdminPath ? navigate("/admin") : !isAdminLoginPage && navigate("/");
-      }
-    
-  }, [navigate]);
 
+    isTamUser && isLoginPage && navigate("/main")
+    isAdmin && isAdminLoginPage && navigate("/admin/fileupload");    
+   
+  }, [navigate]);
 
   if (process.env.NODE_ENV === "production") {
     console.log = function no_console() {};
     console.warn = function no_console() {};
   }
-
 
   return (
     <div>

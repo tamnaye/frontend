@@ -5,20 +5,22 @@ import "antd/dist/antd.min.css";
 import styles from "./Login.module.css";
 import encrypt from "../../hooks/encrypt";
 import useUrl from "../../hooks/useUrl";
-import { removeToken, setAuth } from "../../hooks/authModule";
+import { removeToken, setAdminAuth, setAuth } from "../../hooks/authModule";
 
 export default function Login({ path }) {
-  const admin = path === "/admin";
-  const navigatePath = admin ? "/admin/fileupload" : "/main";
+  const isAdmin = path === "/admin" ? true : false;
+  console.log("login page isAdmin", isAdmin);
+  const ip = useUrl();
+  const apiUrl = isAdmin
+    ? `http://${ip}/admin/login`
+    : `http://${ip}/auth/login`;
+  const navigatePath = isAdmin ? "/admin/fileupload" : "/main";
+
   const navigate = useNavigate();
-  const location = useLocation();
   // const [isAdmin, setIsAdmin] = useState(false);
 
-
-  const url = `http://${useUrl()}/auth/login`;
   function getToken(userid) {
-
-    fetch(url, {
+    fetch(apiUrl, {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -28,14 +30,16 @@ export default function Login({ path }) {
       }),
     })
       .then((res) => {
-        setAuth(
-          res.headers.get("Authorization"),
-          res.headers.get("reAuthorization"),
-          admin
-        );
+        console.log("login ing");
+        console.log("header ", res.status);
+        isAdmin
+          ?setAdminAuth(res.headers.get("Authorization2")) 
+          :setAuth(
+            res.headers.get("Authorization"),
+            res.headers.get("reAuthorization")
+          ) 
         return res.json();
       })
-
       .then((data) => {
         if (data.message === "success") {
           navigate(navigatePath);
@@ -72,7 +76,7 @@ export default function Login({ path }) {
   return (
     <div className={styles.container}>
       <div className={styles.box}>
-        {admin ? (
+        {isAdmin ? (
           <h1 className={styles.centerNameAdmin}>탐나예 관리자 로그인</h1>
         ) : (
           <h1 className={styles.centerName}>더큰내일 회의실 예약 시스템</h1>
@@ -112,7 +116,7 @@ export default function Login({ path }) {
             />
           </Form.Item>
           <Form.Item>
-            {admin ? (
+            {isAdmin ? (
               <Button
                 size="large"
                 style={{ width: "100%" }}

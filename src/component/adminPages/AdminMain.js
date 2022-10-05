@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import useUrl from '../../hooks/useUrl';
 
 const AdminMain = () => {
-  const url = `http://${useUrl()}/auth/logout`;
+  const url = `http://${useUrl()}/admin/logout`;
   const navigate = useNavigate();
   return (
     <>
