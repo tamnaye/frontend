@@ -14,6 +14,7 @@ import IndividualMain from "./component/adminPages/individual/IndividualMain";
 import FileUpload from "./component/adminPages/fileUpload/FileUpload";
 import LoginContainer from "./component/login/LoginContainer";
 import Invalid from "./component/Invalid";
+import Feedback from './component/Feedback';
 import { useEffect } from "react";
 
 function App() {
@@ -26,10 +27,12 @@ function App() {
   const isLoginPage = window.location.pathname === "/";
   useEffect(() => {
 
+
     isTamUser && isLoginPage && navigate("/main")
     isAdmin && isAdminLoginPage && navigate("/admin/fileupload");    
    
   }, [navigate]);
+
 
   if (process.env.NODE_ENV === "production") {
     console.log = function no_console() {};
@@ -56,7 +59,7 @@ function App() {
 
         <Route path="*" element={<EmptyPage />} />
         <Route path="/invalid" element={<Invalid />} />
-        {/* <Route path='/feedback' element={<Feedback />} /> */}
+        <Route path='/feedback' element={<Feedback />} />
       </Routes>
     </div>
   );

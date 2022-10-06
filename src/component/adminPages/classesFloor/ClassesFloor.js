@@ -45,7 +45,6 @@ const ClassesFloor = () => {
   const btnClickChange = (changeFloor, index) => {
     //console.log('btnClickChange classOfFloorData : ', classOfFloorData[index]);
     //console.log('btnClickChange newFloor : ', newFloor[index]);
-
     const postUrl = `http://${myUrl}/admin/change/floor`;
     if (floor[index] === newFloor[index]) {
       alert('수정사항이 없습니다.');

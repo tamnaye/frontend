@@ -29,7 +29,6 @@ const IndividualMain = () => {
 
   //--삭제 관련 state--//
   const [deletecheckedList, setDeletecheckedList] = useState([]);
-  // const [isChecked, setIsChecked] = useState(false);
 
   //--추가 관련 state--//
   const [addUserClass, setAddUserClass] = useState('6기');
@@ -45,10 +44,12 @@ const IndividualMain = () => {
   const [pickedUserId, setPickedUserId] = useState({});
 
   // 수정에서 변경될 내용 데이터
-  const [changedUserName, setChangedUserName] = useState(null);
+  const [changedUserName, setChangedUserName] = useState('');
   const [changedUserRole, setChangedUserRole] = useState('USER');
   const [changedUserFloor, setChangedUserFloor] = useState('2');
   const [changedUserFloorNumber, setChangedUserFloorNumber] = useState('2');
+
+  // const changedUserName = useRef(null);
 
   // 드롭다운에 사용될 class들 가져오기//
   const url = `http://${myUrl}/admin/view/class-list`;
@@ -117,10 +118,11 @@ const IndividualMain = () => {
   console.log('deletecheckedList 1 ', deletecheckedList);
 
   const onDeleteButton = () => {
+    console.log('onDeleteButton : ', deletecheckedList);
     const postUrl = `http://${myUrl}/admin/deletion/user
     `;
     const object = {
-      userId: deletecheckedList,
+      userIdList: deletecheckedList,
     };
     fetchPostJson(postUrl, object, navigate).then((data) => {
       //console.log(data.message);
@@ -181,6 +183,7 @@ const IndividualMain = () => {
   const handleClose = () => {
     setShow(false);
     setChangedUserName('');
+    // changedUserName.current = '';
   };
 
   const handleShow = (data) => {
@@ -192,7 +195,10 @@ const IndividualMain = () => {
   };
 
   const onChangeName = (e) => {
+    e.preventDefault();
+    // changedUserName.current = e.target.value;
     setChangedUserName(e.target.value);
+    console.log(e.target.value);
   };
 
   const onChangeRole = (e) => {
@@ -219,6 +225,7 @@ const IndividualMain = () => {
       userId: pickedUserId,
       userName: changedUserName,
     };
+
     fetchPostJson(postUrl, object, navigate).then((data) => {
       //console.log(data.message);
       alert(data.message);
@@ -441,10 +448,12 @@ const IndividualMain = () => {
                               <Form.Label>이름</Form.Label>
                               <Form.Control
                                 id="inputName"
-                                placeholder="변경된 이름을 기입해주세요"
-                                onChange={(e) => onChangeName(e)}
+                                // placeholder="변경할 이름을 기입해주세요"
+                                // onChange={(e) => onChangeName(e)}
+                                onChange={onChangeName}
                                 value={changedUserName}
                                 required
+                                // ref={c}
                               />
                               <Form.Label>권한</Form.Label>
                               <Form.Select
