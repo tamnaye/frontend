@@ -7,7 +7,6 @@ import {
   isAdmin
 } from "./authModule";
 function returnJson(res, navigate) {
-  if (getAuth().auth !== null || getAdmin() !== null) {
     if (res.status === 200) { // 정상 [admin은 리프레쉬 없음]
       refreshToken(res.headers.get("Authorization"));
       return res.json();
@@ -19,7 +18,6 @@ function returnJson(res, navigate) {
     } else if (res.status === 500) { //서버 에러 
       alert("서버 에러  : 관리자에게 문의해주세요");
     }
-  }
 }
 
 export function fetchGet(url, navigate) {
