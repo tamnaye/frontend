@@ -1,11 +1,11 @@
 import { Input, Button, Form } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "antd/dist/antd.min.css";
 import styles from "./Login.module.css";
 import encrypt from "../../hooks/encrypt";
 import useUrl from "../../hooks/useUrl";
-import { removeToken, setAdminAuth, setAuth } from "../../hooks/authModule";
+import { setAdminAuth, setAuth } from "../../hooks/authModule";
 
 export default function Login({ path }) {
   const isAdmin = path === "/admin" ? true : false;
