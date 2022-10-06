@@ -8,7 +8,7 @@ import useUrl from "../../hooks/useUrl";
 import { setAdminAuth, setAuth } from "../../hooks/authModule";
 
 export default function Login({ path }) {
-  const isAdmin = path === "/admin" ? true : false;
+  const isAdmin = path === "/admin" || path==="/admin/" ? true : false;
   console.log("login page isAdmin", isAdmin);
   const ip = useUrl();
   const apiUrl = isAdmin
@@ -32,7 +32,7 @@ export default function Login({ path }) {
       .then((res) => {
         console.log("login ing");
         console.log("header ", res.status);
-        isAdmin
+        isAdmin 
           ?setAdminAuth(res.headers.get("Authorization2")) 
           :setAuth(
             res.headers.get("Authorization"),

@@ -34,7 +34,7 @@ export function sendAuth() {
         "Content-Type": "application/json",
         Authorization2: window.localStorage.getItem(
           process.env.REACT_APP_AUTH2_KEY
-        ),
+        )
       }
     : {
         "Content-Type": "application/json",
