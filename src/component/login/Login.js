@@ -44,7 +44,7 @@ export default function Login({ path }) {
         if (data.message === "success") {
           navigate(navigatePath);
         } else {
-          alert("알수없는 에러입니다.");
+          alert("권한 없음.");
         }
       });
   }
