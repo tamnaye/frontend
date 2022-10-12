@@ -165,6 +165,7 @@
 - 이현정 [cchloe0927](https://github.com/cchloe0927)
 - 조무결 [mugyeol](https://github.com/mugyeol)
 
+
 ## 7. 프로젝트 과정 기록
  - 노션 : https://www.notion.so/621ecd901e604f6d922ab080b0c77a0f
  - 프레젠테이션 : 
