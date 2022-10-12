@@ -156,7 +156,8 @@
 >  ### 6. 어드민페이지
 > 파일 업로드를 통한 최신기수 업로드, 유저 회원정보 CRUD, 기수별 층수관리, 회의실 데이터 수정
 >
-<img width="510" alt="스크린샷 2022-10-02 오후 11 12 21" src="https://user-images.githubusercontent.com/85235063/193458532-9f1632f5-b422-469a-9d52-d3ffe51d6fc5.png">
+<img width="800" alt="스크린샷 2022-10-02 오후 11 12 21" src="https://user-images.githubusercontent.com/85235063/193458532-9f1632f5-b422-469a-9d52-d3ffe51d6fc5.png">
+<br/>
 
 ## 6. 개발 및 기획
 - 송민아 [m1naworld](https://github.com/m1naworld)
@@ -164,8 +165,9 @@
 - 이현정 [cchloe0927](https://github.com/cchloe0927)
 - 조무결 [mugyeol](https://github.com/mugyeol)
 
+<br/>
 
 ## 7. 프로젝트 과정 기록
- - 노션 : https://www.notion.so/621ecd901e604f6d922ab080b0c77a0f
- - 프레젠테이션 : https://docs.google.com/presentation/d/1Klc-cPABwICCtTyXdc9YBTwJiMS7nWjG/edit?usp=sharing&ouid=116140859951012349127&rtpof=true&sd=true
+ - 노션 : [개발 과정](https://www.notion.so/621ecd901e604f6d922ab080b0c77a0f)
+ - 프레젠테이션 : [발표 자료](https://docs.google.com/presentation/d/1Klc-cPABwICCtTyXdc9YBTwJiMS7nWjG/edit?usp=sharing&ouid=116140859951012349127&rtpof=true&sd=true)
 
