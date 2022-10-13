@@ -16,8 +16,9 @@ import { Link } from 'react-router-dom';
 const SecondFloorMeetingRoomState = ({
   //2층
   SecondMeetingRoominfo,
-  SinyangID,
-  SinyangName,
+  SecondOfficial,
+  // SinyangID,
+  // SinyangName,
   //전체
   bookingData,
   roomData,
@@ -89,14 +90,30 @@ const SecondFloorMeetingRoomState = ({
                 </Link>
               </th>
             ))}
-            {floor === 0 ? (
+
+            {SecondOfficial.map((room) =>
+              floor === 0 ? (
+                <th
+                  key={room.roomId}
+                  className="table-primary"
+                  id={styles.text}
+                >
+                  <Link to={`/booking/${room.roomId}`}>
+                    <ArrowRightCircleFill />
+                    {room.roomName}
+                  </Link>
+                </th>
+              ) : null
+            )}
+
+            {/* {floor === 0 ? (
               <th key={SinyangName} className="table-primary" id={styles.text}>
                 <Link to={`/booking/${SinyangID}`}>
                   <ArrowRightCircleFill />
                   {SinyangName}
                 </Link>
               </th>
-            ) : null}
+            ) : null} */}
           </tr>
         </thead>
         <tbody id={styles.tbody}>
@@ -173,67 +190,73 @@ const SecondFloorMeetingRoomState = ({
               ))}
 
               {/* 신양 */}
-              {floor === 0 ? (
-                <th key={0} className={styles.roomstate}>
-                  {IsThisTimeRoombooked(time, SinyangID) ? (
-                    <OverlayTrigger
-                      trigger={['hover', 'focus']}
-                      key={TimeAndRoomFilter(time, SinyangID)[0].bookingId}
-                      placement="top"
-                      overlay={
-                        <Popover id="popover-positioned-top">
-                          <Popover.Body>
-                            <Poplay
-                              userName={
-                                TimeAndRoomFilter(time, SinyangID)[0].applicant
-                                  .userName
-                              }
-                              startTime={
-                                TimeAndRoomFilter(time, SinyangID)[0].startTime
-                              }
-                              endTime={
-                                TimeAndRoomFilter(time, SinyangID)[0].endTime
-                              }
-                              roomName={
-                                TimeAndRoomFilter(time, SinyangID)[0].roomName
-                              }
-                              participants={
-                                TimeAndRoomFilter(time, SinyangID)[0]
-                                  .participants
-                              }
-                            />
-                          </Popover.Body>
-                        </Popover>
-                      }
-                    >
-                      <button
-                        style={{
-                          height: `${
-                            bookingLength(
-                              TimeAndRoomFilter(time, SinyangID)[0].startTime,
-                              TimeAndRoomFilter(time, SinyangID)[0].endTime
-                            ) * 35.8
-                          }px`,
-                        }}
-                        className={styles.bookingTime}
-                        id={
-                          TimeAndRoomFilter(time, SinyangID)[0].official
-                            ? [styles.Manager]
-                            : null
+              {SecondOfficial.map((room) =>
+                floor === 0 ? (
+                  <th key={room.roomId} className={styles.roomstate}>
+                    {IsThisTimeRoombooked(time, room.roomId) ? (
+                      <OverlayTrigger
+                        trigger={['hover', 'focus']}
+                        key={TimeAndRoomFilter(time, room.roomId)[0].bookingId}
+                        placement="top"
+                        overlay={
+                          <Popover id="popover-positioned-top">
+                            <Popover.Body>
+                              <Poplay
+                                userName={
+                                  TimeAndRoomFilter(time, room.roomId)[0]
+                                    .applicant.userName
+                                }
+                                startTime={
+                                  TimeAndRoomFilter(time, room.roomId)[0]
+                                    .startTime
+                                }
+                                endTime={
+                                  TimeAndRoomFilter(time, room.roomId)[0]
+                                    .endTime
+                                }
+                                roomName={
+                                  TimeAndRoomFilter(time, room.roomId)[0]
+                                    .roomName
+                                }
+                                participants={
+                                  TimeAndRoomFilter(time, room.roomId)[0]
+                                    .participants
+                                }
+                              />
+                            </Popover.Body>
+                          </Popover>
                         }
-                        variant="secondary"
                       >
-                        <p>
-                          {
-                            TimeAndRoomFilter(time, SinyangID)[0].applicant
-                              .userName
+                        <button
+                          style={{
+                            height: `${
+                              bookingLength(
+                                TimeAndRoomFilter(time, room.roomId)[0]
+                                  .startTime,
+                                TimeAndRoomFilter(time, room.roomId)[0].endTime
+                              ) * 35.8
+                            }px`,
+                          }}
+                          className={styles.bookingTime}
+                          id={
+                            TimeAndRoomFilter(time, room.roomId)[0].official
+                              ? [styles.Manager]
+                              : null
                           }
-                        </p>
-                      </button>
-                    </OverlayTrigger>
-                  ) : null}
-                </th>
-              ) : null}
+                          variant="secondary"
+                        >
+                          <p>
+                            {
+                              TimeAndRoomFilter(time, room.roomId)[0].applicant
+                                .userName
+                            }
+                          </p>
+                        </button>
+                      </OverlayTrigger>
+                    ) : null}
+                  </th>
+                ) : null
+              )}
             </tr>
           ))}
         </tbody>

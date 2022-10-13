@@ -11,8 +11,6 @@ const SecondFloor = ({
   SecondOfficial,
   bookingData,
   roomData,
-  // SinyangID,
-  // SinyangName,
   userClasses,
   floor,
 }) => {
