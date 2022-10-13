@@ -6,6 +6,7 @@ import styles from "./Login.module.css";
 import encrypt from "../../hooks/encrypt";
 import useUrl from "../../hooks/useUrl";
 import { setAdminAuth, setAuth } from "../../hooks/authModule";
+import { fontSize, fontWeight } from "@mui/system";
 
 export default function Login({ path }) {
   const isAdmin = path === "/admin" || path==="/admin/" ? true : false;
@@ -77,9 +78,9 @@ export default function Login({ path }) {
     <div className={styles.container}>
       <div className={styles.box}>
         {isAdmin ? (
-          <h1 className={styles.centerNameAdmin}>탐나예 관리자 로그인</h1>
+          <h1 className={styles.centerNameAdmin} style={{fontFamily: 'GmarketSansMedium', fontWeight: "800", fontSize:"20px"}}>탐나예 관리자 로그인</h1>
         ) : (
-          <h1 className={styles.centerName}>더큰내일 회의실 예약 시스템</h1>
+          <h1 className={styles.centerName} style={{fontFamily: 'GmarketSansMedium', fontWeight: "800", fontSize:"20px"}}>더큰내일 회의실 예약 시스템</h1>
         )}
         <Form onFinish={onFinish}>
           <Form.Item

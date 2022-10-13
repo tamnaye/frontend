@@ -24,7 +24,7 @@ const useTimeAlert = () => {
   const startTime = '0830'
   const endTime = '2100'
   useEffect(() => {
-    if (startTime < nowTime || endTime > nowTime) {
+    if (startTime > nowTime || endTime < nowTime) {
       setAblebtn(false)
     } else {
       setAblebtn(true)
