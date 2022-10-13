@@ -6,6 +6,12 @@
     width: 360px;
     
   }
+  .wrap .meetingUserinfo {
+    margin-top: -29px;
+  }
+  .wrap .naboxUserinfo {
+    margin-top: -35px;
+  }
 }
 
 .roomInfo {

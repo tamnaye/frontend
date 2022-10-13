@@ -3,6 +3,7 @@ import useUrl from '../../../hooks/useUrl';
 import { useEffect } from 'react';
 import { fetchGet } from '../../../hooks/fetchUrl';
 import { useNavigate } from 'react-router-dom';
+import { sendAuth } from '../../../hooks/authModule';
 
 const FileUpload = () => {
   const myUrl = useUrl();
@@ -22,7 +23,7 @@ const FileUpload = () => {
     formData.append('file', e.target.files[0]);
     console.log('target file:', formData);
     for (let value of formData.values()) {
-      //console.log('formData onchange value:', value);
+      console.log('formData onchange value:', value);
     }
   };
 
@@ -33,17 +34,18 @@ const FileUpload = () => {
     //----csv파일 POST
     fetch(`http://${myUrl}/admin/insert/user`, {
       method: 'POST',
+      headers:sendAuth(),
       cache: 'no-cache',
       body: formData,
     })
       .then((res) => res.json())
       .then((data) => {
-        //console.log('data:', data, data.message);
+        console.log('data:', data, data.message);
         alert(data.message);
         window.location.reload(); //리액트 새로고침 -> 파일 Input 빈값처리
       })
       .catch((err) => {
-        //console.log(err);
+        console.log(err);
       });
   };
   //console.log(formData);

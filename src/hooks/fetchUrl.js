@@ -2,8 +2,6 @@ import {
   tokenExpired,
   refreshToken,
   sendAuth,
-  getAuth,
-  getAdmin,
   isAdmin
 } from "./authModule";
 function returnJson(res, navigate) {
@@ -26,20 +24,6 @@ export function fetchGet(url, navigate) {
     headers: sendAuth(),
   }).then((res) => {
     return returnJson(res, navigate);
-    // if (getAuth().auth !== null) {
-    //   if (res.status === 403) {
-    //     tokenExpired();
-    //     window.location.reload()
-    //   //  !getAdmin() ?  navigate("/") : navigate("/admin/fileupload")
-    //   } else if (res.status === 200) {
-    //     refreshToken(res.headers.get("Authorization"));
-    //     return res.json();
-    //   } else if (res.status === 500) {
-    //     alert("서버 에러  : 관리자에게 문의해주세요");
-    //   } else if (res.status===404){
-    //     navigate('/')
-    //   }
-    // }
   });
 }
 export function fetchPostJson(url, object, navigate) {
