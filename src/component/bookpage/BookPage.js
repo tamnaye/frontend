@@ -47,12 +47,12 @@ function BookPage() {
       <div className={styles.roomInfo}>
         <RoomInfo currentRoomData={currentRoomData} />
         <div className={styles.bookingInfo}>
-          <BookingData
-            bookingData={bookingData}
-            userData={userData}
-            namesData={namesData}
-            currentRoomData={currentRoomData}
-          />
+              <BookingData
+                bookingData={bookingData}
+                userData={userData}
+                namesData={namesData}
+                currentRoomData={currentRoomData}
+              />
         </div>
       </div>
     </div>
