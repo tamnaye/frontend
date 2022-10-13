@@ -114,8 +114,9 @@ const Feedback = () => {
       <div>
         <p style={{ marginTop: '50px', fontWeight: 'bold' }}>문의사항</p>
         <hr />
+        <div style={{ height:'350px', overflowY:'auto'}}>
         {feedbackDatas.map((item, index) => (
-          <Card key={index} style={{ marginTop: '20px' }}>
+          <Card key={index} style={{ marginTop: '20px'}}>
             <Card.Body style={{ position: 'relative' }}>
               {item}
               {userRole === 'DEV'
@@ -142,9 +143,28 @@ const Feedback = () => {
             </Card.Body>
           </Card>
         ))}
+        </div>
       </div>
     </Container>
   );
 };
 
 export default Feedback;
+
+
+/*mypage_bookingTable*/
+// @media screen and (max-width: 700px) {
+//   thead .tableTrTitle .tableTh {
+//      font-size: 10px;
+//      text-align: center;
+//   }
+//   tbody tr .tableTd {
+//      font-size: 10px;
+//   }
+//   div .warning .warning1 {
+//      font-size: 6px;
+//   }
+//   div .warning .warning2 {
+//      font-size: 6px;
+//   }
+//  }
