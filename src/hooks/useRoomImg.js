@@ -1,4 +1,3 @@
-// import logo from '../component/bookpage/img/logo.png';
 import nabox from '../component/bookpage/img/nabox.jpeg';
 //2층
 import hyeopjae from '../component/bookpage/img/hyeopjae.png';

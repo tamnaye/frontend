@@ -20,7 +20,7 @@ const FileUpload = () => {
   //----input file 값 확인
   const onChange = (e) => {
     formData.append('file', e.target.files[0]);
-    //console.log('target file:', formData);
+    console.log('target file:', formData);
     for (let value of formData.values()) {
       //console.log('formData onchange value:', value);
     }
@@ -43,9 +43,10 @@ const FileUpload = () => {
         window.location.reload(); //리액트 새로고침 -> 파일 Input 빈값처리
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
       });
   };
+  //console.log(formData);
 
   return (
     <>

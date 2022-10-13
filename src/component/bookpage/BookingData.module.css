@@ -3,7 +3,7 @@
       margin-top: -29px;
     }
     .wrap .naboxUserinfo {
-      margin-top: -70px;
+      margin-top: -35px;
     }
   }
   
@@ -16,11 +16,11 @@
   }
   /*룸타입에 따른 media적용을 위해*/
   .meetingUserinfo {
-    margin-top: 15px;
+    margin-top: 25px;
     color: #D46B42;
   }
   .naboxUserinfo {
-    margin-top: 15px;
+    margin-top: 75px;
     color: #D46B42;
   }
   /*룸타입에 따른 box테두리 적용*/

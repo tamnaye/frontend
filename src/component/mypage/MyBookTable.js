@@ -15,7 +15,6 @@ function MyBookTable({ userData, myBookingDetailDataList }) {
   const myUrl = useUrl();
   const [userId, setUserId] = useState('');
   const [myBookingList, setMyBookingList] = useState([]);
-  // const url = `http://${myUrl}/api/user/mypage`;
   const navigate = useNavigate;
 
   useEffect(() => {
