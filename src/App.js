@@ -13,7 +13,6 @@ import Room from "./component/adminPages/room/Room";
 import IndividualMain from "./component/adminPages/individual/IndividualMain";
 import FileUpload from "./component/adminPages/fileUpload/FileUpload";
 import LoginContainer from "./component/login/LoginContainer";
-import Invalid from "./component/Invalid";
 import Feedback from "./component/Feedback";
 import { useEffect } from "react";
 
@@ -58,7 +57,6 @@ function App() {
         <Route path="/admin/individual" element={<IndividualMain />} />
 
         <Route path="*" element={<EmptyPage />} />
-        <Route path="/invalid" element={<Invalid />} />
         <Route path="/feedback" element={<Feedback />} />
       </Routes>
     </div>

@@ -1,4 +1,4 @@
-export default function ButtonExplain() {
+export default function TimeBtnExplain() {
   return (
     <div style={{ marginTop: '12px', display: 'flex' }}>
       <p

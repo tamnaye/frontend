@@ -18,22 +18,22 @@ const Header = () => {
         {/* 1890FF */}
         <div className={styles.anker}>
           {getAuth().auth === null ? (
-            <Link to='/'>Login</Link>
+            <Link to='/'>로그인</Link>
           ) : (
             <span
               style={{ color: '#1890FF', marginRight: '12px' }}
               onClick={() => doLogout(navigate, url)}
             >
-              Logout
+              로그아웃
             </span>
           )}
-          <Link to={`/mypage`}>My page</Link>
+          <Link to={`/mypage`}>마이페이지</Link>
         </div>
       </div>
       <div className={styles.menu}>
         <div className={styles.menu__permanent}>
-          <Link to={`/main`}>HOME</Link>
-          <Link to={`/state`}>실시간예약현황</Link>
+          <Link to={`/main`}>홈</Link>
+          <Link to={`/state`}>예약현황</Link>
         </div>
         <div className={styles.menu__temporary}>
           <Link to={`/feedback`}>시스템 문의</Link>

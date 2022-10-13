@@ -19,8 +19,8 @@ function BookPage() {
 
   const [currentRoomData, setCurrentRoomData] = useState([]);
 
-  const [navRoomData, setNavRoomData] = useState([]);
-  const [floorUserData, setFloorUserData] = useState('');
+  const [navRoomData, setNavRoomData] = useState([]); //roomData
+  const [floorUserData, setFloorUserData] = useState(''); //userData
 
   const { roomId } = useParams();
   const myUrl = useUrl();
@@ -29,14 +29,10 @@ function BookPage() {
 
   useEffect(() => {
     fetchGet(url, navigate).then((data) => {
-      //console.log('bookpage !! data :', data);
-
       setBookingData(data.bookingData);
       setUserData(data.userData);
       setNamesData(data.namesData);
-
       setCurrentRoomData(data.currentRoomData);
-
       setNavRoomData(data.roomData);
       setFloorUserData(data.userData.floor);
     });
