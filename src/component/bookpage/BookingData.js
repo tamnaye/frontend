@@ -8,13 +8,14 @@ import useTimes from "../../hooks/useTimes";
 import timePlusMinus from "../../hooks/timePlusMinus";
 import checkPast from "../../hooks/checkPast";
 import getTimes from "../../hooks/getTimes";
-import useTimeAlert from "../../hooks/useTimeAlert";
 import { useNavigate, useParams } from "react-router-dom";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 //component
 import TimeBtnExplain from "./TimeBtnExplain";
 import { fetchPostJson } from "../../hooks/fetchUrl";
-import BookingButton from "./BookingButton"
+import BookingButton from "./BookingButton";
+import BookingMember from "./BookingMember";
+
 //매니저님 예외처리한 부분
 //1) checkBox 예약된거 disable 안하고 그레이 처리 해줌
 //2) defaultDisable에서 break 하는 부분 break 안하도록 해줌
@@ -27,22 +28,13 @@ const BookingData = ({ bookingData, userData, namesData, currentRoomData }) => {
   const floor = currentRoomData.floor;
   const maxTime = currentRoomData.maxTime;
   const times = useTimes();
-  const memberNames = namesData.filter(
-    (member) => member !== userData.userName
-  );
 
-  const [searchedNameState, setSearchedNameState] = useState([]);
   const [bookedState, setBookedState] = useState([]);
   const [pastState, setPastState] = useState([]);
   const [isOfficial, setIsOfficial] = useState([]);
   const [isLoadding, setIsLoading] = useState(false);
 
   useEffect(() => {
-    //console.log("bookingdata useeffect namesData : ", namesData);
-    setSearchedNameState(
-      namesData.filter((member) => member !== userData.userName)
-    );
-    // setMemberNames(namesData.filter((member) => member !== userData.userName));
     const bookedTimes = [];
     const officialTimes = [];
     bookingData.map((booking) =>
@@ -154,102 +146,28 @@ const BookingData = ({ bookingData, userData, namesData, currentRoomData }) => {
     return object;
   }
 
-  //--------팀원 검색 기능---------//
-  const [selectedNameState, setSelectedNameState] = useState([]);
-  const [inputName, setInputName] = useState("");
-  //팀원 리스트 모달창
-  const [isShowModal, setIsShowModal] = useState(true);
-  //useRef사용해서 outside클릭 시 모달창 사라짐
-  const closeModal = useRef();
-
-  function onClickModal() {
-    setIsShowModal(true);
-  }
-  function onClickOutside(event) {
-    if(selectedNameState.length>0){
-        if (closeModal.current && !closeModal.current.contains(event.target)) {
-            setIsShowModal(false);
-          }
-    }
-  }
-  useEffect(() => {
-    document.addEventListener("mousedown", onClickOutside);
-  });
-
-  function nameChangeHandler(e) {
-    setIsShowModal(true);
-    setInputName(e.target.value);
-    const str = e.target.value;
-    let arr = [...memberNames];
-    arr = arr.filter((member) => !selectedNameState.includes(member));
-    if (arr.filter((member) => member.includes(str)).length > 0) {
-      arr = arr.filter((member) => member.includes(str));
-    }
-    setSearchedNameState(arr);
-  }
-  function onClickSearched(name) {
-    setInputName("");
-    setIsShowModal(false);
-    // setSearchedNameState([]);
-
-    const arr = [...selectedNameState];
-    arr.push(name);
-    setSelectedNameState(arr);
-    setSearchedNameState(memberNames.filter((member) => !arr.includes(member)));
-  }
-  function onClickSelected(index) {
-    const arr = [...selectedNameState];
-    const arr2 = [...searchedNameState];
-    arr2.push(arr[index]);
-    arr2.sort();
-    arr.splice(index, 1);
-    setSearchedNameState(arr2);
-    setSelectedNameState(arr);
-  }
-  //팀원 검색 enter event
-  function onSubmit(e) {
-    e.preventDefault();
-    setIsShowModal(false);
-    if (searchedNameState.length === 1) {
-      //이미 선택할 팀원이 나옴
-      setInputName("");
-      // setSearchedNameState([]);
-
-      const arr = [...selectedNameState];
-      arr.push(searchedNameState[0]);
-      setSelectedNameState(arr);
-      setSearchedNameState(
-        memberNames.filter((member) => !arr.includes(member))
-      );
-    } else if (searchedNameState.length > 1) {
-      //검색 결과 두명 이상 나왔을 때 엔터친 경우
-      alert("팀원을 한명씩 선택해 주세요 !");
-    } else {
-      //검색 안되는 이름 치고 엔터친 경우
-      setInputName("");
-      // setSearchedNameState([]);
-      alert("팀원의 이름을 확인해주세요!");
-    }
-  }
-
-  
+  //--------팀원 검색 데이터 받기---------//
+  const [selectedNamesState, setSelectedNamesState] = useState([]);
+  const selectednamesHandler = (names) => {
+    setSelectedNamesState(names);
+  };
   //----예약 데이터 보내기----//
   const roomTypeArr = ["meeting", "nabax"];
-  const myUrl = useUrl();
   const navigate = useNavigate();
+  const myUrl = useUrl();
   const { roomId } = useParams();
   function bookingConfirm() {
     if (
       userClass !== 0 &&
       roomType === roomTypeArr[0] &&
-      selectedNameState.length < 1 &&
+      selectedNamesState.length < 1 &&
       getStartEndTime(checkedState).timeLength === 0
     ) {
       alert("회의 참여자와 회의 시간을 선택해 주세요");
     } else if (
       roomType === roomTypeArr[0] &&
       userClass !== 0 &&
-      selectedNameState.length < 1
+      selectedNamesState.length < 1
     ) {
       alert("회의 참여자를 1명 이상 선택해주세요");
     } else if (getStartEndTime(checkedState).timeLength === 0) {
@@ -267,7 +185,7 @@ const BookingData = ({ bookingData, userData, namesData, currentRoomData }) => {
             getStartEndTime(checkedState).startTime,
             getStartEndTime(checkedState).timeLength
           ),
-          teamMate: selectedNameState,
+          teamMate: selectedNamesState,
           userName: userName,
         };
         fetchPostJson(postUrl, object, navigate).then((data) => {
@@ -296,68 +214,12 @@ const BookingData = ({ bookingData, userData, namesData, currentRoomData }) => {
         >
           예약자 정보
         </h6>
-        <div
-          ref={closeModal} //div영역을 벗어나 클릭하면 모달창 사라짐
-          className={
-            roomType === roomTypeArr[0]
-              ? [styles.meetingInfoBox]
-              : [styles.naboxInfoBox]
-          }
-        >
-          <p>
-            신청자명
-            <input
-              style={{ fontWeight: "bold" }}
-              className={styles.input}
-              type="text"
-              name="val"
-              placeholder={userName}
-              disabled
-            />
-          </p>
-          {/* 팀원 검색 input */}
-          {roomType === roomTypeArr[0] ? (
-            <div>
-              <form onSubmit={onSubmit}>
-                <p>
-                  팀원선택
-                  <input
-                    className={styles.input}
-                    onChange={nameChangeHandler}
-                    value={inputName}
-                    type="text"
-                    placeholder="팀원을 검색하세요"
-                    onClick={onClickModal}
-                  />
-                </p>
-              </form>
-              {isShowModal === true ? (
-                <div className={styles.meetingInputList}>
-                  {searchedNameState.map((item, index) => (
-                    <button
-                      onClick={() => onClickSearched(item)}
-                      key={index}
-                      className={styles.membersName}
-                    >
-                      {item}
-                    </button>
-                  ))}
-                </div>
-              ) : null}
-              <div className={styles.membersBox}>
-                {selectedNameState.map((item, index) => (
-                  <button
-                    className={styles.selectMembers}
-                    onClick={() => onClickSelected(index)}
-                    key={index}
-                  >
-                    {`${item} X`}
-                  </button>
-                ))}
-              </div>
-            </div>
-          ) : null}
-        </div>
+        <BookingMember
+          onSelectNames={selectednamesHandler}
+          userData={userData}
+          namesData={namesData}
+          roomType={roomType}
+        />
       </div>
       <div>
         <h6 className={styles.time}> 시간 선택 </h6>
@@ -420,8 +282,7 @@ const BookingData = ({ bookingData, userData, namesData, currentRoomData }) => {
             </span>
           ))}
         </div>
-        <BookingButton onBookingConfirm={bookingConfirm}/>
-        
+        <BookingButton onBookingConfirm={bookingConfirm} />
       </div>
     </div>
   );
