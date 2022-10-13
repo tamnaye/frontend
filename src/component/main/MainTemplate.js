@@ -55,14 +55,6 @@ const MainTemplate = () => {
         setSecondOfficial(
           data.RoomData.filter((rooms) => rooms.roomType === 'official')
         );
-        // setSinYangID(
-        //   data.RoomData.filter((rooms) => rooms.roomType === 'official')[0]
-        //     .roomId
-        // );
-        // setSinYangName(
-        //   data.RoomData.filter((rooms) => rooms.roomType === 'official')[0]
-        //     .roomName
-        // );
       }
 
       // 3층 일 때 정보
@@ -99,14 +91,7 @@ const MainTemplate = () => {
             (rooms) => rooms.floor === 2 && rooms.roomType === 'official'
           )
         );
-        // setSinYangID(
-        //   data.RoomData.filter((rooms) => rooms.roomType === 'official')[0]
-        //     .roomId
-        // );
-        // setSinYangName(
-        //   data.RoomData.filter((rooms) => rooms.roomType === 'official')[0]
-        //     .roomName
-        // );
+
         // 3층 정보
         setThirdMeetingStudioinfo(
           data.RoomData.filter(
@@ -141,8 +126,6 @@ const MainTemplate = () => {
             SecondOfficial={SecondOfficial}
             bookingData={bookingData}
             roomData={roomData}
-            // SinyangID={SinyangID}
-            // SinyangName={SinyangName}
             floor={floor}
           />,
           <ThirdFloor
@@ -176,8 +159,6 @@ const MainTemplate = () => {
             SecondOfficial={SecondOfficial}
             bookingData={bookingData}
             roomData={roomData}
-            // SinyangID={SinyangID}
-            // SinyangName={SinyangName}
             floor={floor}
           />
         )}

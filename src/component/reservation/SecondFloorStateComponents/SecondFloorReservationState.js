@@ -10,8 +10,9 @@ const SecondFloorReservationState = ({
   //2층
   SecondMeetingRoominfo,
   SecondNaboxinfo,
-  SinyangID,
-  SinyangName,
+  SecondOfficial,
+  // SinyangID,
+  // SinyangName,
   //전체
   bookingData,
   roomData,
@@ -48,8 +49,9 @@ const SecondFloorReservationState = ({
               bookingData={bookingData}
               roomData={roomData}
               SecondMeetingRoominfo={SecondMeetingRoominfo}
-              SinyangID={SinyangID}
-              SinyangName={SinyangName}
+              SecondOfficial={SecondOfficial}
+              // SinyangID={SinyangID}
+              // SinyangName={SinyangName}
               floor={floor}
             />
           ) : (
