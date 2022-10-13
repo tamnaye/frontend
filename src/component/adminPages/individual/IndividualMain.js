@@ -141,15 +141,19 @@ const IndividualMain = () => {
   };
 
   const onAddUserId = (e) => {
+    e.preventDefault();
     setAddUserId(e.target.value);
   };
   const onAddUserName = (e) => {
+    e.preventDefault();
     setAddUserName(e.target.value);
   };
   const onAddUserRole = (e) => {
+    e.preventDefault();
     setAddUserRole(e.target.value);
   };
   const onAddUserFloor = (e) => {
+    e.preventDefault();
     setAddUserFloor(e.target.value);
     setAddUserFloorNumber([e.target.value === 'ALL' ? 0 : e.target.value]);
   };
@@ -202,10 +206,12 @@ const IndividualMain = () => {
   };
 
   const onChangeRole = (e) => {
+    e.preventDefault();
     setChangedUserRole(e.target.value);
   };
 
   const onChangeFloor = (e) => {
+    e.preventDefault();
     setChangedUserFloor(e.target.value);
     setChangedUserFloorNumber([e.target.value === 'ALL' ? 0 : e.target.value]);
   };
@@ -449,8 +455,8 @@ const IndividualMain = () => {
                               <Form.Control
                                 id="inputName"
                                 // placeholder="변경할 이름을 기입해주세요"
-                                // onChange={(e) => onChangeName(e)}
-                                onChange={onChangeName}
+                                onChange={(e) => onChangeName(e)}
+                                // onChange={onChangeName}
                                 value={changedUserName}
                                 required
                                 // ref={c}
@@ -505,4 +511,4 @@ const IndividualMain = () => {
   );
 };
 
-export default IndividualMain;
+export default React.memo(IndividualMain);

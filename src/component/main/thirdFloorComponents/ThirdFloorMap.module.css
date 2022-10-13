@@ -8,6 +8,10 @@
   }
   .container .mapContainer #MeetingRoom {
     padding: 10px;
+    line-height: 0.8rem;
+  }
+  .container .mapContainer #notSelect {
+    line-height: 0.8rem;
   }
 }
 
@@ -20,16 +24,6 @@
     ' Lounge 거문오름 거문오름 NaBox2 더큰내일스튜디오 용눈이오름'
     ' Lounge 거문오름 거문오름 NaBox3 더큰내일스튜디오 따라비오름'
     'space수월봉 . . Stair2 space일출봉 space일출봉';
-
-  /* 구버전 */
-  /* grid-template-columns: 3fr 2fr 1fr 1fr 0.2fr 0.4fr 0.6fr 1.5fr 1.5fr;
-  grid-template-rows: 1fr 1fr 1fr 1.5fr 1.5fr;
-  grid-template-areas:
-    'Lounge Lounge Lounge Lounge 거문오름 거문오름 NaBox1 더큰내일스튜디오 다랑쉬오름'
-    'Lounge Lounge Lounge Lounge 거문오름 거문오름 NaBox2 더큰내일스튜디오 용눈이오름'
-    'Lounge Lounge Lounge Lounge 거문오름 거문오름 NaBox3 더큰내일스튜디오 따라비오름'
-    'space수월봉 . Stair EV . Stair2 Stair2 space일출봉 space일출봉'
-    'space수월봉 화장실 Stair EV . Stair2 Stair2 space일출봉 space일출봉'; */
 
   height: 100%;
   font-size: 11px;
