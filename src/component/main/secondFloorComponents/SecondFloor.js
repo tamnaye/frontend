@@ -2,21 +2,17 @@ import SecondFloorMap from './SecondFloorMap';
 import SecondFloorMeetingRoom from './SecondFloorMeetingRoom';
 import SecondFloorNaRoom from './SecondFloorNaRoom';
 import styles from './SecondFloor.module.css';
-import useUrl from '../../../hooks/useUrl';
-import useTimeAlert from '../../../hooks/useTimeAlert';
-import { useState, useEffect } from 'react';
-import { fetchGet } from '../../../hooks/fetchUrl';
-import { useLocation } from 'react-router-dom';
 
 const SecondFloor = ({
   ablebtn,
   BookingConfirm,
   SecondMeetingRoominfo,
   SecondNaboxinfo,
+  SecondOfficial,
   bookingData,
   roomData,
-  SinyangID,
-  SinyangName,
+  // SinyangID,
+  // SinyangName,
   userClasses,
   floor,
 }) => {
@@ -31,10 +27,11 @@ const SecondFloor = ({
             BookingConfirm={BookingConfirm}
             SecondMeetingRoominfo={SecondMeetingRoominfo}
             SecondNaboxinfo={SecondNaboxinfo}
+            SecondOfficial={SecondOfficial}
             bookingData={bookingData}
             roomData={roomData}
-            SinyangID={SinyangID}
-            SinyangName={SinyangName}
+            // SinyangID={SinyangID}
+            // SinyangName={SinyangName}
             userClasses={userClasses}
             floor={floor}
           />
@@ -44,10 +41,11 @@ const SecondFloor = ({
               ablebtn={ablebtn}
               BookingConfirm={BookingConfirm}
               SecondMeetingRoominfo={SecondMeetingRoominfo}
+              SecondOfficial={SecondOfficial}
               bookingData={bookingData}
               roomData={roomData}
-              SinyangID={SinyangID}
-              SinyangName={SinyangName}
+              // SinyangID={SinyangID}
+              // SinyangName={SinyangName}
               userClasses={userClasses}
               floor={floor}
             />

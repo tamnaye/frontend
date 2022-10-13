@@ -24,8 +24,9 @@ const MainTemplate = () => {
   // 2층 정보
   const [SecondMeetingRoominfo, setSecondMeetingRoominfo] = useState([]);
   const [SecondNaboxinfo, setSecondNaboxinfo] = useState([]);
-  const [SinyangID, setSinYangID] = useState('');
-  const [SinyangName, setSinYangName] = useState('');
+  const [SecondOfficial, setSecondOfficial] = useState([]);
+  // const [SinyangID, setSinYangID] = useState('');
+  // const [SinyangName, setSinYangName] = useState('');
 
   // 3층 정보
   const [ThirdMeetingStudioinfo, setThirdMeetingStudioinfo] = useState([]);
@@ -46,21 +47,22 @@ const MainTemplate = () => {
       // 2층 일 때 정보
       if (data.floor === 2) {
         setSecondMeetingRoominfo(
-          data.RoomData.filter(
-            (rooms) => rooms.roomType === 'meeting' && rooms.roomName !== '신양'
-          )
+          data.RoomData.filter((rooms) => rooms.roomType === 'meeting')
         );
         setSecondNaboxinfo(
           data.RoomData.filter((rooms) => rooms.roomType === 'nabox')
         );
-        setSinYangID(
-          data.RoomData.filter((rooms) => rooms.roomType === 'official')[0]
-            .roomId
+        setSecondOfficial(
+          data.RoomData.filter((rooms) => rooms.roomType === 'official')
         );
-        setSinYangName(
-          data.RoomData.filter((rooms) => rooms.roomType === 'official')[0]
-            .roomName
-        );
+        // setSinYangID(
+        //   data.RoomData.filter((rooms) => rooms.roomType === 'official')[0]
+        //     .roomId
+        // );
+        // setSinYangName(
+        //   data.RoomData.filter((rooms) => rooms.roomType === 'official')[0]
+        //     .roomName
+        // );
       }
 
       // 3층 일 때 정보
@@ -92,14 +94,19 @@ const MainTemplate = () => {
             (rooms) => rooms.floor === 2 && rooms.roomType === 'nabox'
           )
         );
-        setSinYangID(
-          data.RoomData.filter((rooms) => rooms.roomType === 'official')[0]
-            .roomId
+        setSecondOfficial(
+          data.RoomData.filter(
+            (rooms) => rooms.floor === 2 && rooms.roomType === 'official'
+          )
         );
-        setSinYangName(
-          data.RoomData.filter((rooms) => rooms.roomType === 'official')[0]
-            .roomName
-        );
+        // setSinYangID(
+        //   data.RoomData.filter((rooms) => rooms.roomType === 'official')[0]
+        //     .roomId
+        // );
+        // setSinYangName(
+        //   data.RoomData.filter((rooms) => rooms.roomType === 'official')[0]
+        //     .roomName
+        // );
         // 3층 정보
         setThirdMeetingStudioinfo(
           data.RoomData.filter(
@@ -131,10 +138,11 @@ const MainTemplate = () => {
             BookingConfirm={BookingConfirm}
             SecondMeetingRoominfo={SecondMeetingRoominfo}
             SecondNaboxinfo={SecondNaboxinfo}
+            SecondOfficial={SecondOfficial}
             bookingData={bookingData}
             roomData={roomData}
-            SinyangID={SinyangID}
-            SinyangName={SinyangName}
+            // SinyangID={SinyangID}
+            // SinyangName={SinyangName}
             floor={floor}
           />,
           <ThirdFloor
@@ -165,10 +173,11 @@ const MainTemplate = () => {
             BookingConfirm={BookingConfirm}
             SecondMeetingRoominfo={SecondMeetingRoominfo}
             SecondNaboxinfo={SecondNaboxinfo}
+            SecondOfficial={SecondOfficial}
             bookingData={bookingData}
             roomData={roomData}
-            SinyangID={SinyangID}
-            SinyangName={SinyangName}
+            // SinyangID={SinyangID}
+            // SinyangName={SinyangName}
             floor={floor}
           />
         )}
