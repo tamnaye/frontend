@@ -1,0 +1,28 @@
+/*booking button */
+.bookbtn {
+    background-color: #3695f5;
+    cursor: pointer;
+    width: 200px;
+    height: 30px;
+    color: whitesmoke;
+    border: 0px;
+    display: block;
+    margin: auto;
+    margin-top: 30px;
+    margin-bottom: 50px;
+    font-size: 16px;
+  }
+  .bookbtnOff {
+    background-color: #3695f5;
+    width: 200px;
+    height: 30px;
+    color: whitesmoke;
+    border: 0px;
+    display: block;
+    margin: auto;
+    margin-top: 30px;
+    margin-bottom: 50px;
+    font-size: 16px;
+    opacity: 40%;
+    cursor: not-allowed;
+  }
