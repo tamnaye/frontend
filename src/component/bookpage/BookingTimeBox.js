@@ -3,12 +3,10 @@ import styles from "./BookingTimeBox.module.css";
 import "antd/dist/antd.min.css";
 import { Checkbox, Tooltip } from "antd";
 //hooks
-import checkPast from "../../hooks/checkPast";
-import getTimes from "../../hooks/getTimes";
+import { getTimes, times, checkPast }  from "../../hooks/bookingModule";
 import { useEffect, useState } from "react";
 //component
 import TimeBtnExplain from "./TimeBtnExplain";
-import { times } from "../../hooks/times";
 
 //매니저님 예외처리한 부분
 //1) checkBox 예약된거 disable 안하고 그레이 처리 해줌
@@ -28,10 +26,12 @@ const BookingTimeBox = (props) => {
     const bookedTimes = [];
     const officialTimes = [];
     props.bookingData.map((booking) =>
-      bookedTimes.push(...getTimes(booking.startTime, booking.endTime)) &&
+      bookedTimes.push(...getTimes(booking.startTime, booking.endTime)) 
+      &&
       booking.official
         ? officialTimes.push(...getTimes(booking.startTime, booking.endTime))
         : null
+        
     );
     const arr1 = [];
     const arr2 = [];

@@ -3,10 +3,9 @@ import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import "antd/dist/antd.min.css";
 import styles from "./Login.module.css";
-import encrypt from "../../hooks/encrypt";
+import {encrypt} from "../../hooks/loginModule";
 import useUrl from "../../hooks/useUrl";
 import { setAdminAuth, setAuth } from "../../hooks/authModule";
-import { fontSize, fontWeight } from "@mui/system";
 
 export default function Login({ path }) {
   const isAdmin = path === "/admin" || path==="/admin/" ? true : false;

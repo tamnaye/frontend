@@ -1,8 +1,8 @@
 import styles from './Header.module.css';
 import logo from './img/ci_png.png';
 import { Link, useNavigate } from 'react-router-dom';
-import { getAuth, removeToken } from '../../hooks/authModule';
-import { doLogout } from '../../hooks/doLogout';
+import { getAuth } from '../../hooks/authModule';
+import { doLogout } from '../../hooks/loginModule';
 import useUrl from '../../hooks/useUrl';
 
 const Header = () => {

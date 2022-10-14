@@ -12,8 +12,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { fetchGet } from "../../hooks/fetchUrl";
 import BookingMember from "./BookingMember";
-import {getStartEndTime} from "../../hooks/bookingModule"
-import timePlusMinus from "../../hooks/timePlusMinus";
+import {getStartEndTime,timePlusMinus} from "../../hooks/bookingModule"
 import { fetchPostJson } from "../../hooks/fetchUrl";
 import BookingButton from "./BookingButton";
 

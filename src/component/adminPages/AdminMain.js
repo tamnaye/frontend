@@ -2,7 +2,7 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Offcanvas from 'react-bootstrap/Offcanvas';
-import { doLogout } from '../../hooks/doLogout';
+import { doLogout } from '../../hooks/loginModule';
 import { useNavigate } from 'react-router-dom';
 import useUrl from '../../hooks/useUrl';
 
