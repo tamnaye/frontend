@@ -1,94 +1,9 @@
-@media screen and (max-width: 700px){
-    .wrap .meetingUserinfo {
-      margin-top: -29px;
-    }
-    .wrap .naboxUserinfo {
-      margin-top: -35px;
-    }
-  }
-  
   /* Info */
-  .input {
-    width: 230px;
-    height: 22px;
-    margin-left: 20px;
-    text-align: center;
-  }
-  /*룸타입에 따른 media적용을 위해*/
-  .meetingUserinfo {
-    margin-top: 25px;
+  .time {
+    margin-top: 16px;
     color: #D46B42;
   }
-  .naboxUserinfo {
-    margin-top: 75px;
-    color: #D46B42;
-  }
-  /*룸타입에 따른 box테두리 적용*/
-  .meetingInfoBox{
-    padding: 10px 0px 0px 10px;
-    border: 1px solid #D9DDDC;
-    height: 170px;
-    position: relative;
-  }
-  .naboxInfoBox{
-    padding: 10px 0px 0px 10px;
+  .timetable {
+    padding: 10px 0px 10px 15px;
     border: 1px solid #D9DDDC;
   }
-    /*룸타입에 따른 팀원리스트 적용*/
-  .meetingInputList {
-    padding: 0px 0px 0px 5px;
-    border: 1px solid #D9DDDC;
-    border-radius: 5px;
-    width: 307px;  
-    height: 80px;
-    overflow-y: scroll;
-    background-color: rgb(255, 254, 254);
-    z-index: 1;
-    position: absolute;
-    top: 80px;
-  }
-  .naboxInputList {
-    padding: 10px 0px 0px 10px;
-    border: 1px solid #D9DDDC;
-  }
-  /*team member btn*/
-  .membersBox {
-    width: 310px;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-  }
-  .membersName {
-    background-color: white;
-    border: 1px solid #B1D8FB;
-    border-radius: 50px;
-    width: 68px;
-    height: 25px;
-    justify-content: center;
-    margin: 3px 2px 7px 0px;
-    font-size: 14px;
-    color: #528FC4;
-  }
-  .selectMembers {
-    background-color: #B1D8FB;
-    border: 1px solid #B1D8FB;
-    border-radius: 50px;
-    width: 68px;
-    height: 25px;
-    justify-content: center;
-    margin: 7px 5px 0px 3px;
-    font-size: 13px;
-    color: #1a5d99;
-    font-weight: bold;
-
-  }
-
-  /*TimeTable */
-.time {
-  margin-top: 16px;
-  color: #D46B42;
-}
-.timetable {
-  padding: 10px 0px 10px 15px;
-  border: 1px solid #D9DDDC;
-}
-

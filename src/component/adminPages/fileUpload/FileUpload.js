@@ -3,7 +3,7 @@ import useUrl from '../../../hooks/useUrl';
 import { useEffect } from 'react';
 import { fetchGet } from '../../../hooks/fetchUrl';
 import { useNavigate } from 'react-router-dom';
-import { sendAuth } from '../../../hooks/authModule';
+import { sendAuth, sendAuthFile } from '../../../hooks/authModule';
 
 const FileUpload = () => {
   const myUrl = useUrl();
@@ -34,7 +34,7 @@ const FileUpload = () => {
     //----csv파일 POST
     fetch(`http://${myUrl}/admin/insert/user`, {
       method: 'POST',
-      headers:sendAuth(),
+      headers:sendAuthFile(),
       cache: 'no-cache',
       body: formData,
     })

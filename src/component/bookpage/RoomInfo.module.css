@@ -19,12 +19,6 @@
     text-align: center;
 }
 
-.line {
-  border: 0;
-  height: 3px;
-  background: rgba(0, 0, 0, 0.85);
-}
-
 .room_img {
   display: block;
   margin: auto;

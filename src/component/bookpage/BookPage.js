@@ -7,6 +7,8 @@ import NavsFloor3 from "./navs/NavsFloor3";
 import RoomInfo from "./RoomInfo";
 import BookingTimeBox from "./BookingTimeBox";
 import BookingMember from "./BookingMember";
+import { getStartEndTime, timePlusMinus } from "../../hooks/bookingModule";
+import { fetchPostJson } from "../../hooks/fetchUrl";
 import BookingButton from "./BookingButton";
 //hooks
 import { useState, useEffect } from "react";
@@ -44,7 +46,7 @@ function BookPage() {
     setSelectedNamesState(names);
   };
 
-  //--------시간 선택 데이터 받기---------//
+  //시간선택용
   const userClass = userData.classes;
   const [isLoadding, setIsLoading] = useState(false);
   const userName = userData.userName;
@@ -104,6 +106,7 @@ function BookPage() {
       }
     }
   }
+
   return (
     <div>
       {floorUserData === 0
@@ -111,26 +114,15 @@ function BookPage() {
         : floorUserData === 2
         ? [<NavsFloor2 key={2} navRoomData={navRoomData} />]
         : [<NavsFloor3 key={3} navRoomData={navRoomData} />]}
-      <div className={styles.roomInfo}>
+      <div className={styles.bookPage}>
         <RoomInfo currentRoomData={currentRoomData} />
-        <div className={styles.bookingInfo}>
-          <div className={styles.wrap}>
-            <h6
-              className={
-                roomType === roomTypeArr[0]
-                  ? [styles.meetingUserinfo]
-                  : [styles.naboxUserinfo]
-              }
-            >
-              예약자 정보
-            </h6>
-            <BookingMember
-              onSelectNames={selectednamesHandler}
-              userData={userData}
-              namesData={namesData}
-              roomType={roomType}
-            />
-          </div>
+        <div className={styles.bookingInfo_wrap}>
+          <BookingMember
+            onSelectNames={selectednamesHandler}
+            userData={userData}
+            namesData={namesData}
+            roomType={roomType}
+          />
           <BookingTimeBox
             bookingData={bookingData}
             userData={userData}
