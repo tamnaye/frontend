@@ -7,8 +7,6 @@ import NavsFloor3 from "./navs/NavsFloor3";
 import RoomInfo from "./RoomInfo";
 import BookingTimeBox from "./BookingTimeBox";
 import BookingMember from "./BookingMember";
-import { getStartEndTime, timePlusMinus } from "../../hooks/bookingModule";
-import { fetchPostJson } from "../../hooks/fetchUrl";
 import BookingButton from "./BookingButton";
 //hooks
 import { useState, useEffect } from "react";
