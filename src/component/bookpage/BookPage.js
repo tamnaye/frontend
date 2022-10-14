@@ -12,7 +12,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { fetchGet } from "../../hooks/fetchUrl";
 import BookingMember from "./BookingMember";
-import {getStartEndTime,timePlusMinus} from "../../hooks/bookingModule"
+import { getStartEndTime, timePlusMinus } from "../../hooks/bookingModule";
 import { fetchPostJson } from "../../hooks/fetchUrl";
 import BookingButton from "./BookingButton";
 
@@ -43,17 +43,19 @@ function BookPage() {
   const [selectedNamesState, setSelectedNamesState] = useState([]);
   const selectednamesHandler = (names) => {
     setSelectedNamesState(names);
-  }
+  };
 
-//시간선택용 
-const userClass = userData.classes;
-const [isLoadding, setIsLoading] = useState(false);
-const userName = userData.userName;
-const [checkedState, setCheckedState] = useState(useState(new Array(12).fill(false)))
-const selectedTimeHandler = (time)=>{
-  console.log("[bookpage] checking time : ",time)
-  setCheckedState(time)
-}
+  //시간선택용
+  const userClass = userData.classes;
+  const [isLoadding, setIsLoading] = useState(false);
+  const userName = userData.userName;
+  const [checkedState, setCheckedState] = useState(
+    useState(new Array(12).fill(false))
+  );
+  const selectedTimeHandler = (time) => {
+    console.log("[bookpage] checking time : ", time);
+    setCheckedState(time);
+  };
 
   const roomType = currentRoomData.roomType;
   const roomTypeArr = ["meeting", "nabax"];
@@ -102,6 +104,7 @@ const selectedTimeHandler = (time)=>{
       }
     }
   }
+
   return (
     <div>
       {floorUserData === 0
@@ -109,26 +112,15 @@ const selectedTimeHandler = (time)=>{
         : floorUserData === 2
         ? [<NavsFloor2 key={2} navRoomData={navRoomData} />]
         : [<NavsFloor3 key={3} navRoomData={navRoomData} />]}
-      <div className={styles.roomInfo}>
+      <div className={styles.bookPage}>
         <RoomInfo currentRoomData={currentRoomData} />
-        <div className={styles.bookingInfo}>
-          <div className={styles.wrap}>
-            <h6
-              className={
-                roomType === roomTypeArr[0]
-                  ? [styles.meetingUserinfo]
-                  : [styles.naboxUserinfo]
-              }
-            >
-              예약자 정보
-            </h6>
-            <BookingMember
-              onSelectNames={selectednamesHandler}
-              userData={userData}
-              namesData={namesData}
-              roomType={roomType}
-            />
-          </div>
+        <div className={styles.bookingInfo_wrap}>
+          <BookingMember
+            onSelectNames={selectednamesHandler}
+            userData={userData}
+            namesData={namesData}
+            roomType={roomType}
+          />
           <BookingTimeBox
             bookingData={bookingData}
             userData={userData}
@@ -136,8 +128,7 @@ const selectedTimeHandler = (time)=>{
             currentRoomData={currentRoomData}
             onSelectTime={selectedTimeHandler}
           />
-        <BookingButton onBookingConfirm={bookingConfirm} />
-
+          <BookingButton onBookingConfirm={bookingConfirm} />
         </div>
       </div>
     </div>

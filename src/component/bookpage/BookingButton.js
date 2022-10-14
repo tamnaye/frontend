@@ -25,7 +25,6 @@ useEffect(() => {
   }
 }, [timeAblebtn, weekDay]);
 
-
     return (<button
         className={
           timeAblebtn === false || weeklyAblebtn === false

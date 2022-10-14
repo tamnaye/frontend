@@ -1,18 +1,20 @@
-import styles from "./BookingTimeBox.module.css";
+import styles from "./BookingMember.module.css";
 import { useRef, useState, useEffect } from "react";
 
 const BookingMember = (props) => {
   const roomTypeArr = ["meeting", "nabax"];
-  const memberNames = props.namesData.filter((member) => member !== props.userData.userName);
+  const memberNames = props.namesData.filter(
+    (member) => member !== props.userData.userName
+  );
   useEffect(() => {
     setNamesState(
       props.namesData.filter((member) => member !== props.userData.userName)
     );
-  }, [props.namesData, props.userData.userName] );
+  }, [props.namesData, props.userData.userName]);
   useEffect(() => {
     document.addEventListener("mousedown", onClickOutside);
   });
-  
+
   //--------팀원 검색 기능---------//
   const [namesState, setNamesState] = useState([]);
   const [selectedNameState, setSelectedNameState] = useState([]);
@@ -49,7 +51,7 @@ const BookingMember = (props) => {
     const arr = [...selectedNameState];
     arr.push(name);
     setSelectedNameState(arr);
-    props.onSelectNames(arr)
+    props.onSelectNames(arr);
     setNamesState(memberNames.filter((member) => !arr.includes(member)));
   }
   function removeNameHandler(index) {
@@ -58,7 +60,7 @@ const BookingMember = (props) => {
     arr2.push(arr[index]);
     arr2.sort();
     arr.splice(index, 1);
-    props.onSelectNames(arr)
+    props.onSelectNames(arr);
     setSelectedNameState(arr);
     setNamesState(arr2);
   }
@@ -73,9 +75,7 @@ const BookingMember = (props) => {
       const arr = [...selectedNameState];
       arr.push(namesState[0]);
       setSelectedNameState(arr);
-      setNamesState(
-        memberNames.filter((member) => !arr.includes(member))
-      );
+      setNamesState(memberNames.filter((member) => !arr.includes(member)));
     } else if (namesState.length > 1) {
       //검색 결과 두명 이상 나왔을 때 엔터친 경우
       alert("팀원을 한명씩 선택해 주세요 !");
@@ -87,67 +87,78 @@ const BookingMember = (props) => {
     }
   }
   return (
-    <div
-      ref={closeModal} //div영역을 벗어나 클릭하면 모달창 사라짐
-      className={
-        props.roomType === roomTypeArr[0]
-          ? [styles.meetingInfoBox]
-          : [styles.naboxInfoBox]
-      }
-    >
-      <p>
-        신청자명
-        <input
-          style={{ fontWeight: "bold" }}
-          className={styles.input}
-          type="text"
-          name="val"
-          placeholder={props.userData.userName}
-          disabled
-        />
-      </p>
-      {/* 팀원 검색 input */}
-      {props.roomType === roomTypeArr[0] ? (
-        <div>
-          <form onSubmit={onSubmit}>
-            <p>
-              팀원선택
-              <input
-                className={styles.input}
-                onChange={nameChangeHandler}
-                value={inputName}
-                type="text"
-                placeholder="팀원을 검색하세요"
-                onClick={onClickModal}
-              />
-            </p>
-          </form>
-          {isShowModal === true ? (
-            <div className={styles.meetingInputList}>
-              {namesState.map((item, index) => (
+    <div>
+      <h6
+        className={
+          props.roomType === roomTypeArr[0]
+            ? [styles.meetingUserinfo]
+            : [styles.naboxUserinfo]
+        }
+      >
+        예약자 정보
+      </h6>
+      <div
+        ref={closeModal} //div영역을 벗어나 클릭하면 모달창 사라짐
+        className={
+          props.roomType === roomTypeArr[0]
+            ? [styles.meetingInfoBox]
+            : [styles.naboxInfoBox]
+        }
+      >
+        <p>
+          신청자명
+          <input
+            style={{ fontWeight: "bold" }}
+            className={styles.input}
+            type="text"
+            name="val"
+            placeholder={props.userData.userName}
+            disabled
+          />
+        </p>
+        {/* 팀원 검색 input */}
+        {props.roomType === roomTypeArr[0] ? (
+          <div>
+            <form onSubmit={onSubmit}>
+              <p>
+                팀원선택
+                <input
+                  className={styles.input}
+                  onChange={nameChangeHandler}
+                  value={inputName}
+                  type="text"
+                  placeholder="팀원을 검색하세요"
+                  onClick={onClickModal}
+                />
+              </p>
+            </form>
+            {isShowModal === true ? (
+              <div className={styles.meetingInputList}>
+                {namesState.map((item, index) => (
+                  <button
+                    onClick={() => addNameHandler(item)}
+                    key={index}
+                    className={styles.membersName}
+                  >
+                    {item}
+                  </button>
+                ))}
+              </div>
+            ) : null}
+            <div className={styles.membersBox}>
+              {selectedNameState.map((item, index) => (
                 <button
-                  onClick={() => addNameHandler(item)}
+                  className={styles.selectMembers}
+                  onClick={() => removeNameHandler(index)}
                   key={index}
-                  className={styles.membersName}
                 >
-                  {item}
+                  {`${item} X`}
                 </button>
               ))}
             </div>
-          ) : null}
-          <div className={styles.membersBox}>
-            {selectedNameState.map((item, index) => (
-              <button
-                className={styles.selectMembers}
-                onClick={() => removeNameHandler(index)}
-                key={index}
-              >
-                {`${item} X`}
-              </button>
-            ))}
           </div>
-        </div>
-      ) : null}
+        ) : null}
+      </div>
     </div>
   );
 };

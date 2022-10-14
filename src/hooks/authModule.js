@@ -31,7 +31,7 @@ export function refreshToken(auth) {
 export function sendAuth() {
   const object = isAdmin()
     ? {
-        // "Content-Type": "application/json",
+        "Content-Type": "application/json",
         Authorization2: window.localStorage.getItem(
           process.env.REACT_APP_AUTH2_KEY
         )
@@ -46,6 +46,14 @@ export function sendAuth() {
         ),
       };
 
+  return object;
+}
+export function sendAuthFile() {
+  const object = {
+        Authorization2: window.localStorage.getItem(
+          process.env.REACT_APP_AUTH2_KEY
+        )
+      }
   return object;
 }
 function removeAdmin() {
