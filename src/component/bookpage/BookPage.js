@@ -44,7 +44,8 @@ function BookPage() {
   const [selectedNamesState, setSelectedNamesState] = useState([]);
   const selectednamesHandler = (names) => {
     setSelectedNamesState(names);
-  };
+  }
+
 //시간선택용 
 const userClass = userData.classes;
 const [isLoadding, setIsLoading] = useState(false);
@@ -57,10 +58,6 @@ const selectedTimeHandler = (time)=>{
 
   const roomType = currentRoomData.roomType;
   const roomTypeArr = ["meeting", "nabax"];
-
-
-
-
   function bookingConfirm() {
     if (
       userClass !== 0 &&

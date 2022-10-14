@@ -2,16 +2,13 @@ import styles from "./BookingTimeBox.module.css";
 import { useRef, useState, useEffect } from "react";
 
 const BookingMember = (props) => {
-
   const roomTypeArr = ["meeting", "nabax"];
-
   const memberNames = props.namesData.filter((member) => member !== props.userData.userName);
-
   useEffect(() => {
     setNamesState(
       props.namesData.filter((member) => member !== props.userData.userName)
     );
-  }, [props.namesData] );
+  }, [props.namesData, props.userData.userName] );
   //--------팀원 검색 기능---------//
   const [namesState, setNamesState] = useState([]);
   const [selectedNameState, setSelectedNameState] = useState([]);
@@ -20,7 +17,6 @@ const BookingMember = (props) => {
   const [isShowModal, setIsShowModal] = useState(true);
   //useRef사용해서 outside클릭 시 모달창 사라짐
   const closeModal = useRef();
-
   function onClickModal() {
     setIsShowModal(true);
   }
@@ -49,15 +45,11 @@ const BookingMember = (props) => {
   function addNameHandler(name) {
     setInputName("");
     setIsShowModal(false);
-    // setSearchedNameState([]);
-
     const arr = [...selectedNameState];
     arr.push(name);
-
     setSelectedNameState(arr);
     props.onSelectNames(arr)
     setNamesState(memberNames.filter((member) => !arr.includes(member)));
-
   }
   function removeNameHandler(index) {
     const arr = [...selectedNameState];
@@ -65,12 +57,9 @@ const BookingMember = (props) => {
     arr2.push(arr[index]);
     arr2.sort();
     arr.splice(index, 1);
-    
     props.onSelectNames(arr)
     setSelectedNameState(arr);
-    
     setNamesState(arr2);
-    
   }
   //팀원 검색 enter event
   function onSubmit(e) {
@@ -80,7 +69,6 @@ const BookingMember = (props) => {
       //이미 선택할 팀원이 나옴
       setInputName("");
       // setSearchedNameState([]);
-
       const arr = [...selectedNameState];
       arr.push(namesState[0]);
       setSelectedNameState(arr);
@@ -97,7 +85,6 @@ const BookingMember = (props) => {
       alert("팀원의 이름을 확인해주세요!");
     }
   }
-
   return (
     <div
       ref={closeModal} //div영역을 벗어나 클릭하면 모달창 사라짐
@@ -163,5 +150,4 @@ const BookingMember = (props) => {
     </div>
   );
 };
-
 export default BookingMember;
