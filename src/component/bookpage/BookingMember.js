@@ -9,6 +9,10 @@ const BookingMember = (props) => {
       props.namesData.filter((member) => member !== props.userData.userName)
     );
   }, [props.namesData, props.userData.userName] );
+  useEffect(() => {
+    document.addEventListener("mousedown", onClickOutside);
+  });
+  
   //--------팀원 검색 기능---------//
   const [namesState, setNamesState] = useState([]);
   const [selectedNameState, setSelectedNameState] = useState([]);
@@ -27,9 +31,6 @@ const BookingMember = (props) => {
       }
     }
   }
-  useEffect(() => {
-    document.addEventListener("mousedown", onClickOutside);
-  });
 
   function nameChangeHandler(e) {
     setIsShowModal(true);
