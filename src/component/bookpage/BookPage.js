@@ -6,15 +6,16 @@ import NavsFloor2 from "./navs/NavsFloor2";
 import NavsFloor3 from "./navs/NavsFloor3";
 import RoomInfo from "./RoomInfo";
 import BookingTimeBox from "./BookingTimeBox";
-//hooks
-import useUrl from "../../hooks/useUrl";
-import { useNavigate, useParams } from "react-router-dom";
-import { useState, useEffect } from "react";
-import { fetchGet } from "../../hooks/fetchUrl";
 import BookingMember from "./BookingMember";
 import { getStartEndTime, timePlusMinus } from "../../hooks/bookingModule";
 import { fetchPostJson } from "../../hooks/fetchUrl";
 import BookingButton from "./BookingButton";
+//hooks
+import { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import useUrl from "../../hooks/useUrl";
+import { fetchGet, fetchPostJson } from "../../hooks/fetchUrl";
+import { getStartEndTime, timePlusMinus } from "../../hooks/bookingModule";
 
 function BookPage() {
   const { roomId } = useParams();
@@ -57,6 +58,7 @@ function BookPage() {
     setCheckedState(time);
   };
 
+  //--------예약하기 실행---------//
   const roomType = currentRoomData.roomType;
   const roomTypeArr = ["meeting", "nabax"];
   function bookingConfirm() {
