@@ -1,4 +1,4 @@
-export default function useTimes() {
+export function times() {
   const times = [
     '09:00',
     '10:00',

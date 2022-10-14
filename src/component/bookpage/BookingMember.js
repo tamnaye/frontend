@@ -1,4 +1,4 @@
-import styles from "./BookingData.module.css";
+import styles from "./BookingTimeBox.module.css";
 import { useRef, useState, useEffect } from "react";
 
 const BookingMember = (props) => {
