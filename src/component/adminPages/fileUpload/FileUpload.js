@@ -21,9 +21,9 @@ const FileUpload = () => {
   //----input file 값 확인
   const onChange = (e) => {
     formData.append('file', e.target.files[0]);
-    console.log('target file:', formData);
+    //console.log('target file:', formData);
     for (let value of formData.values()) {
-      console.log('formData onchange value:', value);
+      //console.log('formData onchange value:', value);
     }
   };
 

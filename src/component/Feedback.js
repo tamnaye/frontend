@@ -54,7 +54,6 @@ const Feedback = () => {
     }
   };
 
-
   //feedback GET
   const url = `http://${myUrl}/api/feedback`;
   useEffect(() => {
@@ -114,11 +113,12 @@ const Feedback = () => {
       <div>
         <p style={{ marginTop: '50px', fontWeight: 'bold' }}>문의사항</p>
         <hr />
-        <div style={{ height:'350px', overflowY:'auto'}}>
+        <div style={{ height:'350px', overflowY:'auto', padding: '7px'}}>
         {feedbackDatas.map((item, index) => (
           <Card key={index} style={{ marginTop: '20px'}}>
-            <Card.Body style={{ position: 'relative' }}>
+            <Card.Body style={{ padding: '14px' }}>
               {item}
+              <br />
               {userRole === 'DEV'
                 ? null
                 : [
@@ -128,16 +128,17 @@ const Feedback = () => {
                         deleteFeedback(item, index);
                       }}
                       style={{
-                        position: 'absolute',
-                        top: '-12px',
-                        right: '-10px',
-                        width: '25px',
+                        display: 'block',
+                        marginTop: '7px',
+                        width: '40px',
                         height: '25px',
-                        borderRadius: '50%',
                         border: 'none',
+                        color: 'tomato',
+                        backgroundColor: 'transparent',
+                        float: 'right',
                       }}
                     >
-                      X
+                      삭제
                     </button>,
                   ]}
             </Card.Body>
@@ -150,21 +151,3 @@ const Feedback = () => {
 };
 
 export default Feedback;
-
-
-/*mypage_bookingTable*/
-// @media screen and (max-width: 700px) {
-//   thead .tableTrTitle .tableTh {
-//      font-size: 10px;
-//      text-align: center;
-//   }
-//   tbody tr .tableTd {
-//      font-size: 10px;
-//   }
-//   div .warning .warning1 {
-//      font-size: 6px;
-//   }
-//   div .warning .warning2 {
-//      font-size: 6px;
-//   }
-//  }

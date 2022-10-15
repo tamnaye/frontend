@@ -1,9 +1,9 @@
   /* Info */
   @media screen and (max-width: 700px) {
-    div .meetingUserinfo {
+    div .meetingUserTitle {
       margin-top: -29px;
     }
-    div .naboxUserinfo {
+    div .naboxUserTitle {
       margin-top: -49px;
     }
   }
@@ -13,13 +13,14 @@
     height: 22px;
     margin-left: 20px;
     text-align: center;
+    font-weight: bold;
   }
   /*룸타입에 따른 media적용을 위한 css*/
-  .meetingUserinfo {
+  .meetingUserTitle {
     margin-top: 30px;
     color: #D46B42;
   }
-  .naboxUserinfo {
+  .naboxUserTitle {
     margin-top: 75px;
     color: #D46B42;
   }
@@ -34,7 +35,6 @@
     padding: 10px 0px 0px 10px;
     border: 1px solid #D9DDDC;
   }
-
   /*룸타입에 따른 팀원리스트 적용*/
   .meetingInputList {
     padding: 0px 0px 0px 5px;
@@ -52,7 +52,6 @@
     padding: 10px 0px 0px 10px;
     border: 1px solid #D9DDDC;
   }
-
   /*team member btn*/
   .membersBox {
     width: 310px;
