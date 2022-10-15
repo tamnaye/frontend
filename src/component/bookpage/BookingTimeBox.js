@@ -129,7 +129,7 @@ const BookingTimeBox = (props) => {
 
   return (
     <div>
-      <h6 className={styles.time}> 시간 선택 </h6>
+      <h6 className={styles.title}> 시간 선택 </h6>
       {/* 매니저인 경우만 버튼 안내 */}
       {userClass === 0 ? <TimeBtnExplain /> : null}
       {/* 시간 선택 체크 박스  */}

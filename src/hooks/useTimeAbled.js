@@ -1,17 +1,16 @@
 import { useEffect, useState } from 'react'
 
 const useTimeAbled = () => {
-    const [ablebtn, setAblebtn] = useState(true) //예약시간이 아닐 때 상태변경(true일 때 버튼 활성화!)
+  const [ablebtn, setAblebtn] = useState(true) //예약시간이 아닐 때 상태변경(true일 때 버튼 활성화!)
 
-    //21:00-08:30까지 예약 버튼 비활성화 함수
-    const Now = new Date()
-    const NowHour = Now.getHours()
-    const NowMins = Now.getMinutes()
-
-    //주말 예약 버튼 비활성화
-    const day = ['일', '월', '화', '수', '목', '금', '토'];
-    const NowDay = Now.getDay(); //new Date()
-    const weekDay = day[NowDay];
+  //21:00-08:30까지 예약 버튼 비활성화 함수
+  const Now = new Date()
+  const NowHour = Now.getHours()
+  const NowMins = Now.getMinutes()
+  //주말 예약 버튼 비활성화
+  const day = ['일', '월', '화', '수', '목', '금', '토'];
+  const NowDay = Now.getDay(); //new Date()
+  const weekDay = day[NowDay];
 
   function pluszero(times) {
     let time = times.toString() //시간을 숫자에서 문자로 변환

@@ -17,7 +17,7 @@ function MyPage() {
   const [userData, setUserData] = useState('');
   const [myBookingDetailDataList, setMyBookingDetailDataList] = useState([]);
 
-  //----로그인 시 userName 데이터 가져오기----//
+  //로그인 시 userName 데이터 가져오기
   const [userName, setUserName] = useState('');
   const [bookingCount, setBookingCount] = useState([]);
   const url = `http://${myUrl}/api/user/mypage`;

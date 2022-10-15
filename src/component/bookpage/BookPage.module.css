@@ -4,7 +4,6 @@
     grid-template-columns: 1fr;
     grid-template-rows: repeat(2, 1fr);
     width: 360px;
-    
   }
 }
 
@@ -19,10 +18,16 @@
   margin-top: 5px;
 }
 
-  /*BookPage에 크게 Roominfo와 bookingInfo로 css가 나뉨
-  Roominfo에 룸정보가 전체들어가고
-  bookingInfo에는 컴포넌트가 크게 멤버, 타임테이블, 예약버튼으로 나뉨
-  */
+/*BookPage에 크게 Roominfo와 bookingInfo로 css가 나뉨
+Roominfo에 룸정보가 전체들어가고
+bookingInfo에는 컴포넌트가 크게 멤버, 타임테이블, 예약버튼으로 나뉨
+*/
+
+.roomInfo_wrap {
+  padding: 10px;
+  width: 350px;
+  margin: 0px auto;
+} 
 
 .bookingInfo_wrap {
   padding: 10px;

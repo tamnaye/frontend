@@ -38,13 +38,13 @@ function BookPage() {
     });
   }, [url, navigate]);
 
-  //--------팀원 검색 데이터 받기---------//
+  //팀원 검색 데이터 받기
   const [selectedNamesState, setSelectedNamesState] = useState([]);
   const selectednamesHandler = (names) => {
     setSelectedNamesState(names);
   };
 
-  //시간선택용
+  //시간 선택
   const userClass = userData.classes;
   const [isLoadding, setIsLoading] = useState(false);
   const userName = userData.userName;
@@ -56,7 +56,7 @@ function BookPage() {
     setCheckedState(time);
   };
 
-  //--------예약하기 실행---------//
+  //예약하기 실행
   const roomType = currentRoomData.roomType;
   const roomTypeArr = ["meeting", "nabax"];
   function bookingConfirm() {
@@ -113,7 +113,9 @@ function BookPage() {
         ? [<NavsFloor2 key={2} navRoomData={navRoomData} />]
         : [<NavsFloor3 key={3} navRoomData={navRoomData} />]}
       <div className={styles.bookPage}>
+        <div className={styles.roomInfo_wrap} >
         <RoomInfo currentRoomData={currentRoomData} />
+        </div>
         <div className={styles.bookingInfo_wrap}>
           <BookingMember
             onSelectNames={selectednamesHandler}

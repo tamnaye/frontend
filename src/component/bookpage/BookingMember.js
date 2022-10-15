@@ -33,7 +33,6 @@ const BookingMember = (props) => {
       }
     }
   }
-
   function nameChangeHandler(e) {
     setIsShowModal(true);
     setInputName(e.target.value);
@@ -91,8 +90,8 @@ const BookingMember = (props) => {
       <h6
         className={
           props.roomType === roomTypeArr[0]
-            ? [styles.meetingUserinfo]
-            : [styles.naboxUserinfo]
+            ? [styles.meetingUserTitle]
+            : [styles.naboxUserTitle]
         }
       >
         예약자 정보
@@ -108,7 +107,6 @@ const BookingMember = (props) => {
         <p>
           신청자명
           <input
-            style={{ fontWeight: "bold" }}
             className={styles.input}
             type="text"
             name="val"
@@ -127,7 +125,7 @@ const BookingMember = (props) => {
                   onChange={nameChangeHandler}
                   value={inputName}
                   type="text"
-                  placeholder="팀원을 검색하세요"
+                  placeholder="팀원 검색"
                   onClick={onClickModal}
                 />
               </p>

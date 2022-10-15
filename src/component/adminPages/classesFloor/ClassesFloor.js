@@ -32,6 +32,8 @@ const ClassesFloor = () => {
       setNewFloor(newArr);
     });
   }, [url]);
+  //console.log(floorData)
+  //console.log(classOfFloorData)
 
   //----select box 값 가져오기
   const onChange = (event, index) => {
@@ -59,7 +61,7 @@ const ClassesFloor = () => {
         setFloor(arr);
         //console.log(floor);
         alert(data.message);
-        // window.location.reload(); //alert 버튼 클릭 시, 새로고침해서 데이터 다시 받아옴
+        //window.location.reload(); //alert 버튼 클릭 시, 새로고침해서 데이터 다시 받아옴
       });
     }
   };
