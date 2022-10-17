@@ -4,6 +4,7 @@ import {
   sendAuth,
   isAdmin
 } from "./authModule";
+
 function returnJson(res, navigate) {
     if (res.status === 200) { // 정상 [admin은 리프레쉬 없음]
       refreshToken(res.headers.get("Authorization"));
@@ -26,6 +27,7 @@ export function fetchGet(url, navigate) {
     return returnJson(res, navigate);
   });
 }
+
 export function fetchPostJson(url, object, navigate) {
   return fetch(url, {
     method: "POST",

@@ -15,6 +15,7 @@ import FileUpload from "./component/adminPages/fileUpload/FileUpload";
 import LoginContainer from "./component/login/LoginContainer";
 import Feedback from "./component/Feedback";
 import { useEffect } from "react";
+import Example from "./component/adminPages/individual/Example"
 
 function App() {
   const navigate = useNavigate();
@@ -58,6 +59,7 @@ function App() {
 
         <Route path="*" element={<EmptyPage />} />
         <Route path="/feedback" element={<Feedback />} />
+        <Route path="/example" element={<Example />} />
       </Routes>
     </div>
   );
