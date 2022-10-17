@@ -459,7 +459,7 @@ const IndividualMain = () => {
                               <Form.Label>이름</Form.Label>
                               <Form.Control
                                 id="inputName"
-                                // placeholder="변경할 이름을 기입해주세요"
+                                placeholder={data.userName}
                                 onChange={(e) => onChangeName(e)}
                                 // onChange={onChangeName}
                                 value={changedUserName}
