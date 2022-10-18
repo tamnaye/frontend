@@ -8,13 +8,13 @@ import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import IndividualEditModal from "./IndividualEditModal";
 //hooks
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Children } from "react";
 import { useNavigate } from "react-router-dom";
 //custom hooks
 import useUrl from "../../../hooks/useUrl";
 import { fetchGet, fetchPostJson } from "../../../hooks/fetchUrl";
 
-const IndividualMain = () => {
+const IndividualMain = (props) => {
   const myUrl = useUrl();
   const navigate = useNavigate();
 
@@ -440,7 +440,7 @@ const IndividualMain = () => {
                     <th>{data.floor === 0 ? "ALL" : data.floor}</th>
                     <th>
                       {/* 모달창 관련 */}
-
+                      <>
                       {/* 모달창으로 들어가는 버튼 */}
                       <Button
                         style={{
@@ -455,7 +455,6 @@ const IndividualMain = () => {
                       >
                         수정하기
                       </Button>
-                    </th>
                       {show[index] ? (
                         <IndividualEditModal
                           userName={data.userName}
@@ -463,8 +462,11 @@ const IndividualMain = () => {
                           onClose={closeModalHandler}
                           onEditUser={userEditHandler}
                           // pickedUserId={pickedUserId}
-                        />
+                        >{props.children}</IndividualEditModal>
                       ) : null}
+                      </>
+                    </th>
+ 
                   </tr>
                 ))}
               </tbody>

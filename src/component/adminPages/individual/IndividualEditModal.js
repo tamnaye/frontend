@@ -95,6 +95,7 @@ const IndividualEditModal = (props) => {
 //   };
 
   return (
+    <div>
     <Modal show='true' onHide={handleClose} >
       {/* 모달 창 헤더 */}
       <Modal.Header closeButton>
@@ -147,6 +148,7 @@ const IndividualEditModal = (props) => {
         </Modal.Footer>
       </Form.Group>
     </Modal>
+    </div>
   );
 };
 export default IndividualEditModal
