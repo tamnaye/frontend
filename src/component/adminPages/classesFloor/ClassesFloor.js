@@ -9,13 +9,15 @@ import { useNavigate } from 'react-router-dom';
 const ClassesFloor = () => {
   const navigate = useNavigate();
   const myUrl = useUrl();
-  //const floorSelection = [0, 2, 3]; //select-option 층수 배열로 만들어 준 후 map으로 돌림 <- back에서 데이터 받아오기로!
 
+  //const floorSelection = [0, 2, 3]; //select-option 층수 배열로 만들어 준 후 map으로 돌림 <- back에서 데이터 받아오기로!
   const [floorData, setFloorData] = useState([]); //[0, 2, 3]
-  const [classOfFloorData, setClassOfFloorData] = useState([]); //floor, classes
+  const [classOfFloorData, setClassOfFloorData] = useState([]); //classes, floor
 
   const [floor, setFloor] = useState([]);
   const [newFloor, setNewFloor] = useState([]);
+  //console.log("floor 원본:", floor);
+  //console.log("newFloor 복제:", newFloor);
 
   const url = `http://${myUrl}/admin/view/class&floor`;
   useEffect(() => {
@@ -25,25 +27,26 @@ const ClassesFloor = () => {
 
       const newArr = [];
       data.ClassOfFloorData.map((item) => {
-        newArr.push(item.floor);
+        return newArr.push(item.floor);
       });
-      //console.log(newArr);
+      //console.log("floorsNewArr:", newArr);
       setFloor(newArr);
       setNewFloor(newArr);
     });
   }, [url]);
-  //console.log(floorData)
-  //console.log(classOfFloorData)
+  //console.log("floor GET:", floor)
+  //console.log("newFloor POST:", newFloor)
 
   //----select box 값 가져오기
   const onChange = (event, index) => {
     const newArr = [...newFloor];
     newArr[index] = Number(event.target.value);
-    //console.log('newArr:', newArr, typeof newArr[index]);
+    //console.log('floorsInputNewArr:', newArr, typeof newArr[index]);
     setNewFloor(newArr);
   };
 
   //----수정 버튼 클릭 시 수정한 데이터 post
+  //console.log(`비교: ${floor} = ${newFloor}`);
   const btnClickChange = (changeFloor, index) => {
     //console.log('btnClickChange classOfFloorData : ', classOfFloorData[index]);
     //console.log('btnClickChange newFloor : ', newFloor[index]);
@@ -56,12 +59,12 @@ const ClassesFloor = () => {
         floor: newFloor[index],
       };
       fetchPostJson(postUrl, object, navigate).then((data) => {
-        const arr = [...floor];
+        const arr = [...floor]; //방법1. 전체 새로고침 없이 변경한 상태의 값만 바로 화면에 띄우기 위해
         arr[index] = Number(newFloor[index]);
         setFloor(arr);
         //console.log(floor);
         alert(data.message);
-        //window.location.reload(); //alert 버튼 클릭 시, 새로고침해서 데이터 다시 받아옴
+        //방법2. window.location.reload(); //alert 버튼 클릭 시, 새로고침해서 데이터 다시 받아옴
       });
     }
   };
