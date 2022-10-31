@@ -1,8 +1,5 @@
 import styles from './SecondFloorMap.module.css';
-import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import useUrl from '../../../hooks/useUrl';
-import useTimeAlert from '../../../hooks/useTimeAlert';
 import { EmojiFrownFill } from 'react-bootstrap-icons';
 
 const SecondFloorMap = ({
@@ -11,9 +8,8 @@ const SecondFloorMap = ({
   SecondMeetingRoominfo,
   SecondNaboxinfo,
   bookingData,
+  SecondOfficial,
   roomData,
-  SinyangID,
-  SinyangName,
   floor,
 }) => {
   // roomFull 함수 설정
@@ -125,28 +121,35 @@ const SecondFloorMap = ({
           </Link>
         ))}
 
-        {/* 신양 */}
-        {floor === 0 ? (
-          <Link
-            to={`/booking/${SinyangID}`}
-            className={styles[SinyangName]}
-            id={
-              notroomFull(SinyangID) && ablebtn
-                ? [styles.MeetingRoom]
-                : [styles.full]
-            }
-            onClick={BookingConfirm}
-          >
-            <div>
-              {notroomFull(SinyangID) && ablebtn
-                ? SinyangName
-                : `${SinyangName}\n마감`}
+        {/* official */}
+        {SecondOfficial.map((rooms) =>
+          floor === 0 ? (
+            <Link
+              to={`/booking/${rooms.roomId}`}
+              key={1}
+              className={styles[`official${rooms.roomId}`]}
+              id={
+                notroomFull(rooms.roomId) && ablebtn
+                  ? [styles.MeetingRoom]
+                  : [styles.full]
+              }
+              onClick={BookingConfirm}
+            >
+              <div>
+                {notroomFull(rooms.roomId) && ablebtn
+                  ? rooms.roomName
+                  : `${rooms.roomName}\n마감`}
+              </div>
+            </Link>
+          ) : (
+            <div
+              className={styles[`official${rooms.roomId}`]}
+              key={2}
+              id={styles.notSelect}
+            >
+              {rooms.roomName}
             </div>
-          </Link>
-        ) : (
-          <div className={styles[SinyangName]} id={styles.notSelect}>
-            {SinyangName}
-          </div>
+          )
         )}
 
         <div className={styles.space범섬} id={styles.notSelect}>

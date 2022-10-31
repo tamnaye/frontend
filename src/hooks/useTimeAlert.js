@@ -4,7 +4,7 @@ const useTimeAlert = () => {
   const [ablebtn, setAblebtn] = useState(true) //예약시간이 아닐 때 상태변경(true일 때 버튼 활성화!)
 
   //21:00-08:30까지 예약 버튼 비활성화 함수
-  const Now = new Date() //현재 날짜 및 시간 -> Tue Aug 23 2022 16:33:51 GMT+0900
+  const Now = new Date()
   const NowHour = Now.getHours()
   const NowMins = Now.getMinutes()
 
@@ -38,7 +38,8 @@ const useTimeAlert = () => {
       )
     }
   }
-  return [ablebtn, BookingConfirm]
+
+  return [ablebtn, BookingConfirm] 
 }
 
 export default useTimeAlert

@@ -1,0 +1,68 @@
+.wrap .box {
+  margin: 0 auto;
+  padding: 0 3rem;
+  /* border: 1px solid black; */
+  width: 95vw;
+}
+.header {
+  /* padding: 3rem 8vw 1rem 8vw;
+  margin: 0;
+  top: 0;
+  left: 0;
+  right: 0; */
+  padding-top: 1rem;
+  left: 8vw;
+  right: 8vw;
+}
+.titleContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.title {
+  font-size: 24px;
+  color: #2090ff;
+}
+
+.line {
+  width: 100%;
+}
+
+.buttons {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.upload_btn {
+  margin-top: 10px;
+  margin-left: 10px;
+  width: 70px;
+  height: 40px;
+  background-color: white;
+  color: #2090ff;
+  border: 2px solid #2090ff;
+  border-radius: 5px;
+  float: right;
+}
+
+.upload_btn:hover {
+  background-color: #2090ff;
+  color: white;
+  border: 2px solid #2090ff;
+}
+
+/* table title */
+.tableContainer {
+  padding-top: 2rem;
+}
+
+.tableTrtableTrTitle {
+  table-layout: fixed;
+  text-align: center;
+  font-size: 18px;
+}
+
+th {
+  text-align: center;
+  table-layout: fixed;
+}

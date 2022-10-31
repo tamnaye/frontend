@@ -54,6 +54,20 @@
   color: white;
 }
 
+.officialDisabled {
+  width: 92%;
+  height: 30px;
+  margin: 5px;
+  border-radius: 15px;
+  border: none;
+  font-size: 11px;
+  font-weight: 500;
+  background-color: #fff;
+  color: rgb(138, 138, 138);
+  border: 1px solid rgb(193, 193, 193);
+  cursor: default;
+}
+
 .notfull a {
   color: white;
 }

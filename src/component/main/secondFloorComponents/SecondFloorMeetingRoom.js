@@ -7,9 +7,10 @@ const SecondFloorMeetingRoom = ({
   BookingConfirm,
   SecondMeetingRoominfo,
   bookingData,
+  SecondOfficial,
   roomData,
-  SinyangID,
-  SinyangName,
+  // SinyangID,
+  // SinyangName,
   userClasses,
   floor,
 }) => {
@@ -92,19 +93,25 @@ const SecondFloorMeetingRoom = ({
             </button>
           </Link>
         ))}
-
-        {floor === 0 ? (
-          <button
-            className={
-              notroomFull(SinyangID) && ablebtn
-                ? [styles.notfull]
-                : [styles.full]
-            }
-            onClick={BookingConfirm}
-          >
-            {SinyangName}
-          </button>
-        ) : null}
+        {SecondOfficial.map((rooms, idx) =>
+          floor === 0 ? (
+            <button
+              key={idx}
+              className={
+                notroomFull(rooms.roomId) && ablebtn
+                  ? [styles.notfull]
+                  : [styles.full]
+              }
+              onClick={BookingConfirm}
+            >
+              {rooms.roomName}
+            </button>
+          ) : (
+            <button key={idx} className={styles.officialDisabled} disabled>
+              {rooms.roomName}
+            </button>
+          )
+        )}
       </div>
     </div>
   );

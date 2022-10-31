@@ -1,29 +1,43 @@
 import styles from './Header.module.css';
 import logo from './img/ci_png.png';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { getAuth } from '../../hooks/authModule';
+import { doLogout } from '../../hooks/loginModule';
+import useUrl from '../../hooks/useUrl';
 
 const Header = () => {
+  const navigate = useNavigate();
+  const url = `http://${useUrl()}/auth/logout`;
+
   return (
     <div className={styles.HeaderContainer}>
       <div className={styles.Header}>
         <Link to={`/main`}>
           <img className={styles.img} src={logo} alt='logo'></img>
         </Link>
+        {/* 1890FF */}
         <div className={styles.anker}>
           {getAuth().auth === null ? (
-            <Link to='/'>Login</Link>
+            <Link to='/'>로그인</Link>
           ) : (
-            <Link to='/logout'>Logout</Link>
+            <span
+              style={{ color: '#1890FF', marginRight: '12px' }}
+              onClick={() => doLogout(navigate, url)}
+            >
+              로그아웃
+            </span>
           )}
-          <Link to={`/mypage`}>My page</Link>
+          <Link to={`/mypage`}>마이페이지</Link>
         </div>
       </div>
       <div className={styles.menu}>
-
-        <Link to={`/`}>HOME</Link>
-        <Link to={`/state`}>실시간예약현황</Link>
-        {/* <Link to={`/feedback`}>피드백</Link> */}
+        <div className={styles.menu__permanent}>
+          <Link to={`/main`}>홈</Link>
+          <Link to={`/state`}>예약현황</Link>
+        </div>
+        <div className={styles.menu__temporary}>
+          <Link to={`/feedback`}>시스템 문의</Link>
+        </div>
       </div>
     </div>
   );

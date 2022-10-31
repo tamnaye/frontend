@@ -9,11 +9,20 @@
     }
     .wrap .box .file{
         margin-top: 30px;
-        font-size: 13px;
+        font-size: 14px;
         padding: 10px;
     }
     .wrap .box .table_box{
-        font-size: 15px;
+        font-size: 13px;
+    }
+    .wrap .box .select_floor {
+        width: 60px;
+        height: 27px;
+        text-align: center;
+    }
+    .wrap .box .select_type {
+        height: 27px;
+        text-align: center;
     }
     .wrap .box .btn{
         width: 70px;
@@ -55,17 +64,21 @@
 .table_box {
     margin-top: 30px;
     text-align: center;
-    font-size: 20px;
+    font-size: 18px;
 }
 
 .classe {
     margin: auto;
-    width: 70px;
+    width: 60px;
     height: 30px;
 }
 
 .select_floor {
     width: 70px;
+    height: 30px;
+    text-align: center;
+}
+.select_type {
     height: 30px;
     text-align: center;
 }
@@ -76,7 +89,7 @@ select > .option_difault{
 
 .btn {
     width: 70px;
-    height: 40px;
+    height: 35px;
     background-color: white;
     color: #2090ff;
     border: 2px solid #2090ff;
