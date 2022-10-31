@@ -9,16 +9,26 @@
     }
     .wrap .box .file{
         margin-top: 30px;
-        font-size: 13px;
+        height: 85px;
+        font-size: 14px;
         padding: 10px;
+    }
+    .wrap .box .file .file_span{
+        font-size: 13px;
+    }
+    .wrap .box .input{
+        margin-top: 30px;
+        font-size: 14px;
     }
     .wrap .box .upload_btn{
         width: 70px;
         height: 27px;
+        font-size: 13px;
     }
     .wrap .box .content_btn{
         width: 70px;
         height: 27px;
+        font-size: 13px;
     }
   }
 
@@ -46,25 +56,33 @@
 .file{
     margin-top: 30px;
     width: 100%;
-    height: 40px;
+    height: 70px;
     padding: 5px;
     border-radius: 10px;
     background-color: aliceblue;
     font-size: 18px;
 }
 
+.file_span{
+    color: #2090ff;
+    font-size: 16px;
+}
+
 .input {
-    margin-top: 30px;
+    margin-top: 40px;
     width: 100%;
+    font-size: 18px;
+    color: rgba(0,0,0,.55);
     border: 1px solid gainsboro;
     box-shadow: 0px 19px 38px rgba(0, 0, 0, 0.03),
     0px 15px 12px rgba(0, 0, 0, 0.1);
 }
 
 .upload_btn {
-    margin-top: 20px;
-    width: 70px;
-    height: 30px;
+    margin-top: 35px;
+    width: 90px;
+    height: 35px;
+    font-size: 16px;
     background-color: white;
     color: #2090ff;
     border: 2px solid #2090ff;
@@ -80,8 +98,9 @@
 .content_btn {
     margin-top: 20px;
     margin-right: 10px;
-    width: 70px;
-    height: 30px;
+    width: 90px;
+    height: 35px;
+    font-size: 16px;
     background-color: white;
     color: rgb(93, 168, 226);
     border: 2px solid rgb(93, 168, 226);

@@ -1,26 +1,27 @@
-@media screen and (max-width: 700px){
-    .wrap .meetingUserinfo {
+  /* Info */
+  @media screen and (max-width: 700px) {
+    div .meetingUserTitle {
       margin-top: -29px;
     }
-    .wrap .naboxUserinfo {
-      margin-top: -70px;
+    div .naboxUserTitle {
+      margin-top: -49px;
     }
   }
-  
-  /* Info */
+
   .input {
     width: 230px;
     height: 22px;
     margin-left: 20px;
     text-align: center;
+    font-weight: bold;
   }
-  /*룸타입에 따른 media적용을 위해*/
-  .meetingUserinfo {
-    margin-top: 15px;
+  /*룸타입에 따른 media적용을 위한 css*/
+  .meetingUserTitle {
+    margin-top: 30px;
     color: #D46B42;
   }
-  .naboxUserinfo {
-    margin-top: 15px;
+  .naboxUserTitle {
+    margin-top: 75px;
     color: #D46B42;
   }
   /*룸타입에 따른 box테두리 적용*/
@@ -34,7 +35,7 @@
     padding: 10px 0px 0px 10px;
     border: 1px solid #D9DDDC;
   }
-    /*룸타입에 따른 팀원리스트 적용*/
+  /*룸타입에 따른 팀원리스트 적용*/
   .meetingInputList {
     padding: 0px 0px 0px 5px;
     border: 1px solid #D9DDDC;
@@ -79,44 +80,5 @@
     font-size: 13px;
     color: #1a5d99;
     font-weight: bold;
-
   }
 
-  /*TimeTable */
-.time {
-  margin-top: 16px;
-  color: #D46B42;
-}
-.timetable {
-  padding: 10px 0px 10px 15px;
-  border: 1px solid #D9DDDC;
-}
-
-/*booking button */
-.bookbtn {
-  background-color: #3695f5;
-  cursor: pointer;
-  width: 200px;
-  height: 30px;
-  color: whitesmoke;
-  border: 0px;
-  display: block;
-  margin: auto;
-  margin-top: 30px;
-  margin-bottom: 50px;
-  font-size: 16px;
-}
-.bookbtnOff {
-  background-color: #3695f5;
-  width: 200px;
-  height: 30px;
-  color: whitesmoke;
-  border: 0px;
-  display: block;
-  margin: auto;
-  margin-top: 30px;
-  margin-bottom: 50px;
-  font-size: 16px;
-  opacity: 40%;
-  cursor: not-allowed;
-}

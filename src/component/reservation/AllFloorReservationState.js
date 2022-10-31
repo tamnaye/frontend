@@ -13,8 +13,9 @@ const AllFloorReservationState = ({
   // 2층
   SecondMeetingRoominfo,
   SecondNaboxinfo,
-  SinyangID,
-  SinyangName,
+  SecondOfficial,
+  // SinyangID,
+  // SinyangName,
   // 3층
   ThirdMeetingStudioinfo,
   ThirdNaboxinfo,
@@ -54,10 +55,11 @@ const AllFloorReservationState = ({
                   key="2"
                   className={styles.reservationTable}
                   SecondMeetingRoominfo={SecondMeetingRoominfo}
+                  SecondOfficial={SecondOfficial}
                   bookingData={bookingData}
                   roomData={roomData}
-                  SinyangID={SinyangID}
-                  SinyangName={SinyangName}
+                  // SinyangID={SinyangID}
+                  // SinyangName={SinyangName}
                   floor={floor}
                 />,
                 <ThirdFloorMeetingRoomState

@@ -3,18 +3,24 @@ import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import "antd/dist/antd.min.css";
 import styles from "./Login.module.css";
-import encrypt from "../../hooks/encrypt";
+import {encrypt} from "../../hooks/loginModule";
 import useUrl from "../../hooks/useUrl";
-import {  setAuth } from "../../hooks/authModule";
+import { setAdminAuth, setAuth } from "../../hooks/authModule";
 
-export default function Login() {
-  const navigate = useNavigate();
+export default function Login({ path }) {
+  const isAdmin = path === "/admin" || path==="/admin/" ? true : false;
+  console.log("login page isAdmin", isAdmin);
   const ip = useUrl();
+  const apiUrl = isAdmin
+    ? `http://${ip}/admin/login`
+    : `http://${ip}/auth/login`;
+  const navigatePath = isAdmin ? "/admin/fileupload" : "/main";
+
+  const navigate = useNavigate();
+  // const [isAdmin, setIsAdmin] = useState(false);
 
   function getToken(userid) {
-    const url = `http://${ip}/auth/login`;
-
-    fetch(url, {
+    fetch(apiUrl, {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -24,18 +30,21 @@ export default function Login() {
       }),
     })
       .then((res) => {
-        setAuth(
-          res.headers.get("Authorization"),
-          res.headers.get("reAuthorization")
-        );
+        console.log("login ing");
+        console.log("header ", res.status);
+        isAdmin 
+          ?setAdminAuth(res.headers.get("Authorization2")) 
+          :setAuth(
+            res.headers.get("Authorization"),
+            res.headers.get("reAuthorization")
+          ) 
         return res.json();
       })
-
       .then((data) => {
         if (data.message === "success") {
-          navigate(`/main`);
+          navigate(navigatePath);
         } else {
-          alert("알수없는 에러입니다.");
+          alert("권한 없음.");
         }
       });
   }
@@ -67,7 +76,11 @@ export default function Login() {
   return (
     <div className={styles.container}>
       <div className={styles.box}>
-        <h1 className={styles.centerName}>더큰내일 회의실 예약 시스템</h1>
+        {isAdmin ? (
+          <h1 className={styles.centerNameAdmin} style={{fontFamily: 'GmarketSansMedium', fontWeight: "800", fontSize:"20px"}}>탐나예 관리자 로그인</h1>
+        ) : (
+          <h1 className={styles.centerName} style={{fontFamily: 'GmarketSansMedium', fontWeight: "800", fontSize:"20px"}}>더큰내일 회의실 예약 시스템</h1>
+        )}
         <Form onFinish={onFinish}>
           <Form.Item
             name="userid"
@@ -103,14 +116,25 @@ export default function Login() {
             />
           </Form.Item>
           <Form.Item>
-            <Button
-              size="large"
-              style={{ width: "100%" }}
-              type="primary"
-              htmlType="submit"
-            >
-              Login
-            </Button>
+            {isAdmin ? (
+              <Button
+                size="large"
+                style={{ width: "100%" }}
+                type="default"
+                htmlType="submit"
+              >
+                Login
+              </Button>
+            ) : (
+              <Button
+                size="large"
+                style={{ width: "100%" }}
+                type="primary"
+                htmlType="submit"
+              >
+                Login
+              </Button>
+            )}
           </Form.Item>
         </Form>
       </div>

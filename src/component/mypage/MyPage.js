@@ -8,28 +8,31 @@ import Footer from '../footer/Footer';
 //hooks
 import useUrl from '../../hooks/useUrl';
 import { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { fetchGet } from '../../hooks/fetchUrl';
 
 function MyPage() {
   const myUrl = useUrl();
-  const location = useLocation()
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const [userData, setUserData] = useState('');
+  const [myBookingDetailDataList, setMyBookingDetailDataList] = useState([]);
 
-  //----로그인 시 userName 데이터 가져오기----//
-  const [bookingCount, setBookingCount] = useState([]);
+  //로그인 시 userName 데이터 가져오기
   const [userName, setUserName] = useState('');
-  const [userId, setUserId] = useState('');
+  const [bookingCount, setBookingCount] = useState([]);
   const url = `http://${myUrl}/api/user/mypage`;
   useEffect(() => {
-      fetchGet(url,navigate)
-        .then((data) => {
-            setUserId(data?.userData.userId)
-            setUserName(data?.userData.userName);
-            setBookingCount(data?.myBookingDetailDataList);
-        });
-  }, [url]);
-  //onsole.log(bookingCount);
+    fetchGet(url, navigate).then((data) => {
+      setUserName(data?.userData.userName);
+      setBookingCount(data?.myBookingDetailDataList);
+
+      setUserData(data?.userData.userId);
+      setMyBookingDetailDataList(data?.myBookingDetailDataList);
+    });
+  }, [url, navigate]);
+  //console.log(bookingCount);
+  //console.log(myBookingDetailDataList);
+  //console.log(userData);
 
   return (
     <>
@@ -41,7 +44,10 @@ function MyPage() {
         {Array.isArray(bookingCount) && bookingCount.length === 0 ? (
           <MyBookTableEmpty />
         ) : (
-          <MyBookTable />
+          <MyBookTable
+            userData={userData}
+            myBookingDetailDataList={myBookingDetailDataList}
+          />
         )}
       </Container>
       <Footer />

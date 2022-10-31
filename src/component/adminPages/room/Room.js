@@ -8,52 +8,94 @@ import { Navigate, useNavigate } from "react-router-dom";
 
 const Room = () => {
   const hourSelection = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
-  const [maxHour, setMaxHour] = useState("");
+  const roomTypeSelection = ["meeting", "nabox", "studio", "official"];
+  const [maxHour, setMaxHour] = useState([]);
+  const [roomType, setRoomType] = useState([]);
+  const [newMaxHour, setNewMaxHour] = useState([]);
+  const [newRoomType, setNewRoomType] = useState([]);
   const [roomData, setRoomData] = useState([]);
   const navigate = useNavigate();
   const defaultFloor = 2;
-
+  console.log("maxHour : ",maxHour)
+  console.log("newMaxHour : ",newMaxHour)
+  console.log("roomType : ",roomType)
+  console.log("newRoomType : ",newRoomType)
   const myUrl = useUrl();
   const url = `http://${myUrl}/admin/view/room?floor=${defaultFloor}`;
   useEffect(() => {
     fetchGet(url, navigate).then((data) => {
-      console.log("room useeffect data : ", data);
+      console.log("room useeffect data : ", data.RoomData);
       setRoomData(data?.RoomData);
+      const arr1 = [];
+      const arr2 = [];
+      data?.RoomData.map((item) => {
+        arr1.push(item.maxTime);
+        arr2.push(item.roomType);
+      });
+      setMaxHour(arr1);
+      setNewMaxHour(arr1);
+      setRoomType(arr2);
+      setNewRoomType(arr2);
     });
   }, [url]);
 
   function getRooms(floor) {
     const url = `http://${myUrl}/admin/view/room?floor=${floor}`;
     fetchGet(url, navigate).then((data) => {
-      setRoomData(data.RoomData);
-    });
-  }
-  function updateMaxHour(roomid, index) {
-    const url = `http://${myUrl}/admin/change/maxtime`;
-    const object = {
-      roomId: roomid,
-      maxTime: maxHour,
-    };
-    fetchPostJson(url, object, navigate).then((data) => {
-      alert(
-        `${
-          roomData[index].roomType === "meeting"
-            ? roomData[index].roomName + "(회의실)"
-            : roomData[index].roomName
-        }의 최대 이용시간이 수정되었습니다.`
-      );
+      console.log("room getRooms data : ", data?.RoomData);
+      setRoomData(data?.RoomData);
+      const arr1 = [];
+      const arr2 = [];
+      data?.RoomData.map((item) => {
+        arr1.push(item.maxTime);
+        arr2.push(item.roomType);
+      });
+      setMaxHour(arr1);
+      setNewMaxHour(arr1);
+      setRoomType(arr2);
+      setNewRoomType(arr2);
     });
   }
 
-  //----select box 값 가져오기
   const onChangeFloor = (event) => {
-    console.log("target value", event.target.value);
     getRooms(event.target.value);
   };
-  const onChangeMaxHour = (event) => {
-    console.log("target value", event.target.value);
-    setMaxHour(event.target.value);
+  const onChangeMaxHour = (event, index) => {
+    const arr = [...newMaxHour];
+    arr[index] = Number(event.target.value);
+    setNewMaxHour(arr);
   };
+  const onChangeRoomType = (event, index) => {
+    const arr = [...newRoomType];
+    arr[index] = event.target.value;
+    setNewRoomType(arr);
+  };
+
+  function updateRoomData(roomid, index) {
+    const url = `http://${myUrl}/admin/update/room-data`;
+
+    if (
+      newMaxHour[index] === maxHour[index] &&
+      newRoomType[index] === roomType[index]
+    ) {
+      alert("수정사항이 없습니다.");
+    } else {
+      const object = {
+        roomId: roomid,
+        maxTime: newMaxHour[index],
+        roomType: newRoomType[index],
+      };
+      fetchPostJson(url, object, navigate).then((data) => {
+          const arr = [...maxHour]
+          const arr2 = [...roomType]
+          arr[index] = Number(newMaxHour[index])
+          arr2[index] = newRoomType[index]
+          setMaxHour(arr)
+          setRoomType(arr2)
+          alert(data?.message)
+      });
+    }
+  }
 
   return (
     <div className={styles.wrap}>
@@ -74,7 +116,7 @@ const Room = () => {
                   >
                     <option value={defaultFloor}>{defaultFloor}</option>
                     <option value="3">3</option>
-                    <option value="4">4</option>
+                    {/* <option value="4">4</option> */}
                   </select>
                 </td>
               </tr>
@@ -88,12 +130,15 @@ const Room = () => {
                   최대이용시간
                 </th>
                 <th className={styles.tableTh} scope="col">
+                  타입
+                </th>
+                <th className={styles.tableTh} scope="col">
                   수정버튼
                 </th>
               </tr>
             </thead>
             <tbody>
-              {roomData.map((item, index) => (
+              {roomData?.map((item, index) => (
                 <tr key={index}>
                   <td>
                     <div>{item.roomName}</div>
@@ -102,14 +147,10 @@ const Room = () => {
                     <select
                       name="maxHour"
                       className={styles.select_floor}
-                      onChange={onChangeMaxHour}
+                      // onChange={onChangeMaxHour}
+                      onChange={(e) => onChangeMaxHour(e, index)}
                     >
-                      <option
-                        className={styles.option_difault}
-                        value={item.maxTime}
-                      >
-                        {item.maxTime}
-                      </option>
+                      <option value={item.maxTime}>{item.maxTime}</option>
                       {hourSelection.map((hour, index) =>
                         hour === item.maxTime ? null : (
                           <option key={index} value={hour}>
@@ -120,9 +161,25 @@ const Room = () => {
                     </select>
                   </td>
                   <td>
+                    <select
+                      name="roomType"
+                      className={styles.select_type}
+                      onChange={(e)=>onChangeRoomType(e,index)}
+                    >
+                      <option value={item.roomType}>{item.roomType}</option>
+                      {roomTypeSelection.map((type, index) =>
+                        type === item.roomType ? null : (
+                          <option key={index} value={type}>
+                            {type}
+                          </option>
+                        )
+                      )}
+                    </select>
+                  </td>
+                  <td>
                     <button
                       className={styles.btn}
-                      onClick={() => updateMaxHour(item.roomId, index)}
+                      onClick={() => updateRoomData(item.roomId, index)}
                     >
                       수정
                     </button>
