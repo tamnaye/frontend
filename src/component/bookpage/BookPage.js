@@ -105,16 +105,7 @@ function BookPage() {
     }
   }
 
-      setBookingData(data.bookingData);
-      setUserData(data.userData);
-      setNamesData(data.namesData);
 
-      setRoomData(data.nowRoomData);
-
-      setNavData(data.roomData);
-      setUserFloor(data.userData.floor);
-    });
-  }, [url, navigate]);
   return (
     <div>
       {floorUserData === 0
