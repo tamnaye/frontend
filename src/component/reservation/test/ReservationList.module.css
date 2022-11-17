@@ -1,0 +1,94 @@
+@media screen and (max-width: 600px) {
+  #table #thead #theadTr #text {
+    font-size: 10px;
+    padding: 8px 2px;
+    word-break: break-all;
+    white-space: break-spaces;
+  }
+  #table #tbody #tbodyTr .time {
+    height: 36px;
+    font-size: 10px;
+    padding: 8px 5px;
+  }
+  #table #tbody #tbodyTr .roomstate .bookingTime {
+    border-radius: 2px;
+    padding: 15px 8px 2px 15px;
+    white-space: break-spaces;
+  }
+  #table #tbody #tbodyTr .roomstate .bookingTime p {
+    font-size: 10px;
+  }
+  #table {
+    width: 80vw;
+  }
+}
+
+.ReservationStateContainer {
+  display: grid;
+  grid-template-rows: 50px 1fr;
+  grid-template-areas:
+    'buttonContainer'
+    'reservationtable';
+  width: 80vw;
+  margin-top: 10px;
+  padding-bottom: 30px;
+}
+
+.ReservationStateContainer .buttonContainer {
+  display: flex;
+  justify-content: right;
+  grid-area: buttonContainer;
+}
+
+.Reservation {
+  grid-area: reservationtable;
+}
+
+.button {
+  width: 70px;
+  height: 25px;
+  margin: 5px;
+  border-radius: 15px;
+  border: none;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  background-color: #46a1fd;
+  color: white;
+}
+
+#table th {
+  font-size: 12px;
+  padding: 5px auto;
+  text-align: center;
+}
+
+tbody .time {
+  font-size: 11px;
+  word-break: keep-all;
+  width: 15%;
+}
+
+#tbodyTr .roomstate {
+  position: relative;
+}
+.bookingTime {
+  position: absolute;
+  top: 0%;
+  transform: translateX(-0.5rem);
+  width: 99%;
+  background-color: #74b8fc;
+  color: whitesmoke;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  border-radius: 5px;
+  font-size: 12px;
+  font-weight: 700;
+  z-index: 1;
+}
+
+#Manager {
+  background-color: rgb(128, 128, 128, 0.8);
+}

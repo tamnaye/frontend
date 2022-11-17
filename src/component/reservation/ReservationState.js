@@ -11,12 +11,8 @@ import { useEffect, useState } from 'react';
 // 커스텀 훅
 import useUrl from '../../hooks/useUrl';
 import { fetchGet } from '../../hooks/fetchUrl';
-// import useTimeAlert from '../../hooks/useTimeAlert';
 
 const ReservationState = () => {
-  // //모든 층수 사용 useTimeAlert
-  // const [ablebtn, BookingConfirm] = useTimeAlert();
-
   //층수 API 정보 가져오기
   const [floor, setfloor] = useState('');
   const [bookingData, setBookingData] = useState([]);
@@ -26,8 +22,6 @@ const ReservationState = () => {
   const [SecondMeetingRoominfo, setSecondMeetingRoominfo] = useState([]);
   const [SecondNaboxinfo, setSecondNaboxinfo] = useState([]);
   const [SecondOfficial, setSecondOfficial] = useState([]);
-  // const [SinyangID, setSinYangID] = useState('');
-  // const [SinyangName, setSinYangName] = useState('');
 
   // 3층 정보
   const [ThirdMeetingStudioinfo, setThirdMeetingStudioinfo] = useState([]);
@@ -56,14 +50,6 @@ const ReservationState = () => {
         setSecondOfficial(
           data.RoomData.filter((rooms) => rooms.roomType === 'official')
         );
-        // setSinYangID(
-        //   data.RoomData.filter((rooms) => rooms.roomType === 'official')[0]
-        //     .roomId
-        // );
-        // setSinYangName(
-        //   data.RoomData.filter((rooms) => rooms.roomType === 'official')[0]
-        //     .roomName
-        // );
       }
 
       // 3층 일 때 정보
@@ -133,8 +119,6 @@ const ReservationState = () => {
           FourthFloorinfo={FourthFloorinfo}
           bookingData={bookingData}
           roomData={roomData}
-          // SinyangID={SinyangID}
-          // SinyangName={SinyangName}
           floor={floor}
         />,
       ]}
@@ -147,8 +131,6 @@ const ReservationState = () => {
           SecondOfficial={SecondOfficial}
           bookingData={bookingData}
           roomData={roomData}
-          // SinyangID={SinyangID}
-          // SinyangName={SinyangName}
           floor={floor}
         />,
       ]}
