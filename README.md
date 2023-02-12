@@ -168,6 +168,5 @@
 <br/>
 
 ## 7. 프로젝트 과정 기록
- - 노션 : [개발 과정](https://www.notion.so/621ecd901e604f6d922ab080b0c77a0f)
  - 프레젠테이션 : [발표 자료](https://docs.google.com/presentation/d/1Klc-cPABwICCtTyXdc9YBTwJiMS7nWjG/edit?usp=sharing&ouid=116140859951012349127&rtpof=true&sd=true)
 
